@@ -1,0 +1,1162 @@
+#
+# uts/i86pc/Makefile.rules
+#
+# Copyright (c) 1996 by Sun Microsystems, Inc.
+# All rights reserved.
+#
+#pragma ident	"@(#)Makefile.rules	1.97	96/09/30 SMI"
+#
+#	This Makefile defines the build rules for the directory uts/i86pc
+#	and it's children. These are the source files which i86pc
+#	"implementation architecture" dependent.
+#
+
+#
+#	This was implemented by pattern matching rules of the form:
+#
+# $(OBJS_DIR)/%.o:	 $(UTSBASE)/i86pc/os/%.c
+#	$(COMPILE.c) -o $@ $<
+#
+# $(LINTS_DIR)/%.ln:	$(UTSBASE)/i86pc/os/%.c
+#	@($(LHEAD) $(LINT.c) $< $(LTAIL))
+#
+#	For each directory containing source. This proved to slow under
+#	Nse because it caused a significant additional number of stats
+#	and stats are real slow under TFS. If TFS performance should
+#	improve, one might consider returning to the former implementation.
+#	In the former implementation, this file (Makefile.rules) was not
+#	needed and the pattern matching rules were in Makefile.files.
+#
+
+# Define location of sources which are SunSoft Confidential -- Internal Use Only
+SECRETBASE=	$(UTSBASE)/SunSoft_Confidential
+# Rules for making objects that need confidential header files
+SECRETCOMPILE.c=	$(COMPILE.c) -I$(SECRETBASE)/i86pc
+SECRETLINT.c=		$(LINT.c) -I$(SECRETBASE)/i86pc
+
+#
+#	C object build rules
+#
+#	The following are alphabetized by source file path. Please maintain
+# this ordering.
+#
+# Device driver kernel modules
+#
+$(OBJS_DIR)/csa.o:              $(UTSBASE)/i86pc/io/dktp/controller/csa/csa.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/controller/csa/csa.c
+
+$(OBJS_DIR)/csa_common.o: \
+		$(UTSBASE)/i86pc/io/dktp/controller/csa/csa_common.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/controller/csa/csa_common.c
+
+$(OBJS_DIR)/csa_common_eisa.o: \
+		$(UTSBASE)/i86pc/io/dktp/controller/csa/csa_common_eisa.c 
+	$(COMPILE.c) -o $@ \
+		$(UTSBASE)/i86pc/io/dktp/controller/csa/csa_common_eisa.c
+
+$(OBJS_DIR)/csa_impl.o: \
+		$(UTSBASE)/i86pc/io/dktp/controller/csa/csa_impl.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/controller/csa/csa_impl.c
+
+$(OBJS_DIR)/csa_queue.o: \
+		$(UTSBASE)/i86pc/io/dktp/controller/csa/csa_queue.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/controller/csa/csa_queue.c
+
+$(OBJS_DIR)/dsa.o:		$(UTSBASE)/i86pc/io/dktp/controller/dsa.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/controller/dsa.c
+
+$(OBJS_DIR)/aha.o:		$(UTSBASE)/i86pc/io/dktp/hba/aha.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/aha.c
+
+$(OBJS_DIR)/aic.o:		$(UTSBASE)/i86pc/io/dktp/hba/aic/aic.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/aic/aic.c
+
+$(OBJS_DIR)/aiccp.o:		$(UTSBASE)/i86pc/io/dktp/hba/aic/aiccp.s 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/aic/aiccp.s
+
+$(OBJS_DIR)/him6x60.o:		$(UTSBASE)/i86pc/io/dktp/hba/aic/him6x60.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/aic/him6x60.c
+
+$(OBJS_DIR)/blogic.o:		$(UTSBASE)/i86pc/io/dktp/hba/blogic/blogic.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/blogic/blogic.c
+
+$(OBJS_DIR)/blogic_hba.o:	$(UTSBASE)/i86pc/io/dktp/hba/blogic/blogic_hba.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/blogic/blogic_hba.c
+
+$(OBJS_DIR)/corv.o:		$(UTSBASE)/i86pc/io/dktp/hba/corvette/corv.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/corvette/corv.c
+
+$(OBJS_DIR)/corv_hba.o:         $(UTSBASE)/i86pc/io/dktp/hba/corvette/corv_hba.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/corvette/corv_hba.c
+
+$(OBJS_DIR)/delivery.o:         $(UTSBASE)/i86pc/io/dktp/hba/corvette/delivery.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/corvette/delivery.c
+
+$(OBJS_DIR)/xmca.o:		$(UTSBASE)/i86pc/io/dktp/hba/corvette/xmca.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/corvette/xmca.c
+
+$(OBJS_DIR)/dpt.o:		$(UTSBASE)/i86pc/io/dktp/hba/dpt/dpt.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/dpt/dpt.c
+
+$(OBJS_DIR)/dpt_eisa.o:		$(UTSBASE)/i86pc/io/dktp/hba/dpt/dpt_eisa.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/dpt/dpt_eisa.c
+
+$(OBJS_DIR)/dpt_send.o:		$(UTSBASE)/i86pc/io/dktp/hba/dpt/dpt_send.s
+	$(COMPILE.s) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/dpt/dpt_send.s
+
+$(OBJS_DIR)/dptghd.o:		$(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd.c
+
+$(OBJS_DIR)/dptghd_debug.o:	$(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_debug.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_debug.c
+
+$(OBJS_DIR)/dptghd_queue.o:	$(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_queue.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_queue.c
+
+$(OBJS_DIR)/dptghd_scsa.o:	$(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_scsa.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_scsa.c
+
+$(OBJS_DIR)/dptghd_scsi.o:	$(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_scsi.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_scsi.c
+
+$(OBJS_DIR)/dptghd_timer.o:	$(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_timer.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_timer.c
+
+$(OBJS_DIR)/eha.o:		$(UTSBASE)/i86pc/io/dktp/hba/eha.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/eha.c
+
+$(OBJS_DIR)/esa.o:		$(UTSBASE)/i86pc/io/dktp/hba/esa.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/esa.c
+
+$(OBJS_DIR)/hba.o:		$(UTSBASE)/i86pc/io/dktp/hba/hba.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/hba.c
+
+$(OBJS_DIR)/him.o:		$(UTSBASE)/i86pc/io/dktp/hba/him.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/him.c
+
+$(OBJS_DIR)/him_init.o:		$(UTSBASE)/i86pc/io/dktp/hba/him_init.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/him_init.c
+
+$(OBJS_DIR)/chs.o: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs.c  
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/chs/chs.c
+
+$(OBJS_DIR)/chs_hba.o: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_hba.c  
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_hba.c
+
+$(OBJS_DIR)/chs_busops.o: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_busops.c  
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_busops.c
+
+$(OBJS_DIR)/chs_conf.o: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_conf.c  
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_conf.c
+
+$(OBJS_DIR)/chs_dac.o: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_dac.c  
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_dac.c
+
+$(OBJS_DIR)/chs_devops.o: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_devops.c  
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_devops.c
+
+
+$(OBJS_DIR)/chs_interrupt.o: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_interrupt.c  
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_interrupt.c
+
+$(OBJS_DIR)/chs_intr.o: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_intr.c  
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_intr.c
+
+$(OBJS_DIR)/chs_raid.o: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_raid.c  
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_raid.c
+
+$(OBJS_DIR)/chs_transport.o: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_transport.c  
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_transport.c
+
+$(OBJS_DIR)/chs_viperconf.o: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_viperconf.c  
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_viperconf.c
+
+$(OBJS_DIR)/chs_queue.o: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_queue.c  
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_queue.c
+
+$(OBJS_DIR)/chs_viper.o: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_viper.c  
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_viper.c
+
+
+$(OBJS_DIR)/iss.o:		$(SECRETBASE)/i86pc/io/dktp/hba/iss/iss.c 
+	$(SECRETCOMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/dktp/hba/iss/iss.c
+
+$(OBJS_DIR)/iss_hba.o:		$(SECRETBASE)/i86pc/io/dktp/hba/iss/iss_hba.c 
+	$(COMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/dktp/hba/iss/iss_hba.c
+
+$(OBJS_DIR)/mcis.o:             $(UTSBASE)/i86pc/io/dktp/hba/mcis.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/mcis.c
+
+$(OBJS_DIR)/dac960.o:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/dac960.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/mlx/dac960.c
+
+$(OBJS_DIR)/dac960p.o:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/dac960p.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/mlx/dac960p.c
+
+$(OBJS_DIR)/dmc960.o:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/dmc960.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/mlx/dmc960.c
+
+$(OBJS_DIR)/mlx.o:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx.c
+
+$(OBJS_DIR)/mlx_busops.o:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_busops.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_busops.c
+
+$(OBJS_DIR)/mlx_conf.o:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_conf.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_conf.c
+
+$(OBJS_DIR)/mlx_dac.o:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_dac.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_dac.c
+
+$(OBJS_DIR)/mlx_devops.o:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_devops.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_devops.c
+
+$(OBJS_DIR)/mlx_eisa.o:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_eisa.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_eisa.c
+
+$(OBJS_DIR)/mlx_interrupt.o:	$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_interrupt.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_interrupt.c
+
+$(OBJS_DIR)/mlx_intr.o:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_intr.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_intr.c
+
+$(OBJS_DIR)/mlx_raid.o:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_raid.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_raid.c
+
+$(OBJS_DIR)/mlx_transport.o:	$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_transport.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_transport.c
+
+$(OBJS_DIR)/mlx_xmca.o:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_xmca.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_xmca.c
+
+#----------------------------------------------------------------------------
+#	SAVE_DMA_SEG_VIRT_ADDRS affects pcscsi.h, pcscsi.c, pcscsi_dma_impl
+#	directly, and portability.c, ggmini_solaris.c indirectly (they 
+#	include pcscsi.h).
+#	SG_ALWAYS affects pcscsi_dma_impl.c only.
+#	-WO,-B = Accept C++ style comment delimiters (i.e., //)
+#	All the defines following the above are used by the AMD core code
+#	AND its inclue files (some of which are included in the Solaris src).
+#	The defines are the same for everybody because it hurts nothing and
+#	reduces maintenance difficulties.
+
+$(OBJS_DIR)/pcscsi.o:		$(UTSBASE)/i86pc/io/dktp/hba/pcscsi/pcscsi.c
+	$(COMPILE.c) \
+	-DSAVE_DMA_SEG_VIRT_ADDRS -DSG_ALWAYS \
+	-W0,-B -DSOLARIS -DOTHER_OS -DISABLE_DIO -DDISABLE_SREG \
+	-DDISABLE_MDL -DCOMPAQ_MACHINE \
+	-o $@ $(UTSBASE)/i86pc/io/dktp/hba/pcscsi/pcscsi.c
+
+$(OBJS_DIR)/pcscsi_dma_impl.o:	$(UTSBASE)/i86pc/io/dktp/hba/pcscsi/pcscsi_dma_impl.c
+	$(COMPILE.c) \
+	-DSAVE_DMA_SEG_VIRT_ADDRS -DSG_ALWAYS \
+	-W0,-B -DSOLARIS -DOTHER_OS -DISABLE_DIO -DDISABLE_SREG \
+	-DDISABLE_MDL -DCOMPAQ_MACHINE \
+	-o $@ $(UTSBASE)/i86pc/io/dktp/hba/pcscsi/pcscsi_dma_impl.c
+
+$(OBJS_DIR)/portability.o:	$(UTSBASE)/i86pc/io/dktp/hba/pcscsi/portability.c
+	$(COMPILE.c) \
+	-DSAVE_DMA_SEG_VIRT_ADDRS -DSG_ALWAYS \
+	-W0,-B -DSOLARIS -DOTHER_OS -DISABLE_DIO -DDISABLE_SREG \
+	-DDISABLE_MDL -DCOMPAQ_MACHINE \
+	-o $@ $(UTSBASE)/i86pc/io/dktp/hba/pcscsi/portability.c
+
+$(OBJS_DIR)/ggmini_solaris.o:	$(UTSBASE)/i86pc/io/dktp/hba/pcscsi/ggmini_solaris.c
+	$(COMPILE.c) \
+	-DSAVE_DMA_SEG_VIRT_ADDRS -DSG_ALWAYS \
+	-W0,-B -DSOLARIS -DOTHER_OS -DISABLE_DIO -DDISABLE_SREG \
+	-DDISABLE_MDL -DCOMPAQ_MACHINE \
+	-o $@ $(UTSBASE)/i86pc/io/dktp/hba/pcscsi/ggmini_solaris.c
+
+$(OBJS_DIR)/ggmini.o:		$(UTSBASE)/i86pc/io/dktp/hba/pcscsi/ggmini.c
+	$(COMPILE.c) \
+	-DSAVE_DMA_SEG_VIRT_ADDRS -DSG_ALWAYS \
+	-W0,-B -DSOLARIS -DOTHER_OS -DISABLE_DIO -DDISABLE_SREG \
+	-DDISABLE_MDL -DCOMPAQ_MACHINE \
+	-o $@ $(UTSBASE)/i86pc/io/dktp/hba/pcscsi/ggmini.c
+#----------------------------------------------------------------------------
+
+$(OBJS_DIR)/trantor.o:		$(UTSBASE)/i86pc/io/dktp/hba/trantor/trantor.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dktp/hba/trantor/trantor.c
+
+$(OBJS_DIR)/dnet.o:		$(UTSBASE)/i86pc/io/dnet.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/dnet.c
+
+$(OBJS_DIR)/iprb.o:		$(UTSBASE)/i86pc/io/iprb/iprb.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/iprb/iprb.c
+
+$(OBJS_DIR)/eepro.o:		$(UTSBASE)/i86pc/io/eepro/eepro.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/eepro/eepro.c
+
+$(OBJS_DIR)/el.o:		$(UTSBASE)/i86pc/io/el.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/el.c
+
+$(OBJS_DIR)/elink.o:		$(UTSBASE)/i86pc/io/elink.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/elink.c
+
+$(OBJS_DIR)/elx.o:		$(UTSBASE)/i86pc/io/elx/elx.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/elx/elx.c
+
+$(OBJS_DIR)/elx_media.o:	$(UTSBASE)/i86pc/io/elx/elx_media.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/elx/elx_media.c
+
+$(OBJS_DIR)/elx_pci.o:		$(UTSBASE)/i86pc/io/elx/elx_pci.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/elx/elx_pci.c
+
+$(OBJS_DIR)/elx_xfr.o:		$(UTSBASE)/i86pc/io/elx/elx_xfr.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/elx/elx_xfr.c
+
+$(OBJS_DIR)/iee.o:		$(UTSBASE)/i86pc/io/iee.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/iee.c
+
+$(OBJS_DIR)/ieef.o:             $(UTSBASE)/i86pc/io/ieef.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/ieef.c
+
+$(OBJS_DIR)/chanmux.o:		$(UTSBASE)/i86pc/io/kd/chanmux.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/chanmux.c
+
+$(OBJS_DIR)/evc.o:		$(UTSBASE)/i86pc/io/kd/kd/evc.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/kd/evc.c
+
+$(OBJS_DIR)/evga.o:		$(UTSBASE)/i86pc/io/kd/kd/evga.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/kd/evga.c
+
+$(OBJS_DIR)/i8042.o:		$(UTSBASE)/i86pc/io/kd/kd/i8042.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/kd/i8042.c
+
+$(OBJS_DIR)/kdkb.o:		$(UTSBASE)/i86pc/io/kd/kd/kdkb.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/kd/kdkb.c
+
+$(OBJS_DIR)/kbmode.o:		$(UTSBASE)/i86pc/io/kd/kd/kbmode.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/kd/kbmode.c
+
+$(OBJS_DIR)/kdspace.o:		$(UTSBASE)/i86pc/io/kd/kd/kdspace.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/kd/kdspace.c
+
+$(OBJS_DIR)/kdstr.o:		$(UTSBASE)/i86pc/io/kd/kd/kdstr.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/kd/kdstr.c
+
+$(OBJS_DIR)/kdv.o:		$(UTSBASE)/i86pc/io/kd/kd/kdv.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/kd/kdv.c
+
+$(OBJS_DIR)/kdvt.o:		$(UTSBASE)/i86pc/io/kd/kd/kdvt.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/kd/kdvt.c
+
+$(OBJS_DIR)/vdc.o:		$(UTSBASE)/i86pc/io/kd/kd/vdc.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/kd/vdc.c
+
+$(OBJS_DIR)/vtables.o:		$(UTSBASE)/i86pc/io/kd/kd/vtables.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/kd/vtables.c
+
+$(OBJS_DIR)/kdvm.o:		$(UTSBASE)/i86pc/io/kd/kdvm/kdvm.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/kdvm/kdvm.c
+
+$(OBJS_DIR)/kdvm_cgi.o:		$(UTSBASE)/i86pc/io/kd/kdvm/kdvm_cgi.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/kdvm/kdvm_cgi.c
+
+$(OBJS_DIR)/kdvmspace.o:        $(UTSBASE)/i86pc/io/kd/kdvm/kdvmspace.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/kdvm/kdvmspace.c
+
+$(OBJS_DIR)/iosubr.o:		$(UTSBASE)/i86pc/io/kd/iosubr.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/iosubr.c
+
+$(OBJS_DIR)/kdfakeit.o:		$(UTSBASE)/i86pc/io/kd/kdfakeit.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/kdfakeit.c
+
+$(OBJS_DIR)/ws_8042.o:		$(UTSBASE)/i86pc/io/kd/ws/ws_8042.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/ws/ws_8042.c
+
+$(OBJS_DIR)/ws_ansi.o:		$(UTSBASE)/i86pc/io/kd/ws/ws_ansi.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/ws/ws_ansi.c
+
+$(OBJS_DIR)/ws_cmap.o:		$(UTSBASE)/i86pc/io/kd/ws/ws_cmap.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/ws/ws_cmap.c
+
+$(OBJS_DIR)/ws_subr.o:		$(UTSBASE)/i86pc/io/kd/ws/ws_subr.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/ws/ws_subr.c
+
+$(OBJS_DIR)/ws_tables.o:        $(UTSBASE)/i86pc/io/kd/ws/ws_tables.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/ws/ws_tables.c
+
+$(OBJS_DIR)/ws_tcl.o:		$(UTSBASE)/i86pc/io/kd/ws/ws_tcl.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/ws/ws_tcl.c
+
+$(OBJS_DIR)/wsspace.o:		$(UTSBASE)/i86pc/io/kd/ws/wsspace.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kd/ws/wsspace.c
+
+$(OBJS_DIR)/kdmouse.o:		$(UTSBASE)/i86pc/io/kdmouse.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/kdmouse.c
+
+$(OBJS_DIR)/logi.o:		$(UTSBASE)/i86pc/io/logi.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/logi.c
+
+$(OBJS_DIR)/mscsi.o:		$(UTSBASE)/i86pc/io/mscsi.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/mscsi.c
+
+$(OBJS_DIR)/mse.o:		$(UTSBASE)/i86pc/io/mse.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/mse.c
+
+$(OBJS_DIR)/msm.o:		$(UTSBASE)/i86pc/io/msm.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/msm.c
+
+$(OBJS_DIR)/nee.o:		$(UTSBASE)/i86pc/io/nee/nee.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/nee/nee.c
+
+$(OBJS_DIR)/neefcode.o:		$(UTSBASE)/i86pc/io/nee/neefcode.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/nee/neefcode.c
+
+$(OBJS_DIR)/nei.o:		$(UTSBASE)/i86pc/io/nei/nei.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/nei/nei.c
+
+$(OBJS_DIR)/nfe.o:		$(UTSBASE)/i86pc/io/nfe/nfe.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/nfe/nfe.c
+
+$(OBJS_DIR)/epp.o:              $(UTSBASE)/i86pc/io/pe/host/ppc/epp.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/pe/host/ppc/epp.c
+
+$(OBJS_DIR)/pp.o:               $(UTSBASE)/i86pc/io/pe/host/ppc/pp.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/pe/host/ppc/pp.c
+
+$(OBJS_DIR)/unixglue.o:         $(UTSBASE)/i86pc/io/pe/host/ppc/unixglue.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/pe/host/ppc/unixglue.c
+
+$(OBJS_DIR)/pe2.o:              $(UTSBASE)/i86pc/io/pe/media/pe2/pe2.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/pe/media/pe2/pe2.c
+
+$(OBJS_DIR)/pe3.o:              $(UTSBASE)/i86pc/io/pe/media/pe3/pe3.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/pe/media/pe3/pe3.c
+
+$(OBJS_DIR)/pe.o:               $(UTSBASE)/i86pc/io/pe/pe/pe.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/pe/pe/pe.c
+
+$(OBJS_DIR)/scpa.o:             $(UTSBASE)/i86pc/io/pe/scpa/scpa.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/pe/scpa/scpa.c
+
+$(OBJS_DIR)/riles.o:		$(UTSBASE)/i86pc/io/riles/riles.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/riles/riles.c
+
+$(OBJS_DIR)/sbpro.o:		$(UTSBASE)/i86pc/io/sbpro.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/sbpro.c
+
+$(OBJS_DIR)/board_id.o:		$(UTSBASE)/i86pc/io/smc/board_id.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/smc/board_id.c
+
+$(OBJS_DIR)/smc.o:		$(UTSBASE)/i86pc/io/smc/smc.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/smc/smc.c
+
+$(OBJS_DIR)/smcbcopy.o:		$(UTSBASE)/i86pc/io/smc/smcbcopy.s
+	$(COMPILE.s) -o $@ $(UTSBASE)/i86pc/io/smc/smcbcopy.s
+
+$(OBJS_DIR)/smcddi.o:		$(UTSBASE)/i86pc/io/smc/smcddi.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/smc/smcddi.c
+
+$(OBJS_DIR)/smcspace.o:		$(UTSBASE)/i86pc/io/smc/smcspace.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/smc/smcspace.c
+
+$(OBJS_DIR)/smce.o:		$(UTSBASE)/i86pc/io/smce/smce.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/smce/smce.c
+
+$(OBJS_DIR)/smce_lm.o:		$(UTSBASE)/i86pc/io/smce/smce_lm.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/smce/smce_lm.c
+
+$(OBJS_DIR)/8232.o:		$(UTSBASE)/i86pc/io/smceu/8232.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/smceu/8232.c
+
+$(OBJS_DIR)/lebm.o:		$(UTSBASE)/i86pc/io/smceu/lebm.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/smceu/lebm.c
+
+$(OBJS_DIR)/smceu.o:		$(UTSBASE)/i86pc/io/smceu/smceu.c \
+				$(UTSBASE)/i86pc/io/smcg/smcg.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/smceu/smceu.c
+
+$(OBJS_DIR)/smceucfg.o:		$(UTSBASE)/i86pc/io/smceu/smceucfg.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/smceu/smceucfg.c
+
+$(OBJS_DIR)/9232.o:		$(UTSBASE)/i86pc/io/smcf/9232.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/smcf/9232.c
+
+$(OBJS_DIR)/lft9232.o:		$(UTSBASE)/i86pc/io/smcf/lft9232.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/smcf/lft9232.c
+
+$(OBJS_DIR)/lft_cfg.o:		$(UTSBASE)/i86pc/io/smcf/lft_cfg.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/smcf/lft_cfg.c
+
+$(OBJS_DIR)/smcf.o:		$(UTSBASE)/i86pc/io/smcf/smcf.c \
+				$(UTSBASE)/i86pc/io/smcg/smcg.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/smcf/smcf.c
+
+$(OBJS_DIR)/tiqmouse.o:		$(UTSBASE)/i86pc/io/tiqmouse.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/tiqmouse.c
+
+$(OBJS_DIR)/tr.o:		$(UTSBASE)/i86pc/io/tr/tr.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/tr/tr.c
+
+$(OBJS_DIR)/tr_sr.o:		$(UTSBASE)/i86pc/io/tr/tr_sr.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/tr/tr_sr.c
+
+
+# Graphics device kernel driver modules
+#
+$(OBJS_DIR)/p9000.o:            $(UTSBASE)/i86pc/io/p9000/p9000.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/p9000/p9000.il $(UTSBASE)/i86pc/io/p9000/p9000.c
+
+$(OBJS_DIR)/p9100.o:            $(UTSBASE)/i86pc/io/p9100/p9100.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/p9100/p9100.il $(UTSBASE)/i86pc/io/p9100/p9100.c
+
+$(OBJS_DIR)/xsvc.o:            	$(SECRETBASE)/i86pc/io/xsvc/xsvc.c
+	$(COMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/xsvc/xsvc.c
+
+
+# Driver-related kernel modules
+#
+$(OBJS_DIR)/ansi.o:		$(UTSBASE)/i86pc/io/ansi.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/ansi.c
+
+$(OBJS_DIR)/char.o:		$(UTSBASE)/i86pc/io/char.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/char.c
+
+$(OBJS_DIR)/emap.o:		$(UTSBASE)/i86pc/io/emap.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/emap.c
+
+
+# Streams kernel modules
+#
+$(OBJS_DIR)/vuidkd.o:		$(UTSBASE)/i86pc/io/vuidkd.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/vuidkd.c
+
+$(OBJS_DIR)/vuid2ps2.o:		$(UTSBASE)/i86pc/io/vuidmice/vuid2ps2.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/vuidmice/vuid2ps2.c
+
+$(OBJS_DIR)/vuid3ps2.o:		$(UTSBASE)/i86pc/io/vuidmice/vuid3ps2.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/i86pc/io/vuidmice/vuid3ps2.c
+
+
+# MP kernel mach modules
+#
+$(OBJS_DIR)/apic_c.o:		$(SECRETBASE)/i86pc/io/apic/apic.c
+	$(COMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/apic/apic.c
+
+$(OBJS_DIR)/apic_s.o:		$(SECRETBASE)/i86pc/io/apic/apic.s
+	$(COMPILE.s) -o $@ $(SECRETBASE)/i86pc/io/apic/apic.s
+
+$(OBJS_DIR)/ast.o:		$(SECRETBASE)/i86pc/io/ast/ast.c
+	$(COMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/ast/ast.c
+
+$(OBJS_DIR)/compaq.o:		$(SECRETBASE)/i86pc/io/compaq/compaq.c
+	$(SECRETCOMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/compaq/compaq.c
+
+$(OBJS_DIR)/compaq_ml.o:	$(SECRETBASE)/i86pc/io/compaq/compaq_ml.s
+	$(COMPILE.s) -o $@ $(SECRETBASE)/i86pc/io/compaq/compaq_ml.s
+
+$(OBJS_DIR)/cbdriver.o:		$(SECRETBASE)/i86pc/io/corollary/cbdriver.c
+	$(COMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/corollary/cbdriver.c
+
+$(OBJS_DIR)/cbus.o:		$(SECRETBASE)/i86pc/io/corollary/cbus.c
+	$(COMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/corollary/cbus.c
+
+$(OBJS_DIR)/cbus1.o:		$(SECRETBASE)/i86pc/io/corollary/cbus1.c
+	$(COMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/corollary/cbus1.c
+
+$(OBJS_DIR)/cbus1bt.o:		$(SECRETBASE)/i86pc/io/corollary/cbus1bt.s
+	$(COMPILE.s) -o $@ $(SECRETBASE)/i86pc/io/corollary/cbus1bt.s
+
+$(OBJS_DIR)/cbus1pic.o:		$(SECRETBASE)/i86pc/io/corollary/cbus1pic.s
+	$(COMPILE.s) -o $@ $(SECRETBASE)/i86pc/io/corollary/cbus1pic.s
+
+$(OBJS_DIR)/cbus2.o:		$(SECRETBASE)/i86pc/io/corollary/cbus2.c
+	$(COMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/corollary/cbus2.c
+
+$(OBJS_DIR)/cbus2ecc.o:		$(SECRETBASE)/i86pc/io/corollary/cbus2ecc.c
+	$(COMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/corollary/cbus2ecc.c
+
+$(OBJS_DIR)/cbus2pic.o:		$(SECRETBASE)/i86pc/io/corollary/cbus2pic.s
+	$(COMPILE.s) -o $@ $(SECRETBASE)/i86pc/io/corollary/cbus2pic.s
+
+$(OBJS_DIR)/cbus_sw.o:		$(SECRETBASE)/i86pc/io/corollary/cbus_sw.c
+	$(COMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/corollary/cbus_sw.c
+
+$(OBJS_DIR)/cbusmem.o:		$(SECRETBASE)/i86pc/io/corollary/cbusmem.c
+	$(COMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/corollary/cbusmem.c
+
+$(OBJS_DIR)/cbusmisc.o:		$(SECRETBASE)/i86pc/io/corollary/cbusmisc.s
+	$(COMPILE.s) -o $@ $(SECRETBASE)/i86pc/io/corollary/cbusmisc.s
+
+$(OBJS_DIR)/psm.o:		$(SECRETBASE)/i86pc/io/corollary/psm.c
+	$(COMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/corollary/psm.c
+
+$(OBJS_DIR)/syspro.o:		$(SECRETBASE)/i86pc/io/syspro/syspro.c
+	$(SECRETCOMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/syspro/syspro.c
+
+$(OBJS_DIR)/imsattn.o:		$(SECRETBASE)/i86pc/io/tpf/imsattn.c
+	$(SECRETCOMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/tpf/imsattn.c
+
+$(OBJS_DIR)/lock_add_hrt.o:	$(SECRETBASE)/i86pc/io/tpf/lock_add_hrt.s
+	$(COMPILE.s) -o $@ $(SECRETBASE)/i86pc/io/tpf/lock_add_hrt.s
+
+$(OBJS_DIR)/tpf.o:		$(SECRETBASE)/i86pc/io/tpf/tpf.c
+	$(SECRETCOMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/tpf/tpf.c
+
+$(OBJS_DIR)/calibrate.o:	$(SECRETBASE)/i86pc/io/tpf/tpf_apic.s
+	$(COMPILE.s) -o $@ $(SECRETBASE)/i86pc/io/tpf/tpf_apic.s
+
+$(OBJS_DIR)/tpfwbinvd.o:	$(SECRETBASE)/i86pc/io/tpf/tpfwbinvd.s
+	$(COMPILE.s) -o $@ $(SECRETBASE)/i86pc/io/tpf/tpfwbinvd.s
+
+$(OBJS_DIR)/wyse_sun_c.o:       $(SECRETBASE)/i86pc/io/wysemp/wyse_sun_c.c
+	$(COMPILE.c) -o $@ $(SECRETBASE)/i86pc/io/wysemp/wyse_sun_c.c
+
+$(OBJS_DIR)/wyse_sun_s.o:       $(SECRETBASE)/i86pc/io/wysemp/wyse_sun_s.s
+	$(COMPILE.s) -o $@ $(SECRETBASE)/i86pc/io/wysemp/wyse_sun_s.s
+
+
+#
+#	Lint `object' build rules
+#
+#	The following are alphabetized by source file path. Please maintain
+# this ordering.
+#
+# Device driver kernel modules
+#
+$(LINTS_DIR)/csa.ln:            $(UTSBASE)/i86pc/io/dktp/controller/csa/csa.c
+	@($(LHEAD) $(LINT.c) \
+		$(UTSBASE)/i86pc/io/dktp/controller/csa/csa.c $(LTAIL))
+
+$(LINTS_DIR)/csa_common.ln: \
+		$(UTSBASE)/i86pc/io/dktp/controller/csa/csa_common.c
+	@($(LHEAD) $(LINT.c) \
+		$(UTSBASE)/i86pc/io/dktp/controller/csa/csa_common.c $(LTAIL))
+
+$(LINTS_DIR)/csa_common_eisa.ln: \
+		$(UTSBASE)/i86pc/io/dktp/controller/csa/csa_common_eisa.c
+	@($(LHEAD) $(LINT.c) \
+		$(UTSBASE)/i86pc/io/dktp/controller/csa/csa_common_eisa.c $(LTAIL))
+
+$(LINTS_DIR)/csa_impl.ln: \
+		$(UTSBASE)/i86pc/io/dktp/controller/csa/csa_impl.c
+	@($(LHEAD) $(LINT.c) \
+		$(UTSBASE)/i86pc/io/dktp/controller/csa/csa_impl.c $(LTAIL))
+
+$(LINTS_DIR)/csa_queue.ln: \
+		$(UTSBASE)/i86pc/io/dktp/controller/csa/csa_queue.c
+	@($(LHEAD) $(LINT.c) \
+		$(UTSBASE)/i86pc/io/dktp/controller/csa/csa_queue.c $(LTAIL))
+
+$(LINTS_DIR)/dsa.ln:            $(UTSBASE)/i86pc/io/dktp/controller/dsa.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/controller/dsa.c $(LTAIL))
+
+$(LINTS_DIR)/aha.ln:		$(UTSBASE)/i86pc/io/dktp/hba/aha.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/aha.c $(LTAIL))
+
+$(LINTS_DIR)/aic.ln:		$(UTSBASE)/i86pc/io/dktp/hba/aic/aic.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/aic/aic.c $(LTAIL))
+
+$(LINTS_DIR)/him6x60.ln:	$(UTSBASE)/i86pc/io/dktp/hba/aic/him6x60.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/aic/him6x60.c $(LTAIL))
+
+$(LINTS_DIR)/blogic.ln:		$(UTSBASE)/i86pc/io/dktp/hba/blogic/blogic.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/blogic/blogic.c $(LTAIL))
+
+$(LINTS_DIR)/blogic_hba.ln:     $(UTSBASE)/i86pc/io/dktp/hba/blogic/blogic_hba.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/blogic/blogic_hba.c $(LTAIL))
+
+$(LINTS_DIR)/corv.ln:           $(UTSBASE)/i86pc/io/dktp/hba/corvette/corv.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/corvette/corv.c
+
+$(LINTS_DIR)/corv_hba.ln:       $(UTSBASE)/i86pc/io/dktp/hba/corvette/corv_hba.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/corvette/corv_hba.c
+
+$(LINTS_DIR)/delivery.ln:       $(UTSBASE)/i86pc/io/dktp/hba/corvette/delivery.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/corvette/delivery.c
+
+$(LINTS_DIR)/xmca.ln:           $(UTSBASE)/i86pc/io/dktp/hba/corvette/xmca.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/corvette/xmca.c
+
+$(LINTS_DIR)/dpt.ln:		$(UTSBASE)/i86pc/io/dktp/hba/dpt/dpt.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/dpt/dpt.c $(LTAIL))
+
+$(LINTS_DIR)/dpt_eisa.ln:	$(UTSBASE)/i86pc/io/dktp/hba/dpt/dpt_eisa.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/dpt/dpt_eisa.c $(LTAIL))
+
+$(LINTS_DIR)/dpt_send.ln:	$(UTSBASE)/i86pc/io/dktp/hba/dpt/dpt_send.s
+	@($(LHEAD) $(LINT.s) $(UTSBASE)/i86pc/io/dktp/hba/dpt/dpt_send.s $(LTAIL))
+
+$(LINTS_DIR)/dptghd.ln:		$(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd.c $(LTAIL))
+
+$(LINTS_DIR)/dptghd_debug.ln:	$(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_debug.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_debug.c $(LTAIL))
+
+$(LINTS_DIR)/dptghd_queue.ln:	$(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_queue.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_queue.c $(LTAIL))
+
+$(LINTS_DIR)/dptghd_scsa.ln:	$(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_scsa.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_scsa.c $(LTAIL))
+
+$(LINTS_DIR)/dptghd_scsi.ln:	$(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_scsi.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_scsi.c $(LTAIL))
+
+$(LINTS_DIR)/dptghd_timer.ln:	$(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_timer.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/dpt/dptghd_timer.c $(LTAIL))
+
+$(LINTS_DIR)/eha.ln:		$(UTSBASE)/i86pc/io/dktp/hba/eha.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/eha.c $(LTAIL))
+
+$(LINTS_DIR)/esa.ln:		$(UTSBASE)/i86pc/io/dktp/hba/esa.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/esa.c $(LTAIL))
+
+$(LINTS_DIR)/hba.ln:            $(UTSBASE)/i86pc/io/dktp/hba/hba.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/hba.c $(LTAIL))
+
+$(LINTS_DIR)/him.ln:		$(UTSBASE)/i86pc/io/dktp/hba/him.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/him.c $(LTAIL))
+
+$(LINTS_DIR)/him_init.ln:	$(UTSBASE)/i86pc/io/dktp/hba/him_init.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/him_init.c $(LTAIL))
+
+
+$(LINTS_DIR)/chs.ln: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs.c  
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/chs/chs.c $(LTAIL))
+
+$(LINTS_DIR)/chs_hba.ln: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_hba.c  
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_hba.c $(LTAIL))
+
+$(LINTS_DIR)/chs_busops.ln: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_busops.c  
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_busops.c $(LTAIL))
+
+$(LINTS_DIR)/chs_conf.ln: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_conf.c  
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_conf.c $(LTAIL))
+
+$(LINTS_DIR)/chs_dac.ln: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_dac.c  
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_dac.c $(LTAIL))
+
+$(LINTS_DIR)/chs_devops.ln: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_devops.c  
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_devops.c $(LTAIL))
+
+
+$(LINTS_DIR)/chs_interrupt.ln: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_interrupt.c  
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_interrupt.c $(LTAIL))
+
+$(LINTS_DIR)/chs_intr.ln: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_intr.c  
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_intr.c $(LTAIL))
+
+$(LINTS_DIR)/chs_raid.ln: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_raid.c  
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_raid.c $(LTAIL))
+
+$(LINTS_DIR)/chs_transport.ln: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_transport.c  
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_transport.c $(LTAIL))
+
+$(LINTS_DIR)/chs_viperconf.ln: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_viperconf.c  
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_viperconf.c $(LTAIL))
+
+$(LINTS_DIR)/chs_queue.ln: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_queue.c  
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_queue.c $(LTAIL))
+
+$(LINTS_DIR)/chs_viper.ln: $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_viper.c  
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/chs/chs_viper.c $(LTAIL))
+
+
+$(LINTS_DIR)/iss.ln:            $(SECRETBASE)/i86pc/io/dktp/hba/iss/iss.c
+	@($(LHEAD) $(SECRETLINT.c) $(SECRETBASE)/i86pc/io/dktp/hba/iss/iss.c $(LTAIL))
+
+$(LINTS_DIR)/iss_hba.ln:	$(SECRETBASE)/i86pc/io/dktp/hba/iss/iss_hba.c
+	@($(LHEAD) $(LINT.c) $(SECRETBASE)/i86pc/io/dktp/hba/iss/iss_hba.c $(LTAIL))
+
+$(LINTS_DIR)/mcis.ln:		$(UTSBASE)/i86pc/io/dktp/hba/mcis.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/mcis.c $(LTAIL))
+
+$(LINTS_DIR)/dac960.ln:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/dac960.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/mlx/dac960.c $(LTAIL))
+
+$(LINTS_DIR)/dac960p.ln:	$(UTSBASE)/i86pc/io/dktp/hba/mlx/dac960p.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/mlx/dac960p.c $(LTAIL))
+
+$(LINTS_DIR)/dmc960.ln:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/dmc960.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/mlx/dmc960.c $(LTAIL))
+
+$(LINTS_DIR)/mlx.ln:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx.c $(LTAIL))
+
+$(LINTS_DIR)/mlx_busops.ln:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_busops.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_busops.c $(LTAIL))
+
+$(LINTS_DIR)/mlx_conf.ln:	$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_conf.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_conf.c $(LTAIL))
+
+$(LINTS_DIR)/mlx_dac.ln:	$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_dac.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_dac.c $(LTAIL))
+
+$(LINTS_DIR)/mlx_devops.ln:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_devops.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_devops.c $(LTAIL))
+
+$(LINTS_DIR)/mlx_eisa.ln:	$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_eisa.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_eisa.c $(LTAIL))
+
+$(LINTS_DIR)/mlx_interrupt.ln:	$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_interrupt.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_interrupt.c $(LTAIL))
+
+$(LINTS_DIR)/mlx_intr.ln:	$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_intr.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_intr.c $(LTAIL))
+
+$(LINTS_DIR)/mlx_raid.ln:	$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_raid.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_raid.c $(LTAIL))
+
+$(LINTS_DIR)/mlx_transport.ln:	$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_transport.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_transport.c $(LTAIL))
+
+$(LINTS_DIR)/mlx_xmca.ln:		$(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_xmca.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/mlx/mlx_xmca.c $(LTAIL))
+
+$(LINTS_DIR)/pcscsi.ln:		$(UTSBASE)/i86pc/io/dktp/hba/pcscsi/pcscsi.c
+	@($(LHEAD) $(LINT.c) \
+		$(UTSBASE)/i86pc/io/dktp/hba/pcscsi/pcscsi.c $(LTAIL))
+
+$(LINTS_DIR)/pcscsi_dma_impl.ln: \
+		$(UTSBASE)/i86pc/io/dktp/hba/pcscsi/pcscsi_dma_impl.c
+	@($(LHEAD) $(LINT.c) \
+		$(UTSBASE)/i86pc/io/dktp/hba/pcscsi/pcscsi_dma_impl.c $(LTAIL))
+
+$(LINTS_DIR)/portability.ln: \
+		$(UTSBASE)/i86pc/io/dktp/hba/pcscsi/portability.c
+	@($(LHEAD) $(LINT.c) \
+		$(UTSBASE)/i86pc/io/dktp/hba/pcscsi/portability.c $(LTAIL))
+
+$(LINTS_DIR)/ggmini_solaris.ln: \
+		$(UTSBASE)/i86pc/io/dktp/hba/pcscsi/ggmini_solaris.c
+	@($(LHEAD) $(LINT.c) \
+		$(UTSBASE)/i86pc/io/dktp/hba/pcscsi/ggmini_solaris.c $(LTAIL))
+
+$(LINTS_DIR)/ggmini.ln: \
+		$(UTSBASE)/i86pc/io/dktp/hba/pcscsi/ggmini.c
+	@($(LHEAD) $(LINT.c) \
+		$(UTSBASE)/i86pc/io/dktp/hba/pcscsi/ggmini.c $(LTAIL))
+
+$(LINTS_DIR)/trantor.ln:	$(UTSBASE)/i86pc/io/dktp/hba/trantor/trantor.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dktp/hba/trantor/trantor.c $(LTAIL))
+
+$(LINTS_DIR)/dnet.ln:		$(UTSBASE)/i86pc/io/dnet.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/dnet.c $(LTAIL))
+
+$(LINTS_DIR)/iprb.ln:		$(UTSBASE)/i86pc/io/iprb/iprb.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/iprb/iprb.c $(LTAIL))
+
+$(LINTS_DIR)/eepro.ln:		$(UTSBASE)/i86pc/io/eepro/eepro.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/eepro/eepro.c $(LTAIL))
+
+$(LINTS_DIR)/el.ln:		$(UTSBASE)/i86pc/io/el.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/el.c $(LTAIL))
+
+$(LINTS_DIR)/elink.ln:          $(UTSBASE)/i86pc/io/elink.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/elink.c $(LTAIL))
+
+$(LINTS_DIR)/elx.ln:		$(UTSBASE)/i86pc/io/elx/elx.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/elx/elx.c $(LTAIL))
+
+$(LINTS_DIR)/elx_media.ln:	$(UTSBASE)/i86pc/io/elx/elx_media.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/elx/elx_media.c $(LTAIL))
+
+$(LINTS_DIR)/elx_pci.ln:	$(UTSBASE)/i86pc/io/elx/elx_pci.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/elx/elx_pci.c $(LTAIL))
+
+$(LINTS_DIR)/elx_xfr.ln:	$(UTSBASE)/i86pc/io/elx/elx_xfr.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/elx/elx_xfr.c $(LTAIL))
+
+$(LINTS_DIR)/iee.ln:            $(UTSBASE)/i86pc/io/iee.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/iee.c $(LTAIL))
+
+$(LINTS_DIR)/ieef.ln:           $(UTSBASE)/i86pc/io/ieef.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/ieef.c $(LTAIL))
+
+$(LINTS_DIR)/chanmux.ln:        $(UTSBASE)/i86pc/io/kd/chanmux.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/chanmux.c $(LTAIL))
+
+$(LINTS_DIR)/evc.ln:		$(UTSBASE)/i86pc/io/kd/kd/evc.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/kd/evc.c $(LTAIL))
+
+$(LINTS_DIR)/evga.ln:		$(UTSBASE)/i86pc/io/kd/kd/evga.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/kd/evga.c $(LTAIL))
+
+$(LINTS_DIR)/i8042.ln:		$(UTSBASE)/i86pc/io/kd/kd/i8042.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/kd/i8042.c $(LTAIL))
+
+$(LINTS_DIR)/kdkb.ln:		$(UTSBASE)/i86pc/io/kd/kd/kdkb.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/kd/kdkb.c $(LTAIL))
+
+$(LINTS_DIR)/kbmode.ln:		$(UTSBASE)/i86pc/io/kd/kd/kbmode.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/kd/kbmode.c $(LTAIL))
+
+$(LINTS_DIR)/kdspace.ln:        $(UTSBASE)/i86pc/io/kd/kd/kdspace.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/kd/kdspace.c $(LTAIL))
+
+$(LINTS_DIR)/kdstr.ln:		$(UTSBASE)/i86pc/io/kd/kd/kdstr.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/kd/kdstr.c $(LTAIL))
+
+$(LINTS_DIR)/kdv.ln:		$(UTSBASE)/i86pc/io/kd/kd/kdv.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/kd/kdv.c $(LTAIL))
+
+$(LINTS_DIR)/kdvt.ln:		$(UTSBASE)/i86pc/io/kd/kd/kdvt.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/kd/kdvt.c $(LTAIL))
+
+$(LINTS_DIR)/vdc.ln:		$(UTSBASE)/i86pc/io/kd/kd/vdc.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/kd/vdc.c $(LTAIL))
+
+$(LINTS_DIR)/vtables.ln:        $(UTSBASE)/i86pc/io/kd/kd/vtables.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/kd/vtables.c $(LTAIL))
+
+$(LINTS_DIR)/kdvm.ln:		$(UTSBASE)/i86pc/io/kd/kdvm/kdvm.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/kdvm/kdvm.c $(LTAIL))
+
+$(LINTS_DIR)/kdvm_cgi.ln:       $(UTSBASE)/i86pc/io/kd/kdvm/kdvm_cgi.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/kdvm/kdvm_cgi.c $(LTAIL))
+
+$(LINTS_DIR)/kdvmspace.ln:      $(UTSBASE)/i86pc/io/kd/kdvm/kdvmspace.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/kdvm/kdvmspace.c $(LTAIL))
+
+$(LINTS_DIR)/iosubr.ln:		$(UTSBASE)/i86pc/io/kd/iosubr.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/iosubr.c $(LTAIL))
+
+$(LINTS_DIR)/kdfakeit.ln:       $(UTSBASE)/i86pc/io/kd/kdfakeit.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/kdfakeit.c $(LTAIL))
+
+$(LINTS_DIR)/ws_8042.ln:        $(UTSBASE)/i86pc/io/kd/ws/ws_8042.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/ws/ws_8042.c $(LTAIL))
+
+$(LINTS_DIR)/ws_ansi.ln:        $(UTSBASE)/i86pc/io/kd/ws/ws_ansi.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/ws/ws_ansi.c $(LTAIL))
+
+$(LINTS_DIR)/ws_cmap.ln:        $(UTSBASE)/i86pc/io/kd/ws/ws_cmap.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/ws/ws_cmap.c $(LTAIL))
+
+$(LINTS_DIR)/ws_subr.ln:        $(UTSBASE)/i86pc/io/kd/ws/ws_subr.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/ws/ws_subr.c $(LTAIL))
+
+$(LINTS_DIR)/ws_tables.ln:      $(UTSBASE)/i86pc/io/kd/ws/ws_tables.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/ws/ws_tables.c $(LTAIL))
+
+$(LINTS_DIR)/ws_tcl.ln:		$(UTSBASE)/i86pc/io/kd/ws/ws_tcl.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/ws/ws_tcl.c $(LTAIL))
+
+$(LINTS_DIR)/wsspace.ln:        $(UTSBASE)/i86pc/io/kd/ws/wsspace.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kd/ws/wsspace.c $(LTAIL))
+
+$(LINTS_DIR)/kdmouse.ln:	$(UTSBASE)/i86pc/io/kdmouse.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/kdmouse.c $(LTAIL))
+
+$(LINTS_DIR)/logi.ln:           $(UTSBASE)/i86pc/io/logi.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/logi.c $(LTAIL))
+
+$(LINTS_DIR)/mscsi.ln:		$(UTSBASE)/i86pc/io/mscsi.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/mscsi.c $(LTAIL))
+
+$(LINTS_DIR)/mse.ln:            $(UTSBASE)/i86pc/io/mse.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/mse.c $(LTAIL))
+
+$(LINTS_DIR)/msm.ln:            $(UTSBASE)/i86pc/io/msm.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/msm.c $(LTAIL))
+
+$(LINTS_DIR)/nee.ln:            $(UTSBASE)/i86pc/io/nee/nee.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/nee/nee.c $(LTAIL))
+
+$(LINTS_DIR)/neefcode.ln:       $(UTSBASE)/i86pc/io/nee/neefcode.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/nee/neefcode.c $(LTAIL))
+
+$(LINTS_DIR)/nei.ln:            $(UTSBASE)/i86pc/io/nei/nei.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/nei/nei.c $(LTAIL))
+
+$(LINTS_DIR)/nfe.ln:		$(UTSBASE)/i86pc/io/nfe/nfe.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/nfe/nfe.c $(LTAIL))
+
+$(LINTS_DIR)/epp.ln:            $(UTSBASE)/i86pc/io/pe/host/ppc/epp.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/pe/host/ppc/epp.c $(LTAIL))
+
+$(LINTS_DIR)/pp.ln:             $(UTSBASE)/i86pc/io/pe/host/ppc/pp.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/pe/host/ppc/pp.c $(LTAIL))
+
+$(LINTS_DIR)/unixglue.ln:       $(UTSBASE)/i86pc/io/pe/host/ppc/unixglue.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/pe/host/ppc/unixglue.c $(LTAIL))
+
+$(LINTS_DIR)/pe2.ln:            $(UTSBASE)/i86pc/io/pe/media/pe2/pe2.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/pe/media/pe2/pe2.c $(LTAIL))
+
+$(LINTS_DIR)/pe3.ln:            $(UTSBASE)/i86pc/io/pe/media/pe3/pe3.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/pe/media/pe3/pe3.c $(LTAIL))
+
+$(LINTS_DIR)/pe.ln:             $(UTSBASE)/i86pc/io/pe/pe/pe.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/pe/pe/pe.c $(LTAIL))
+
+$(LINTS_DIR)/scpa.ln:           $(UTSBASE)/i86pc/io/pe/scpa/scpa.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/pe/scpa/scpa.c $(LTAIL))
+
+$(LINTS_DIR)/riles.ln:          $(UTSBASE)/i86pc/io/riles/riles.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/riles/riles.c $(LTAIL))
+
+$(LINTS_DIR)/sbpro.ln:          $(UTSBASE)/i86pc/io/sbpro.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/sbpro.c $(LTAIL))
+
+$(LINTS_DIR)/board_id.ln:       $(UTSBASE)/i86pc/io/smc/board_id.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/smc/board_id.c $(LTAIL))
+
+$(LINTS_DIR)/smc.ln:		$(UTSBASE)/i86pc/io/smc/smc.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/smc/smc.c $(LTAIL))
+
+$(LINTS_DIR)/smcbcopy.ln:	$(UTSBASE)/i86pc/io/smc/smcbcopy.s
+	@($(LHEAD) $(LINT.s) $(UTSBASE)/i86pc/io/smc/smcbcopy.s $(LTAIL))
+
+$(LINTS_DIR)/smcddi.ln:		$(UTSBASE)/i86pc/io/smc/smcddi.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/smc/smcddi.c $(LTAIL))
+
+$(LINTS_DIR)/smcspace.ln:       $(UTSBASE)/i86pc/io/smc/smcspace.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/smc/smcspace.c $(LTAIL))
+
+$(LINTS_DIR)/smce.ln:		$(UTSBASE)/i86pc/io/smce/smce.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/smce/smce.c $(LTAIL))
+
+$(LINTS_DIR)/smce_lm.ln:	$(UTSBASE)/i86pc/io/smce/smce_lm.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/smce/smce_lm.c $(LTAIL))
+
+$(LINTS_DIR)/8232.ln:		$(UTSBASE)/i86pc/io/smceu/8232.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/smceu/8232.c $(LTAIL))
+
+$(LINTS_DIR)/lebm.ln:		$(UTSBASE)/i86pc/io/smceu/lebm.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/smceu/lebm.c $(LTAIL))
+
+$(LINTS_DIR)/smceu.ln:		$(UTSBASE)/i86pc/io/smceu/smceu.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/smceu/smceu.c $(LTAIL))
+
+$(LINTS_DIR)/smceucfg.ln:	$(UTSBASE)/i86pc/io/smceu/smceucfg.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/smceu/smceucfg.c $(LTAIL))
+
+$(LINTS_DIR)/9232.ln:		$(UTSBASE)/i86pc/io/smcf/9232.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/smcf/9232.c $(LTAIL))
+
+$(LINTS_DIR)/lft9232.ln:	$(UTSBASE)/i86pc/io/smcf/lft9232.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/smcf/lft9232.c $(LTAIL))
+
+$(LINTS_DIR)/lft_cfg.ln:	$(UTSBASE)/i86pc/io/smcf/lft_cfg.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/smcf/lft_cfg.c $(LTAIL))
+
+$(LINTS_DIR)/smcf.ln:		$(UTSBASE)/i86pc/io/smcf/smcf.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/smcf/smcf.c $(LTAIL))
+
+$(LINTS_DIR)/tiqmouse.ln:	$(UTSBASE)/i86pc/io/tiqmouse.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/tiqmouse.c $(LTAIL))
+
+$(LINTS_DIR)/tr.ln:		$(UTSBASE)/i86pc/io/tr/tr.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/tr/tr.c $(LTAIL))
+
+$(LINTS_DIR)/tr_sr.ln:		$(UTSBASE)/i86pc/io/tr/tr_sr.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/tr/tr_sr.c $(LTAIL))
+
+
+# Graphics device kernel driver modules
+#
+$(LINTS_DIR)/p9000.ln:          $(UTSBASE)/i86pc/io/p9000/p9000.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/p9000/p9000.c $(LTAIL))
+
+$(LINTS_DIR)/p9100.ln:          $(UTSBASE)/i86pc/io/p9100/p9100.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/p9100/p9100.c $(LTAIL))
+
+$(LINTS_DIR)/xsvc.ln:           $(SECRETBASE)/i86pc/io/xsvc/xsvc.c
+	@($(LHEAD) $(LINT.c) $(SECRETBASE)/i86pc/io/xsvc/xsvc.c $(LTAIL))
+
+
+# Driver-related kernel modules
+#
+$(LINTS_DIR)/ansi.ln:           $(UTSBASE)/i86pc/io/ansi.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/ansi.c $(LTAIL))
+
+$(LINTS_DIR)/char.ln:           $(UTSBASE)/i86pc/io/char.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/char.c $(LTAIL))
+
+$(LINTS_DIR)/emap.ln:		$(UTSBASE)/i86pc/io/emap.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/emap.c $(LTAIL))
+
+
+# Streams kernel modules
+#
+$(LINTS_DIR)/vuidkd.ln:		$(UTSBASE)/i86pc/io/vuidkd.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/vuidkd.c $(LTAIL))
+
+$(LINTS_DIR)/vuid2ps2.ln:        $(UTSBASE)/i86pc/io/vuidmice/vuid2ps2.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/vuidmice/vuid2ps2.c $(LTAIL))
+
+$(LINTS_DIR)/vuid3ps2.ln:        $(UTSBASE)/i86pc/io/vuidmice/vuid3ps2.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/i86pc/io/vuidmice/vuid3ps2.c $(LTAIL))
+
+
+# MP kernel mach modules
+#
+$(LINTS_DIR)/apic_c.ln:           $(SECRETBASE)/i86pc/io/apic/apic.c
+	@($(LHEAD) $(LINT.c) $(SECRETBASE)/i86pc/io/apic/apic.c $(LTAIL))
+
+$(LINTS_DIR)/apic_s.ln:           $(SECRETBASE)/i86pc/io/apic/apic.s
+	@($(LHEAD) $(LINT.s) $(SECRETBASE)/i86pc/io/apic/apic.s $(LTAIL))
+
+$(LINTS_DIR)/ast.ln:            $(SECRETBASE)/i86pc/io/ast/ast.c
+	@($(LHEAD) $(LINT.c) $(SECRETBASE)/i86pc/io/ast/ast.c $(LTAIL))
+
+$(LINTS_DIR)/compaq.ln:         $(SECRETBASE)/i86pc/io/compaq/compaq.c
+	@($(LHEAD) $(SECRETLINT.c) $(SECRETBASE)/i86pc/io/compaq/compaq.c $(LTAIL))
+
+$(LINTS_DIR)/compaq_ml.ln:         $(SECRETBASE)/i86pc/io/compaq/compaq_ml.s
+	@($(LHEAD) $(LINT.s) $(SECRETBASE)/i86pc/io/compaq/compaq_ml.s $(LTAIL))
+
+$(LINTS_DIR)/cbdriver.ln:	$(SECRETBASE)/i86pc/io/corollary/cbdriver.c
+	@($(LHEAD) $(LINT.c) $(SECRETBASE)/i86pc/io/corollary/cbdriver.c $(LTAIL))
+
+$(LINTS_DIR)/cbus.ln:           $(SECRETBASE)/i86pc/io/corollary/cbus.c
+	@($(LHEAD) $(LINT.c) $(SECRETBASE)/i86pc/io/corollary/cbus.c $(LTAIL))
+
+$(LINTS_DIR)/cbus1.ln:          $(SECRETBASE)/i86pc/io/corollary/cbus1.c
+	@($(LHEAD) $(LINT.c) $(SECRETBASE)/i86pc/io/corollary/cbus1.c $(LTAIL))
+
+
+$(LINTS_DIR)/cbus1bt.ln:	$(SECRETBASE)/i86pc/io/corollary/cbus1bt.s
+	@($(LHEAD) $(LINT.s) $(SECRETBASE)/i86pc/io/corollary/cbus1bt.s $(LTAIL))
+
+$(LINTS_DIR)/cbus1pic.ln:	$(SECRETBASE)/i86pc/io/corollary/cbus1pic.s
+	@($(LHEAD) $(LINT.s) $(SECRETBASE)/i86pc/io/corollary/cbus1pic.s $(LTAIL))
+
+$(LINTS_DIR)/cbus2.ln:          $(SECRETBASE)/i86pc/io/corollary/cbus2.c
+	@($(LHEAD) $(LINT.c) $(SECRETBASE)/i86pc/io/corollary/cbus2.c $(LTAIL))
+
+$(LINTS_DIR)/cbus2ecc.ln:	$(SECRETBASE)/i86pc/io/corollary/cbus2ecc.c
+	@($(LHEAD) $(LINT.c) $(SECRETBASE)/i86pc/io/corollary/cbus2ecc.c $(LTAIL))
+
+$(LINTS_DIR)/cbus2pic.ln:	$(SECRETBASE)/i86pc/io/corollary/cbus2pic.s
+	@($(LHEAD) $(LINT.s) $(SECRETBASE)/i86pc/io/corollary/cbus2pic.s $(LTAIL))
+
+$(LINTS_DIR)/cbus_sw.ln:	$(SECRETBASE)/i86pc/io/corollary/cbus_sw.c
+	@($(LHEAD) $(LINT.c) $(SECRETBASE)/i86pc/io/corollary/cbus_sw.c $(LTAIL))
+
+$(LINTS_DIR)/cbusmem.ln:	$(SECRETBASE)/i86pc/io/corollary/cbusmem.c
+	@($(LHEAD) $(LINT.c) $(SECRETBASE)/i86pc/io/corollary/cbusmem.c $(LTAIL))
+
+$(LINTS_DIR)/cbusmisc.ln:	$(SECRETBASE)/i86pc/io/corollary/cbusmisc.s
+	@($(LHEAD) $(LINT.s) $(SECRETBASE)/i86pc/io/corollary/cbusmisc.s $(LTAIL))
+
+$(LINTS_DIR)/psm.ln:            $(SECRETBASE)/i86pc/io/corollary/psm.c
+	@($(LHEAD) $(LINT.c) $(SECRETBASE)/i86pc/io/corollary/psm.c $(LTAIL))
+
+$(LINTS_DIR)/syspro.ln:         $(SECRETBASE)/i86pc/io/syspro/syspro.c
+	@($(LHEAD) $(SECRETLINT.c) $(SECRETBASE)/i86pc/io/syspro/syspro.c $(LTAIL))
+
+$(LINTS_DIR)/imsattn.ln:	$(SECRETBASE)/i86pc/io/tpf/imsattn.c
+	@($(LHEAD) $(SECRETLINT.c) $(SECRETBASE)/i86pc/io/tpf/imsattn.c $(LTAIL))
+
+$(LINTS_DIR)/lock_add_hrt.ln:	$(SECRETBASE)/i86pc/io/tpf/lock_add_hrt.s
+	@($(LHEAD) $(LINT.s) $(SECRETBASE)/i86pc/io/tpf/lock_add_hrt.s $(LTAIL))
+
+$(LINTS_DIR)/tpf.ln:		$(SECRETBASE)/i86pc/io/tpf/tpf.c
+	@($(LHEAD) $(SECRETLINT.c) $(SECRETBASE)/i86pc/io/tpf/tpf.c $(LTAIL))
+
+$(LINTS_DIR)/calibrate.ln:	$(SECRETBASE)/i86pc/io/tpf/tpf_apic.s
+	@($(LHEAD) $(LINT.s) $(SECRETBASE)/i86pc/io/tpf/tpf_apic.s $(LTAIL))
+
+$(LINTS_DIR)/tpfwbinvd.ln:	$(SECRETBASE)/i86pc/io/tpf/tpfwbinvd.s
+	@($(LHEAD) $(LINT.s) $(SECRETBASE)/i86pc/io/tpf/tpfwbinvd.s $(LTAIL))
+
+$(LINTS_DIR)/wyse_sun_c.ln:	$(SECRETBASE)/i86pc/io/wysemp/wyse_sun_c.c
+	@($(LHEAD) $(LINT.c) $(SECRETBASE)/i86pc/io/wysemp/wyse_sun_c.c $(LTAIL))
+
+$(LINTS_DIR)/wyse_sun_s.ln:	$(SECRETBASE)/i86pc/io/wysemp/wyse_sun_s.s
+	@($(LHEAD) $(LINT.s) $(SECRETBASE)/i86pc/io/wysemp/wyse_sun_s.s $(LTAIL))

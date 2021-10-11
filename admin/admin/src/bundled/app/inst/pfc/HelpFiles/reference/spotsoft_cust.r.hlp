@@ -1,0 +1,72 @@
+---- About This Screen -----------------------------
+
+A package is a functional group of files and
+directories that form a software application.
+A cluster is a group of software packages.
+
+For the initial option, the software in the software
+group you selected is automatically selected to be
+installed. For the upgrade option, the existing
+software on the system is selected to be upgraded.
+
+In both cases, you can add or delete the software
+to be installed by selecting or deselecting the
+clusters and packages on this screen.
+
+---- Legend ----------------------------------------
+
+>    Non-expanded cluster
+V    Expanded cluster
+
+[ ]   Unselected cluster or package
+[X]   Selected cluster or package
+[/]   Partially selected cluster
+[!]   Required cluster or package
+
+---- Using This Screen -----------------------------
+
+> To expand a cluster:
+  Use the arrow keys to move the highlight bar over
+  any > symbol and press Return.
+
+> To contract a cluster: 
+  Use the arrow keys to move the highlight bar over
+  any V symbol and press Return.
+
+> To select or deselect a cluster or package: 
+  Use the arrow keys to move the highlight bar over
+  any [ ], [X], [/] symbols and press Return.
+
+> To view cluster or package information: 
+  Use the arrow keys to move the highlight bar over
+  the cluster or package name and press Return.
+
+> To scroll through the list of clusters and 
+  packages: 
+  Use the up/down arrow keys to move through the 
+  list. 
+
+> To select all packages in a partially-selected 
+  cluster:
+  Use the arrow keys to move the highlight bar over
+  the cluster and press Return
+
+---- Required Clusters and Packages ----------------
+     
+While required clusters and packages cannot be 
+selected or deselected, they are displayed so you 
+can see the contents of the software group.
+
+---- To Reset a Software Group (Initial Only) ------
+
+> To discard changes you've made to a software
+  group and reset it to its original settings:
+
+  1. Press F2_OK on the Customize Software screen.
+
+  2. Select a different software group on the 
+     Software screen. 
+
+  3. Choose F2 (lose edits) on the warning message.
+
+  4. Reselect the original software group.

@@ -1,0 +1,28 @@
+Allocate Client Services Screen
+	allocate.r.hlp
+Customize Disks Screen
+	spotcustdisk.r.hlp
+Customize Disks By Cylinders Screen
+	spotcylinder.r.hlp
+Customize Software Screen
+	spotsoftcust.r.hlp
+File System Modifications Summary Screen
+	filechanges.r.hlp
+Glossary
+	glossary.r.hlp
+Mount Remote File Systems Screen
+	mount.r.hlp
+Navigation With Mouse and Keyboard
+	navigate.r.hlp
+Preserve Data Screen
+	spotpreserve.r.hlp
+Select Auto-layout Constraints Screen
+	constraints.r.hlp
+Select Disks Screen
+	spotseldisk.r.hlp
+Select Media for Backup Screen
+	selectmedia.r.hlp
+Select Root Location Screen
+	spotchangedisk.r.hlp
+Select Version to Upgrade Screen
+	version.r.hlp

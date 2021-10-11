@@ -1,0 +1,7 @@
+name="dpt"
+	__title__="DPT SmartCache Plus"
+
+	__category__="scsi"
+
+	__auto__="string,true"
+	;

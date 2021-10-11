@@ -1,0 +1,20 @@
+class="sysbus" name="kdmouse"
+	__wclass__="XINPUT"
+	__wname__="KDMOUSE-B"
+	__category__="pointer"
+	__title__="PS/2 style built in mouse"
+
+	ddxHandler="ddxSUNWx86mouse.so.1"
+	ddxInitFunc="ddxSUNWmouseProc"
+
+	buttons="var,__nbuttons__"
+	__nbuttons__="string,2,3"
+	strmod="vuid2ps2,vuid3ps2"
+
+	dev="/dev/kdmouse"
+	interrupts="numeric,1","numeric,12"
+	ignore-hardware-nodes="numeric,1"
+
+	__common__="name","class"
+	__driver__="interrupts","ignore-hardware-nodes"
+	;

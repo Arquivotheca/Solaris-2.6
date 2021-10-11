@@ -1,0 +1,143 @@
+From kiefner.abg@sni.de Wed Sep  7 06:06 PDT 1994
+Subject: SNI PCE-5S
+To: adler@pongo73.West.Sun.COM (Bruce Adler)
+Date: Wed, 7 Sep 94 14:46:13 MESZ
+From: Erhard Kiefner <kiefner.abg@sni.de>
+
+
+
+Siemens Nixdorf AG
+Erhard Weiss
+7. Sept. 94
+
+Dear Bruce Adler,
+
+I have received your mail.
+Here are some additional information and explanations.
+
+
+BIOS-Update
+-----------
+We have verified the reported problem that the PC hangs when trying to 
+save the old image of the BIOS.
+Our tests had the following results:
+- We were able to duplicate the problem when the BIOS image should be
+  stored on a harddisk (C:) and using the old BIOS.
+- The problem is fixed in newer versions of the BIOS.
+- The problem can be solved when the old BIOS image is stored on a 
+  diskette from which the MS-DOS is booted from.
+
+This is a step by step instruction how to save and update the BIOS:
+1. Format a MS-DOS system floppy disk and copy the file FLASHBIO.EXE to this
+   disk.
+   This is necessary because normally there is not enough storage capacity
+   available to store the old BIOS image on the Flash Update Diskette.
+2. Boot the PCE-5S and enter the System BIOS Setup 
+   (pressing the keys Control-ALT-Insert during startup)
+3. Disable Shadow-RAM (this is the second page of the setup)
+4. Exit the System BIOS Setup and save the configuration (F10, F5)
+5. Boot the system from the prepared MS-DOS system diskette
+6. Start the utility FLASHBIO.EXE to save the old image
+   FLASHBIO <file name>   (example: FLASHBIO bios100.omf)
+   This saves the old BIOS and the contents of the CMOS-RAM on the
+   diskette.
+
+7. Insert the Flash Update Diskette with the new BIOS and start the PC.
+   The PC will boot from diskette, start the AUTOEXEC.BAT-file and update the
+   system.
+   Messages and hints will be displayed on the screen during the update
+   process.
+  
+  
+IRQ-Setting
+-----------
+The behavior you have desribed is ok. But this needs some explanations.
+
+There is an ASIC ("CLASIC") and additional logic implemented in the PCE-5S 
+hardware that is used for redirecting the IRQ's.
+The ASIC and logic also alow to use shared or splitted interrupts.
+If the same IRQ is selected for each SCSI-controller, shared interrupts are
+used.
+The standard PC harddisk-controller IRQ14 is handled different from the 
+other available interrupts.
+This is due to the fact that some standard operating systems try to use there
+own drivers if they detect that IRQ14 is used. This causes problems because
+SCSI controllers are different that standard harddisk controllers.
+
+
+The following diagram shows how interrupt requests are redirected in the 
+PCE-5S:
+                         
+
+IRQ, SCSI 2                -------------------------         -------
+--------------------.-----| config register 09      |-------|   I   |
+base address        |     |                         | IRQ14 |   N   |
+800H                |      -------------------------  IRQ15 |   T   |
+                    |                                       |   E   |
+                    |      -------------------------        |   R   |
+                    .-----| config register 0A      |-------|   R   |
+                    |     |                         | IRQ10 |   U   |
+                    |      -------------------------  IRQ11 |   P   |
+                    |                                 IRQ15 |   T   |
+enable  -------     |                                       |   -   |
+-------| Logic |----                                        |   L   |
+   ----|       |                                            |   O   |
+  |     -------                                             |   G   |
+  |                                                         |   I   |
+  |                                                         |   C   |
+  |   IRQ, SCSI 1          -------------------------        |       |
+--.-----------------------| config register 0B      |-------|       |
+      base address        |                         | IRQ10 |       |
+      840H                 -------------------------  IRQ11  -------
+                                                      IRQ15
+
+
+The IRQ from SCSI controller 2 is connected to the config register 09H and 0AH.
+Config register 09H is the IDE config register and allows to route
+IRQ14 and IRQ15 as well to enable the inputs.
+Config register 0AH allows to root IRQ 10, 11, 15.
+Config register 0BH allows to root IRQ 10, 11, 15 but  n o t  IRQ14.
+
+Because we do not want to waste IRQ14 we are using a trick.
+
+If the user selects IRQ14 for SCSI controller 1, this interrupt is routed
+through config register 09H (Controller 1 only). SCSI Controller 2 is 
+disabled.
+If Controller 1 and 2 (CTRLR 1 / CTRLR 2) and IRQ14 and IRQ15 are selected the
+IRQ's are switched. For controller 2 IRQ14 is used, for controller 1 IRQ15 
+is used.
+This has no impact to the user.
+The above situation describes the situation you have found.
+This is only valid if the user uses IRQ14.
+Our default selection is
+  Controller 1 = IRQ11
+  Controller 2 = IRQ15
+
+If other combination of the IRQ's are used (IRQ10/IRQ11/IRQ15) the
+interrupts can be routed by the config register 0AH and 0BH and there 
+is no need for a switch.
+
+To handle that situation with the switched IRQ14 in your driver, I recommend
+to read the Peripheral Control2 register (offset 29H) in the CMOS RAM
+to get the info that IRQ14 is selected for Controller 1 and another
+interrupt request for Controller 2. 
+
+I hope that explaination helps to understand the situation with the IRQ's.
+
+I am looking forward hearing from you soon.
+
+Sincerely
+Erhard Weiss
+
+
+
+                                                 file: office\sunsoft\sun03.txt
+-- 
++---------------------------------------------------------------------------+
+| Erhard Kiefner, SNI BU PC E SW 1,  Siemens Nixdorf Informationssysteme AG |
+| E-Mail: kiefner.abg@sni.de         Buergermeister-Ulrich-Str. 100         |
+| uucp:   unido!nixpbe!kiefner.abg   D-86199 Augsburg                       |
+| Tel:    +49 821 804 3605                                                  |
+| Fax:    +49 821 804 2910                                                  |
++---------------------------------------------------------------------------+
+

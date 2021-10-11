@@ -1,0 +1,20 @@
+---- Description -----------------------------------
+
+     Specifies the primary network interface for
+     your system.
+
+     This information is requested if the software
+     detects multiple Ethernet cards or network
+     adapter cards on your system.  This screen
+     will be displayed if you're installing a
+     gateway from a CD-ROM.
+
+     In most cases, the correct choice is the
+     lowest numbered interface (for example, if the
+     choices are le0 and le1, the lowest is le0).
+     However, if you don't know, ask your system or
+     network administrator.
+
+     CAUTION: If you specify the incorrect primary
+              network interface, your system may not
+              be able to find a name service.

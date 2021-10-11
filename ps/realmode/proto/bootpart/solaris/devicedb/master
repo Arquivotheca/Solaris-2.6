@@ -1,0 +1,199 @@
+version 1.0
+#
+#ident "@(#)master   1.110   96/10/30 SMI"
+#
+# Device tree database
+#      - Records in this file can be in an arbitrary order.
+#      - Records are terminated by newlines, and fields are separated
+#        by any number of spaces and/or tabs.
+#      - Quotes can be used in any field to allow white space.
+#      - Other than comments (lines such as this beginning with '#")
+#        and the "Version" string no other tokens are understood.
+#
+# Database format:-
+#
+# <dev ids> <path> <dev type> <bus> <realmode dvr> <dev desc> <properties>
+#
+# Where:-
+#       dev ids         is a comma seperated list of unique device identifiers
+#
+#       path            is the /devices path component eg ata or pci1000,1
+#
+#       dev type        is the device type.  This field is only for printing
+#                       if the device is bootable and has a realmode driver.
+#			valid values are:
+#
+#			    com  ...  Serial ports
+# 			    mem  ...  Memory extender cards
+#			    mfc  ...  Multi-function card
+#			    msd  ...  Device controller (includes HBAs)
+#			    net  ...  Network devices
+#			    oth  ...  Miscellaneous (including sound cards)
+#			    ptr  ...  Mice, etc.
+#			    vid  ...  Video/graphics cards
+#			    prt  ...  Parallel ports
+#
+#       bus             bus type (eg all, isa, pnpisa, eisa, mca, pci, pcmcia)
+#
+#       realmode dvr    is the realmode driver for bootable devices,
+#                       otherwise "none".  If the name is prefixed with an
+#			an asterisk, the driver supports the LEGACYPROBE
+#			function only and cannot be installed as a bios
+#			extension.
+#
+#       dev desc        Freeform descriptive device text
+#
+#       properties      optional additional device properties of the form
+#                       name=value eg ipl=3. Properties are added to the
+#                       device tree node passed to the kernel.
+#
+#
+# ISA/EISA devices
+# id is the config file name (without leading "!" and trailing ".cfg")
+#
+PNPB002|CTL0031|ESS1681 sbpro oth all *sbpro.bef "Sound Blaster"
+PNPB02F joyst oth all *joyst.bef "Game port (Joy stick)"
+PNPB006 none oth all none "Audio MIDI interface (MPU401 UART)"
+ADP0000|ADP0001|ADP0002|ADP0400 eha msd all aha1740.bef "Adaptec 1740/1742 SCSI controller" $port=0-1F
+ALRB200 none oth eisa none "ALR math coprocessor"
+AST8250 none mem eisa none "AST Premmia GX Extended Memory Configuration"
+ATI4402 chanmux vid all none "ATI 68800 Mach 32 video"
+ICU1120|ICU1130|BUS4201|BUS4202 blogic msd all blogic.bef "BusLogic 32 Bit SCSI controller"
+CPQ6200 nfe net all nfe.bef "NetFlex-2 DualPort Ethernet" $port=C80-C8F
+CPQ6101 nfe net all nfe.bef "NetFlex-2 Ethernet and Token Ring" $port=C80-C8F
+CPQ4411|CPQ4410|CPQ4430|SNIAAC1 ncrs msd all ncrs.bef "Compaq 32-Bit Fast-SCSI-2 Controller"
+CPQ4020 csa msd all none "Compaq scsi array" $port=0-1F
+DPTA701|ICU00A1|ICU1331 dpt msd isa dpt.bef "DPT PM2011/9x ISA SCSI adapter"
+DPT2402|DPTA401|DPTA402|DPTA501|DPTA502 dpt msd eisa dpt.bef "DPT PM2012/9x EISA SCSI adapter" $port=C88-C8F
+DPTA410 dpt msd eisa dpt.bef "DPT PM2022/2122/3122/3222 EISA SCSI Adapter" $port=C88-C8F
+DPTA420 dpt msd eisa dpt.bef "DPT PM2042/2142 EISA SCSI adapter" $port=C88-C8F
+NEC0182 dpt msd eisa dpt.bef "NEC (DPT) SCSI Adapter" $port=C88-C8F
+PNP80F3|ICU00B0 el net all el.bef "3COM Etherlink II (3C503) Ethernet adapter"
+PNP80F6|TCM5070|ICU00C0 elink net all elink.bef "3COM Etherlink 16 (3C507) Ethernet adapter"
+ICU0180 sbpro oth all none "Sound Blaster Multi-Media Adapter"
+ICU0190 sbpro oth all none "Sound Blaster Pro"
+ICU01A0|ICU01A3 sbpro mfc all none "Sound Blaster 16ASP Multi-Media Adapter"
+ICU01A1 sbpro oth all none "Sound Blaster 16 Multi-Media Adapter"
+PNP0F15|ICU0210 logi ptr all *logi.bef "Logitech bus mouse" 
+PNP0F00|ICU0211 msm ptr all *msm.bef "Microsoft bus mouse"
+ICU0580 tmc msd all none "Future Domain TMC-850 SCSI controller"
+ICU05F0 usc msd all none "Ultrastor ULTRA14F SCSI Controller"
+ICU1100 aic msd all aic.bef "Adaptec 1522 SCSI controller"
+INT1000 iee net all iee.bef "Intel EtherExpress network card"
+INT1010|INT1060|UNB0019|UNB0048 ieef net all ieef.bef "Intel EtherExpress Flash network card" $port=0-1F
+INT0301 eepro net all eepro.bef "Intel EtherExpress PRO network adapter"
+ISAB703 aic msd all aic.bef "Iomega PC1600 SCSI Adapter Board"
+PNP80D6|ISA8712 nei net isa nei.bef "Novell NE2000 Ethernet Adapter"
+PNP0900|ISY0010 chanmux vid all none "VGA Compatible Display Adapter"
+PNP0500|PNP0501|ISY0020 asy com all *com.bef "Serial port"
+PNP0F03|PNP0F12|PNP0F1C|PNP0F13|PNP0F19|ISY0030 kdmouse ptr all *ps2ms.bef "PS/2 mouse"
+ISY0040|PNP0600 ata msd all ata.bef "IDE controller"
+ISY0050|PNP0700 fdc msd all *fdc.bef "Floppy disk controller"
+PNP0400|ISY0060 lp prt all *lpt.bef "Parallel port"
+SUN0010 p9000 vid all none "P9000 VLB VGA graphics adapter"
+SUN0020 p9100 vid all none "P9100 VLB VGA graphics adapter"
+PNP0902 chanmux vid all none "VGA w/ 8514/A compatible graphics adapter"
+ADP0100|ISY0200|ICU0091|ADP1540|ADP1542 aha msd all aha1540.bef "Adaptec 1540/1542 SCSI controller"
+MLX0070|MLX0071|MLX0072|MLX0073|MLX0074|MLX0075|MLX0076|MLX0077|MLX0078|MLX0079|MLX007A|MLX007B|MLX007C|MLX007D|MLX007E|MLX007F mlx msd all mlx.bef "Mylex DAC960 EISA Disk Array Controller" $port=0-1F
+PNP8004|NVL0701|ASU0500 nee net all nee.bef "Novell NE3200 Ethernet" $port=0-1F
+RII0102 riles net all riles.bef "Racal InterLan ES3210 Ethernet Controller" $port=0-1F
+PNP81C3|PNP81C4|PNP81C5|PNP81C6|PNP81C7|PNP812A|SMC8013|SMC8416|ICU1740 smc net all smc.bef "SMC Ethernet adapter"
+SMC0110 smce net all smce.bef "SMC Elite32 Ethernet adapter"
+SMC8010 smceu net all smceu.bef "SMC EtherCard Elite32C Ethernet adapter" $port=0-1F
+SMCA010 smcf net all smcf.bef "SMC Ether 10/100 Ethernet adapter" $port=0-1F
+ICU1751 elx net isa elx.bef "3Com 3C509 Etherlink"
+PNP80F7|TCM5090|TCM5091|TCM5092|TCM5093|TCM5094|TCM5095 elx net pnpisa elx.bef "3Com 3C509B Etherlink III"
+TCM5090|TCM5091|TCM5094|TCM5095|TCM5092|TCM5093|TCM5970 elx net eisa elx.bef "3Com 3C579 Ethernet"
+PNP80F4|TCM6790 tr net all tr.bef "3Com 3C678 Tokenlink III 16/4"
+TRI3101|TRI3102|TRI3103|TRI3301|TRI3302|TRI3303|TRI3801|TRI3901 iss msd all iss.bef "Tricord ISS or IIOP SCSI HBA" $port=C80-C8B $channels=0,1,2,3
+TRI1A01 none oth all none "CPU board"
+ICU1300 tr net all tr.bef "IBM Token-Ring 16/4 Adapter"
+WYS7901 none oth all none "Cpu board"
+WYS7D01 none mem all none "Memory board"
+ADP7770|ADP7771 esa msd all esa.bef "Adaptec 274x/284x SCSI controller" $port=C00-C1F $channels=0,1
+SUN0001 none oth all none "ISA Plug and play configuration ports"
+PNP8214 pe net all pe3.bef "Xircom Pocket Ethernet parallel port card"
+PNPA01E|PNPA01F trantor msd all trantor.bef "Trantor parallel port SCSI adapter"
+PNP8231 pcn net all pcn.bef "AMD PCnet-ISA 79C960/PCnet-32 79C965 Ethernet"
+PNP0F01 msm ptr all *com.bef "Microsoft serial mouse" mouse=mc
+PNP0302 kd key all *key.bef "System keyboard"
+SUNFFE1 bios oth all none "Used BIOS memory"
+SUNFFE2 motherboard oth all none "Motherboard"
+@@@0000 x x all *nop.bef "Null device"
+#
+# Micro-channel devices
+# id is the config file name (without leading character and trailing ".adf")
+#
+0708 aha msd mca aha1540.bef "Adaptec 1640 SCSI controller (Buslogic BT646)"
+0F1F aha msd mca aha1540.bef "Adaptec 1640 SCSI controller"
+61c8 smc net mca smc.bef "SMC 8013EP/A network adapter"
+61c9 smc net mca smc.bef "SMC 8013WP/A network adapter"
+627c elx net mca elx.bef "3Com 3C529 network adapter"
+627d elx net mca elx.bef "3Com 3C529-TP network adapter"
+62f7 elx net mca elx.bef "3Com 3C529-TP network adapter"
+6fc0 smc net mca smc.bef "WD8003E/A or WD8003ET/A network adapter"
+6fc1 smc net mca smc.bef "WD8003ST/A network adapter"
+6fc2 smc net mca smc.bef "WD8003W/A network adapter"
+80ec chanmux vid mca none "Matrox MGA display adapter"
+8efc corvette msd mca corvette.bef "IBM Micro Channel Corvette SCSI adapter"
+8eff mcis msd mca mcis.bef "IBM PS/2 SCSI adapter"
+8f82 mlx msd mca mlx.bef "Mylex DAC960 EISA Disk Array Controller (cheetah)"
+8fbb mlx msd mca mlx.bef "Mylex DAC960 EISA Disk Array Controller (passplay)"
+8fda chanmux vid mca none "XGA-2 display adapter"
+8fdb chanmux vid mca none "XGA-2 display adapter"
+90ee chanmux vid mca none "Micro Channel SVGA display adapter"
+917b chanmux vid mca none "Micro Channel SVGA display adapter"
+e000 tr net mca tr.bef "3Com Token Ring network adapter"
+e001 tr net mca tr.bef "3Com 3C629 Tokenlink III Token Ring network"
+eee7 asy com mca none "Serial port"
+efd4 smc net mca smc.bef "IBM ENA 13W network adapter"
+efd5 smc net mca smc.bef "IBM ENA 13E network adapter"
+effd chanmux vid mca none "IBM Micro Channel VGA display adapter"
+#
+# PCI devices
+# P1275 defined name format: pciVVVV,DDDD
+# where VVVV and DDDD are the vendor and device id fields from
+# the configuration space.
+# 
+# Only add entries for devices with befs.
+#
+pci1000,1 pci1000,1 msd pci ncrs.bef "Symbios Logic 53c810 PCI SCSI"
+pci1000,2 pci1000,2 msd pci ncrs.bef "Symbios Logic 53c820 PCI SCSI"
+pci1000,3 pci1000,3 msd pci ncrs.bef "Symbios Logic 53c825 PCI SCSI"
+pci1000,4 pci1000,4 msd pci ncrs.bef "Symbios Logic 53c815 PCI SCSI"
+pci1014,2e pci1014,2e msd pci chs.bef "IBM PC ServeRaid"
+pci1022,2000 pci1022,2000 net pci pcn.bef "AMD PCI 79C970 PCnet Ethernet"
+pci1022,2020 pci1022,2020 msd pci pcscsi.bef "AMD PCI 53C974 PC SCSI"
+pci1044,a400 pci1044,a400 msd pci dpt.bef "DPT PCI 2124/2144 SCSI"
+pci104b,1040 pci104b,1040 msd pci blogic.bef "Buslogic BT-946C PCI SCSI-II"
+pci1069,1 pci1069,1 msd pci mlx.bef "Mylex PCI DAC960P Wide SCSI w/RAID"
+pci10b7,5900 pci10b7,5900 net pci elx.bef "3Com 3C590 Ethernet 10bT"
+pci10b7,5950 pci10b7,5950 net pci elx.bef "3Com 3C595 Ethernet 100bTX"
+pci8086,1227 pci8086,1227 net pci ieef.bef "Intel 82256 EEpro100 PCI Ethernet"
+pci9004,7078 pci9004,7078 msd pci adp.bef "Adaptec AIC-7870 PCI SCSI"
+pci9004,7178 pci9004,7178 msd pci adp.bef "Adaptec AHA-2940/2940W PCI SCSI"
+pci9004,7278 pci9004,7278 msd pci adp.bef "Adaptec AHA-3940/3940W PCI SCSI"
+pci9004,7478 pci9004,7478 msd pci adp.bef "Adaptec AHA-2944W PCI Differential SCSI"
+pci9004,7578 pci9004,7578 msd pci adp.bef "Adaptec AHA-7875 PCI SCSI"
+pci9004,8078 pci9004,8078 msd pci adp.bef "Adaptec AIC-7880 PCI UltraSCSI"
+pci9004,8178 pci9004,8178 msd pci adp.bef "Adaptec AHA-2940U/2940UW PCI UltraSCSI"
+pci9004,8278 pci9004,8278 msd pci adp.bef "Adaptec AHA-7882 PCI UltraSCSI"
+pci9004,8478 pci9004,8478 msd pci adp.bef "Adaptec AHA-7884 PCI SCSI"
+pci9004,8578 pci9004,8578 msd pci adp.bef "Adaptec AHA-7885 PCI SCSI"
+pci9004,5078 pci9004,5078 msd pci adp.bef "Adaptec AIC-7850 PCI SCSI"
+pci9004,5578 pci9004,5578 msd pci adp.bef "Adaptec AIC-7855 PCI SCSI"
+pci9004,6078 pci9004,6078 msd pci adp.bef "Adaptec AHA-7860 PCI SCSI"
+pci9004,6075 pci9004,6075 msd pci adp.bef "Adaptec AHA-7560 PCI SCSI"
+pci9004,6178 pci9004,6178 msd pci adp.bef "Adaptec AHA-7861 PCI SCSI"
+pci9004,6278 pci9004,6278 msd pci adp.bef "Adaptec AHA-7862 PCI SCSI"
+#
+# Comment out iprb temporarily
+#
+# pci8086,1229 pci8086,1229 net pci iprb.bef "Intel Pro100/B Fast Ethernet"
+pci1011,2 pci1011,2 net pci dnet.bef "DEC 21040 PCI Ethernet"
+pci1011,9 pci1011,9 net pci dnet.bef "DEC 21140 PCI Fast Ethernet"
+pci1011,14 pci1011,14 net pci dnet.bef "DEC 21041 PCI Ethernet"
+pci1109,1400 pci1109,1400 net pci dnet.bef "Cogent EM110TX PCI Fast Ethernet"
+pci1109,2400 pci1109,2400 net pci dnet.bef "Cogent EM440 PCI Fast Ethernet"
+pci10b8,2001 pci10b8,2001 net pci dnet.bef "SMC9332BDT PCI Fast Ethernet"
+pci1109,2400 pci101109,2400 net pci dnet.bef "Cogent EM440 PCI Fast Ethernet"

@@ -1,0 +1,292 @@
+#
+#	@(#)prototype_com 1.19 96/02/16
+#
+# Copyright (c) 1992-1996 Sun Microsystems, Inc.  All Rights Reserved.
+#
+# This required package information file contains a list of package contents.
+# The 'pkgmk' command uses this file to identify the contents of a package
+# and their location on the development machine when building the package.
+# Can be created via a text editor or through use of the 'pkgproto' command.
+
+#
+# SUNWsibi platform independent package contents
+#
+
+#
+# Local variables for path name abbreviations
+#
+!installd=usr/sbin/install.d
+!cuihelp=usr/openwin/lib/locale/C/help/install.help
+!guihelp=usr/openwin/lib/locale/C/help/installtool.help
+!lib.C=usr/lib/locale/C
+!openwin.C=usr/openwin/lib/locale/C
+!proto=proto
+!tmp=tmp
+
+# packaging files
+#
+i pkginfo
+i copyright
+i depend
+i i.shadow
+i i.system
+i preinstall
+i postinstall
+
+# Existing directories
+#
+d none etc 0755 root sys
+d none etc/default 0775 root sys
+d none etc/inet 0755 root sys
+d none etc/net 0755 root sys
+d none etc/net/ticlts 0755 root sys
+d none etc/net/ticots 0755 root sys
+d none etc/net/ticotsord 0755 root sys
+d none etc/rc2.d 0775 root sys
+d none sbin 0775 root sys
+d none usr 0775 root sys
+d none usr/lib 0775 root bin
+d none usr/lib/locale 0755 bin bin
+d none $lib.C 0755 bin bin
+d none $lib.C/LC_MESSAGES 0755 bin bin
+d none usr/openwin 0775 root bin
+d none usr/openwin/lib 0775 root bin
+d none usr/openwin/lib/locale 0775 root bin
+d none $openwin.C 0775 root bin
+d none $openwin.C/help 0775 root bin
+d none $openwin.C/app-defaults 0775 root bin
+d none usr/sbin 0775 root bin
+d none $installd 0775 root bin
+
+#
+# Existing data files being replaced on the image
+#
+f none sbin/rc2 0744 root sys
+f none sbin/rcS 0744 root sys
+f none sbin/sulogin 4555 root bin
+f none etc/inittab 0664 root sys
+
+!default 0755 bin bin
+#
+# New documentation directories 
+#
+d none $cuihelp
+d none $cuihelp/howto
+d none $cuihelp/reference
+d none $cuihelp/topics
+d none $guihelp
+d none $guihelp/howto
+d none $guihelp/reference
+d none $guihelp/topics
+
+
+!default 0755 root sys
+#
+# New directories and directory referencing symlinks
+# on the image
+#
+d none a
+d none cdrom
+d none $openwin.C/install_misc
+d none $proto
+d none $proto/root
+d none $proto/root/kernel
+d none $proto/root/kernel/drv
+
+
+# new directories to put install interfaces
+#
+
+# new directories which must exist before the writeable
+# area is initialized
+#
+d none   $tmp/kernel
+
+!default 0555 root sys
+
+#
+# New programs and scripts on the image
+#
+f none sbin/dial
+f none sbin/getbootargs
+f none sbin/get_root
+f none sbin/mem
+f none sbin/startup
+f none sbin/suninstall
+f none sbin/sysconfig
+f none usr/sbin/installtool
+f none usr/sbin/sysidxm
+f none usr/sbin/ttinstall
+f none $installd/rcS.stub
+f none $installd/parse_dynamic_clustertoc
+
+!default 0644 root sys
+#
+# New 0644 data files on the image
+#
+p none etc/initpipe 0600 root sys
+f none $installd/Xdefaults
+f none $installd/Xinitrc
+f none $installd/openwin-init
+f none $lib.C/LC_MESSAGES/install-openwin-menu.gui
+
+!default 0444 root sys
+#
+# New 0444 data files on the image
+#
+f none $openwin.C/app-defaults/Sysidtool
+f none $openwin.C/app-defaults/Installtool
+f none $openwin.C/app-defaults/Installtool_lowres
+
+#
+# ttinstall Help Files on the image
+#
+f none $cuihelp/howto/Howto
+f none $cuihelp/howto/boot.h.hlp
+f none $cuihelp/howto/freedisk.h.hlp
+f none $cuihelp/howto/platform.h.hlp
+f none $cuihelp/howto/resolve.h.hlp
+f none $cuihelp/howto/softgroup.h.hlp
+f none $cuihelp/howto/vtoc.h.hlp
+f none $cuihelp/reference/Reference
+f none $cuihelp/reference/allocate.r.hlp
+f none $cuihelp/reference/bootdev.r.hlp
+f none $cuihelp/reference/bootdisk.r.hlp
+f none $cuihelp/reference/constraints.r.hlp
+f none $cuihelp/reference/filechanges.r.hlp
+f none $cuihelp/reference/glossary.r.hlp
+f none $cuihelp/reference/mount.r.hlp
+f none $cuihelp/reference/selectdisk.r.hlp
+f none $cuihelp/reference/selectmedia.r.hlp
+f none $cuihelp/reference/spotcustdisk.r.hlp
+f none $cuihelp/reference/spotdiskprops.r.hlp
+f none $cuihelp/reference/spotpreserve.r.hlp
+f none $cuihelp/reference/spotseldisk.r.hlp
+f none $cuihelp/reference/spotserverexp.r.hlp
+f none $cuihelp/reference/spotsoft_cust.r.hlp
+f none $cuihelp/reference/version.r.hlp
+f none $cuihelp/topics/Topics
+f none $cuihelp/topics/allocate.t.hlp
+f none $cuihelp/topics/autolayout.t.hlp
+f none $cuihelp/topics/boot.t.hlp
+f none $cuihelp/topics/diskless.t.hlp
+f none $cuihelp/topics/diskname.t.hlp
+f none $cuihelp/topics/diskpart.t.hlp
+f none $cuihelp/topics/fdisk.t.hlp
+f none $cuihelp/topics/hetserver.t.hlp
+f none $cuihelp/topics/initial.t.hlp
+f none $cuihelp/topics/language.t.hlp
+f none $cuihelp/topics/morespace.t.hlp
+f none $cuihelp/topics/mount.t.hlp
+f none $cuihelp/topics/navigate.t.hlp
+f none $cuihelp/topics/preserve.t.hlp
+f none $cuihelp/topics/softgroup.t.hlp
+f none $cuihelp/topics/upgrade.t.hlp
+
+#
+# installtool Help Files on the image
+#
+f none $guihelp/howto/Howto
+f none $guihelp/howto/boot.h.hlp
+f none $guihelp/howto/freedisk.h.hlp
+f none $guihelp/howto/hetserver.h.hlp
+f none $guihelp/howto/navigate.h.hlp
+f none $guihelp/howto/platform.h.hlp
+f none $guihelp/howto/preserve.h.hlp
+f none $guihelp/howto/resolve.h.hlp
+f none $guihelp/howto/softgroup.h.hlp
+f none $guihelp/howto/swap.h.hlp
+f none $guihelp/reference/Reference
+f none $guihelp/reference/allocate.r.hlp
+f none $guihelp/reference/constraints.r.hlp
+f none $guihelp/reference/filechanges.r.hlp
+f none $guihelp/reference/glossary.r.hlp
+f none $guihelp/reference/mount.r.hlp
+f none $guihelp/reference/navigate.r.hlp
+f none $guihelp/reference/selectmedia.r.hlp
+f none $guihelp/reference/spotchangedisk.r.hlp
+f none $guihelp/reference/spotcustdisk.r.hlp
+f none $guihelp/reference/spotcylinder.r.hlp
+f none $guihelp/reference/spotpreserve.r.hlp
+f none $guihelp/reference/spotseldisk.r.hlp
+f none $guihelp/reference/spotsoftcust.r.hlp
+f none $guihelp/reference/version.r.hlp
+f none $guihelp/topics/Topics
+f none $guihelp/topics/allocate.t.hlp
+f none $guihelp/topics/autolayout.t.hlp
+f none $guihelp/topics/boot.t.hlp
+f none $guihelp/topics/diskless.t.hlp
+f none $guihelp/topics/diskname.t.hlp
+f none $guihelp/topics/diskpart.t.hlp
+f none $guihelp/topics/fdisk.t.hlp
+f none $guihelp/topics/hetserver.t.hlp
+f none $guihelp/topics/initial.t.hlp
+f none $guihelp/topics/language.t.hlp
+f none $guihelp/topics/load.t.hlp
+f none $guihelp/topics/morespace.t.hlp
+f none $guihelp/topics/mount.t.hlp
+f none $guihelp/topics/navigate.t.hlp
+f none $guihelp/topics/softgroup.t.hlp
+f none $guihelp/topics/upgrade.t.hlp
+
+#
+# Uninitialized writeable files
+#
+s none   etc/defaultdomain=../tmp/root/etc/defaultdomain
+s none   etc/defaultrouter=../tmp/root/etc/defaultrouter
+s none   etc/instance=../tmp/root/etc/instance
+s none   etc/nodename=../tmp/root/etc/nodename
+s none   etc/.mnt.lock=../tmp/root/etc/.mnt.lock
+s none   etc/mnttab.temp=../tmp/root/etc/mnttab.temp
+s none   etc/.name_service_door=../tmp/root/etc/.name_service_door
+s none   etc/sysidcfg=../tmp/root/etc/sysidcfg
+
+#
+# NULL initialized writeable files
+#
+s create etc/net/ticots/hosts=../../../tmp/root/etc/net/ticots/hosts
+s create etc/net/ticlts/hosts=../../../tmp/root/etc/net/ticlts/hosts
+s create etc/net/ticotsord/hosts=../../../tmp/root/etc/net/ticotsord/hosts
+s create etc/mnttab=../tmp/root/etc/mnttab
+s create etc/.mnttab.lock=../tmp/root/etc/.mnttab.lock
+s create etc/ps_data=../tmp/root/etc/ps_data
+
+#
+# Existing initialized writeable files (some with multiple references)
+#
+s copy   etc/inet/hosts=../../tmp/root/etc/inet/hosts
+s copy   etc/inet/netmasks=../../tmp/root/etc/inet/netmasks
+s copy   etc/device.tab=../tmp/root/etc/device.tab
+s copy   etc/dgroup.tab=../tmp/root/etc/dgroup.tab
+s copy   etc/vfstab=../tmp/root/etc/vfstab
+
+#
+# Existing initialized writeable files referenced before and after
+# writeable area initialization
+#
+s copy2 etc/format.dat=../tmp/root/etc/format.dat
+s copy2 etc/default/init=../../tmp/root/etc/default/init
+
+#
+# Explicitly modified existing non-writeable files
+#
+e shadow etc/shadow 0666 root root
+e system etc/system 0644 root sys
+
+!default 0644 root sys
+#
+# Newly delivered writeable files
+#
+f new etc/.sysIDtool.state
+f new etc/transfer_list
+
+#
+# Explicitly initialized existing writeable files
+#
+s nsswitch etc/nsswitch.conf=../tmp/root/etc/nsswitch.conf
+s var	   var=./tmp/root/var
+
+#
+# New symlinks within the writeable area
+#
+s none	$proto/kernel=../tmp/root/kernel

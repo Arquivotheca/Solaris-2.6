@@ -1,0 +1,42 @@
+name="hitachi"
+        __title__="prototype hitachi entry"
+        __category__="monitor"
+	monitor="hitachi/20mc.vda"
+        ;
+
+name="nec"
+        __title__="prototype nec entry"
+        __category__="monitor"
+	monitor="nec/nec2a.vda"
+        ;
+
+name="sni"
+        __title__="prototype sni entry"
+        __category__="monitor"
+	monitor="sni/mcm1701-90.vda"
+        ;
+
+name="ibm"
+        __title__="prototype ibm entry"
+        __category__="monitor"
+	monitor="ibm/vga.vda"
+        ;
+
+name="mfreq"
+        __title__="prototype mfreq entry"
+        __category__="monitor"
+	monitor="mfreq/mfreq38.vda"
+        ;
+
+
+name="ingr"
+        __title__="prototype intergraph entry"
+        __category__="monitor"
+	monitor="ingr/mdsp1260a.vda"
+        ;
+
+name="lcd"
+        __title__="prototype lcd entry"
+        __category__="monitor"
+        monitor="lcd/nbsvga.vda"
+        ;

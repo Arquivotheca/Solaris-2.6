@@ -1,0 +1,29 @@
+---- Adding users to the sysadmin group
+         in the NIS+ environment -----------------------------------
+
+1.      Log in as root on the NIS+ master server.
+2.      Type admintool & in a Shell or Command Tool window.
+        The launcher is displayed.
+3.      Click on the Group Manager icon.
+        The Group Manager Load window is displayed.
+4.      Select the NIS+ naming service.
+5.      Click on OK.
+        The Group Manager main window is displayed.
+6.      Select the sysadmin group entry to modify from the
+        Group Manager main window.
+7.      Choose Modify from the Edit menu.
+        The Modify window contains the selected group entry.
+8.      Type user names in the Members List text box. Or,
+        if adding additional group members, type user names
+        at the end of the list.
+        Separate user names with commas.
+9.      Click on OK.
+
+The requirements for viewing and modifying NIS+ table
+information are:
+
+-       Membership in the UNIX group, sysadmin (group ID=14), 
+        which allows use of the Administration Tool applications.
+-       Modify permissions on the NIS+ tables to be managed.
+        These permissions are usually given to the NIS+ group
+        members.

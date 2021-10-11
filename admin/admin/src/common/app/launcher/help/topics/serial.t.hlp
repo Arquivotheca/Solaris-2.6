@@ -1,0 +1,16 @@
+---- Serial Port Manager -------------------------------------
+ 
+Serial Port Manager enables system administrators to manage
+serial port services for terminals and modems.
+
+Using Serial Port Manager to configure serial port software is a
+convenient way to setup terminals and modems without having
+to manually edit and create the necessary files. It features:
+
+-       Templates for common terminal and modem configurations
+-       Multiple port setup, modification, or deletion
+-       Quick visual status of each port
+
+Serial Port Manager can be used to manage serial port
+information on the local system or on a remote system with
+the appropriate access privileges.

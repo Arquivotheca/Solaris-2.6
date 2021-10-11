@@ -1,0 +1,21 @@
+---- How to Modify Application Properties -----
+
+1. Click on the Application Properties button.
+   The Application Properties window is displayed.
+
+   Modify the following application properties:
+
+   A. The application name in the Name text box.
+      The application name must be changed in order
+      for any application properties changes to be
+      successful.
+
+   B. The application path name in the Application
+      Path text box.
+
+   C. Any agruments to the application in the
+      Arguments text box.
+
+   D. The icon path name in the Icon Path text box. 
+ 
+   E. Click on Register.

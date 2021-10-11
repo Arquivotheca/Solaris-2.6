@@ -1,0 +1,195 @@
+#
+# Copyright (c) 1996 by Sun Microsystems, Inc.
+#
+#ident	"@(#)Makefile.prep	1.9	96/06/18 SMI"
+#
+# uts/prep/Makefile.prep
+#
+#	This makefile contains the common definitions for the prep unix
+#	and all prep implementation architecture dependent modules.
+#
+
+#
+#	Machine type (implementation architecture):
+#
+PLATFORM	 = prep
+
+#
+#	Everybody needs to know how to build modstubs.o and to locate unix.o
+#
+OBJS_DIR	 = .
+UNIX_DIR	 = $(UTSBASE)/$(PLATFORM)/unix
+MODSTUBS_DIR	 = $(UNIX_DIR)
+DSF_DIR		 = $(UTSBASE)/$(PLATFORM)/genassym
+LINTS_DIR	 = $(OBJS_DIR)
+LINT_LIB_DIR	 = $(UTSBASE)/$(PLATFORM)/lint-libs
+
+UNIX_O		 = $(UNIX_DIR)/unix.o
+MODSTUBS_O	 = $(MODSTUBS_DIR)/modstubs.o
+LINT_LIB	 = $(LINT_LIB_DIR)/llib-lunix.ln
+
+#
+#	Define the base directory for installation.
+#
+#	This is setup with the assumption that $(ROOT) will come to
+#	mean the location where machine independent stuff is installed
+#	(typically /proto). The machine dependent modules should be
+#	`installed' elsewhere (in this case, $(ROOT)/prep, aka /proto/prep).
+#	Note that this is only the location for the build to place these
+#	components. The packages will relocate these components as though
+#	anchored in the root.
+#
+BASE_INS_DIR	= $(ROOT)/$(PLATFORM)
+
+#
+#	Include the makefiles which define build rule templates, the
+#	collection of files per module, and a few specific flags. Note
+#	that order is significant, just as with an include path. The
+#	first build rule template which matches the files name will be
+#	used. By including these in order from most machine dependent
+#	to most machine independent, we allow a machine dependent file
+#	to be used in preference over a machine independent version
+#	(Such as a machine specific optimization, which preserves the
+#	interfaces.)
+#
+include $(UTSBASE)/$(PLATFORM)/Makefile.files
+include $(UTSBASE)/ppc/Makefile.files
+include $(UTSBASE)/common/Makefile.files
+
+#
+#	Include machine independent rules. Note that this does not imply
+#	that the resulting module from rules in Makefile.uts is	machine
+#	independent. Only that the build rules are machine independent.
+#
+include $(UTSBASE)/Makefile.uts
+
+#
+#	The following must be defined for all implementations:
+#
+#	MAPFILE:	ld mapfile for the build of /kernel/unix.
+#	MODSTUBS:	Module stubs source file.
+#	GENASSYM_SRC:	genassym.c
+#
+MAPFILE		 = $(UTSBASE)/$(PLATFORM)/conf/Mapfile
+#MODSTUBS	 = $(UTSBASE)/ppc/ml/modstubs.s
+#GENASSYM_SRC	 = $(UTSBASE)/$(PLATFORM)/ml/genassym.c
+
+#
+#	Define the actual specific platforms
+#
+MACHINE_DEFS	 = -D$(PLATFORM) -D_MACHDEP
+
+#
+#	Debugging level
+#
+#	Special knowledge of which special debugging options effect which
+#	file is used to optimize the build if these flags are changed.
+#
+#	XXX: The above could possibly be done for more flags and files, but
+#	     is left as an experiment to the interested reader. Be forewarned,
+#	     that excessive use could lead to maintenance difficulties.
+#
+#	XXX: Debugging level for release builds should be decided.
+#
+DEBUG_DEFS	=
+$(NOT_RELEASE_BUILD)DEBUG_DEFS	+= -DDEBUG
+
+#$(NOT_RELEASE_BUILD)trap.o	:=	DEBUG_DEFS	+= -DTRAPDEBUG
+#$(NOT_RELEASE_BUILD)syscall.o	:=	DEBUG_DEFS	+= -DSYSCALLTRACE
+#$(NOT_RELEASE_BUILD)locore.o	:=	DEBUG_DEFS	+= -DTRAPTRACE
+#$(NOT_RELEASE_BUILD)clock.o	:=	DEBUG_DEFS	+= -DKSLICE=1
+
+#
+#	Build `options'. These are mostly historical and the need for these
+#	is largely removed by the module technology. However, the static
+#	build will continue to require these.
+#
+OPTION_DEFS	 = -DSYSACCT -DC2_AUDIT -DQUOTA
+
+#
+#	Collect the preprocessor definitions to be associated with *all*
+#	files.
+#
+ALL_DEFS	 = $(MACHINE_DEFS) $(DEBUG_DEFS) $(OPTION_DEFS)
+NATIVE_DEFS	 = -U$(NATIVE_MACH) -D$(MACH) -D__LITTLE_ENDIAN
+GENASSYM_DEFS	 = $(NATIVE_DEFS) $(MACHINE_DEFS) $(OPTION_DEFS)
+
+#
+#	Temporary define of MP. As soon as #if MPs go off from common tree
+#	This should be removed
+#ALWAYS_DEFS	+= -DMP
+ALWAYS_DEFS	+=
+
+#
+# ----- TRANSITIONAL SECTION --------------------------------------------------
+#
+
+#
+#	Not everything which *should* be a module is a module yet. The
+#	following is a list of such objects which are currently part of
+#	the base kernel but should soon become kmods.
+#
+NOT_YET_KMODS	 = $(AUTOCONF_OBJS) $(OLDPTY_OBJS) $(PTY_OBJS) $(MOD_OBJS)
+
+#
+# ----- END OF TRANSITIONAL SECTION -------------------------------------------
+#
+
+#
+#	The kernels modules which are "implementation architecture"
+#	specific for this machine are enumerated below. Note that most
+#	of these modules must exist (in one form or another) for each
+#	architecture.
+#
+#	Common Drivers (usually pseudo drivers) (/kernel/drv):
+#
+DRV_KMODS	+= dnet ncrs pcn
+
+#
+#	Machine Specific Driver Modules (/kernel/drv):
+#
+#	XXX: How many of these are really machine specific?
+#
+DRV_KMODS	+= xsvc
+DRV_KMODS	+= kd
+DRV_KMODS	+= fd fdc
+DRV_KMODS	+= asy
+DRV_KMODS	+= ata
+DRV_KMODS	+= lp
+DRV_KMODS	+= kdmouse
+DRV_KMODS	+= elx
+
+#
+#	Exec Class Modules (/kernel/exec):
+#
+EXEC_KMODS	+= 
+
+#
+#	Scheduling Class Modules (/kernel/sched):
+#
+SCHED_KMODS	+= 
+
+#
+#	File System Modules (/kernel/fs):
+#
+FS_KMODS	+=
+
+#
+#	Streams Modules (/kernel/strmod):
+#
+STRMOD_KMODS	+= vuidps2 vuidm3p vuidm4p vuidm5p
+
+#
+#	'System' Modules (/kernel/sys):
+#
+SYS_KMODS	+=
+
+#
+#	'Misc' Modules (/kernel/misc):
+#
+MISC_KMODS	+=
+
+#
+#	'Mach' Modules (/kernel/mach):
+#
+MACH_KMODS     	+=

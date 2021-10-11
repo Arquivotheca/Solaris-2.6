@@ -1,0 +1,71 @@
+---- About this screen ------------------------
+
+This screen lets you to allocate space for
+AutoClients and diskless clients. After you
+install Solaris on the OS server, you must use
+Solstice Host Manager to set up client service
+support for these clients or they will not be
+able to access Solaris software.
+
+---- Service and Type -------------------------
+
+The Service pull-down menu controls the screen
+display so you can specify root (/) and/or
+swap services.
+
+Swap is disk space used for virtual memory
+storage when a system does not have enough
+system memory to handle current processes.
+
+Root is a file system that contains the 
+directories and files critical for system
+operation, such as the kernel, device drivers,
+and the programs used to start (boot) a system.
+
+---- # Clients --------------------------------
+
+Clients are any system connected to a network.
+However, this editable field is for specifying 
+the number of AutoClients and/or diskless 
+clients.
+ 
+AutoClients are systems that cache all of their
+needed system software from an OS server. They
+require a small disk for swapping and caching
+their individual root (/) and /usr file system
+from an OS server.
+
+Diskless clients are systems that do not have
+their own disks and rely completely on an OS
+server for software and file storage.
+
+---- Size Per ---------------------------------
+
+This editable field lets you specify the size
+in megabytes for root (/) and/or swap.
+
+---- Total Size -------------------------------
+
+This calculation is the result of multiplying
+the # Clients by the Size Per. Total Size is
+the number of megabytes of space that will be
+set aside on the disk in the /export/root 
+and/or /export/swap directories.
+
+---- Mount Point ------------------------------
+
+An OS server shares files with other systems
+by exporting file systems. The mount point is
+the name of an exported directory on the OS 
+server where the client can access what it needs. 
+
+When you specify root (/) and/or swap services 
+on this screen, the Solaris installation program 
+creates empty export directories, setting aside
+the appropriate megabytes of space on the disk.
+
+After Solaris software is installed, you must 
+complete set up of /export/root and/or
+/export/swap by using Solstice Host Manager.  
+
+

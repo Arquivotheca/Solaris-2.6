@@ -1,0 +1,17 @@
+---- Admintool:Groups ------------------------------
+ 
+Managing groups with Admintool enables you to manage
+group information without having to manually edit
+the /etc/group file.
+
+Manage groups with Admintool to perform the
+following tasks: 
+
+- Add and remove UNIX groups
+- Add and remove user names from UNIX groups
+- Display group information
+
+Admintool can be used to manage the /etc/group file
+on the local system. It does not modify group
+information in global network name service databases
+such as NIS or NIS+.

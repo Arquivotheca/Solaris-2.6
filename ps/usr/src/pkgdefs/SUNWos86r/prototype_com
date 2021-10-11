@@ -1,0 +1,35 @@
+#       Copyright (c) 1995 Sun Microsystems, Inc.
+#               All Rights Reserved
+#
+#	@(#)prototype_com	1.6	96/07/30 (c) Sun Microsystems, Inc.
+#
+# This required package information file contains a list of package contents.
+# The 'pkgmk' command uses this file to identify the contents of a package
+# and their location on the development machine when building the package.
+# Can be created via a text editor or through use of the 'pkgproto' command.
+ 
+#!search <pathname pathname ...>        # where to find pkg objects
+#!include <filename>                    # include another 'prototype' file
+#!default <mode> <owner> <group>        # default used if not specified on entry
+#!<param>=<value>                       # puts parameter in pkg environment
+
+# packaging files
+i pkginfo
+i copyright
+i depend
+i postinstall
+i postremove
+#
+# source locations relative to the prototype file
+#
+# SUNWos86r
+#
+d none etc/openwin 775 root bin
+d none etc/openwin/server 775 root bin
+d none etc/openwin/server/etc 775 root bin
+d none etc/openwin/etc 775 root bin
+d none etc/openwin/etc/devdata 775 root bin
+d none etc/openwin/etc/devdata/SUNWaccel 775 root bin
+d none etc/openwin/etc/devdata/SUNWaccel/monitors 775 root bin
+d none etc/openwin/etc/devdata/SUNWaccel/monitors/pnp 775 root bin
+d none sbin 0775 root sys

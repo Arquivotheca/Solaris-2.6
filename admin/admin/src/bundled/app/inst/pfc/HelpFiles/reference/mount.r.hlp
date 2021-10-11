@@ -1,0 +1,51 @@
+
+---- About this screen ------------------------------------
+
+     This screen lets you specify a remote file system to
+     mount from a server. It also lets you test the mount
+     to see if the server is up and running.
+
+
+---- Local mount point -----------------------------------
+
+     Specify the mount point where the remote file system
+     will be mounted. For example: /marketing.
+
+
+---- Server's host name ----------------------------------
+
+     Specify the host name of the server that is providing
+     the file system. For example: sholto
+
+
+---- Server's IP address ---------------------------------
+
+     If the IP address of the server is not automatically
+     found, you must specify it. An IP address is four
+     sets of number separated by periods. 
+     For example: 129.221.2.1
+
+
+---- File system path ------------------------------------
+
+     For this field you can specify the path to the remote
+     file system to be mounted.
+
+     Or you can press F4, to access the Server's Exportable 
+     File Systems screen where you an select a file system 
+     path from a list of the server's known exportable file 
+     systems. The file system path you select is automatically
+     copied into the File system path field on the Remote
+     File system screen.
+
+
+---- About F3 - Test Mount -------------------------------
+
+     Pressing F3 automatically starts a test mount, which
+     verifies that the server is reachable, and the file
+     system you specified is available for mounting.
+
+     If the test mount is unsuccessful, it may mean the
+     server is temporarily down. In that case, choose Cancel 
+     and make sure you mount the remote file system after 
+     Solaris software is installed.

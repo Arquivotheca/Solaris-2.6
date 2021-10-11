@@ -1,0 +1,29 @@
+---- Using the online help system --------------------------------
+
+Pressing the Help button from an application window will display
+the AdminHelp system. The AdminHelp system menu contains
+three buttons that are used to display three levels of help
+files:
+
+-	Topics
+	Displays conceptual information about the
+	applications and their windows
+-	How to
+	Displays step-by-step information about
+	performing a specific tasks
+-	Reference
+	Displays reference and glossary information
+
+The AdminHelp system has two display areas:
+
+-	The top display area displays topic information. You
+	can click on a topic in the top display area to access
+	a help file without clicking on a button.
+-	The bottom display area displays the text of the help
+	file. Use the scrollbar on the right side of the display
+	area to scroll through the text file.
+
+There are two additional buttons on the left corner of the menu:
+
+-	Previous, used to redisplay the previous help file
+-	Done, used to quit the AdminHelp system

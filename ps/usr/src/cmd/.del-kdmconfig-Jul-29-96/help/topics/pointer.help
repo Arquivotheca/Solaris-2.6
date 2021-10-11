@@ -1,0 +1,18 @@
+
+---- Description -----------------------------------------------------
+
+     Specifies the pointing device connected to your system.  
+     There are two types of pointing devices:   
+
+     - Serial devices are typically connected to one of your 
+       system's serial communication ports (COM ports) by one of
+       the following DIN connectors: DB-9, DB-15, or DB-25.
+
+     - Currently serial mice will be configured on 
+       /dev/tty00 (COM1).  See the Release Notes for connecting 
+       a serial mouse to ports other than /dev/tty00 (COM1).
+
+     - Bus devices are typically connected with a round connector.
+
+     To determine the brand name of your pointing device, look on 
+     the top or bottom, or see the manual that comes with your device.

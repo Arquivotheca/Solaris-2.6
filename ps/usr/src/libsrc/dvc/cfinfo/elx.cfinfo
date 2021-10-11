@@ -1,0 +1,7 @@
+name="elx"
+	class="sysbus"
+	__title__="3COM EtherLink III network card"
+	__category__="network"
+
+	__auto__="string,true"
+	;

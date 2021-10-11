@@ -1,0 +1,21 @@
+---- Admintool:Package Administration: Incorrect Run
+Level ----------------------------------------------
+
+Incorrect Run Level
+     Indicates resolution if the run level is not
+     correct for the installation or removal of a
+     package. Options are:
+
+     Ask	Installer will be prompted for
+		instructions when an incorrect run
+		level is found. 
+
+     Ignore	Do not check for run level.
+
+     Abort	Abort installation if run level is
+		incorrect.
+
+See the "Topics" help for more information about
+using Admintool:Package Administration to set
+preferences during installation.
+

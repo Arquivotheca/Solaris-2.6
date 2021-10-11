@@ -1,0 +1,25 @@
+#
+#       @(#)prototype_com 1.4 96/08/26
+#
+# This required package information file contains a list of package contents.
+# The 'pkgmk' command uses this file to identify the contents of a package
+# and their location on the development machine when building the package.
+# Can be created via a text editor or through use of the 'pkgproto' command.
+
+#!search
+#!default 0711 root bin
+!instdir=./usr/sbin
+
+# packaging files
+i pkginfo=pkginfo
+i copyright=copyright
+i depend=depend
+#
+# source locations relative to the prototype file
+#
+# SUNWswmt
+#
+d none ./usr 0775 root sys
+d none ./usr/sbin 0775 root bin
+f none $instdir/patchadd 0555 root bin
+f none $instdir/patchrm 0555 root bin

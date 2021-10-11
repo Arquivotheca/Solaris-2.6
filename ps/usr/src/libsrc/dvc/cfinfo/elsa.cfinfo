@@ -1,0 +1,35 @@
+class="win" name="elsa"
+        __wclass__="XSCREEN"
+
+        ddxHandler="ddxSUNWaccel.so.1" ddxInitFunc="XaccelInit"
+        ;
+
+class="win" name="elsa"
+        __wclass__="XSCREENCONFIG"
+        __category__="display"
+	__xinside__="TRUE"
+        __title__="prototype elsa entry"
+
+        device="elsa"
+
+	res="var,__resolution__"
+        __resolution__="string,1024x768,1152x900,1280x1024,800x600,640x480"
+
+        defdepth="var,__depth__"
+        __depth__="string,8,24"
+
+        size="var,__size__"
+        __size__="string,15-inch,17-inch,19-inch"
+        __dimx__="string,12,13.5,15"
+        __dimy__="string,9.5,11,12"
+
+
+        position="var,__position__"
+        __position__="string,left,right,top,bottom"
+	
+        pmifile="/usr/openwin/share/etc/devdata/svpmi/elsa/win1000-1.xqa"
+	monitor="mfreq/mfreq48.vda"
+        dpix="string,90"
+        dpiy="string,90"
+        ;
+

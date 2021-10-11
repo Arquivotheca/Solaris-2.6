@@ -1,0 +1,23 @@
+---- Admintool:Package Administration: Insufficient
+Space ----------------------------------------------
+
+Insufficient Space
+    Controls how disk space issues are resolved when
+    adding a package. Options are:
+
+    Ask		Installer will be prompted for
+		instructions when there is
+		insufficient space to install a
+		package.
+
+    Ignore	Do not check space requirements
+		(installation fails if it runs out
+		of space).
+
+    Abort	Abort installation if space
+		requirements are not met.
+
+See the "Topics" help for more information about
+using Admintool:Package Administration to set
+preferences during installation.
+

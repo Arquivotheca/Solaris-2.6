@@ -1,0 +1,73 @@
+---- Add Software ----------------------------------
+
+1. Select Software from the Browse menu.
+
+2. Select Add from the Edit menu on the
+   Admintool:Software main window.
+
+3. Determine your next step based on whether the
+   software resides on a mounted CD-ROM drive or on
+   a system's hard disk.
+
+   If software is...	Then...
+   -----------------	-------
+   On a mounted		Select CD with Volume
+   CD-ROM drive		Management or CD without
+			Volume Management. If the
+			software resides somewhere
+			other than the default path, 
+			specify the correct mount
+			point for the software.
+
+   On a system's	Specify the absolute path to
+   hard disk		the directory with the
+			software.
+
+
+NOTE:  When you specify a path where software
+       resides, Admintool:Software expects to find
+       one of the following:
+
+       - a .cdtoc file
+       - a .clustertoc file
+       - a directory that has a pkginfo file
+
+       If Admintool:Software finds any of these, it
+       displays software available for installation. 
+       If it doesn't find any of these, it displays
+       an error message that says, "No installable
+       software on the media."
+	
+4. Select software to add to the local system from
+   the Software window.
+
+5. Click the Add button.
+
+   Admintool starts an xterm display that shows the
+   output of any scripts used to install the
+   software. These scripts may be interactive and
+   require your input
+
+
+---- View Software ---------------------------------
+
+The Admintool:Add Software screen shows software
+available to be installed on your system. 
+
+Use the vertical and horizontal scrollbars to view
+available software and software descriptions in more
+detail. 
+
+---- Read the Description Window -------------------
+
+Each time you select a software product in the
+Add Software window, the Description window
+changes to display information about that software
+product.
+
+- To view descriptions in their entirety, use the
+  vertical and horizontal scrollbars. 
+
+- To enlarge the viewing area of the Description
+  window, place the cursor on a corner of the
+  Admintool:Add Software window and drag it.

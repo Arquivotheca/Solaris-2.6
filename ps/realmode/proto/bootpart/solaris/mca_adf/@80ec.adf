@@ -1,0 +1,67 @@
+
+AdapterId 80ECh
+
+AdapterName "Matrox MGA Video Adapter (V0.02)"
+
+NumBytes 2
+
+
+NamedItem Prompt  "Enable/Disable Adapter"
+
+Choice  " Adapter Enabled "    pos[0]=XXXXXXX1b
+Choice  " Adapter Disabled "   pos[0]=XXXXXXX0b
+
+Help
+
+"This controls whether the adapter is enabled or not. Use the Enabled
+setting for normal use. Use the Disabled setting if you are not using
+the adapter and enabling it causes a conflict with another device."
+
+
+NamedItem Prompt  "Memory Mapping"
+
+Choice  " Map2 C8000 "         pos[1]=XXXXX010b mem 0c8000h-0cbfffh
+Choice  " Map3 CC000 "         pos[1]=XXXXX011b mem 0cc000h-0cffffh
+Choice  " Map4 D0000 "         pos[1]=XXXXX100b mem 0d0000h-0d3fffh
+Choice  " Map5 D4000 "         pos[1]=XXXXX101b mem 0d4000h-0d7fffh
+Choice  " Map6 D8000 "         pos[1]=XXXXX110b mem 0d8000h-0dbfffh
+Choice  " Map7 DC000 "         pos[1]=XXXXX111b mem 0dc000h-0dffffh
+Choice  " Map1 AC000 "         pos[1]=XXXXX000b 
+
+Help
+
+"There are 7 different 16K windows where you can map the MGA.
+Change this setting if it conflicts with another adapter.
+Note: Use Map1 only if the on-board VGA is enabled."
+
+NamedItem Prompt  "MGA on-board VGA"
+
+choice  " VGA Enabled "        pos[1]=XXXX0XXXb mem 0c0000h-0c7fffh
+choice  " VGA Disabled "       pos[1]=XXXX1XXXb
+
+Help
+
+"Select 'VGA Enabled' if you want a single screen solution.
+This setting enables the VGA bios at C0000h (on the MGA adapter)."
+
+
+NamedItem Prompt  "Composite SYNC"
+
+choice  " CSYNC Disabled "     pos[1]=XXX0XXXXb
+choice  " CSYNC Enabled "      pos[1]=XXX1XXXXb
+
+Help
+
+"Select 'CSYNC Enabled' if you are using a composite sync monitor."
+
+
+NamedItem Prompt  "Zbuffer"
+
+choice  " Zbuffer Absent "     pos[1]=XX0XXXXXb
+choice  " Zbuffer Present "    pos[1]=XX1XXXXXb
+
+Help
+
+"Select 'Zbuffer Present' if your MGA has it's ZIP memory installed
+on the sockets placed on the lower left area of the adapter.
+The default setting is 'Zbuffer Absent'."

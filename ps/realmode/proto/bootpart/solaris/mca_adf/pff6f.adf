@@ -1,0 +1,360 @@
+
+AdapterId 0FF6Fh
+
+AdapterName "Built In Features"
+
+NumBytes 4
+
+FixedResources
+	vpd(1)
+	pos[0]=XXXXXX11b
+	pos[24]=11111111b
+	pos[25]=11111111b
+	pos[26]=11111111b
+	pos[27]=XXXXXXX1b
+	pos[28]=0XXXXX00b
+	pos[29]=11111101b
+	pos[30]=1100XXXXb
+			   io 03f0h-03f7h
+			   int 6
+			   arb 2
+			   mem 0fc000000h - 0fdffffffh
+			       0fffe0000h - 0ffffffffh
+
+
+sysmem 1024 32
+
+address 32
+
+
+   NamedItem Prompt "Display F1 prompt to access System Programs"
+      choice "Yes"  pos[1]=XXXXXX0Xb
+      choice "No "  pos[1]=XXXXXX1Xb
+
+      Help
+"During startup, your system normally displays a prompt that tells you
+to press F1 for access to the system programs. If
+you wish to suppress this prompt, change the setting to <No>."
+
+Begin
+   NamedItem Prompt "Serial Port"
+      choice "SERIAL 1"  pos[0]=XXXX11XXb  pos[3]=X000XXXXb
+	 io 03f8h-03ffh 083f8h-083ffh
+	 int 4
+      choice "SERIAL 2"  pos[0]=XXXX01XXb  pos[3]=X001XXXXb
+	 io 02f8h-02ffh 082f8h-082ffh
+	 int 3
+      choice "SERIAL 3"  pos[0]=XXXX01XXb  pos[3]=X010XXXXb
+	 io 3220h-3227h 0b220h-0b227h
+	 int 3
+      choice "SERIAL 4"  pos[0]=XXXX01XXb  pos[3]=X011XXXXb
+	 io 3228h-322fh 0b228h-0b22fh
+	 int 3
+      choice "SERIAL 5"  pos[0]=XXXX01XXb  pos[3]=X100XXXXb
+	 io 4220h-4227h 0c220h-0c227h
+	 int 3
+      choice "SERIAL 6"  pos[0]=XXXX01XXb  pos[3]=X101XXXXb
+	 io 4228h-422fh 0c228h-0c22fh
+	 int 3
+      choice "SERIAL 7"  pos[0]=XXXX01XXb  pos[3]=X110XXXXb
+	 io 5220h-5227h 0d220h-0d227h
+	 int 3
+      choice "SERIAL 8"  pos[0]=XXXX01XXb  pos[3]=X111XXXXb
+	 io 5228h-522fh 0d228h-0d22fh
+	 int 3
+      choice "Disabled"  pos[0]=XXXXX0XXb
+
+      Help
+      "The built-in serial port connector can be set as Serial 1 through 8
+      or the port can be disabled.  If you are using an ASCII terminal
+      as your system console, do not disable this port.
+      If you are in the 'Change Configuration' window, you can change
+      the setting.  Use F5 and F6 to scroll through the choices, the Up
+      and Down arrow keys to move from field to field.
+      If a setting conflicts with another, an asterisk (*) appears next to
+      the conflicts.  You must fix conflicts before you use the device.
+      (If you are not in the 'Change Configuration' window and you need
+      to change the setting, return to the 'Set Configuration' window then
+      select 'Change configuration'.)"
+
+   NamedItem Prompt "Serial Transmit Arbitration Level"
+      choice "Shared 4" pos[2]=XXXX0100b pos[1]=1XXXXXXXb arb SharedArb 4
+      choice "Shared 3" pos[2]=XXXX0011b pos[1]=1XXXXXXXb arb SharedArb 3
+      choice "Shared 1" pos[2]=XXXX0001b pos[1]=1XXXXXXXb arb SharedArb 1
+      choice "Shared 0" pos[2]=XXXX0000b pos[1]=1XXXXXXXb arb SharedArb 0
+      choice "Shared 7" pos[2]=XXXX0111b pos[1]=1XXXXXXXb arb SharedArb 7
+      choice "Shared 6" pos[2]=XXXX0110b pos[1]=1XXXXXXXb arb SharedArb 6
+      choice "Shared 5" pos[2]=XXXX0101b pos[1]=1XXXXXXXb arb SharedArb 5
+      choice "Dedicated 7" pos[2]=XXXX0111b pos[1]=0XXXXXXXb arb 7
+      choice "Dedicated 6" pos[2]=XXXX0110b pos[1]=0XXXXXXXb arb 6
+      choice "Dedicated 5" pos[2]=XXXX0101b pos[1]=0XXXXXXXb arb 5
+      choice "Dedicated 4" pos[2]=XXXX0100b pos[1]=0XXXXXXXb arb 4
+      choice "Dedicated 3" pos[2]=XXXX0011b pos[1]=0XXXXXXXb arb 3
+      choice "Dedicated 1" pos[2]=XXXX0001b pos[1]=0XXXXXXXb arb 1
+      choice "Dedicated 0" pos[2]=XXXX0000b pos[1]=0XXXXXXXb arb 0
+      choice "Disabled" pos[2]=XXXX1111b
+
+      Help
+      "The built-in serial port connector can be set to any one of the
+      available arbitration levels for transmitting data. If the level
+      selected is shared then other devices can be set at the same level.
+      If the level selected is dedicated then only this device can be set
+      to that level.
+      If you are in the 'Change Configuration' window, you can change
+      the setting.  Use F5 and F6 to scroll through the choices, the Up
+      and Down arrow keys to move from field to field.
+      If a setting conflicts with another, an asterisk (*) appears next to
+      the conflicts.  You must fix conflicts before you use the device.
+      (If you are not in the 'Change Configuration' window and you need
+      to change the setting, return to the 'Set Configuration' window then
+      select 'Change configuration'.)"
+
+   NamedItem Prompt "Serial Receive Arbitration Level"
+      choice "Shared 3" pos[2]=0011XXXXb pos[1]=X1XXXXXXb arb SharedArb 3
+      choice "Shared 1" pos[2]=0001XXXXb pos[1]=X1XXXXXXb arb SharedArb 1
+      choice "Shared 0" pos[2]=0000XXXXb pos[1]=X1XXXXXXb arb SharedArb 0
+      choice "Shared 7" pos[2]=0111XXXXb pos[1]=X1XXXXXXb arb SharedArb 7
+      choice "Shared 6" pos[2]=0110XXXXb pos[1]=X1XXXXXXb arb SharedArb 6
+      choice "Shared 5" pos[2]=0101XXXXb pos[1]=X1XXXXXXb arb SharedArb 5
+      choice "Shared 4" pos[2]=0100XXXXb pos[1]=X1XXXXXXb arb SharedArb 4
+      choice "Dedicated 7" pos[2]=0111XXXXb pos[1]=X0XXXXXXb arb 7
+      choice "Dedicated 6" pos[2]=0110XXXXb pos[1]=X0XXXXXXb arb 6
+      choice "Dedicated 5" pos[2]=0101XXXXb pos[1]=X0XXXXXXb arb 5
+      choice "Dedicated 4" pos[2]=0100XXXXb pos[1]=X0XXXXXXb arb 4
+      choice "Dedicated 3" pos[2]=0011XXXXb pos[1]=X0XXXXXXb arb 3
+      choice "Dedicated 1" pos[2]=0001XXXXb pos[1]=X0XXXXXXb arb 1
+      choice "Dedicated 0" pos[2]=0000XXXXb pos[1]=X0XXXXXXb arb 0
+      choice "Disabled" pos[2]=1111XXXXb
+
+      Help
+      "The built-in serial port connector can be set to any one of the
+      available arbitration levels for receiving data. If the level
+      selected is shared then other devices can be set at the same level.
+      If the level selected is dedicated then only this device can be set
+      to that level.
+      If you are in the 'Change Configuration' window, you can change
+      the setting.  Use F5 and F6 to scroll through the choices, the Up
+      and Down arrow keys to move from field to field.
+      If a setting conflicts with another, an asterisk (*) appears next to
+      the conflicts.  You must fix conflicts before you use the device.
+      (If you are not in the 'Change Configuration' window and you need
+      to change the setting, return to the 'Set Configuration' window then
+      select 'Change configuration'.)"
+End
+
+Begin
+   NamedItem Prompt "Parallel Port"
+      choice "PARALLEL 1"  pos[0]=X001XXXXb  io 03bch-03bfh 1278h-127fh int 7
+      choice "PARALLEL 2"  pos[0]=X011XXXXb  io 0378h-037fh int 7
+      choice "PARALLEL 3"  pos[0]=X101XXXXb  io 0278h-027fh int 7
+      choice "Disabled"    pos[0]=X000XXXXb
+
+      Help
+      "The built-in parallel port connector can be set as Parallel 1
+      through 3 or the port can be disabled.
+      If you are in the 'Change Configuration' window, you can change
+      the setting.  Use F5 and F6 to scroll through the choices, the Up
+      and Down arrow keys to move from field to field.
+      If a setting conflicts with another, an asterisk (*) appears next to
+      the conflicts.  You must fix conflicts before you use the device.
+      Use the Up and Down arrow keys to move from field to field.
+      (If you are not in the 'Change Configuration' window and you need
+      to change the setting, return to the 'Set Configuration' window then
+      select 'Change configuration'.)"
+
+   NamedItem Prompt "Parallel Port Arbitration Level"
+      choice "Shared 7"
+	 pos[3]=XXXX0111b pos[1]=XX1XXXXXb pos[0]=0XXXXXXXb
+	 arb SharedArb 7
+      choice "Shared 6"
+	 pos[3]=XXXX0110b pos[1]=XX1XXXXXb pos[0]=0XXXXXXXb
+	 arb SharedArb 6
+      choice "Shared 5"
+	 pos[3]=XXXX0101b pos[1]=XX1XXXXXb pos[0]=0XXXXXXXb
+	 arb SharedArb 5
+      choice "Shared 4"
+	 pos[3]=XXXX0100b pos[1]=XX1XXXXXb pos[0]=0XXXXXXXb
+	 arb SharedArb 4
+      choice "Shared 3"
+	 pos[3]=XXXX0011b pos[1]=XX1XXXXXb pos[0]=0XXXXXXXb
+	 arb SharedArb 3
+      choice "Shared 1"
+	 pos[3]=XXXX0001b pos[1]=XX1XXXXXb pos[0]=0XXXXXXXb
+	 arb SharedArb 1
+      choice "Shared 0"
+	 pos[3]=XXXX0000b pos[1]=XX1XXXXXb pos[0]=0XXXXXXXb
+	 arb SharedArb 0
+      choice "Dedicated 7"
+	 pos[3]=XXXX0111b pos[1]=XX0XXXXXb pos[0]=0XXXXXXXb
+	 arb 7
+      choice "Dedicated 6"
+	 pos[3]=XXXX0110b pos[1]=XX0XXXXXb pos[0]=0XXXXXXXb
+	 arb 6
+      choice "Dedicated 5"
+	 pos[3]=XXXX0101b pos[1]=XX0XXXXXb pos[0]=0XXXXXXXb
+	 arb 5
+      choice "Dedicated 4"
+	 pos[3]=XXXX0100b pos[1]=XX0XXXXXb pos[0]=0XXXXXXXb
+	 arb 4
+      choice "Dedicated 3"
+	 pos[3]=XXXX0011b pos[1]=XX0XXXXXb pos[0]=0XXXXXXXb
+	 arb 3
+      choice "Dedicated 1"
+	 pos[3]=XXXX0001b pos[1]=XX0XXXXXb pos[0]=0XXXXXXXb
+	 arb 1
+      choice "Dedicated 0"
+	 pos[3]=XXXX0000b pos[1]=XX0XXXXXb pos[0]=0XXXXXXXb
+	 arb 0
+      choice "Disabled"
+	 pos[3]=XXXX1111b pos[0]=1XXXXXXXb
+
+      Help
+      "The built-in parallel port connector can be set to any one of the
+      available arbitration levels.  If the level selected is shared then
+      other devices can be set at the same level.  If the level selected is
+      dedicated then only this device can be set to that level.  Select
+      <Disabled> to use the port in compatibility mode.
+      If you are in the 'Change Configuration' window, you can change
+      the setting.  Use F5 and F6 to scroll through the choices, the Up
+      and Down arrow keys to move from field to field.
+      If a setting conflicts with another, an asterisk (*) appears next to
+      the conflicts.  You must fix conflicts before you use the device.
+      (If you are not in the 'Change Configuration' window and you need
+      to change the setting, return to the 'Set Configuration' window then
+      select 'Change configuration'.)"
+End
+
+NamedItem Prompt "Preempt Enable/Disable"
+   Choice  "Enable"  pos[31]=X0XXXXXXb
+   Choice  "Disable"  pos[31]=X1XXXXXXb
+
+   Help
+   "This choice lets the system board processor preempt continuous data
+   transfers by other devices for its use of Micro Channel.  Normally,
+   this field should be set to <Enable>.
+   If you are in the 'Change Configuration' window, you can change
+   the setting.  Use F5 and F6 to scroll through the choices, the Up
+   and Down arrow keys to move from field to field.
+   (If you are not in the 'Change Configuration' window and you need
+   to change the setting, return to the 'Set Configuration' window then
+   select 'Change configuration'.)"
+
+Begin Device 3 2 0 NoDMA
+
+NamedItem Prompt "Video I/O Address"
+	choice "Instance 6: 2160h - 216Fh"
+		pos[27]=XXXX110Xb io 02160h-0216fh
+	choice "Instance 1: 2110h - 211Fh"
+		pos[27]=XXXX001Xb io 02110h-0211fh
+	choice "Instance 2: 2120h - 212Fh"
+		pos[27]=XXXX010Xb io 02120h-0212fh
+	choice "Instance 3: 2130h - 213Fh"
+		pos[27]=XXXX011Xb io 02130h-0213fh
+	choice "Instance 4: 2140h - 214Fh"
+		pos[27]=XXXX100Xb io 02140h-0214fh
+	choice "Instance 5: 2150h - 215Fh"
+		pos[27]=XXXX101Xb io 02150h-0215fh
+
+	Help
+	"This field shows the I/O (Input/Output) address range for the
+	 display controller registers.	This field also selects the
+	 exact location of the video coprocessor registers.
+	 If you are in the 'Change Configuration' window, you can change
+	 the setting.  Use F5 and F6 to scroll through the choices, the Up
+	 and Down arrow keys to move from field to field.
+	 (If you are not in the 'Change Configuration' window and you need
+	 to change the setting, return to the 'Set Configuration' window then
+	 select 'Change configuration'.)"
+
+NamedItem Prompt "Video ROM Address Space"
+	choice "C0000 - C1FFF" pos[27]=0000XXXXb mem 0c0000h-0c1fffh
+	choice "C2000 - C3FFF" pos[27]=0001XXXXb mem 0c2000h-0c3fffh
+	choice "C4000 - C5FFF" pos[27]=0010XXXXb mem 0c4000h-0c5fffh
+	choice "C6000 - C7FFF" pos[27]=0011XXXXb mem 0c6000h-0c7fffh
+	choice "C8000 - C9FFF" pos[27]=0100XXXXb mem 0c8000h-0c9fffh
+	choice "CA000 - CBFFF" pos[27]=0101XXXXb mem 0ca000h-0cbfffh
+	choice "CC000 - CDFFF" pos[27]=0110XXXXb mem 0cc000h-0cdfffh
+	choice "CE000 - CFFFF" pos[27]=0111XXXXb mem 0ce000h-0cffffh
+	choice "D0000 - D1FFF" pos[27]=1000XXXXb mem 0d0000h-0d1fffh
+	choice "D2000 - D3FFF" pos[27]=1001XXXXb mem 0d2000h-0d3fffh
+	choice "D4000 - D5FFF" pos[27]=1010XXXXb mem 0d4000h-0d5fffh
+	choice "D6000 - D7FFF" pos[27]=1011XXXXb mem 0d6000h-0d7fffh
+	choice "D8000 - D9FFF" pos[27]=1100XXXXb mem 0d8000h-0d9fffh
+	choice "DA000 - DBFFF" pos[27]=1101XXXXb mem 0da000h-0dbfffh
+	choice "DC000 - DDFFF" pos[27]=1110XXXXb mem 0dc000h-0ddfffh
+	choice "DE000 - DFFFF" pos[27]=1111XXXXb mem 0de000h-0dffffh
+
+	Help
+	"This field shows the memory address range used for the system
+	 video ROM.
+	 If you are in the 'Change Configuration' window, you can change
+	 the setting.  Use F5 and F6 to scroll through the choices, the Up
+	 and Down arrow keys to move from field to field.
+	 If a setting conflicts with another, an asterisk (*) appears next to
+	 the conflicts.  You must fix conflicts before you use the device.
+	 (If you are not in the 'Change Configuration' window and you need
+	 to change the setting, return to the 'Set Configuration' window then
+	 select 'Change configuration'.)"
+
+NamedItem Prompt "Video Arbitration Level"
+	choice "Arbitration level 13" pos[28]=X1101XXXb arb 0dh
+	choice "Arbitration level 12" pos[28]=X1100XXXb arb 0ch
+	choice "Arbitration level 11" pos[28]=X1011XXXb arb 0bh
+	choice "Arbitration level 10" pos[28]=X1010XXXb arb 0ah
+	choice "Arbitration level  9" pos[28]=X1001XXXb arb 9
+	choice "Arbitration level  8" pos[28]=X1000XXXb arb 8
+	choice "Arbitration level 14" pos[28]=X1110XXXb arb 0eh
+
+	Help
+	"The video sub-system can be set to any one of the available
+	arbitration levels.
+	If you are in the 'Change Configuration' window, you can change
+	the setting.  Use F5 and F6 to scroll through the choices, the Up
+	and Down arrow keys to move from field to field.
+	If a setting conflicts with another, an asterisk (*) appears next to
+	the conflicts.	You must fix conflicts before you use the device.
+	(If you are not in the 'Change Configuration' window and you need
+	to change the setting, return to the 'Set Configuration' window then
+	select 'Change configuration'.)"
+
+NamedItem Prompt "Video Fairness"
+	choice "Fairness On"  pos[28]=XXXXX1XXb
+	choice "Fairness Off" pos[28]=XXXXX0XXb
+
+	Help
+	"This field is used to select whether the video sub-system
+	coprocessor will follow the fairness algorithm for bus usage.
+	If you are in the 'Change Configuration' window, you can change
+	the setting.  Use F5 and F6 to scroll through the choices, the Up
+	and Down arrow keys to move from field to field.
+	(If you are not in the 'Change Configuration' window and you need
+	to change the setting, return to the 'Set Configuration' window then
+	select 'Change configuration'.)"
+End
+
+ADPItem 1 Prompt "Usable System-Board Memory"
+   Exec
+   Help
+   "This field displays the type of Usable Memory on the
+   system board.  The memory type is either parity or
+   error-correcting-code (ECC)."
+
+ADPItem 2 Prompt "Bypass System Programs on Error"
+   Help
+	"When the power-on self-test (POST) detects an error, POST
+	normally starts the system programs.  If you want POST to
+	start the operating system instead, choose <Enable>.  Warning:
+	Setting this to <Enable> could result in a partially configured system
+	when an adapter or device is added.  A partially configured system may
+	cause some operating systems and applications to be inoperable.
+
+	NOTE: If the selection displays 'Not Available,' this feature
+	is not available for the processor board that is installed, and
+	the system programs can not be bypassed."
+
+ADPItem 3 Prompt "Processor"
+   Help
+	"This field displays the speed and type of processor CPU
+	used in the system."
+
+

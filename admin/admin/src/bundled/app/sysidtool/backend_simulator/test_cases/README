@@ -1,0 +1,123 @@
+High level boot flow from CD image:
+
+rcS
+	/sbin/ifconfig -a plumb
+	/sbin/ifconfig -ad auto-revarp -trailers up
+	/sbin/hostconfig -p bootparams
+	if /netmask
+                /sbin/ifconfig -a netmask `cat /netmask`
+
+startup
+	if i86
+		sysidnet -l
+		sysidconfig
+
+sysconfig
+	if i86
+		SYSIDTOOL_MODE=INSTALL; export SYSIDTOOL_MODE
+	sysidnet
+	sysidnis
+	sysidsys
+
+
+Because of this boot flow, there are three possible initial states for the
+machine to be in when sysidnet runs:
+
+net booted:
+	The system has the hostname and domainname from the hostconfig command.
+	The boot interface is in the following state:
+
+	le0: flags=843<UP,BROADCAST,RUNNING,MULTICAST> mtu 1500
+		inet 129.152.221.203 netmask ffffff00 broadcast 129.152.255.255
+		ether 8:0:20:1d:17:97 
+
+CD boot, net configured:
+	This is slighly different from net boot, in that the netmask is not
+	set on the if.  The system does have the hostname and domainname
+	set from the hostconfig.  The interface is in the following state:
+
+	le0: flags=863<UP,BROADCAST,NOTRAILERS,RUNNING,MULTICAST> mtu 1500
+		inet 129.152.221.203 netmask ffff0000 broadcast 129.152.255.255
+		ether 8:0:20:1d:17:97 
+
+CD boot, net not configured:
+	The system will not have the hostname and domainname set.  The
+	interface is in the following state:
+
+	le0: flags=842<BROADCAST,RUNNING,MULTICAST> mtu 1500
+		inet 0.0.0.0 netmask 0 
+		ether 8:0:20:1d:17:97 
+
+The simulator is run by specifying the simulator library to the sysidtool
+program, along with the input and out system state files.
+
+-O simulatory library
+-i input state
+-I output state
+
+./sysidnet -O backend_simulator/libsysidsim.so \
+	-i backend_simulator/test_cases/test1 -I /tmp/T1
+
+The syntax for the input and out system state files is the same:
+
+machine {
+	name = <name> ;
+	domainname = <domainname> ;
+	type = <network name service> ;
+	rootpass = <encrypted root password> ;
+	interfaces {
+		{<name>, <instance>, <ipaddr>, <netmask>, <bcast addr>, <flags>}
+		...
+	}
+	sysidtool {
+		configured = < 1 | 0>;
+		bootparamed = < 1 | 0>;
+		networked = < 1 | 0>;
+		autobound = < 1 | 0>;
+		subnetted = < 1 | 0>;
+		rootpass = < 1 | 0>;
+		locale = < 1 | 0>;
+		termtype = <terminal type>;
+	}
+}
+
+nameservice {
+	type = NIS | NIS+ | UFS ;
+	name =  <domainname> ;
+	server = broadcast | <servername> ;
+	serverip = <serveripaddr> ;
+	map {
+		name = hosts | netmasks | timezone | locale | bootparams |
+			ether ;
+		{ <key>, ... }				// generic entry
+		{ <hostname>, <ipaddr> }		// hosts entry
+		{ <netnum>, <netmask>, <comment> }	// netmasks entry
+		{ <hostname>, <timezone> }		// timezone entry
+		{ <hostname>, <locale> }		// locale entry
+		{ <hostname>, [<key>=<name>:<val>]* }	// bootparams
+		{ <hostname>, <n:n:n:n:n:n> }		// ethers
+	}
+	...
+}
+...
+
+There can be more then one interface.  There can be more then one name
+service.  There can be more then one entry for each map.
+
+
+Sample test cases found here:
+
+test_netboot
+	A machine that is net booted, with enough tables for sysidtool
+	to run with no user interaction.
+
+test_cdboot
+	A machine with no network auto-configuration set up.  Full
+	user interaction.
+
+test_with_timezone - A test with the timezone variable set in
+	the machine area
+testinput - First testinput file. Boring
+test_multip - Test input with multiple network interfaces
+test_without_interfaces - Test input with no interfaces
+testinput1 - Test input that should cause a failure (multiple NIS+ domains)

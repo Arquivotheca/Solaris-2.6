@@ -1,0 +1,79 @@
+Module: pfgMeta
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Wed Mar  1 15:16:12 1995";
+      copy = false;
+      inCreateMenu = true;
+      nodesUsed = meta_dialog;
+        {
+          meta_dialog = formWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 40;
+            vip_y = 30;
+              {
+                :Inherited panelhelpText = XmText;
+              }
+              {
+                :Inherited metaForm : form = XmForm;
+                    {
+                      softwareGroupLabel = XmLabel;
+                      Group: Constraint
+                        topAttachment = attach_form;
+                        leftAttachment = attach_position;
+                        leftPosition = 10;
+                    }
+                    {
+                      recommendedSizeLabel = XmLabel;
+                      Group: Constraint
+                        rightAttachment = attach_opposite_widget;
+                        topAttachment = attach_form;
+                        rightWidget = metaScrolledWindow;
+                    }
+                    {
+                      metaScrolledWindow = XmScrolledWindow;
+                      Group: Widget
+                        scrollingPolicy = automatic;
+                        shadowThickness = 0;
+                      Group: Constraint
+                        leftAttachment = attach_opposite_widget;
+                        bottomAttachment = attach_form;
+                        leftWidget = softwareGroupLabel;
+                        topAttachment = attach_widget;
+                        topWidget = softwareGroupLabel;
+                        rightAttachment = attach_position;
+                        rightPosition = 90;
+                          {
+                            metaRadioBox = XmRadioBox;
+                          }
+                    }
+              }
+              {
+                :Inherited messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = continueButton;
+                    {
+                      :Inherited continueButton : button1 = XmPushButton;
+                    }
+                    {
+                      :Inherited gobackButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: metaGobackCB";
+                    }
+                    {
+                      :Inherited customizeButton : button3 = XmPushButton;
+                    }
+                    {
+                      :Inherited exitButton : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgExit";
+                    }
+                    {
+                      :Inherited helpButton : button5 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"softgroup.t\")";
+                    }
+              }
+        }
+}
+

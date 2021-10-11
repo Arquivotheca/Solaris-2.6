@@ -1,0 +1,49 @@
+#
+#	@(#)prototype_com 1.20 96/04/02
+#
+# This required package information file contains a list of package contents.
+# The 'pkgmk' command uses this file to identify the contents of a package
+# and their location on the development machine when building the package.
+# Can be created via a text editor or through use of the 'pkgproto' command.
+
+#!search
+#!default 0711 root bin
+
+# packaging files
+i pkginfo
+i copyright
+i depend
+#
+# source locations relative to the prototype file
+#
+# SUNWadmc
+#
+d none usr 0775 root sys
+d none usr/bin 0775 root bin
+f none usr/bin/showrev 0755 root sys
+d none usr/snadm 0755 root bin
+d none usr/snadm/lib 0755 root bin
+s none usr/snadm/lib/libprinter.so=./libprinter.so.2
+f none usr/snadm/lib/libprinter.so.2 0644 bin bin
+s none usr/snadm/lib/libserial.so=./libserial.so.2
+f none usr/snadm/lib/libserial.so.2 0644 bin bin
+s none usr/snadm/lib/libadmldb.so=./libadmldb.so.2
+f none usr/snadm/lib/libadmldb.so.2 0644 root sys
+s none usr/snadm/lib/libadmutil.so=./libadmutil.so.2
+f none usr/snadm/lib/libadmutil.so.2 0644 root sys
+s none usr/snadm/lib/libspmicommon.so=./libspmicommon.so.1
+f none usr/snadm/lib/libspmicommon.so.1 0644 bin bin
+s none usr/snadm/lib/libspmisoft.so=./libspmisoft.so.1
+f none usr/snadm/lib/libspmisoft.so.1 0644 bin bin
+s none usr/snadm/lib/libspmistore.so=./libspmistore.so.1
+f none usr/snadm/lib/libspmistore.so.1 0644 bin bin
+s none usr/snadm/lib/libspmisvc.so=./libspmisvc.so.1
+f none usr/snadm/lib/libspmisvc.so.1 0644 bin bin
+s none usr/snadm/lib/libspmiapp.so=./libspmiapp.so.1
+f none usr/snadm/lib/libspmiapp.so.1 0644 bin bin
+s none usr/snadm/lib/libspmitty.so=./libspmitty.so.1
+f none usr/snadm/lib/libspmitty.so.1 0644 bin bin
+s none usr/snadm/lib/libspmixm.so=./libspmixm.so.1
+f none usr/snadm/lib/libspmixm.so.1 0644 bin bin
+f none usr/snadm/lib/libadmapp.so.2 0644 bin bin
+s none usr/snadm/lib/libadmapp.so=./libadmapp.so.2

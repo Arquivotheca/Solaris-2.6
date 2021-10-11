@@ -1,0 +1,50 @@
+---- The Source Media Path -------------------------
+
+When you select Add from the Admintool:Software Edit
+menu, Admintool prompts you for the location of the
+software to be installed. Software can reside either 
+on a CD in a CD-ROM drive or on a system's hard
+disk. 
+
+If the software resides on a CD in a CD-ROM drive,
+the path to the CD may vary, as illustrated in the
+following table.
+
+If the		    And the	Then the default 
+system is...	    CD is a...	path to the CD is... 
+------------	    ----------	--------------------
+A SPARC running   
+Volume Management   Solaris CD  /cdrom/cdrom0/s0 
+
+An x86 running 
+Volume Management   Solaris CD	/cdrom/cdrom0/s2
+
+Not running 
+Volume Management   Solaris CD	/export/install
+
+A SPARC or x86
+running Volume
+Management	    product CD	/cdrom/cdrom0
+
+
+For systems not running Volume Management, Admintool
+assumes the CD has been manually mounted on
+/export/install. You can, however, specify another
+path if the CD has been mounted elsewhere.
+
+If the software resides on a system's disk, specify 
+the absolute path to it.
+
+NOTE:  When you specify a path where software
+       resides, Admintool:Software expects to find
+       one of the following:
+
+       - a .cdtoc file
+       - a .clustertoc file
+       - a directory that has a pkginfo file
+ 
+       If Admintool:Software finds any of these, it
+       displays software available for installation.
+       If it doesn't find any of these, it displays
+       an error message that says, "No installable
+       software on the media."

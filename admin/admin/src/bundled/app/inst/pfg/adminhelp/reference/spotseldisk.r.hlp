@@ -1,0 +1,38 @@
+
+---- About this screen ---------------------
+
+You must select at least one disk for
+installing Solaris software.
+
+---- Default Boot Disk --------------------
+
+The default boot disk is automatically 
+selected if one can be determined. If
+one is not listed, you can let the
+Solaris installation program create one
+for you, or select one from a list.
+
+On SPARC systems, if you accept the 
+default, the system hardware (EEPROM) will 
+automatically be updated to reboot from 
+this disk after installation.
+
+On x86 systems, if you change the default
+boot disk, you must change the BIOS.
+
+---- Select Root Location Button ------------
+
+This button lets you change the default boot
+disk shown in the Selected Disks window, or 
+specify one if one is not listed. This is an 
+advanced user option that lets you change 
+where the root (/) file system is laid out.
+
+---- Buttons: >> and << ---------------------
+
+The >> (Select All) and << (Deselect All) 
+buttons let you move all disks in the list
+between windows. This is useful for sites
+with large numbers of disks. 
+
+

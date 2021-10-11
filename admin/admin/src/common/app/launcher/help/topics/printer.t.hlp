@@ -1,0 +1,12 @@
+---- Printer Manager -----------------------------------------
+ 
+Printer Manager is a graphical user interface that simplifies
+the setup and administration of local and remote printers.
+
+Use Printer Manager to setup both print servers and print clients,
+and perform such tasks as defining a default system printer and
+managing printer queues.
+
+Printer Manager can be used to manage printer information on
+the local system or on a remote system with the appropriate
+access privileges.

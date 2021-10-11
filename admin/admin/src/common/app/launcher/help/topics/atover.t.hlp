@@ -1,0 +1,40 @@
+---- Administration Tool ----------------------------------------
+
+Administration Tool is a graphical user interface used to perform
+administrative tasks such as managing users, groups, hosts,
+printers, and serial devices.
+
+Administration Tool provides a series of applications that enable
+system administrators to perform administrative tasks.
+
+---- Administration Tool applications ---------------------------
+
+-	Database Manager
+	Enables you to manage network-related system
+	files such as aliases and netmasks
+-	Group Manager
+	Enables you to manage group information
+-	Host Manager
+	Enables you to manage network client services
+-	Printer Manager
+	Enables you to manage local and remote printer
+	setup
+-	Policy Manager
+	Enables you to manage default parameter values
+	for adding client services
+-	Serial Port Manager
+	Enables you to manage serial devices
+-	User Account Manager
+	Enables you to manage user account information
+
+---- Requirements for using Administration Tool ------------------
+
+-	A bit-mapped display monitor
+-	The Solaris 2.0 (or greater) operating system with the
+	OpenWindows environment started
+-	Superuser privileges or membership in the sysadmin
+	group (group ID=14) and the required access privileges
+	for managing the NIS or NIS+ databases
+
+See the Administration Application Reference Guide for more
+information about Administration Tool requirements.

@@ -1,0 +1,92 @@
+Module: pfgComboBox
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Mon Nov 21 14:40:21 1994";
+      copy = false;
+      inCreateMenu = true;
+        {
+          :Opaque combobox_form = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+            marginWidth = 5;
+            marginHeight = 5;
+            nodeAccess = access_any;
+          Group: Control
+            vip_x = 75;
+            vip_y = 30;
+            vipComment = "";
+            vip_show_name = true;
+              {
+                combobox_textfield = combobox_textfield : pfgComboBox;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = combobox_arrowbutton;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_none;
+                  resizable = true;
+              }
+              {
+                combobox_arrowbutton = combobox_arrowbutton : pfgComboBox;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_none;
+                  resizable = true;
+              }
+              {
+                combobox_scrolledlist = combobox_scrolledlist : pfgComboBox;
+                Group: Constraint
+                  leftAttachment = attach_opposite_widget;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_widget;
+                  topWidget = combobox_textfield;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                  leftWidget = combobox_textfield;
+              }
+              {
+                combobox_label = XmLabel;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = combobox_textfield;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_none;
+                  resizable = true;
+              }
+        }
+        {
+          combobox_textfield = XmTextField;
+          Group: Control
+            vip_x = 75;
+            vip_y = 85;
+            vipComment = "";
+            vip_show_name = true;
+        }
+        {
+          combobox_arrowbutton = XmArrowButton;
+          Group: Widget
+            arrowDirection = arrow_down;
+          Group: Control
+            vip_x = 75;
+            vip_y = 140;
+            vipComment = "";
+            vip_show_name = true;
+        }
+        {
+          combobox_scrolledlist = XmScrolledList;
+          Group: Widget
+            scrollBarDisplayPolicy = static;
+            height = 50;
+          Group: Control
+            vip_x = 75;
+            vip_y = 195;
+            vipComment = "";
+            vip_show_name = true;
+        }
+}
+

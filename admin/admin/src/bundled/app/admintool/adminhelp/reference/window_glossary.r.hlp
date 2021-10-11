@@ -1,0 +1,45 @@
+---- Button Definitions ----------------------------
+
+All Software button
+    The Admintool:Software All Software button
+    provides a pulldown menu of view options you
+    can choose from. These view options are:
+
+    All Software - Show all software installed on
+    the system.
+
+    System Software - Show only system software
+    installed on the local system.
+
+    Application Software - Show only application
+    software installed on the local system.
+
+Apply button
+    Completes the current operation, but does not
+    remove the window from the display.
+
+Cancel button
+    Closes the window without doing anything.
+
+Help button
+    Displays the Help system to provide help for the
+    window. 
+
+OK button
+    Completes the current operation and removes the
+    window from the display. 
+
+Reset button
+    Resets all fields to their last saved
+    state, which corresponds to the last time the OK
+    button was selected.
+
+Show Details button
+    Shows details about software installed on the
+    local system. Details displayed include the name
+    of the software, its product and vendor
+    affiliation, the hardware architecture it runs
+    on, the date installed, and the approximate disk
+    space it uses. The Show Details button is only
+    activated when a product is selected in the
+    Admintool:Software window.

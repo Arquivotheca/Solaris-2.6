@@ -1,0 +1,25 @@
+class="win" name="SUNW8514"
+	__wclass__="XSCREEN"
+
+        ddxHandler="ddxSUNW8514.so.1" ddxInitFunc="SUNW8514Init"
+	;
+
+class="win" name="SUNW8514"
+	__wclass__="XSCREENCONFIG"
+	__category__="display"
+	__title__="prototype 8514 device entry"
+
+	size="var,__size__"
+	__size__="string,15-inch,17-inch,19-inch"
+	__dimx__="string,12,13.5,15"
+	__dimy__="string,9.5,11,12"
+
+	position="var,__position__"
+	__position__="string,left,right,top,bottom"
+
+	device="SUNW8514"
+ 	pmifile="/usr/openwin/share/etc/devdata/svpmi/SUNW8514/ati.pmi"
+	res="string,1024x768"
+	dpix="string,90"
+	dpiy="string,90"
+	;

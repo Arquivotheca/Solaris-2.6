@@ -1,0 +1,21 @@
+---- To select a name service ------------------------------------
+
+Administration Tool can be used to manage information on the
+local system or across the network by using a name service.
+The sources of information that can be managed by
+Administration Tool are described below.
+
+-	NIS+ table information
+	This requires sysadmin group (group ID=14)
+	membership and the appropriate ownership and
+	permission on the NIS+ tables to be modified.
+-	NIS map information
+	You must be a member of the sysadmin group and
+	have explicit permissions on the NIS master server
+	to update the maps. This means an entry for your
+	user name must reside in root's .rhost file on the
+	NIS master server.
+-	None (/etc files on the local system)
+	You must be superuser or a member of the sysadmin
+	group. The local system (identified under Host:
+	on the Load window) is selected by default.

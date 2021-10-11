@@ -1,0 +1,44 @@
+Module: pfgClientQuery
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Fri Dec 16 14:37:44 1994";
+      copy = false;
+      inCreateMenu = true;
+        {
+          initial_client_query = baseWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 60;
+            vip_y = 30;
+              {
+                :Inherited panelhelpText = panelhelpText;
+              }
+              {
+                :Inherited messageBox = messageBox;
+                    {
+                      :Inherited query_continue : button1 = XmPushButton;
+                      Group: Widget
+                        accelerator = "C:reserve_space_now";
+                    }
+                    {
+                      :Inherited query_goback : button2 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      :Inherited query_cancel : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:reserve_space_later";
+                    }
+                    {
+                      :Inherited query_exit : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:pfgExit";
+                    }
+                    {
+                      :Inherited query_help : button5 = XmPushButton;
+                    }
+              }
+        }
+}
+

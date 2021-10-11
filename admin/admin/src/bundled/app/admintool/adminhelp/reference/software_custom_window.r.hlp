@@ -1,0 +1,27 @@
+---- Admintool:Customize Installation --------------
+
+Description
+    The Description window contains detailed
+    information about the specified product,
+    including approximate disk space required. 
+
+Installation Directory
+    Optional. Installation Directory specifies
+    where the product will be installed. The default
+    installation path is displayed, but you can
+    modify this path to install software in a
+    location other than the default. 
+
+NOTE:  Specifying an alternate installation 
+       directory has serious implications. Products
+       may depend on finding software components in
+       their default directories. If you have
+       installed a product somewhere other than the
+       default directory, you should know whether or
+       not this product relies on data files or
+       software in fixed locations.  
+
+Unresolved Dependencies
+    The Unresolved Dependencies window displays
+    other software products that must also be
+    installed for this product to work properly.

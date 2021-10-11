@@ -1,0 +1,109 @@
+#
+# Copyright (c) 1996 by Sun Microsystems, Inc.
+#
+#ident	"@(#)Makefile.rules	1.10	96/08/13 SMI"
+#
+# uts/prep/Makefile.rules
+#
+#	This Makefile defines the build rules for the directory uts/prep
+#	and it's children. These are the source files which prep
+#	"implementation architecture" dependent.
+#
+
+#
+#	This was implemented by pattern matching rules of the form:
+#
+# $(OBJS_DIR)/%.o:	 $(UTSBASE)/prep/os/%.c
+#	$(COMPILE.c) -o $@ $<
+#
+# $(LINTS_DIR)/%.ln:	$(UTSBASE)/prep/os/%.c
+#	@($(LHEAD) $(LINT.c) $< $(LTAIL))
+#
+#	For each directory containing source. This proved to slow under
+#	Nse because it caused a significant additional number of stats
+#	and stats are real slow under TFS. If TFS performance should
+#	improve, one might consider returning to the former implementation.
+#	In the former implementation, this file (Makefile.rules) was not
+#	needed and the pattern matching rules were in Makefile.files.
+#
+
+# Define location of sources which are SunSoft Confidential -- Internal Use Only
+SECRETBASE=     $(UTSBASE)/SunSoft_Confidential
+
+#
+#	C object build rules
+#
+#	The following are alphabetized by source file path. Please maintain
+# this ordering.
+#
+$(OBJS_DIR)/dnet.o:		$(UTSBASE)/prep/io/dnet.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/prep/io/dnet.c
+
+$(OBJS_DIR)/elx.o:              $(UTSBASE)/prep/io/elx.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/prep/io/elx.c
+
+$(OBJS_DIR)/kbmode.o:		$(UTSBASE)/prep/io/kd/kd/kbmode.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/prep/io/kd/kd/kbmode.c
+
+$(OBJS_DIR)/kdkb.o:		$(UTSBASE)/prep/io/kd/kd/kdkb.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/prep/io/kd/kd/kdkb.c
+
+$(OBJS_DIR)/kdstr.o:		$(UTSBASE)/prep/io/kd/kd/kdstr.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/prep/io/kd/kd/kdstr.c
+
+$(OBJS_DIR)/ws_8042.o:		$(UTSBASE)/prep/io/kd/ws/ws_8042.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/prep/io/kd/ws/ws_8042.c
+
+$(OBJS_DIR)/ws_cmap.o:		$(UTSBASE)/prep/io/kd/ws/ws_cmap.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/prep/io/kd/ws/ws_cmap.c
+
+$(OBJS_DIR)/ws_subr.o:		$(UTSBASE)/prep/io/kd/ws/ws_subr.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/prep/io/kd/ws/ws_subr.c
+
+$(OBJS_DIR)/ws_tables.o:	$(UTSBASE)/prep/io/kd/ws/ws_tables.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/prep/io/kd/ws/ws_tables.c
+
+$(OBJS_DIR)/kdmouse.o:		$(UTSBASE)/prep/io/kdmouse.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/prep/io/kdmouse.c
+
+$(OBJS_DIR)/xsvc.o:            	$(SECRETBASE)/prep/io/xsvc.c
+	$(COMPILE.c) -o $@ $(SECRETBASE)/prep/io/xsvc.c
+
+#
+#	Lint `object' build rules
+#
+#	The following are alphabetized by source file path. Please maintain
+# this ordering.
+#
+$(LINTS_DIR)/dnet.ln:		$(UTSBASE)/prep/io/dnet.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/prep/io/dnet.c $(LTAIL))
+
+$(LINTS_DIR)/elx.ln:		$(UTSBASE)/prep/io/elx.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/prep/io/elx.c $(LTAIL))
+
+$(LINTS_DIR)/kbmode.ln:		$(UTSBASE)/prep/io/kd/kd/kbmode.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/prep/io/kd/kd/kbmode.c $(LTAIL))
+
+$(LINTS_DIR)/kdkb.ln:		$(UTSBASE)/prep/io/kd/kd/kdkb.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/prep/io/kd/kd/kdkb.c $(LTAIL))
+
+$(LINTS_DIR)/kdstr.ln:		$(UTSBASE)/prep/io/kd/kd/kdstr.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/prep/io/kd/kd/kdstr.c $(LTAIL))
+
+$(LINTS_DIR)/ws_8042.ln:	$(UTSBASE)/prep/io/kd/ws/ws_8042.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/prep/io/kd/ws/ws_8042.c $(LTAIL))
+
+$(LINTS_DIR)/ws_cmap.ln:	$(UTSBASE)/prep/io/kd/ws/ws_cmap.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/prep/io/kd/ws/ws_cmap.c $(LTAIL))
+
+$(LINTS_DIR)/ws_subr.ln:	$(UTSBASE)/prep/io/kd/ws/ws_subr.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/prep/io/kd/ws/ws_subr.c $(LTAIL))
+
+$(LINTS_DIR)/ws_tables.ln:	$(UTSBASE)/prep/io/kd/ws/ws_tables.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/prep/io/kd/ws/ws_tables.c $(LTAIL))
+
+$(LINTS_DIR)/kdmouse.ln:	$(UTSBASE)/prep/io/kdmouse.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/prep/io/kdmouse.c $(LTAIL))
+
+$(LINTS_DIR)/xsvc.ln:           $(SECRETBASE)/prep/io/xsvc.c
+	@($(LHEAD) $(LINT.c) $(SECRETBASE)/prep/io/xsvc.c $(LTAIL))

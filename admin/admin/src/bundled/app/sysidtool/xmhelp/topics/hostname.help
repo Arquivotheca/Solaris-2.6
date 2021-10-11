@@ -1,0 +1,12 @@
+---- Description -----------------------------------
+
+     Specifies the name of this system; if the
+     system is on a network, it uniquely identifies
+     it among all other systems.
+
+     Host names are often assigned by network or
+     system administrators according to site
+     policies.  Because creating duplicate host
+     names can cause network problems, do not
+     guess; check with your system or network
+     administrator.

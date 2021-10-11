@@ -1,0 +1,64 @@
+#
+# Real Makefile SID -- change $-signs to %-signs in the line below
+# to use this as a real Makefile, delete the space between '#' and
+# ident, and put a space between '#' and ident for the template SID.
+#
+#ident @(#)Makefile.targ   1.7     96/01/23
+#
+
+$(ROOT)/%: %
+	$(INS.file)
+
+$(ROOTSBIN)/%: %
+	$(INS.file)
+
+$(ROOTUSRSBIN)/%: %
+	$(INS.file)
+
+$(ROOTINSTALLD)/%: %
+	$(INS.file)
+
+$(ROOTRESD)/%: %
+	$(INS.file)
+
+$(ROOTTOOLS)/%: %
+	$(INS.file)
+
+$(ROOTUSRLIBMSGS)/%: %
+	$(INS.file)
+
+$(ROOTHELPDIR)/$(HELPTYPE)/%: %
+	$(INS.file)
+
+$(ROOTGUIHELPDIR)/$(HELPTYPE)/%: %
+	$(INS.file)
+
+$(ROOTAI)/%: %
+	$(INS.file)
+
+$(ROOTAI86)/%: %
+	$(INS.file)
+
+$(ROOTCD)/%: %
+	$(INS.file)
+ 
+$(ROOTETC)/%: %
+	$(INS.file)
+
+$(ROOTADMINETC)/%: %
+	$(INS.file)
+
+$(ROOTINITD)/%: %
+	$(INS.file)
+ 
+$(ROOTUSRMENU)/%: %
+	$(INS.file)
+ 
+$(ROOTCDBUILD)/%: %
+	$(INS.file)
+ 
+$(ROOTUSRBIN)/%: %
+	$(INS.file)
+ 
+$(ROOTVARSADM)/%: %
+	$(INS.file)

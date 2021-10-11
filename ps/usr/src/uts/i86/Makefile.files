@@ -1,0 +1,29 @@
+#
+# uts/i86/Makefile.files
+#
+# Copyright (c) 1996 by Sun Microsystems, Inc.
+# All Rights Reserved
+#
+#pragma ident	"@(#)Makefile.files	1.27	96/06/18 SMI"
+#
+#	This Makefile defines all file modules and build rules for the
+# directory uts/i86 and it's children. These are the source files which
+# are specific to the i86 processor.
+#
+
+#       Misc. modules
+
+#	Driver modules
+
+#
+#	Build up paths and defines.
+#
+LINT_DEFS	+= -Di86
+INC_PATH	+= -I$(UTSBASE)/i86
+
+#
+# Inlined assembler routines.
+#
+INLINES		+= $(UTSBASE)/i86/ml/i86.il
+
+

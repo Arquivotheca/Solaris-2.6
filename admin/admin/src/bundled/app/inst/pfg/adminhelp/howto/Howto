@@ -1,0 +1,16 @@
+Determine a System's Platform
+	platform.h.hlp
+Free Up Disk Space
+	freedisk.h.hlp
+Install Solaris for a Heterogeneous Server
+	hetserver.h.hlp
+Navigate With Mouse and Keyboard
+	navigate.h.hlp
+Preserve Existing Disk Slices And/Or Data
+	preserve.h.hlp
+Reset Software Group to Default Selections
+	softgroup.h.hlp
+Resolve Software Dependencies
+	resolve.h.hlp
+Specify a Boot Disk
+	boot.h.hlp

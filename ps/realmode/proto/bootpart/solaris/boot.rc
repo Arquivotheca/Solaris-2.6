@@ -1,0 +1,66 @@
+#ident "@(#)boot.rc 1.8 96/07/16 SMI"
+#
+# Copyright (c) 1996, by Sun Microsystems, Inc.
+# All rights reserved.
+#
+echo '
+
+             Solaris 2.6 Intel Platform Edition Booting System
+
+'
+
+#
+# get environment variables the first time through only
+#
+cd /options
+if .streq ( ${beenhere}X , X )
+	source /platform/i86pc/boot/solaris/bootenv.rc
+	source /platform/i86pc/boot/solaris/bootargs.rc
+	set beenhere true
+endif
+
+#
+# let user type to boot interpreter before bootconf runs
+# if the variable "bshfirst" is set to "true".
+#
+if .streq ( ${bshfirst}X , trueX )
+	echo 'Entering boot interpreter - type ctrl-d to resume boot'
+	console
+endif
+
+echo '
+Running Configuration Assistant...'
+
+run /platform/i86pc/boot/solaris/bootconf.exe ${confflags}
+
+#
+#  Set up default boot file, based on /options property "boot-file"
+#
+cd /options
+if .streq ( "${boot-file}"X , X )
+	set def_bootfile kernel/unix	# emergency fallback case
+else
+	set def_bootfile "${boot-file}"
+endif
+
+#
+#  If a boot file name was supplied at reboot, it overrides the
+#  default boot file.
+#
+if ! .streq ( "${rb_file}"X , X )
+	set def_bootfile "${rb_file}"
+endif
+
+#
+#  Set up the boot-args property if necessary
+#
+cd /chosen
+if ! .streq ( "${rb_args}"X , X )
+	setprop boot-args "${rb_args}"
+endif
+
+echo ''
+#
+# Control now passes back to the boot shell,
+# which has been prewired to source the /etc/bootrc file.
+#

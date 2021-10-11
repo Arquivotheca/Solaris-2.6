@@ -1,0 +1,10 @@
+! The app-defaults file for Admin applications.
+
+*allowShellResize: True
+*fontList: -*-helvetica-bold-r-normal-*-12-120-75-75-p-70-iso8859-1
+*XmTextField.fontList: -*-helvetica-medium-r-normal-*-12-120-75-75-p-67-iso8859-1
+*XmText.fontList: -*-helvetica-medium-r-normal-*-12-120-75-75-p-67-iso8859-1
+*helpform*helptext.rows:	15
+*helpform*helptext.columns:	52
+*helpform*helpsubjs.visibleItemCount: 4
+*helpform*helptext.fontList: -*-lucida sans typewriter-medium-r-normal-*-12-*

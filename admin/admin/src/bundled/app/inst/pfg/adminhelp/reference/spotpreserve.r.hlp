@@ -1,0 +1,24 @@
+---- About this screen ------------------------
+
+This screen is used to preserve existing slices 
+on disks. Any slice can be preserved, however, 
+the following slices must be renamed if you want 
+to preserve them:
+
+   / (root)
+   swap
+   /usr
+   /var
+
+---- To rename file systems -------------------
+
+> Click on the the file system name and type the 
+  new name
+
+---- To unpreserve data ------------------------
+
+The Preserve buttons are toggle buttons. To 
+unpreserve data on a slice:
+
+> Select the button in the Preserve Data column 
+  to change its state from selected to deselected

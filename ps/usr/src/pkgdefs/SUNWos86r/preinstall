@@ -1,0 +1,16 @@
+#
+# Put the existing OWconfig fine in the package database.
+#
+#ident "@(#)preinstall 1.4 96/10/31"
+#
+
+#
+# If the file exists on the system, put it in the package database.
+# This makes up for a failure to do this in older releases.
+#
+if [ -r ${BASEDIR}/etc/openwin/server/etc/OWconfig ]; then
+	installf -c rOWconfig $PKGINST /etc/openwin/server/etc/OWconfig e 
+	installf -f -c rOWconfig $PKGINST
+fi
+
+exit 0

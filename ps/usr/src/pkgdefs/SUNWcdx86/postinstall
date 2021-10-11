@@ -1,0 +1,26 @@
+#
+#ident "@(#)postinstall 1.5 95/07/27"
+#
+# postinstall script for SUNWcdx86 package.
+#
+# script adds rootprop driver to kernel configuration
+#
+
+
+case "${ARCH}" in
+i386)
+	if [ -n "${BASEDIR}" ]; then
+		add_drv -b ${BASEDIR} rootprop
+	else
+		add_drv rootprop
+	fi
+	
+	grep rootprop ${BASEDIR}/etc/devlink.tab >/dev/null 2>&1
+	if [ $? -ne 0 ]; then
+		cat >>${BASEDIR}/etc/devlink.tab <<-EOM
+		# The following line added to support the rootprop driver
+		type=ddi_pseudo;name=rootprop	\D
+		EOM
+	fi
+	;;
+esac

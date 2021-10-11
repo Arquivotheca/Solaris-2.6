@@ -1,0 +1,256 @@
+Module: pfgGUITemplates
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.2 / Solaris 2.4";
+      lastWritten = "Fri Oct 27 11:14:05 1995";
+      copy = false;
+      inCreateMenu = true;
+      description = "Copyright (c) 1994-1995 by Sun MicroSystems, Inc.\nAll rights reserved.";
+        {
+          :Opaque panelhelpText = XmText;
+          Group: Widget
+            autoShowCursorPosition = False;
+            cursorPositionVisible = False;
+            editMode = multi_line_edit;
+            traversalOn = False;
+            resizeHeight = True;
+            wordWrap = True;
+            shadowThickness = 0;
+            marginWidth = 18;
+            marginHeight = 18;
+            value = message_text;
+            translations = "#override
+~Ctrl ~Meta<BtnDown>:
+~Ctrl ~Meta<BtnUp>:";
+            createCallback = "C:unregister_as_dropsite";
+            nodeAccess = access_any;
+          Group: Control
+            vip_x = 135;
+            vip_y = 140;
+            vipComment = "";
+            vip_show_name = true;
+        }
+        {
+          :Opaque messageBox = XmMessageBox;
+          Group: Widget
+            dialogType = dialog_template;
+            nodeAccess = access_any;
+          Group: Control
+            vip_x = 135;
+            vip_y = 30;
+            vipComment = "";
+            vip_show_name = true;
+              {
+                button1 = XmPushButton;
+                Group: Widget
+                  nodeAccess = access_any;
+              }
+              {
+                button2 = XmPushButton;
+                Group: Widget
+                  nodeAccess = access_any;
+              }
+              {
+                button3 = XmPushButton;
+                Group: Widget
+                  nodeAccess = access_any;
+              }
+              {
+                button4 = XmPushButton;
+                Group: Widget
+                  nodeAccess = access_any;
+              }
+              {
+                button5 = XmPushButton;
+                Group: Widget
+                  nodeAccess = access_any;
+              }
+        }
+        {
+          baseWindow = XmFormDialog;
+          Group: Control
+            vip_x = 45;
+            vip_y = 30;
+              {
+                panelhelpText = panelhelpText;
+                Group: Widget
+                  nodeAccess = access_any;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_widget;
+                  bottomWidget = messageBox;
+              }
+              {
+                messageBox = messageBox;
+                Group: Constraint
+                  rightAttachment = attach_form;
+                  leftAttachment = attach_form;
+                  bottomAttachment = attach_form;
+              }
+        }
+        {
+          labelText = XmForm;
+          Group: Control
+            vip_x = 135;
+            vip_y = 85;
+              {
+                label = XmLabel;
+                Group: Widget
+                  alignment = alignment_end;
+                Group: Constraint
+                  rightAttachment = attach_widget;
+                  rightWidget = textField;
+                  rightOffset = 5;
+                  leftAttachment = attach_form;
+                  bottomAttachment = attach_opposite_widget;
+                  bottomWidget = textField;
+                  topAttachment = attach_opposite_widget;
+                  topWidget = textField;
+              }
+              {
+                textField = XmTextField;
+                Group: Constraint
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  rightAttachment = attach_form;
+              }
+        }
+        {
+          formWindow = XmFormDialog;
+          Group: Control
+            vip_x = 45;
+            vip_y = 140;
+              {
+                panelhelpText = panelhelpText;
+                Group: Widget
+                  nodeAccess = access_any;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_form;
+              }
+              {
+                form = XmForm;
+                Group: Constraint
+                  rightAttachment = attach_form;
+                  leftAttachment = attach_form;
+                  topAttachment = attach_widget;
+                  topWidget = panelhelpText;
+                  bottomAttachment = attach_widget;
+                  bottomWidget = messageBox;
+              }
+              {
+                messageBox = messageBox;
+                Group: Constraint
+                  rightAttachment = attach_form;
+                  leftAttachment = attach_form;
+                  bottomAttachment = attach_form;
+              }
+        }
+        {
+          twolistWindow = formWindow;
+          Group: Control
+            vip_x = 45;
+            vip_y = 85;
+              {
+                panelhelpText = XmText;
+              }
+              {
+                form = XmForm;
+                Group: Widget
+                  fractionBase = 9;
+                  marginWidth = 20;
+                    {
+                      availableLabel = XmLabel;
+                      Group: Constraint
+                        topAttachment = attach_form;
+                        rightAttachment = attach_position;
+                        rightPosition = 4;
+                        leftAttachment = attach_form;
+                    }
+                    {
+                      availableScrolledList = XmScrolledList;
+                      Group: Widget
+                        listSizePolicy = constant;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = selectedLabel;
+                        bottomAttachment = attach_form;
+                        rightAttachment = attach_position;
+                        rightPosition = 4;
+                        resizable = False;
+                    }
+                    {
+                      buttonForm = XmRowColumn;
+                      Group: Widget
+                        entryAlignment = alignment_center;
+                        marginWidth = 10;
+                        spacing = 10;
+                      Group: Constraint
+                        topAttachment = attach_widget;
+                        topWidget = availableLabel;
+                        leftAttachment = attach_position;
+                        leftPosition = 4;
+                          {
+                            addButton = XmPushButton;
+                            Group: Widget
+                              sensitive = False;
+                          }
+                          {
+                            removeButton = XmPushButton;
+                            Group: Widget
+                              sensitive = False;
+                          }
+                    }
+                    {
+                      selectedLabel = XmLabel;
+                      Group: Constraint
+                        topAttachment = attach_form;
+                        leftAttachment = attach_widget;
+                        leftPosition = 6;
+                        rightAttachment = attach_form;
+                        leftWidget = buttonForm;
+                    }
+                    {
+                      selectedScrolledList = XmScrolledList;
+                      Group: Widget
+                        listSizePolicy = constant;
+                      Group: Constraint
+                        leftAttachment = attach_widget;
+                        leftWidget = buttonForm;
+                        topAttachment = attach_opposite_widget;
+                        topWidget = availableScrolledList;
+                        bottomAttachment = attach_opposite_widget;
+                        bottomWidget = availableScrolledList;
+                        rightAttachment = attach_form;
+                        resizable = False;
+                    }
+              }
+              {
+                messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = continueButton;
+                    {
+                      continueButton : button1 = XmPushButton;
+                    }
+                    {
+                      gobackButton : button2 = XmPushButton;
+                    }
+                    {
+                      exitButton : button3 = XmPushButton;
+                    }
+                    {
+                      helpButton : button4 = XmPushButton;
+                    }
+                    {
+                      button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+}
+

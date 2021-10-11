@@ -1,0 +1,51 @@
+---- Push buttons -----------------------------
+
+     Cancel .... deletes input on current screen
+     Change .... goes back to a screen in a
+                 sequence of screens so you can
+                 change selections
+
+     Continue .. goes to the next screen
+     Help ...... starts the Help tool
+     OK ........ applies any changes and 
+                 dismisses dialog box
+
+---- Using the mouse --------------------------
+
+    > To activate an operation, click once on
+      push button
+
+    > To enter values in a field, click once
+      in the field and start typing
+
+    > To select an option from a number of
+      options in a list, move the cursor on
+      the item and click once
+
+    > To resize windows, point the cursor on the
+      corner of the window; hold the Select
+      button down and drag the corner
+
+    > To move a scrollbar or slider bar, point
+      the cursor on the bar; hold the Select
+      button down and move in the desired
+      direction
+
+---- Keys to use ------------------------------
+
+     Tab, Ctrl-Tab .. moves the focus among
+                      control groups (for
+                      example, from field to
+                      push buttons, and from
+                      field to field)
+
+      Return/Enter ... applies any changes and
+                       activates the highlighted
+                       push button
+
+      Backspace ...... backspaces one letter in
+                       a field
+
+      arrow keys ..... moves focus among push
+                       buttons and among items
+                       in a list or menu

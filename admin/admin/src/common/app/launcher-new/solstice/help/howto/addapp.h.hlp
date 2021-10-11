@@ -1,0 +1,31 @@
+---- How to Add Applications to
+     the Solstice Launcher ---------------------
+
+1. Select Add Application from the Launcher menu.
+   The Add Application window is displayed.
+
+2. Provide the following application information:
+
+   A. Identify the application name in the Name
+      text box.
+      This name is displayed in the launcher
+      window.
+
+   B. Identify the application path name in the
+      Application Path text box.
+
+   C. Identify any arguments for the application
+      in the Arguments text box.
+      These arguments are passed to the application
+      when it is started.
+
+   D. Identify the application icon path name in
+      the Icon Path text box.
+
+3. Click on Register to add the application.
+
+This procedure describes how to locally register
+applications in the $HOME/.solstice_registry file.
+See the Solstice System Management Guide for
+information about registering applications
+globally.

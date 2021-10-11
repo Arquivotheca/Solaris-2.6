@@ -1,0 +1,35 @@
+#
+# Copyright (c) 1996 by Sun Microsystems, Inc.
+#
+#ident	"@(#)Makefile.files	1.8	96/08/13 SMI"
+#
+# uts/prep/Makefile.files
+#
+#	This Makefile defines all file modules in the directory uts/prep
+#	and it's children. These are the source files which prep
+#	"implementation architecture" dependent.
+#
+
+#
+#		object lists
+#
+
+#
+#		driver modules
+#
+ELX_OBJS +=	elx.o
+KD_OBJS +=	at_keyprocess.o	kbmode.o	kdkb.o		kdstr.o	\
+		ws_8042.o	ws_cmap.o	ws_subr.o \
+		ws_tables.o
+KDMOUSE_OBJS +=	kdmouse.o 
+XSVC_OBJS +=	xsvc.o
+
+#
+#	platform specific modules 
+#
+
+#
+#	Build up defines and paths.
+#
+ALL_DEFS	+= -Dprep
+INC_PATH	+= -I$(UTSBASE)/prep

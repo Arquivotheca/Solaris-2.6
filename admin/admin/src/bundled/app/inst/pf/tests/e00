@@ -1,0 +1,6 @@
+install_type  initial_install
+system_type standalone
+cluster SUNWCxxx
+package SUNWxxx
+partitioning default
+filesys any auto /bin

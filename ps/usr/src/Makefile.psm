@@ -1,0 +1,39 @@
+#
+# Makefile.psm
+#
+#pragma ident  "@(#)Makefile.psm 1.1     95/02/28 SMI"
+#
+# Copyright (c) 1995 by Sun Microsystems, Inc.
+# All rights reserved.
+#
+# Makefile.psm, global definitions for platform specific modules
+#
+
+INS.dir.root.sys=	$(INS) -s -d -m $(DIRMODE) $@
+$(CH)INS.dir.root.sys=	$(INS) -s -d -m $(DIRMODE) -u root -g sys $@
+
+ROOT_PLAT_DIR		 = $(ROOT)/platform
+
+ROOT_PSM_DIR		 = $(ROOT_PLAT_DIR)/$(PLATFORM)
+
+ROOT_PSM_MOD_DIR	 = $(ROOT_PSM_DIR)/kernel
+
+ROOT_PSM_DRV_DIR	 = $(ROOT_PSM_MOD_DIR)/drv
+ROOT_PSM_STRMOD_DIR	 = $(ROOT_PSM_MOD_DIR)/strmod
+ROOT_PSM_MISC_DIR	 = $(ROOT_PSM_MOD_DIR)/misc
+
+ROOT_PSM_MOD_DIRS	 = $(ROOT_PSM_DRV_DIR)
+ROOT_PSM_MOD_DIRS       += $(ROOT_PSM_STRMOD_DIR)
+ROOT_PSM_MOD_DIRS       += $(ROOT_PSM_MISC_DIR)
+
+#
+# The following are for the installation of objects in PSM directories.
+#
+ROOT_PSM_PROG=			$(PROG:%=$(ROOT_PSM_DIR)/%)
+
+#
+# The following are used to link objects between platforms (for platforms
+# which wish to share some objects, but not everything).
+#
+ROOT_PSM_PROG_LINKS=		$(PLATLINKS:%=$(ROOT_PLAT_DIR)/%/$(PROG))
+

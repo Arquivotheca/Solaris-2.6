@@ -1,0 +1,10 @@
+
+AdapterID 0effdh
+
+AdapterName "IBM VGA Adapter"
+
+Numbytes 1
+
+fixedresources pos[0]=0000000xb
+
+

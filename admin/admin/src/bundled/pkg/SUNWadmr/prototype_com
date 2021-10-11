@@ -1,0 +1,44 @@
+#
+#	@(#)prototype_com 1.6 96/10/05
+#
+# This required package information file contains a list of package contents.
+# The 'pkgmk' command uses this file to identify the contents of a package
+# and their location on the development machine when building the package.
+# Can be created via a text editor or through use of the 'pkgproto' command.
+
+#!search
+#!default 0711 root bin
+
+# packaging files
+i pkginfo
+i copyright
+i depend
+i postinstall
+i postremove
+#
+# source locations relative to the prototype file
+#
+# SUNWadmr
+#
+d none ./etc 0755 root sys
+d none ./etc/rc2.d 0775 root sys
+d none ./etc/init.d 0775 root sys
+d none ./sbin 0775 root sys
+f none ./etc/init.d/sysid.net 0755 root other
+f none ./etc/init.d/sysid.sys 0755 root other
+f none ./etc/init.d/autoinstall 0755 root other
+l none ./etc/rc2.d/S30sysid.net=../../etc/init.d/sysid.net
+l none ./etc/rc2.d/S71sysid.sys=../../etc/init.d/sysid.sys
+l none ./etc/rc2.d/S72autoinstall=../../etc/init.d/autoinstall
+s none ./sbin/bpgetfile=../usr/sbin/bpgetfile
+d none ./var 0775 root sys
+d none ./var/sadm 0755 root sys
+d none ./var/sadm/system 0755 root sys
+d none ./var/sadm/system/admin 0755 root sys
+d none ./var/sadm/system/admin/services 0755 root sys
+d none ./var/sadm/system/logs 0755 root sys
+d none ./var/sadm/system/data 0755 root sys
+d none ./var/sadm/install_data 0755 root sys
+d none ./var/sadm/softinfo 0755 root sys
+s none ./var/sadm/softinfo/INST_RELEASE=../system/admin/INST_RELEASE
+f none ./var/sadm/README 0444 root sys

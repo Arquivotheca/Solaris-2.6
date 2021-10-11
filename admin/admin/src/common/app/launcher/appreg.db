@@ -1,0 +1,7 @@
+User list /opt/SUNWadm/admintool/2.1/bin/usermgr class any
+Table list /opt/SUNWadm/admintool/2.1/bin/dbmgr class any
+Table get /opt/SUNWadm/admintool/2.1/bin/dbmgr instance any
+Group list /opt/SUNWadm/admintool/2.1/bin/groupmgr class any
+Host list /opt/SUNWadm/admintool/2.1/bin/hostmgr class any
+Printer list /opt/SUNWadm/admintool/2.1/bin/printmgr class any
+SerialPort list /opt/SUNWadm/admintool/2.1/bin/serialmgr class any

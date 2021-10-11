@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+#       @(#)set_root_pw 1.5 95/10/02 SMI
+#
+# This is an example bourne shell script to be run after installation.
+# It sets the system's root password to the entry defined in PASSWD.
+# The encrypted password is obtained from an existing root password entry
+# in /etc/shadow from an installed machine.
+
+echo "setting password for root"
+
+# set the root password
+PASSWD=dKO5IBkSF42lw
+# create a temporary input file
+cp /a/etc/shadow /a/etc/shadow.orig
+
+nawk -F: '{ 
+	if ( $1 == "root" ) 
+	    printf"%s:%s:%s:%s:%s:%s:%s:%s:%s\n",$1,passwd,$3,$4,$5,$6,$7,$8,$9
+	else
+	    printf"%s:%s:%s:%s:%s:%s:%s:%s:%s\n",$1,$2,$3,$4,$5,$6,$7,$8,$9
+	}' passwd="$PASSWD" /a/etc/shadow.orig > /a/etc/shadow
+
+# remove the temporary file
+rm -f /a/etc/shadow.orig
+
+# set the flag so sysidroot won't prompt for the root password
+sed -e 's/0	# root/1	# root/' ${SI_SYS_STATE} > /tmp/state.$$
+mv /tmp/state.$$ ${SI_SYS_STATE}

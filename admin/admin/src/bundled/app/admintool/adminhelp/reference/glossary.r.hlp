@@ -1,0 +1,204 @@
+---- Glossary --------------------------------------
+
+Admintool:Hosts
+    The Admintool application used to manage host 
+    information in the /etc/inet/hosts file.
+
+Admintool:Groups
+    The Admintool application used to manage group
+    information in the /etc/group file.  
+
+Admintool:Printers
+    The Admintool application used to manage local
+    and remote printer setup.
+
+Admintool:Serial Ports
+    The Admintool application used to manage serial
+    port services for terminals and modems.
+
+Admintool:Software
+    The Admintool application used to add or remove
+    software, or to view the software already
+    installed on a system.
+
+Admintool:Users
+    The Admintool application used to manage user
+    account information in the /etc/passwd and
+    /etc/shadow files.  
+
+file content
+    The file formats (e.g., PostScript or ASCII)
+    that can be printed without any special
+    filtering by the printer. 
+
+host name
+    A name used by the operating system to identify
+    a system. 
+
+group
+    A collection of users who share files and other
+    system resources. Each user belongs to a primary
+    group (listed in the user's passwd entry), and
+    optionally, one or more secondary groups.
+
+group 14
+    A UNIX group ID that has special system
+    administration privileges. Admintool users must
+    be in group 14 for Admintool to be able to
+    modify and update local system files. Group 14
+    is also known as the sysadmin group.
+
+group ID (GID)
+    A group identification number used by the system
+    to identify a user's primary group. 
+
+group file
+    A file containing entries for UNIX groups. The
+    group file is accessed from the Admintool:Groups
+    window.
+
+group name
+    A name used by the operating system to identify
+    a user's group. 
+
+initialization files
+    Special files that run automatically when a user 
+    logs in. When you create a user account and
+    specify a path to a home directory with
+    Admintool, it copies generic versions of the
+    initialization files into that home directory.
+
+IP address
+    A system's unique network address.
+
+local printer
+    A printer physically connected to the local
+    system.
+
+media server
+    A system that shares a Solaris(tm) CD image or
+    a product CD image. This CD image can be on
+    either a system's CD-ROM drive or a system's
+    hard disk. The Admintool accesses the Solaris or
+    product CD image to add software on a local system.
+
+name service
+    Method by which system information is maintained
+    in the network. There are three types: NIS,
+    NIS+, or None. 
+
+    NIS - Name service shipped with the SunOS(tm)
+    4.1.x operating system. Designated machines,
+    called NIS servers, contain maps that store
+    information about the network, its workstations,
+    and its users. 
+
+    NIS+ - Name service shipped with the Solaris 2.x
+    product. Making use of true databases (instead
+    of two-column maps that simply associate one 
+    variable with another), NIS+ stores even more
+    information than NIS. 
+
+    None - Method for administrators of networks
+    that do not use a network name service;
+    administrators usually select one machine on the
+    network on which to maintain a master copy of
+    the /etc system files. 
+
+passwd file
+    A file in the /etc directory that contains user
+    account information such as the user name, user
+    ID, group ID, and home directory.
+
+permissions
+    A set of attributes assigned to each file and
+    directory that determines which users have
+    access to read, write, and execute its contents.
+
+primary group
+    A user's primary group affiliation determines
+    the group ownership of files the user creates or
+    determines the files a user is allowed to
+    access. Membership in this group is defined by
+    the group identifier listed in the user's entry
+    in the /etc/passwd file. 
+
+port
+    A channel through which a device communicates
+    with the operating system.
+
+print client
+    A system that uses a print server for printing
+    files.
+
+print server
+    A system with a printer physically connected to
+    it and the appropriate software configured to
+    manage both local and remote print requests.
+
+printer name
+    A unique name for a printer.
+
+printer type
+    The terminfo database entry that contains the
+    control sequences that initialize the printer.
+
+remote printer
+    A printer connected to a print server that is
+    available on the network.
+
+secondary group
+    A set of users sharing a secondary group ID, as
+    listed in the /etc/group file.
+
+shadow file
+    A file in the /etc directory that contains
+    encrypted user passwords and password aging
+    information.
+
+shell
+    A command-line interpreter program that accepts
+    and executes commands that you type. There are
+    several varieties of shell programs, and three
+    are included in the Solaris 2.x environment:
+    Bourne, Korn, and C.
+
+skeleton path
+    A prototype directory (/etc/skel) that contains
+    start-up files. See also initialization files. 
+
+stream
+    A Stream is a communication path between a user
+    process and a device driver.
+
+streams module
+    A Streams module is software in the kernel that
+    processes characters as they pass through a
+    serial port. A Streams module can be pushed (or
+    popped) onto a stream as if the stream were a
+    first-in, last-out stack. 
+
+superuser
+    A user who has access to all parts of the
+    system. This is usually the system
+    administrator. Also known as root.
+
+sysadmin group
+    See group 14.
+
+system default printer
+    The printer your print requests will be sent to
+    if you do not specify a printer.
+
+user account
+    A record of essential user information stored on
+    the system. You must have a user account to
+    access a system.
+
+user ID (UID)
+    A number used by the operating system to
+    identify a user. 
+
+user name
+    The name assigned to an individual user. The
+    user name is used to log in to a system.

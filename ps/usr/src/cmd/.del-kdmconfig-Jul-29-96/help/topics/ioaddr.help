@@ -1,0 +1,21 @@
+
+---- Description -----------------------------------------------------
+
+    Specifies the first I/O address of the block used by the device.
+	
+    This field is selectable on the Microsoft Bus Mouse. The default
+    value (0x23c), is referred to in the Microsoft Bus Mouse docs
+    and on the interface card as the "Primary" ioaddr. If your Bus
+    Mouse interface is using the default settings, this is the choice
+    you want.
+
+    If your Microsoft Bus Mouse interface has had the ioaddr jumper
+    moved, you should should use the other address (0x238). This is
+    also referred to as the "Secondary" ioaddr in the Microsoft docs
+    and on the interface card.
+
+    Some third party interface cards, for example some of the ATI
+    video cards that have an integral mouse port, can be configured
+    as Microsoft Bus Mice. The ATI cards use the "Secondary" port,
+    without including a jumper to change the ioaddr. If your system
+    is using this interface, the 0x238 setting should work for you.

@@ -1,0 +1,23 @@
+
+--- Profiles -----------------------------------------------------
+
+    A profile specifies how the Solaris software will be installed. 
+    It is created as you make selections on each screen in the 
+    Solaris installation program. Before you start to install the
+    Solaris software, you can go back and change selections until 
+    the profile is exactly the way you want it. 
+
+    The following is a sample profile for a standalone system:
+
+    ================================================================ 
+                      
+                System Type: Standalone  
+                   Software: Solaris 2.4, End User System Support
+                             - Archive Libraries
+                  Languages: German
+Disk and File System Layout: /             c0t0d0s0   31 MB
+                             swap          c0t0d0s1   32 MB
+                             /usr          c0t0d0s6  133 MB
+                             /export/home  c0t0d0s7 1830 MB
+        Remote File Systems: /work
+   

@@ -1,0 +1,12 @@
+Determine a System's Platform
+	platform.h.hlp
+Access a Disk's Existing Layout
+	vtoc.h.hlp
+Free Up Disk Space
+	freedisk.h.hlp
+Reset Software Group to Default Selections
+	softgroup.h.hlp
+Resolve Software Dependencies
+	resolve.h.hlp
+Specify a Boot Disk
+	boot.h.hlp

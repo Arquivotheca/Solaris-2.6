@@ -1,0 +1,40 @@
+---- Using the Online Help System ------------------
+
+Pressing the Help button from an application window  
+displays the Help system menu, which displays three
+categories of information:
+
+- Topics
+  Displays background information about the
+  applications.
+
+- How to
+  Displays step-by-step information about
+  performing a specific task.
+
+- Reference
+  Displays field descriptions, button definitions,
+  keyboard shortcuts, and glossary information.
+
+To switch between the three categories, click on the
+appropriate button. 
+
+The Help system has two display areas:
+
+- The top display area displays a list of available
+  help subjects for the current category of
+  information. To access specific help text, click
+  on a subject in the top display area.
+
+- The bottom display area displays the help text.
+  To scroll through the text, use the scrollbar on
+  the right side of the display area.
+
+There are two additional buttons on the left corner
+of the menu:
+
+- Previous
+  Redisplays the previous help text
+
+- Done
+  Quits the Help system

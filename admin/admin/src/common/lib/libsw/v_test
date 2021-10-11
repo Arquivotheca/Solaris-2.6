@@ -1,0 +1,114 @@
+#!/bin/sh
+#
+#ident   "@(#)v_test 1.5 93/04/02 SMI"
+#
+# This test is for product and package version comparison's.
+# To run this test compile v_version.c as follows:
+#        cc -g -DMAIN v_version.c -o version
+
+:
+echo "---------- Begin Product Versioning Test ----------"
+echo ""
+echo "Correct output: 1"
+version -P Solaris_2.0.2			Solaris_2.0.1
+version -P Solaris_2.10.5.4		Solaris_2.9
+version -P Solaris_2.0.2_Dell_A		Solaris_2.0.1_Soulbourne_A
+version -P Solaris_2.0.1_5.1		Solaris_2.0.1_5.0
+version -P Solaris_2.0.1_Dell_B		Solaris_2.0.1_Dell_A
+version -P Solaris_2.0.1_Dell_A_5.1	Solaris_2.0.1_Dell_A_5.0
+version -P Solaris_3.0.1_Dell_A_5.0.1	Solaris_2.0.1_Dell_A_5.0.1
+
+echo ""
+echo "Correct output: 0"
+version -P solaris_2.0.1			solaris_2.0.1
+version -P SOLARIS_2.0.1			solaris_2.0.1
+
+echo ""
+echo "Correct output: -1"
+version -P Solaris_2.0.1			Solaris_2.0.2
+version -P Solaris_2.9			Solaris_2.10.5.4		
+version -P Solaris_2.0.1_Soulbourne_A	Solaris_2.0.2_Dell_A
+version -P Solaris_2.0.1_5.0		Solaris_2.0.1_5.1
+version -P Solaris_2.0.1_Dell_A		Solaris_2.0.1_Dell_B
+version -P Solaris_2.0.1_Dell_A_5.0	Solaris_2.0.1_Dell_A_5.1
+version -P Solaris_2.0.1_Dell_A_5.0.1	Solaris_3.0.1_Dell_A_5.0.1
+
+echo ""
+echo "Correct output: -2"
+version -P Solaris				Solaris
+
+version -P Solaris_2.0.1			Solaris	
+version -P Solaris_2.0.1_5.0.1		Solaris_2.0.1
+version -P Solaris_2.0.1_5.0		Solaris_2.0.1_Dell_A
+version -P Solaris_2.0.1_Dell_A		Solaris_2.0.1_Dell 
+version -P Solaris_2.0.1_Dell_A_1.0	Solaris_2.0.1_Dell_A
+version -P Solaris_2.0.1_Dell_A		Solaris_2.0.1_5.1
+version -P Solaris_2.0.1			Solaris_2.0.1_Dell_A
+version -P Solaris_2.0.1_Dell		Solaris_2.0.1_Dell_A
+version -P Solaris_2.0.1_Dell_A		Solaris_2.0.1_Dell_A_1.0
+
+version -P Solaris				Solaris_2.0.1
+version -P Solaris_2.0.1			Solaris_2.0.1_5.0.1
+version -P Solaris_2.0.1_Dell_A		Solaris_2.0.1_5.0
+version -P Solaris_2.0.1_Dell		Solaris_2.0.1_Dell_A
+version -P Solaris_2.0.1_Dell_A		Solaris_2.0.1_Dell_A_1.0
+version -P Solaris_2.0.1_5.1		Solaris_2.0.1_Dell_A
+version -P Solaris_2.0.1_Dell_A		Solaris_2.0.1
+version -P Solaris_2.0.1_Dell_A		Solaris_2.0.1_Dell
+version -P Solaris_2.0.1_Dell_A_1.0	Solaris_2.0.1_Dell_A
+
+echo ""
+echo "---------- Begin Package Versioning Test ----------"
+echo ""
+echo "Correct output: 1"
+version -p 2.1.2				2.1.1
+version -p 2.10.0				2.9.1
+version -p 2.10.10,REV=1.2			2.9.1.1,REV=11.0.2,PATCH=2
+version -p 2.1.1,REV=11.0.2			2.1.1,REV=11.0.1
+version -p 2.1.2				2.1.1,REV=11.0.1
+version -p 2.1.1_DELL_A,REV=3.1.2,PATCH=1	2.1.1_DELL_A,REV=3.1.1,PATCH=1
+version -p 2.1.2_Dell_A				2.1.1
+version -p 2.1.2_Dell_A 			2.1.1_Solbourne_A 
+version -p 2.1.1,REV=5.0			2.1.1
+version -p 2.1.1_Dell_A,REV=1.0			2.1.1_Dell_A
+version -p 11.5.0,REV=1.0.5.1			11.5.0,REV=1.0.5
+
+echo ""
+echo "Correct output: 0"
+version -p 0					0.0.0
+version -p 0.0.0				0
+version -p 2.1.1,REV=3				2.1.1,REV=3
+version -p 2.1.1,REV=11.0.1,PATCH=2		2.1.1,REV=11.0.1,PATCH=3
+version -p 2.1.1_Solbourne_a			2.1.1_SOLBOURNE_A
+version -p "2.1.1, PATCH=DELL-3"		"2.1.1, PATCH=DELL-4"
+version -p "2.1.1_DELL_A, REV=3.1.1, PATCH=1"  	"2.1.1_DELL_A, REV=3.1.1, PATCH=1"
+version -p 2.1.1				2.1.1,REV=0.0
+version -p 2.1.1,REV=0.0			2.1.1
+version -p 2.1.1_Dell_A				2.1.1_Dell_A,REV=0.0
+version -p 2.1.1_Dell_A,REV=0.0			2.1.1_Dell_A
+
+echo ""
+echo "Correct output: -1"
+version -p 2.1.1				2.1.2
+version -p 2.9.0				2.10.1
+version -p 2.9.1.1,REV=11.0.2,PATCH=2		2.10.10,REV=1.2
+version -p 2.1.1,REV=11.0.1			2.1.1,REV=11.0.2
+version -p 2.1.1,REV=11.0.1			2.1.2
+version -p 2.1.1_DELL_A,REV=3.1.1,PATCH=1  	2.1.1_DELL_A,REV=3.1.2,PATCH=1
+version -p 2.1.1				2.1.2_Dell_A
+version -p 2.1.1_Solbourne_A			2.1.2_Dell_A
+version -p 2.1.1				2.1.1,REV=5.0
+version -p 2.1.1_Dell_A				2.1.1_Dell_A,REV=1.0
+version -p 11.5.0,REV=1.0.5			11.5.0,REV=1.0.5.1
+
+echo ""
+echo "Correct output: -2"
+version -p 2.1.1_Dell_A			2.1.1,REV=5.0
+version -p 2.1.1_Dell_A			2.1.1
+version -p 2.1.1_Solbourne_A		2.1.1_Dell_A
+version -p 2.1.1_Dell_A			2.1.1_Dell
+
+version -p 2.1.1,REV=5.0		2.1.1_Dell_A
+version -p 2.1.1			2.1.1_Dell_A
+version -p 2.1.1_Dell_A			2.1.1_Solbourne_A
+version -p 2.1.1_Dell			2.1.1_Dell_A

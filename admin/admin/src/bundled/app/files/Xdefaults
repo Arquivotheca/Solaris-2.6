@@ -1,0 +1,17 @@
+OpenWindows.WorkspaceColor:	SlateGray
+OpenWindows.WindowColor:	#cccccc
+OpenWindows.IconLocation:	bottom
+OpenWindows.DragRightDistance:	100
+OpenWindows.SelectDisplaysMenu:	False
+OpenWindows.AutoInputFocus:   	True
+OpenWindows.Beep:		always
+OpenWindows.ScrollbarPlacement:	right
+OpenWindows.PopupJumpCursor:	True
+OpenWindows.MultiClickTimeout:	4
+!
+Window.Color.Background:	grey
+Window.Color.Foreground:	black
+!
+Scrollbar*JumpCursor:		True
+!
+olwm.RunSlaveProcess:		False

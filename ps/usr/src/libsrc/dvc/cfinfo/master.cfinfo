@@ -1,0 +1,47 @@
+name="master"
+	interrupts="var,__ipl__","var,__irq__"
+	__ipl__="numeric,0"
+	__irq__="numeric,0"
+
+	reg="var,__busaddr__","var,__memaddr__","var,__memsize__"
+	__busaddr__="numeric,0"
+	__memaddr__="numeric,0"
+	__memsize__="numeric,0"
+	
+	ioaddr="var,__ioa__"
+	__ioa__="numeric,0"
+
+	dmachan="var,__dma__"
+	__dma__="numeric,0"
+
+	dmaspeed="var,__dmaspeed__"
+	__dmaspeed__="numeric,0"
+
+	dev="var,__device__"
+	__device__="string"
+
+	desktop="var,__desktop__"
+	__desktop__="string"
+
+	res="var,__resolution__"
+	__resolution__="string"
+
+	size="var,__size__"
+	__size__="string"
+
+	ref="var,__ref__"
+	__ref__="string"
+
+	buttons="var,__nbuttons__"
+	__nbuttons__="string"
+
+	reg="var,__bmemnum__","var,__bmemaddr__","var,__bconst__"
+	__bmemnum__="numeric,0"
+	__bmemaddr__="numeric,0"
+	__bconst__="numeric,0"
+
+	bustype="var,__btype__"
+	__btype__="string"
+
+	__auto__="true"
+	;

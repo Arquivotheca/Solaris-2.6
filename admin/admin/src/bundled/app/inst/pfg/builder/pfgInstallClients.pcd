@@ -1,0 +1,934 @@
+Module: pfgInstallClients
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.2 / Solaris 2.4";
+      lastWritten = "Thu Oct 10 14:05:33 1996";
+      copy = false;
+      inCreateMenu = true;
+      nodesUsed = "client_setup_table,\nclient_setup,\nnew_client_setup,\nclientDialog";
+        {
+          new_client_setup = XmForm;
+          Group: Widget
+            verticalSpacing = 8;
+            horizontalSpacing = 6;
+            managed = True;
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+          Group: Control
+            vip_x = 55;
+            vip_y = 250;
+            vipComment = "Form for No Swap definiton.  The platform option menu will\nbe created with the platform choices from a previous screen.\nAll other fields will be initially filled in with default values that\ncan later be changed by the user.  The total size will be\ncalculated, but can later be changed by the user also.";
+            vip_show_name = true;
+              {
+                platforms = XmOptionMenu;
+                Group: Widget
+                  subMenuId = platformMenu;
+                  menuHistory = root_svc_none;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = client_types;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                    Popups:
+                    {
+                      platformMenu = XmPulldownMenu;
+                      Group: Widget
+                        nodeAccess = access_any;
+                          {
+                            root_svc_none = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C:reset_to_none";
+                              nodeAccess = access_any;
+                          }
+                          {
+                            no_platform = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C:set_separate_swap";
+                              nodeAccess = access_any;
+                          }
+                          {
+                            Delete = XmPushButton;
+                            Group: Widget
+                              managed = False;
+                              nodeAccess = access_any;
+                          }
+                          {
+                            platform_1 = XmPushButton;
+                            Group: Widget
+                              nodeAccess = access_any;
+                          }
+                          {
+                            platform_2 = XmPushButton;
+                            Group: Widget
+                              nodeAccess = access_any;
+                          }
+                          {
+                            platform_3 = XmPushButton;
+                            Group: Widget
+                              nodeAccess = access_any;
+                          }
+                    }
+              }
+              {
+                client_types = XmOptionMenu;
+                Group: Widget
+                  subMenuId = ctypeMenu;
+                  menuHistory = no_swap;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = root_label;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                    Popups:
+                    {
+                      ctypeMenu = XmPulldownMenu;
+                      Group: Widget
+                        nodeAccess = access_any;
+                          {
+                            no_swap = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C:show_root_only";
+                              nodeAccess = access_any;
+                          }
+                          {
+                            sep_swap = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C:show_root_and_swap";
+                              nodeAccess = access_any;
+                          }
+                          {
+                            swap_on_root = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C:show_swap_on_root";
+                              nodeAccess = access_any;
+                          }
+                    }
+              }
+              {
+                root_label = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                  width = 64;
+                  recomputeSize = False;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = numClients;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                numClients = XmTextField;
+                Group: Widget
+                  maxLength = 5;
+                  width = 80;
+                  activateCallback = "C:compute_size_total";
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = multiply;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                Group: Control
+                  vipComment = "The number of clients.  The default value is 5.";
+              }
+              {
+                multiply = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = size_per;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                size_per = XmTextField;
+                Group: Widget
+                  width = 90;
+                  activateCallback = "C:compute_size_total";
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = equals;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                Group: Control
+                  vipComment = "The default size of /root.";
+              }
+              {
+                equals = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = total_size;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                total_size = XmLabel;
+                Group: Widget
+                  width = 90;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = mount_point;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                Group: Control
+                  vipComment = "The computed total from a multiplcation of number\nof clients times size per client desired.  This field is\ncalculated, but can also be edited. -- Changed to a label for this release, will be changed back to an editable text field later.";
+              }
+              {
+                mount_point = XmLabel;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                Group: Control
+                  vipComment = "The desired mount point for /root.  The default is /export/root. --- This will be changed back to an editable text field for the next release.";
+              }
+              {
+                select_toggle = XmToggleButton;
+                Group: Widget
+                  indicatorType = one_of_many;
+                  managed = False;
+                  recomputeSize = False;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = platforms;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+        }
+        {
+          swap_setup = XmForm;
+          Group: Widget
+            verticalSpacing = 8;
+            horizontalSpacing = 6;
+            rubberPositioning = False;
+          Group: Control
+            vip_x = 55;
+            vip_y = 195;
+            vipComment = "Form for Separate Swap definition.";
+              {
+                swap_label = XmLabel;
+                Group: Widget
+                  width = 64;
+                  recomputeSize = False;
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = swap_numClients;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+              }
+              {
+                swap_numClients = XmTextField;
+                Group: Widget
+                  maxLength = 4;
+                  width = 80;
+                  managed = True;
+                  losingFocusCallback = "C:setNumberOfClients";
+                  activateCallback = "C:setNumberOfClients_traverse";
+                  modifyVerifyCallback = "C:verify_text_is_digit";
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = swap_multiply;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+              }
+              {
+                swap_multiply = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = swap_size_per;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+              }
+              {
+                swap_size_per = XmTextField;
+                Group: Widget
+                  width = 90;
+                  activateCallback = "C:setSwapSize_traverse";
+                  losingFocusCallback = "C:setSwapSize";
+                  maxLength = 4;
+                  modifyVerifyCallback = "C:verify_text_is_digit";
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = swap_equals;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+              }
+              {
+                swap_equals = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = total_swap_size;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+              }
+              {
+                total_swap_size = XmLabel;
+                Group: Widget
+                  width = 130;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = swap_mount_point;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                Group: Control
+                  vipComment = "Changed to a label for now.  Will be changed back to editable for the next release.";
+              }
+              {
+                swap_mount_point = XmLabel;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                Group: Control
+                  vipComment = "Chnaged to a label for now, will be changed back to an editable text field for the next release.";
+              }
+        }
+        {
+          client_setup_table = XmRowColumn;
+          Group: Widget
+            adjustLast = False;
+            orientation = vertical;
+          Group: Control
+            vip_x = 55;
+            vip_y = 140;
+            vipComment = "";
+            vip_show_name = true;
+              {
+                client_setup = client_setup : pfgInstallClients;
+                    {
+                      client_types_frame = XmFrame;
+                    }
+                    {
+                      root_label = XmLabel;
+                    }
+                    {
+                      numClients = XmTextField;
+                    }
+                    {
+                      multiply = XmLabel;
+                    }
+                    {
+                      root_size_per = XmTextField;
+                    }
+                    {
+                      equals = XmLabel;
+                    }
+                    {
+                      total_root_size = XmLabel;
+                      Group: Widget
+                        marginWidth = 0;
+                        recomputeSize = False;
+                    }
+                    {
+                      root_mount_point = XmLabel;
+                      Group: Widget
+                        width = 130;
+                        recomputeSize = False;
+                    }
+              }
+              {
+                swap_setup = swap_setup : pfgInstallClients;
+                    {
+                      swap_label = XmLabel;
+                    }
+                    {
+                      swap_numClients = XmTextField;
+                      Group: Widget
+                        mappedWhenManaged = False;
+                    }
+                    {
+                      swap_multiply = XmLabel;
+                    }
+                    {
+                      swap_size_per = XmTextField;
+                    }
+                    {
+                      swap_equals = XmLabel;
+                    }
+                    {
+                      total_swap_size = XmLabel;
+                      Group: Widget
+                        marginWidth = 0;
+                        recomputeSize = False;
+                    }
+                    {
+                      swap_mount_point = XmLabel;
+                      Group: Widget
+                        width = 130;
+                        recomputeSize = False;
+                    }
+              }
+              {
+                s_on_r_setup = s_on_r_setup : pfgInstallClients;
+                Group: Widget
+                  managed = False;
+                    {
+                      sonr_label = XmLabel;
+                    }
+                    {
+                      numClients = XmTextField;
+                      Group: Widget
+                        mappedWhenManaged = False;
+                    }
+                    {
+                      sonr_multiply = XmLabel;
+                    }
+                    {
+                      size_per = XmTextField;
+                    }
+                    {
+                      sonr_equals = XmLabel;
+                      Group: Widget
+                        mappedWhenManaged = False;
+                    }
+                    {
+                      total_size = XmTextField;
+                      Group: Widget
+                        mappedWhenManaged = False;
+                    }
+                    {
+                      mount_point = XmTextField;
+                      Group: Widget
+                        mappedWhenManaged = False;
+                    }
+              }
+        }
+        {
+          s_on_r_setup = XmForm;
+          Group: Widget
+            horizontalSpacing = 6;
+            verticalSpacing = 8;
+            rubberPositioning = False;
+          Group: Control
+            vipComment = "--- This is being unmanaged for now.  It is planned for use\nin the 2.6 release however, and should not be deleted from this module. --- Form for swap on root definition.";
+            vip_x = 170;
+            vip_y = 30;
+              {
+                sonr_label = XmLabel;
+                Group: Widget
+                  width = 64;
+                  recomputeSize = False;
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = numClients;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+              }
+              {
+                numClients = XmTextField;
+                Group: Widget
+                  maxLength = 5;
+                  width = 80;
+                  activateCallback = "C:compute_size_total";
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = sonr_multiply;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+              }
+              {
+                sonr_multiply = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = size_per;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+              }
+              {
+                size_per = XmTextField;
+                Group: Widget
+                  width = 90;
+                  activateCallback = "C:compute_size_total";
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = sonr_equals;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+              }
+              {
+                sonr_equals = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = total_size;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+              }
+              {
+                total_size = XmTextField;
+                Group: Widget
+                  width = 90;
+                  editable = False;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = mount_point;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                Group: Control
+                  vipComment = "The total size here will be the same as that defined for /root.";
+              }
+              {
+                mount_point = XmTextField;
+                Group: Widget
+                  value = "/export/root";
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                Group: Control
+                  vipComment = "For Swap on Root, the default mount point is the same as\nthat defined for /root.";
+              }
+        }
+        {
+          column_headers = XmForm;
+          Group: Widget
+            managed = True;
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+            allowOverlap = False;
+          Group: Control
+            vipComment = "Column headings for client setup table.";
+            vip_x = 170;
+            vip_y = 140;
+              {
+                platforms_label = XmLabel;
+                Group: Widget
+                  alignment = alignment_center;
+                  marginWidth = 0;
+                  managed = False;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                Group: Control
+                  vipComment = "This label is unmanaged for now, it will go back in 2.6";
+              }
+              {
+                client_types_label = XmLabel;
+                Group: Widget
+                  alignment = alignment_center;
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = platforms_label;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                root_or_swap_label = XmLabel;
+                Group: Widget
+                  alignment = alignment_center;
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = client_types_label;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                numClients_label = XmLabel;
+                Group: Widget
+                  alignment = alignment_center;
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = root_or_swap_label;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                Group: Control
+                  vipComment = "The number of clients.  The default value is 5.";
+              }
+              {
+                blank_label1 = XmLabel;
+                Group: Widget
+                  alignment = alignment_center;
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = numClients_label;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                size_per_label = XmLabel;
+                Group: Widget
+                  alignment = alignment_center;
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = blank_label1;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                Group: Control
+                  vipComment = "The default size of /root.";
+              }
+              {
+                blank_label2 = XmLabel;
+                Group: Widget
+                  alignment = alignment_center;
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = size_per_label;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                total_size_label = XmLabel;
+                Group: Widget
+                  alignment = alignment_center;
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = blank_label2;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                Group: Control
+                  vipComment = "The computed total from a multiplcation of number\nof clients times size per client desired.  This field is\ncalculated, but can also be edited.";
+              }
+              {
+                mount_point_label = XmLabel;
+                Group: Widget
+                  alignment = alignment_center;
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = total_size_label;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                Group: Control
+                  vipComment = "The desired mount point for /root.  The default is /export/root.";
+              }
+        }
+        {
+          client_scroll = XmScrolledWindow;
+          Group: Widget
+            height = 150;
+            scrollingPolicy = automatic;
+            width = 700;
+          Group: Control
+            vip_x = 170;
+            vip_y = 85;
+              {
+                main_table_rc = main_table_rc : pfgInstallClients;
+              }
+        }
+        {
+          main_table_rc = XmRowColumn;
+          Group: Widget
+            adjustLast = False;
+            orientation = vertical;
+          Group: Control
+            vip_x = 55;
+            vip_y = 30;
+        }
+        {
+          client_setup = XmForm;
+          Group: Widget
+            verticalSpacing = 8;
+            horizontalSpacing = 6;
+            managed = True;
+            rubberPositioning = False;
+          Group: Control
+            vipComment = "Form for No Swap definiton.  The platform option menu will\nbe created with the platform choices from a previous screen.\nAll other fields will be initially filled in with default values that\ncan later be changed by the user.  The total size will be\ncalculated, but can later be changed by the user also.";
+            vip_x = 170;
+            vip_y = 195;
+            vip_show_name = true;
+              {
+                client_types_frame = XmFrame;
+                Group: Widget
+                  shadowThickness = 0;
+                Group: Constraint
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  rightAttachment = attach_widget;
+                  rightWidget = root_label;
+                    {
+                      client_types = XmOptionMenu;
+                      Group: Widget
+                        subMenuId = ctypeMenu;
+                        menuHistory = root_and_swap;
+                        marginWidth = 0;
+                        spacing = 0;
+                        marginHeight = 2;
+                          Popups:
+                          {
+                            ctypeMenu = XmPulldownMenu;
+                            Group: Widget
+                              nodeAccess = access_any;
+                                {
+                                  root_only = XmPushButton;
+                                  Group: Widget
+                                    activateCallback = "C:show_root_entry";
+                                    nodeAccess = access_any;
+                                }
+                                {
+                                  swap_only = XmPushButton;
+                                  Group: Widget
+                                    activateCallback = "C:show_swap_entry";
+                                    nodeAccess = access_any;
+                                }
+                                {
+                                  root_and_swap = XmPushButton;
+                                  Group: Widget
+                                    activateCallback = "C:show_root_and_swap_entries";
+                                    nodeAccess = access_any;
+                                }
+                          }
+                    }
+              }
+              {
+                root_label = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                  width = 64;
+                  recomputeSize = False;
+                Group: Constraint
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  rightAttachment = attach_widget;
+                  rightWidget = numClients;
+              }
+              {
+                numClients = XmTextField;
+                Group: Widget
+                  maxLength = 4;
+                  width = 80;
+                  activateCallback = "C:setNumberOfClients_traverse";
+                  losingFocusCallback = "C:setNumberOfClients";
+                  modifyVerifyCallback = "C:verify_text_is_digit";
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = multiply;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                Group: Control
+                  vipComment = "The number of clients.  The default value is 5.";
+              }
+              {
+                multiply = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = root_size_per;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+              }
+              {
+                root_size_per = XmTextField;
+                Group: Widget
+                  width = 90;
+                  activateCallback = "C:setRootSize_traverse";
+                  losingFocusCallback = "C:setRootSize";
+                  maxLength = 4;
+                  modifyVerifyCallback = "C:verify_text_is_digit";
+                Group: Constraint
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  rightAttachment = attach_widget;
+                  rightWidget = equals;
+                Group: Control
+                  vipComment = "The default size of /root.";
+              }
+              {
+                equals = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = total_root_size;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                total_root_size = XmLabel;
+                Group: Widget
+                  width = 130;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_widget;
+                  rightWidget = root_mount_point;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                Group: Control
+                  vipComment = "The computed total from a multiplcation of number\nof clients times size per client desired.  This field is\ncalculated, but can also be edited. -- Changed to a label for this release, will be changed back to an editable text field later.";
+              }
+              {
+                root_mount_point = XmLabel;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                Group: Control
+                  vipComment = "The desired mount point for /root.  The default is /export/root. --- This will be changed back to an editable text field for the next release.";
+              }
+        }
+        {
+          client_form = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+          Group: Control
+            vip_x = 170;
+            vip_y = 250;
+              {
+                client_scroll = client_scroll : pfgInstallClients;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_none;
+                  bottomAttachment = attach_form;
+                  resizable = false;
+              }
+              {
+                column_headers = column_headers : pfgInstallClients;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_widget;
+                  bottomWidget = client_scroll;
+                  resizable = false;
+              }
+        }
+        {
+          clientDialog = formWindow : pfgGUITemplates;
+          Group: Control
+            vipComment = "";
+            vip_show_name = true;
+            vip_x = 55;
+            vip_y = 85;
+              {
+                panelhelpText = XmText;
+              }
+              {
+                form = XmForm;
+                Group: Widget
+                  rubberPositioning = False;
+                  resizePolicy = resize_any;
+                  marginWidth = 10;
+                Group: Constraint
+                  bottomWidget = clientSetupMessageBox;
+                    {
+                      client_form = client_form : pfgInstallClients;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        topAttachment = attach_form;
+                        bottomAttachment = attach_form;
+                          {
+                            client_scroll = XmScrolledWindow;
+                            Group: Constraint
+                              resizable = True;
+                          }
+                          {
+                            column_headers = XmForm;
+                            Group: Constraint
+                              resizable = True;
+                          }
+                    }
+              }
+              {
+                clientSetupMessageBox : messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = clientContinueButton;
+                    {
+                      clientContinueButton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:clientContinueCB";
+                        showAsDefault = 1;
+                    }
+                    {
+                      clientGobackButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:clientGobackCB";
+                    }
+                    {
+                      clientCancelButton : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:clientCancelCB";
+                        managed = False;
+                    }
+                    {
+                      clientExitButton : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:clientExitCB";
+                    }
+                    {
+                      clientHelpButton : button5 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:pfgHelp(\"allocate.r\")";
+                    }
+              }
+        }
+}
+

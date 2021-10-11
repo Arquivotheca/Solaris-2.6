@@ -1,0 +1,17 @@
+---- Delete a Group --------------------------------
+
+1. Choose Groups from the Browse menu.
+
+2. Select the group you want to delete from the
+   Admintool:Groups main window.
+
+3. Choose Delete from the Edit menu. 
+   
+   A window is displayed asking you to confirm the
+   deletion.
+
+4. Click on Delete.
+
+   The selected group is deleted and the group
+   information displayed in the Admintools:Group
+   main window is updated.

@@ -1,0 +1,48 @@
+---- Software Groups -------------------------------
+
+Solaris has four software groups:
+
+   Core - contains the minimum software required to
+   boot and run Solaris on a system. It includes
+   some networking software, and the drivers
+   required to run the OpenWindows environment; it
+   does not include the OpenWindows software. 
+
+   End User - contains the Core software plus the
+   recommended software for an end user including
+   OpenWindows and DeskSet software.
+
+   Developer - contains the End User software plus
+   libraries, include files, man pages, and 
+   programming tools for developing software. 
+   Compilers and debuggers are not included with
+   Solaris.
+
+   Entire Distribution - contains the entire Solaris
+   release.
+
+A fifth software group may be displayed (SPARC only):
+
+   Entire Distribution Plus OEM Support - contains
+   the entire Solaris release, plus software to
+   support specific vendor hardware. This group 
+   is recommended when installing Solaris software 
+   on SPARC-based servers.
+
+Only one software group can be selected at a time.
+
+---- Sizes of Software Groups ----------------------
+ 
+The Recommended Size for installing each software
+group is displayed in megabytes opposite each group.
+This size reflects:
+
+    - Size of the software
+   
+    - File system overhead
+
+    - Swap (which varies with the amount of memory)
+
+NOTE: Once you layout the disk (manually or via 
+auto-layout, the values listed in the Recommended 
+and Minimum fields may change.   

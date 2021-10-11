@@ -1,0 +1,59 @@
+Use Workshop Compiler C 4.2
+    Workshop Compiler C++ 4.2
+
+Create a build area of ?MB and mount it at /build.
+
+Copy the source to the build area.
+
+hostname# cd /cdrom/solaris_2_6_cnm_src
+hostname# tar cf - admin | (cd /build; tar xpf -)
+
+Change the permissions in the /etc/group file to:
+
+hostname# groupadd -g 14 -o sysadm
+
+Set the following environment variables:
+
+hostname# setenv PATH .:${PATH}
+hostname# setenv OPENWINHOME /usr/openwin
+
+Change to the directory that will be the target area for the
+completed admfw and admap packages:
+
+hostname# cd /build/admin/admin/src
+
+Change the permissions on the /build/admin/src/build.proto script
+
+hostname# chmod 755 build.proto
+
+Set the ROOT and SRC environment variables in the build.proto script
+to match your build area tree:
+
+      ROOT=/build/admin/admin/proto
+      SRC=/build/admin/admin/src
+
+Run the build.proto script to create the packages:
+
+hostname# sh ./build.proto &
+
+Output will be in Make.out.
+
+The completed packages will be at /build/admin/admin/proto/package.
+
+
+Change to the directory that will be the target area for the volmgt
+package:
+
+hostname# cd /build/admin/volmgt/src
+
+Set the environment variable:
+
+hostname# source ENV
+
+Create the package:
+
+hostname# make all >& makeout
+
+The completed package is install in the directory
+
+/build/admin/volmgt/src/pkg/SUNWvolg/package

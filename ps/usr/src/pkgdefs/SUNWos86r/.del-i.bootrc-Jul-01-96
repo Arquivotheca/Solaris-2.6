@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+#ident "@(#).del-i.bootrc-Jul-01-96 1.2 95/04/05"
+#
+# Copyright (c) 1995 by Sun Microsystems, Inc.
+# All rights reserved.
+#
+while read src dest
+do
+	if [ ! -f $dest ] ; then
+		# Initial installation
+		cp $src $dest
+	else
+		# Preserve the installed /etc/bootrc during upgrade
+		:
+	fi
+done
+exit 0
+

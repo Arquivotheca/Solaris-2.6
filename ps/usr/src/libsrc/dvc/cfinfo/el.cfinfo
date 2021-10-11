@@ -1,0 +1,7 @@
+name="el"
+	class="sysbus"
+	__title__="3COM EtherLink II network card"
+	__category__="network"
+
+	__auto__="string,true"
+	;

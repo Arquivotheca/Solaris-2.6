@@ -1,0 +1,19 @@
+class="sysbus" name="tiqmouse"
+	__wclass__="XINPUT"
+	__wname__="KDMOUSE-B"
+	__category__="pointer"
+	__title__="TI TravelMate 4000E QuickPort BallPoint mouse"
+
+	ddxHandler="ddxSUNWx86mouse.so.1"
+	ddxInitFunc="ddxSUNWmouseProc"
+
+ 	buttons="string,2"
+	strmod="vuid2ps2"
+
+	dev="/dev/tiqmouse"
+	interrupts="numeric,1","numeric,12"
+	ignore-hardware-nodes="numeric,1"
+
+	__common__="name","class"
+	__driver__="interrupts","ignore-hardware-nodes"
+	;

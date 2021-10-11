@@ -1,0 +1,6 @@
+#
+# This is a sample OWconfig file installed via profiles.
+#
+name="keyboard:0" class="owin" type="AT" dev="/dev/vt00";
+dev="/dev/kdmouse" buttons=2 type="MS-S" class="owin" name="pointer:0";
+class="owin" name="display:0" type="i8514" res="1024x768" size="12x9.5" pmifile="$OPENWINHOME/etc/vesa/i8514/ati.pmi";

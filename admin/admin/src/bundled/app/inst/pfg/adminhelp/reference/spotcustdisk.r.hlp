@@ -1,0 +1,115 @@
+---- About This Screen -----------------------------
+
+This screen lets you simultaneously edit all the
+disks you've selected from the Disks screen. If you
+selected two disks on the Disks screen, two disks
+are shown on this screen for editing. This screen is
+often called the disk editor.
+
+    NOTE: You may have to resize the screen to
+    see all the disks.
+
+    NOTE: The software will not allow you to
+    generate negative free space.
+
+---- Editing Disks ---------------------------------
+
+You can edit disks by changing: 
+  - File system names on slices 0-7
+  - Size of a slice by entering the number of
+    megabytes in the Entry bar (top left of screen)
+    or in the MB column
+
+You can only assign free space to slices when free
+space is available.
+
+---- Recommended and Minimum Fields ----------------
+
+The Recommended field is the recommended value for
+the current file system, which includes all 
+subsidiary file systems and approximately 15% extra
+free space beyond what is needed to install the
+Solaris software.
+
+The Minimum field is the value for the current file
+system which includes all subsidiary file systems
+without the 15% extra free space used in the 
+Recommended calculation.
+
+---- File systems with Recommended and Minimum -----
+
+When you select one of the following file systems,
+you will see a Recommended and Minimum value:
+
+   /(root)
+   /opt
+   /export
+   /usr
+   /usr/openwin
+   /var
+   swap
+
+---- Creating Swap Space ---------------------------
+
+If you manually layout your file systems, you should
+create a swap file system, especially for systems 
+with only 16 Mbytes of memory. The following table 
+lists the recommended sizes for swap space based on 
+a system's physical memory.  
+
+Physical Memory (Mbytes)    Swap Size (Mbytes)
+-----------------------     ------------------
+16 - 64                     32
+64 - 128                    64
+128 - 512                   128
+Greater than 512            256
+
+    NOTE: Auto-layout automatically creates swap
+    space with the recommended sizes shown 
+    above.
+
+You may need more or less swap space based on the 
+applications that the system will run.
+ 
+---- Slices ----------------------------------------
+
+There are eight slices on a disk, numbered 0-7.
+A slice is a physical subset of the disk, except
+slice 2, which by convention, represents the entire 
+disk.
+
+  NOTE: Under SunOS 4.1.x, a slice was known as a 
+  partition.
+
+x86 systems have two extra slices that consume disk 
+space: the boot slice, and the Alternate sector
+slice. These slices are required and cannot be
+edited.
+
+---- Allocated Field -------------------------------
+
+This value is the amount of megabytes that you've
+current allocated based on the Capacity value.
+
+---- Free Field ------------------------------------
+
+This value is the number of megabytes of free space 
+available on the disk; it changes as you assign 
+space to a slice.
+
+---- Capacity Field --------------------------------
+
+This value is the number of megabytes available on 
+the disk.
+
+---- Disk Icon -------------------------------------
+
+A button with a disk icon is displayed for each
+disk. Clicking once on the disk opens a subscreen
+for the disk where you can edit the disk by 
+cylinders. This allows you to create/edit 
+overlapping slices. 
+
+   CAUTION: Cylinder editing requires advanced 
+   system administration skills and should not be 
+   attempted by novice users.

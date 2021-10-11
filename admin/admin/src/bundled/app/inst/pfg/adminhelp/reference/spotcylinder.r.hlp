@@ -1,0 +1,76 @@
+---- About this screen ------------------------
+
+This screen lets you lay out and size disk slices
+for a single disk by specifying starting cylinders.
+This enables you to create overlapping slices. The
+Solaris installation program automatically adjusts
+sizes and checks for illegal configurations. 
+However, once you set a starting cylinder, it
+becomes a fixed point and adjusting stops.
+
+---- To specify an overlapping slice ----------
+
+Use the word `overlap' to designate an overlapping
+slice.
+
+---- If you rename an overlapping slice -------
+
+If you rename an overlapping slice, the slice is
+no longer considered overlapping and its value
+returns to zero.
+
+---- Load button ------------------------------
+
+Selecting the Load buttons lets you load existing
+disk information from Volume Table of Contents
+(VTOC). The VTOC table holds the current slice 
+layout of the disk by cylinders.Loading in an 
+existing VTOC table will overwrite the existing 
+layout.
+
+   NOTE: The prtvtoc command displays the contents
+   of the VTOC table.
+
+---- Recommended and Minimum fields -----------
+
+Whenever you edit the following existing Solaris
+slices,
+
+   /(root)
+   /opt
+   /export
+   /usr
+   /usr/openwin
+   /var
+    swap
+ 
+the Recommended and Minimum values are displayed
+in these fields.
+
+---- Size field -------------------------------
+
+This value is for specifying the size of a slice.
+
+---- Start and End fields ---------------------
+
+The End cylinder field is fixed and cannot be
+changed. The Start cylinder field can be edited
+and becomes a fixed point in your layout; the
+Solaris installation program does not automatically
+adjust sizes beyond the Start point.
+
+---- Allocated field --------------------------
+
+This value is the amount of megabytes that you've
+currently allocated.
+
+---- Free field -------------------------------
+
+This value is the number of megabytes of free space
+available on the disk; it updates as you assign
+space to a slice.
+
+---- Capacity field ---------------------------
+
+This value is the number of megabytes available on
+the disk.

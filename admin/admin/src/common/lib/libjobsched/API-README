@@ -1,0 +1,407 @@
+sccs id: @(#)API-README	1.5	95/06/29
+
+Note:  The code in this library lints (lint -u -m job*.c) and cstyles
+(cstyle job*.[ch]) cleanly, except for some lint grumbling about
+getdate_err in time.h that we can't control.  If you make changes
+that don't lint and/or cstyle I will find you and make you fix them!
+
+
+API for libjobsched
+
+
+libjobsched is a C library interface to the crontab(1) and at(1) commands,
+allowing scheduling of one-time and repeating automatic job execution.
+The externally exposed interfaces provided by this library are very
+close to the cron and at command lines; it is expected that higher level
+interfaces will be written on top of this library, providing a more generic
+job scheduling interface.  libsysman and the SNAG methods are examples of
+the higher level interface layers that should be implemented above libjobsched.
+
+The functions currently provided are add at/cron, delete at/cron, modify
+at/cron, and list at/cron.  get functions should be implemented to provide
+more detail.
+
+
+API
+
+
+All users of libjobsched should include the following public header file:
+
+#include "jobsched_iface.h"
+
+
+This will provide function prototypes for the externally visible functions,
+as well as the following data type definitions:
+
+
+typedef enum { js_csh, js_ksh, js_sh } js_shell_t;
+
+
+typedef struct _js_at_arg_struct {
+	const char	*at_job_id_key;
+	char		*at_job_id;
+	char		*job;
+	char		*owner;
+	boolean_t	job_is_filename_p;
+	js_shell_t	shell;
+	boolean_t	send_at_mail_p;
+	int		year;
+	int		month;
+	int		day_of_month;
+	int		hour;
+	int		min;
+	int		sec;
+} JSAtArg;
+
+typedef struct _js_cron_arg_struct {
+	const char	*username_key;
+	const char	*minute_key;
+	const char	*hour_key;
+	const char	*day_key;
+	const char	*month_key;
+	const char	*day_of_week_key;
+	const char	*job_key;
+	char		*username;
+	char		*minute;
+	char		*hour;
+	char		*day;
+	char		*month;
+	char		*day_of_week;
+	char		*job;
+} JSCronArg;
+
+
+----------------
+
+int
+jobsched_add_at(JSAtArg *ap, char **ret_job_id)
+
+Schedule a one-time job via the at(1) command.
+
+JSAtArg *ap -- a pointer to a structure containing information about
+  the job to be scheduled.
+char **ret_job_id -- if the address of a char pointer is passed to
+  this function, on successful return it will hold a dynamically
+  allocated string that is the job identifier of the scheduled job.
+  This id is needed if you wish to cancel the job via jobsched_delete_at().
+  NOTE: It is up to the caller to free the string.
+
+The following fields of the JSAtArg must be specified for the add/at:
+
+job -- either a string (in the proper shell syntax) of a command to
+  be run, or the name of a file to be exec'd by the shell.  For example,
+  a listing of the current directory can be obtained either by passing
+  down the commands (job = "pwd; /bin/ls") or by passing down a script
+  name (job = "/home/scripts/my-at-job-listing-script").  Note that
+  file must be a commands script, it cannot be a binary file.
+
+job_is_filename_p -- B_TRUE if the job field contains a filename, B_FALSE
+  if it contains the commands.
+
+shell -- which shell to use to interpret the commands or the file
+  in "job".
+
+send_at_mail_p -- B_TRUE to send mail when the job completes, B_FALSE
+  to not send notification.
+
+year, month, day_of_month, hour, min, sec -- the scheduling information
+  for the job.  year can be any year up to 1999.  month is an integer
+  representing the month, Jan = 1, Feb = 2, ..., Dec = 12.  day_of_month
+  is 1 for first, 2 for second, ..., 31.  0 <= hour <=23.  0 <= min <= 59.
+  0 <= sec <= 59.
+
+Return values:
+
+JOBSCHED_BAD_INPUT -- either ap is NULL, or ap->job is NULL.
+JOBSCHED_SCHEDULING_IN_THE_PAST -- the time requested for the job
+  execution has already past.
+JOBSCHED_SUCCESS (0) -- successful completion.
+
+any other non-zero return -- the exit status of the failed "at" command.
+
+----------------
+
+int
+jobsched_add_cron(JSCronArg *cp)
+
+Schedule a regularly repeating job via the cron(1) command.
+
+JSCronArg *cp -- a pointer to a structure containing information about
+  the job to be scheduled.
+
+The following fields of the JSCronArg must be specified for the add/cron:
+
+username (optional) -- The username field is optional, and can only
+  be specified by root.  The job will be scheduled in "username"'s
+  crontab file.  By default, the job will be scheduled in the crontab
+  of the user who owns the process that calls this function (the user
+  running the program).  Pass NULL to get the default behavior.
+
+minute, hour, day, month, day_of_week -- the scheduling information for
+  the job, in crontab format.  Each entry may be either an asterisk
+  ("wildcard", indicates all legal values) or a list of elements
+  separated by commas.  An element is either a number, or two numbers
+  separated by a minus sign, indicating a range.  Examples: for day_of_week,
+  * means to do it every day; 0-2 means do it Sun, Mon, Tues (Sun == 0).
+  For day, 1,15 means to do it on the 1st and 15th; 1-15 means to do
+  it every day for the first half of the month.  Note that it is
+  probably a mistake to specify both day and day_of_week; one of
+  them should be an asterisk.
+
+job -- a command line to pass to sh.  May be a semicolon separated list
+  of commands, but more typically a single command line or the filename
+  of a shell script.  Note that cron passes the line to sh for execution,
+  rather than trying to interpret the line itself as "at" does.
+
+Return values:
+
+JOBSCHED_BAD_INPUT -- either cp is NULL, cp->job is NULL, or one
+  of the time fields is NULL (minute, hour, month, day_of_week).
+JOBSCHED_PERM_DEINED -- a non-root user tried to delete a job
+  from some other user's crontab.
+JOBSCHED_SUCCESS (0) -- successful completion.
+
+any other non-zero return -- the exit status of the failed "crontab" command.
+
+----------------
+
+int
+jobsched_delete_at(JSAtArg *ap)
+
+Delete a job from the at queue.  The at_job_id_key is the only field
+of the passed parameter that is used, and it is used to identify the
+job to be deleted.  The job id is available at the time the job is
+added to the at queue (see jobsched_add_at()), or from the list of
+jobs currently in the at queue (see jobsched_list_at()).
+
+Return values:
+
+JOBSCHED_BAD_INPUT -- either ap is NULL or ap->at_job_kd_key is NULL.
+JOBSCHED_SUCCESS (0) -- successful completion.
+
+any other non-zero return -- the exit status of the failed "at" command.
+
+----------------
+
+int
+jobsched_delete_cron(JSCronArg *cp)
+
+Delete an entry from a crontab file.  You basically have to specify
+all of the information for the crontab entry, since there is no subset
+of data in the entry that can be guaranteed to uniquely identify the
+crontab entry.
+
+The following fields of the JSCronArg must be specified:
+username_key (optional), minute_key, hour_key, day_key, month_key,
+day_of_week_key, job_key.  See jobsched_add_cron() for a description
+of the format of the field values.
+
+Return values:
+
+JOBSCHED_BAD_INPUT -- either cp is NULL, or at least one of
+  cp->job_key, cp->minute_key, cp->hour_key, cp->month_key,
+  or cp->day_of_week_key is NULL.
+JOBSCHED_PERM_DEINED -- a non-root user tried to delete a job
+  from some other user's crontab.
+JOBSCHED_SUCCESS (0) -- successful completion.
+
+any other non-zero return -- the exit status of the failed "crontab" command.
+
+----------------
+
+int
+jobsched_modify_at(JSAtArg *ap, char **ret_job_id)
+
+Modify a job currently in the at queue.
+
+JSAtArg *ap -- a pointer to a structure containing information about
+  the currently scheduled job, and how to change it.
+char **ret_job_id -- if non-NULL, returns a string containing the
+  new job id.  NOTE:  It is up to the caller to free the string.
+
+The following fields are used:
+
+job_id_key -- identifies the currently scheduled job.
+
+job, job_is_filename_p, shell, send_at_mail_p, year, month, day_of_month,
+  hour, min, sec -- the information specifying the new job.
+
+see jobsched_add_at() for more details about the parameters.
+
+jobsched_modify_at() is implemented as a delete of an existing job
+and an add of a new job.  The usual way to perform the modify is
+to call jobsched_get_at() to get the information about the currently
+scheduled job, fill that information into the JSAtArg, update the
+fields that you wish to change with new info, stuff the current
+job_id into the job_id_key, and call modify.
+
+Return values:
+
+JOBSCHED_BAD_INPUT -- either ap is NULL, or at least one of
+  ap->job_id_key, or ap->job is NULL.
+JOBSCHED_FAILED_DIRTY -- the add of the new job succeed, but
+  the delete of the old job failed, and then the backout of
+  the new job failed, hence the "dirty" failure.
+JOBSCHED_SUCCESS (0) -- successful completion.
+
+if the add of the new job fails, any of the jobsched_add_at()
+return codes may be returned.
+
+----------------
+
+int
+jobsched_modify_cron(JSCronArg *cp)
+
+Modify a repeating job currently scheduled in a crontab file.
+
+JSCronArg *cp -- a pointer to a structure containing information about
+  the currently scheduled job, and how to change it.
+char **ret_job_id -- if non-NULL, returns a string containing the
+  new job id.  NOTE:  It is up to the caller to free the string.
+
+The following fields are used:
+
+username_key (optional), minute_key, hour_key, day_key, month_key,
+  day_of_week_key -- these fields identify the current job.  Since
+  there is no real "key" that can be used to identify a crontab
+  entry, all of the data supplied to create the original crontab
+  entry must be supplied to look it up for modify.
+
+username (optional), minute, hour, day, month, day_of_week -- the
+  information specifying the new job.
+
+see jobsched_add_cron() for more details about the parameters.
+
+jobsched_modify_cron() is implemented as a delete of an existing job
+and an add of a new job.  The usual way to perform the modify is
+to call jobsched_get_cron() to get the information about the currently
+scheduled job, fill that information into the JSCronArg, update the
+fields that you wish to change with new info, stuff the current
+job info into the key fields, and call modify.
+
+Return values:
+
+JOBSCHED_BAD_INPUT -- either cp is NULL, or at least one of
+  char * field pointers is NULL.
+JOBSCHED_FAILED_DIRTY -- the add of the new job succeed, but
+  the delete of the old job failed, and then the backout of
+  the new job failed, hence the "dirty" failure.
+JOBSCHED_SUCCESS (0) -- successful completion.
+
+if the add of the new job fails, any of the jobsched_add_cron()
+return codes may be returned.
+
+----------------
+
+int
+jobsched_list_at(JSAtArg **app)
+
+Get a list of the jobs that are currently scheduled for execution
+by "at".  The size of the returned array is returned by the function.
+The fields that are filled in in the returned JSAtArg array are:
+at_job_id, owner, year, month, day_of_month, hour, min, sec.  Note
+that the job itself isn't returned; to get the actual job, use
+jobsched_get_at().  NOTE: this function provides the functionality
+of the "at -l" command, which means it lists ALL users jobs if run
+by root, and only the jobs owned by the user if run as a regular
+user.
+
+Return values:
+
+JOBSCHED_BAD_INPUT -- app is NULL.
+JOBSCHED_MALLOC_ERR -- failed to allocate memory for return array.
+JOBSCHED_FAILURE -- a system or library call failed.
+>= 0 -- successful completion, number of queued jobs returned.
+
+any other non-zero return -- the exit status of the failed "at" command.
+
+int
+jobsched_get_at(JSAtArg *ap)
+
+Get detailed information about a particular queued job.  Pass in
+the address of a structure with the at_job_id_key field filled in
+with the id of the job that you want to know about, and all of the
+other fields will be filled in with info about the job.  jobsched_free_at()
+must be called with the address of the structure when you're done with
+it to free memory dynamically allocated by jobsched_get_at().
+
+Return values:
+
+JOBSCHED_BAD_INPUT -- ap or ap->at_job_id_key is NULL.
+JOBSCHED_NOT_FOUND -- at_job_id_key doesn't exist.
+JOBSCHED_PERM_DEINED -- call is not root and is not the owner of the job.
+JOBSCHED_MALLOC_ERR -- failed to allocate memory for return data.
+JOBSCHED_FAILURE -- a system or library call failed.
+JOBSCHED_SUCCESS (0) -- successful completion.
+
+void
+jobsched_free_at(JSAtArg *ap)
+
+void
+jobsched_free_at_list(JSAtArg *ap, int cnt)
+
+Must be called to free memory that was allocated by jobsched_list_at().
+Pass in the array and array size returned by a previous call to
+jobsched_list_at().
+
+----------------
+
+int
+jobsched_list_cron(JSCronArg **cpp, const char *username)
+
+Get a list of the jobs that are currently scheduled in a user's
+crontab.  The size of the returned array is returned by the function.
+The fields that are filled in in the returned JSCronArg array are:
+minute, hour, day, month, day_of_week, job.  The optional "username"
+argument specifies the user whos crontab should be returned; this
+argument can only be specified by root.  The default behavior is
+to return the crontab of the owner of the process who makes the
+jobsched_list_cron() call; the default behavior is requested by
+passing NULL for username.
+
+Return values:
+
+JOBSCHED_BAD_INPUT -- cpp is NULL.
+JOBSCHED_PERM_DEINED -- a non-root user tried to list another user's
+  crontab file.
+JOBSCHED_MALLOC_ERR -- failed to allocate memory for return array.
+JOBSCHED_FAILURE -- a system or library call failed.
+>= 0 -- successful completion, number of scheduled jobs returned.
+
+any other non-zero return -- the exit status of the failed "crontab" command.
+
+int
+jobsched_get_cron(JSCronArg *cp)
+
+Get detailed information about a particular crontab entry.  Pass in
+the address of a structure with all of the key fields filled in
+(username_key is optional) to identify job that you want to know about,
+and all of the other fields will be filled in with info about the job.
+jobsched_free_cron() must be called with the address of the structure
+when you're done with it to free memory dynamically allocated by
+jobsched_get_cron().
+
+NOTE:  This function doesn't actually do much for you; you have to
+provide all of the information about the job, since there is no
+subset of the cron entry that can be used to uniquely identify the
+entry.  All this function does for you is verify that the entry
+actually exists through the NOT_FOUND error return.
+
+Return values:
+
+JOBSCHED_BAD_INPUT -- cp or one of the required key fields is NULL.
+JOBSCHED_NOT_FOUND -- at_job_id_key doesn't exist.
+JOBSCHED_PERM_DEINED -- caller is not root and does not match the username_key.
+JOBSCHED_MALLOC_ERR -- failed to allocate memory for return data.
+JOBSCHED_FAILURE -- a system or library call failed.
+JOBSCHED_SUCCESS (0) -- successful completion.
+
+void
+jobsched_free_cron(JSCronArg *cp)
+
+void
+jobsched_free_cron_list(JSCronArg *cp, int cnt)
+
+Must be called to free memory that was allocated by jobsched_list_cron().
+Pass in the array and array size returned by a previous call to
+jobsched_list_cron().

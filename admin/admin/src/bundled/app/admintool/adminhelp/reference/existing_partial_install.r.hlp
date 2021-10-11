@@ -1,0 +1,22 @@
+---- Admintool:Package Administration: Existing
+Partial Installations ------------------------------
+
+Existing Partial Installations
+    Checks to see if a version of the package is
+    already partially installed on the system. 
+    Options are:
+
+    Ask		Installer will be prompted for
+		instructions when existing partial
+		installations are found. 
+
+    Ignore	Do not check for a partially
+		installed packages. 
+
+    Abort	Abort installation if a partially
+		installed package exists.
+
+See the "Topics" help for more information about
+using Admintool:Package Administration to set
+preferences during installation.
+

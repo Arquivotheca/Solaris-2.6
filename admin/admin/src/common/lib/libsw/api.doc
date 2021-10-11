@@ -1,0 +1,1436 @@
+#ident "@(#) api.doc 1.7 93/08/17"
+
+			API SPECIFICATION
+			 SOFTWARE LIBRARY
+			     (libsw.a)
+
+
+---------------------------------------------------------------------
+To use the disk library, include the disk header file
+
+			#include "../sw/????.h"
+			#include "../sw/????.h"
+
+_____________________________________________________________________
+			GLOBAL DATA STRUCTURES
+_____________________________________________________________________
+---------------------------------------------------------------------
+char *def_mnt_pnt[] = {         /* order must match FileSys defines */
+	"/",
+	"/usr",
+	"/usr/openwin",
+	"/opt",
+	"/var",
+	"/export/exec",
+	"/export/swap",
+	"/export/root",
+	"/export/home",
+	"/export",
+	NULL
+};
+---------------------------------------------------------------------
+			ADMIN FILE RELATED FUNCTIONS  
+---------------------------------------------------------------------
+char *
+admin_file(char * filename)
+
+	Description:
+ 		Get/set name of current admin file used during pkgadd/pkgrm. If 
+		'filename' is NULL, get the name of the admin file, otherwise, set 
+		the name of the admin file to 'filename'.
+	Parameters:
+		filename  - pathname of admin file (for setting only)
+	Return:
+		NULL	  - default return value for set
+		char *	  - return value for get; name of admin file
+---------------------------------------------------------------------
+int
+admin_write(char * filename, Admin_file * admin)
+
+	Description:
+		Writes the data contained in 'admin' to the admin file. If 'filename'
+		is NULL, a temporary name (/tmp/pkg*) is created. 'filename' (or the
+		temporary file name) is made the default admin_file name via admin_file().
+		NOTE: 	Data is not logged into the file if sw_debug is set.
+	Parameters:
+		filename    - user supplied file name to use for admin file (NULL if
+			      a temporary file is desired)
+		admin	    - pointer to structure continaing admin file data to be stored
+	Return:
+		SUCCESS	    - successful write to admin file
+		ERR_INVALID - 'filename' can't be opened for writing
+		ERR_NOFILE  - 'filename' was NULL and a temporary filename could not be created
+		ERR_SAVE    - call to admin_file() to save 'filename' failed
+---------------------------------------------------------------------
+			ARCHITECTURE RELATED FUNCTIONS
+---------------------------------------------------------------------
+Arch *
+get_all_arches(Module *mod)
+
+	Description:
+		Return a pointer to the head of a list of architectures 
+		supported by a product.
+	Parameters:
+		mod	- pointer to product module (NULL if current product is
+			  to be used)
+	Return:
+		NULL	- 'mod' is NULL and there is no current product
+		Arch *	- pointer to head of architecture list associated with
+			  either the 'mod' product, or the current product if 
+			  'mod' is NULL
+---------------------------------------------------------------------
+char *
+get_default_arch(void)
+
+	Description:
+		Get the default architecture which corresponds to the local
+		system. Returned in the form <instance>.<implementation>
+		(e.g. sparc.sun4c, sparc.sun4m).
+	Parameters:
+		none 
+	Return: 
+		NULL	- the nodename, the architecture, or the machine name
+			  returned by sysinfo() were too long for local 
+			  variables
+		char *	- name of architecture
+---------------------------------------------------------------------
+char *
+get_default_impl(void)
+
+	Description:
+ 		Returns the default implemtation architecture of the machine it 
+		is executed on. (eg. sun4c, sun4m, ...)
+	Parameters:
+		none
+	Return:
+		char *	- pointer to a string containing the default architecture
+---------------------------------------------------------------------
+char *
+get_default_inst(void)
+
+	Description:
+		Returns the default instance architecture of the machine it 
+		is executed on. (eg. sparc, i386, ...)
+	Parameters:
+		none
+	Return:
+		char *	- pointer to a string containing the default implementation
+---------------------------------------------------------------------
+int
+select_arch(Module * prod, char * arch)
+
+	Description:
+		Scan the architecture list of 'prod'. For each architecture 
+		which matches 'arch', the selected state is set to TRUE. If 
+		'arch' applies to more than one of the product architectures,
+		all affected architectures are set (e.g. arch = sparc may set 
+		sparc.sun4c and sparc.sun4m).
+	Parameters:
+		prod	- pointer to product structure containing architecture
+			  chain
+		arch	- string representing architecture set to be marked 
+			  TRUE
+	Return:
+		SUCCESS      - 'arch' made at least one match in the product 
+				architecture chain 
+		ERR_BADARCH  - 'arch' was not found in the product architecture
+				chain
+---------------------------------------------------------------------
+int
+deselect_arch(Module * prod, char * arch)
+
+	Description:
+ 		'prod' specifies the product for which the architecture should be 
+		deselected. 'arch' represents the architecture which should be
+		deselected.  If 'arch' can refer to multiple architectures (eg. 
+		arch = sparc), then all architecture which match (eg. sparc.sun4c) 
+		are deselected.
+	Parameters:
+		prod	- pointer to product module containing architecture list
+		arch	- string specifying architecture to deselect (e.g. sparc
+			  or sparc.sun4c)
+ 	Return:
+		SUCCESS	    - 'arch' matched at least once in 'prod's architecture
+			      list
+		ERR_BADARCH - 'prod' does not support the architecture 'arch'
+---------------------------------------------------------------------
+int
+supports_arch(char * macharch, char * pkgarch)
+
+	Description:
+		Determine if the machine architecture 'macharch' is a member 
+		of the architecture set defined for a package ('pkgarch'). 
+		NOTE:	The current implementation does not consider package
+			architecture "strings" (comma separated lists) or NULL
+			machine architectures to be valid.
+	Parameters:
+		macharch - single architecture specifier of the form:
+		    		<instance>.<implementation>
+		     		(e.g. sparc.sun4c)
+		pkgarch  - package architecture specifier of the form:
+		       		<instance>.<implementation>
+				<instance>.all
+				all
+				all.all
+				(e.g.  sparc.sun4)
+	Return:
+		TRUE	- 'arch' is a member of 'archstr'
+		FALSE	- 'arch' is not a member of 'archstr'
+---------------------------------------------------------------------
+void
+mark_arch(Module * prod)
+
+	Description:
+		Walks the package list associated with the product "prod", 
+		selecting or deselecting architecture specific packages based 
+		on selected architectures and whether the package associated 
+		with the default architecture is selected/deselected. Should be
+		called after selecting (select_arch()) or deselecting 
+		(deselect_arch()) architectures.
+	Parameters:
+		prod	- pointer to product module for which the architectures
+			  are being marked
+	Return:
+		none
+---------------------------------------------------------------------
+			BASEDIR RELATED FUNCTIONS
+---------------------------------------------------------------------
+
+void set_pkg_dir(Module *mod, char *dir);
+	
+	Allows package relocation by setting the "instdir" field in all of
+	the modinfo structures found under "mod" (which must point to a 
+	metacluster, cluster or package).  instdir is set to "dir" unless
+	it has been previously set.  If it has been previously set, it
+	is not changed.
+
+clear_pkg_dir(Module *mod, char *dir);
+
+	Removes the "instdir" setting put in place via a set_pkg_dir() call.
+	Returns all of the modinfo structures found under "mod" (which must
+	point to a metacluster, cluster or package) to instdir=NULL which
+	indicates that no package relocation is planned.  
+
+set_product_basedir(Module *prod, char *dir);
+
+	Allows product relocation by setting the "instdir" field for
+	all packages in the product specified by "prod" to "dir".  
+
+clear_product_basedir(Module *prod);
+
+	Removes the "instdir" settings put in place via a set_product_basedir()
+	call. 
+
+---------------------------------------------------------------------
+			REMOTE CLIENT RELATED FUNCTIONS
+---------------------------------------------------------------------
+
+char    * name2ipaddr(char *hostname);
+
+	Returns the ip address associated with "hostname".  Returns a 
+	zero length string if an ip address can't be found for "hostname".
+
+int test_mount(Remote_FS *rfs);
+
+	Test mounts the remote file system specified by the "rfs" data 
+	structure.  Returns
+		SUCCESS - if test mount succeeded
+		ERR_NOMOUNT - if test mount failed
+
+TestMount get_rfs_test_status(Remote_FS *rfs);
+	
+	Returns the test mount status associated with the Remote File System
+	specified by "rfs".  Returns:
+		NOT_TESTED  - if a previous set_rfs_test_status() hasn't been 
+			      called for this rfs
+		TEST_FAILURE, 
+		TEST_SUCCESS - if set_rfs_test_status() 
+			      succeeded for this rfs
+		ERR_INVALID - if rfs is NULL
+
+int set_rfs_test_status(Remote_FS *rfs, TestMount status);
+
+	Sets the test mount status associated with the Remote File System
+	specified by "rfs" to "status".  Returns:
+		SUCCESS - if test mount status is successfully set
+		ERR_INVALID - if rfs is NULL
+
+---------------------------------------------------------------------
+			DEPENDENCY RELATED FUNCTIONS
+---------------------------------------------------------------------
+int
+check_sw_depends(void)
+
+	Description:
+		Determine if the current product has any packages which are
+		SELECTED, but which have dependencies on packages which are
+		not SELECTED.
+	Parameters:
+		none
+	Return:
+		1	- selected packages have dependencies on unselected
+			  packages
+		0	- selected packages do not have dependencies on
+			  unselected packages
+---------------------------------------------------------------------
+Depend *
+get_depend_pkgs(void)
+
+	Description:
+		Return a pointer to the current list of unresolved package
+		dependencies.
+	Parameters:
+		none
+	Returns:
+		Depend *    - current list of unresolved package dependencies
+---------------------------------------------------------------------
+			SPACE RELATED FUNCTIONS
+---------------------------------------------------------------------
+Space **
+calc_cluster_space(Module *mod, ModStatus status, uchar_t flags)
+
+	Description:
+		Create a space table using the default mount points. Module must
+		either correspond to a cluster or package. The value calculated
+		is based on 'status'. If SELECTED, only those packages with a
+		status of SELECTED, REQUIRED, or PARTIAL are counted. If 'status'
+		is UNSELECTED, all packages are counted regardless of status.
+		Constraints on package inclusion may be made with the 'flags'
+		parameter (not implemented). Currently the default behavior is 
+		CSPACE_NONE.
+	Parameters:
+		mod	- pointer to cluster module
+		status	- SELECTED or UNSELECTED
+		flags	- calculation constraint flag for UNSELECTED status:
+
+			  CSPACE_ARCH	- do not count modules for architectures
+					  which are not currently selected
+			  CSPACE_LOCALE - do not count modules for locales which
+					  are not currently selected
+			  CSPACE_NONE	- count all modules regardless of architecture
+					  or locale standing.
+			  CSPACE_ALL	- CSPACE_ARCH and CSPACE_LOCALE
+	Return:
+		NULL	- error
+		!NULL	- space table pointer with space calculations per FS
+---------------------------------------------------------------------
+Space **
+filesys_ok(void)
+
+	Description:
+		Determine if all file systems have sufficient space (>= min).
+	Parameters:
+		none 
+	Return: 
+		NULL	- all file systems have more than the minimum amount
+			  of space 
+		Space** - array of space information for all file system which
+			  do not have a minimum amount of space configured 
+---------------------------------------------------------------------
+unsigned int
+min_req_space(unsigned int size)
+
+	Description:
+		Adds UFS overhead to 'size' to determine the smallest size a
+		file system should be to hold 'size'. Currently the overhead
+		factor is 15%.
+	Parameters:
+		size	- number of units used as basis of calculation
+	Return:
+		# >= 0	- number of units representing the minimum filesystem
+		          size required to hold 'size' data given overhead
+	Note: 
+		This routine should actually check the disk structure
+		associated with the filesystem. If it's a non-preserved file
+		system, then the multiplier should be 5% (UFS overhead) + 10%
+		(default free space). If it's a preserved file system, this
+		routine should pick the free space value out of the superblock.
+		This will require the parameter list have the file system name
+		added.
+---------------------------------------------------------------------
+Space **
+space_meter(char ** mplist)
+
+	Description:
+		Allocate a space table based on either the default mount points
+		or the ones listed in in 'mplist'. Run the software tree and 
+		populate the table.
+	Parameters:
+		mplist	 - array of mount points for which space is
+			   to be metered. If this is NULL, the
+			   default mount point list will be used
+	Return:
+		NULL	 - invalid mount point list
+		Space ** - pointer to allocated and initialized array of
+			   space structures 
+---------------------------------------------------------------------
+unsigned int
+suggested_space(unsigned int size)
+
+	Description:
+		Adds the "extra_space" passed in at the time of software 
+		library initialization to 'size' to determine the desireable
+		(recommended) file system size.
+	Parameters:
+		size	- number of units used as basis of calculation
+	Return:
+		# >= 0  - number of units representing the minimum filesystem
+			  size required to hold 'size' data given overhead
+---------------------------------------------------------------------
+
+char ** get_config_fs();
+
+	Returns a pointer to a character array of configured filesystems.  
+	This array is NULL terminated and is in the form required by the
+	space code functions.  (eg. space_meter())
+
+
+---------------------------------------------------------------------
+		INSTALLED SYSTEM/DATA STRUCTURE RELATED FUNCTIONS
+---------------------------------------------------------------------
+
+Module * load_installed(char *rootdir, int service);
+
+	Loads the information from an installed system into the data 
+	structures.  Relies on information found in 
+	"rootdir"/var/sadm/{install, pkgs}.  If "service" is FALSE, 
+	information on any installed services is also loaded.  Returns a
+	pointer the the media structure associated with the installed
+	system.
+
+---------------------------------------------------------------------
+Modinfo *
+next_patch(Modinfo * mod)
+
+	Description:
+		Return a pointer to the Modinfo structuer associated with the 
+		next_patch field of the Modinfo structure 'mod'.
+	Parameters: 
+		mod        - pointer to Modinfo structure 
+	Return: 
+		NULL       - no instances in the patch chain 
+		Modinfo *  - pointer to next patch Modinfo structure
+---------------------------------------------------------------------
+Modinfo *
+next_inst(Modinfo * mod)
+
+	Description:
+		Return a pointer to the Modinfo structure associated with the
+		instances field of the Modinfo structure 'mod'.
+	Parameters:
+		mod	   - pointer to Modinfo structure
+	Return:
+		NULL	   - no instances in the chain
+		Modinfo *  - pointer to next instance Modinfo structure
+---------------------------------------------------------------------
+void
+set_cluster_status(Module * mod)
+
+	Description:
+		Sets the module status (SELECTED, REQUIRED, UNSELECTED, PARTIAL) 
+		associated with the all clusters and metaclusters under the 'mod'
+		sub-tree to match that of 'mod'. This function is recursive, so 
+		that the status of every sub-cluster is also set by this call. 
+		Cluster or metacluster status is set based on the status of the 
+		packages which are contained within it.
+	Parameters:
+		mod	- pointer to cluster module
+	Return:
+		none
+---------------------------------------------------------------------
+			SERVICE RELATED FUNCTIONS
+---------------------------------------------------------------------
+Module *
+add_new_service(char * rootdir)
+
+	Description:
+		Adds a new service specified by 'rootdir' to the media chain,
+		creating a NULLPRODUCT structure under the media structure,
+		and returning a pointer to the module associated with the new
+		service.
+	Parameters:
+		rootdir	  - pathname of directory which serves as the root of the
+			    designated service
+	Return: 
+		Module *  - pointer to new media module for the service 
+---------------------------------------------------------------------
+Module * get_current_service(void);
+---------------------------------------------------------------------
+Module * get_default_service(void);
+---------------------------------------------------------------------
+void
+remove_all_services(void)
+
+	Description:
+		Scan the list of media structures, and if the media type is 
+		INSTALLED_SVC and the media is flagged as a NEW_SERVICE, then 
+		the media flags are marked with SVC_TO_BE_REMOVED. 
+		NOTE:   Only new services can be marked for removal. Removal 
+			of existing services not yet supported.
+	Parameters:
+		none
+	Return:
+		none
+---------------------------------------------------------------------
+			LOCALE RELATED FUNCTIONS
+---------------------------------------------------------------------
+int
+deselect_locale(Module *mod, char *locale)
+
+	Description:
+		If the product has a locale structure of type 'locale',
+		set the status of the locale structure to UNSELECTED.
+	Parameters:
+		mod	- pointer to product module
+		locale	- specifies name of locale to be deselected
+	Return:
+		ERR_INVALIDTYPE	  - 'mod' is neither PRODUCT or NULLPRODUCT
+		ERR_BADLOCALE	  - invalid locale parameter specified for this
+				    product
+		SUCCESS		  - locale structure of type 'locale' cleared
+				    successfully
+---------------------------------------------------------------------
+Module *
+get_all_locales(void)
+	
+	Description:
+		Return a pointer to the locale modules associated with the 
+		current product.  
+	Parameters:
+		none
+	Return:
+		NULL	 - no locales associated with the current product
+		Module * - pointer to locale list
+---------------------------------------------------------------------
+char *
+get_current_locale(void)
+
+	Description:
+		Returns the current locale.  If no locale has previously been
+		set, the default locale ("C") is returned.
+	Parameters: 
+		none
+	Return: 
+		"C"     - no current locale defined 
+		char *  - name of current locale
+---------------------------------------------------------------------
+void
+update_l10n_package_status(Module * prod)
+
+	Description:
+		Mark the localization packages as selected or unselected base
+		of the locale status of the associated product 'prod',
+		and the status of each package in the product (i.e.
+		SELECTED or REQUIRED). If 'prod' is NULL, the current product 
+		is used. This function must be called each time the status of 
+		one (or more) locales changes.
+	Parameters:
+		prod    - pointer to product module 
+	Return:
+		none
+---------------------------------------------------------------------
+int
+select_locale(Module * mod, char * locale)
+
+	Description:
+		Scan the 'mod' product locale list for a member which matches
+		'locale'. If found, set the status of that locale structure to
+		"SELECTED" and return.
+	Parameters:
+		mod	- product module pointer (must be type PRODUCT or
+			  NULLPRODUCT)
+		locale	- name of locale to be SELECTED
+	Return:
+		ERR_INVALIDTYPE - 'mod' is neither a PRODUCT or NULLPRODUCT
+		ERR_BADLOCALE   - 'locale' is not part of the locale chain 
+				  for 'mod'
+		SUCCESS         - locale structure of type 'locale' set 
+				  successfully
+---------------------------------------------------------------------
+int
+deselect_locale(Module * mod, char * locale)
+
+	Description:
+		If the product has a locale structure of the specified type,
+		set the status of the locale structure to UNSELECTED.
+	Parameters:
+		mod	- pointer to product module
+		locale  - specifies name of locale to be deselected
+	Return:
+		ERR_INVALIDTYPE - 'mod' is neither PRODUCT or NULLPRODUCT
+		ERR_BADLOCALE   - 'locale' invalid for this product
+		SUCCESS         - locale structure of type 'locale' cleared
+				  successfully
+---------------------------------------------------------------------
+Module *
+get_pkgs_for_locale(Module * mod)
+
+	Description:
+		Return the child pointer of the locale structure which is part
+		of the product locale chain. This will be a pointer to the
+		list of all localization specific packages associated with the
+		specified locale.
+	Parameters:
+		mod     - pointer to lead locale module for a given locale
+	Return:
+		Module* - value of the localization package chain
+---------------------------------------------------------------------
+			MEDIA RELATED FUNCTIONS
+---------------------------------------------------------------------
+Module *
+add_media(char * dir)
+
+	Description:
+		Adds the media specified by 'dir' to the list of known media.
+		The media can refer to a CD, CD image, or installed system. 
+		If the media already exists in the media chain, a pointer to
+		the existing module is returned, otherwise a pointer to the
+		newly created module is returned. The pointer returned is used
+		in future calls to routines such as load_media() and mount_media().  
+	Parameters:
+		dir	  - media name of directory in filesystem namespace
+	Return:
+		NULL	  - error adding media
+		Module *  - pointer to the media module structure
+---------------------------------------------------------------------
+Module *
+add_specific_media(char * dir, char * device, char * volume)
+
+	Description:
+		Used by SWMTOOL in place of add_media() to allow the specification
+		of volumes and devices in place of mounted directories. 'volume'
+		will eventually go away, it's only here for compatibility with
+		the previous versions of swmtool which implemented their own 
+		volume management scheme.   
+	Parameters:
+		dir	 - character string continaing media directory name
+		dev	 - character string continaing media device name
+		volume	 - NOT USED
+	Return:
+		NULL	 - error adding media
+		Module * - pointer to the media module structure
+---------------------------------------------------------------------
+int
+load_media(Module * mod, int use_packagetoc)
+
+	Description:
+		Loads the products and builds the software tree associated with
+		the specified media 'mod'. If 'mod' is NULL the current media 
+		is loaded. If 'use_packagetoc' is TRUE, the ".packagetoc" file
+		is used to obtain the package information if it's available. 
+		If "use_packagetoc" is FALSE or a ".packagetoc" isn't 
+		available, the package information is loaded from the pkgmap 
+		files. In general, "use_packagetoc" should be TRUE, because 
+		of the significant speed-up in reading in this information.
+	Parameters:
+		mod	- pointer to media module (NULL if current media is to
+			  be used)
+		use_packagetoc  - TRUE of FALSE
+	Return:
+		ERR_NOMEDIA     - media module NULL and no current media
+		ERR_INVALIDTYPE - 'mod' is not a media module
+		ERR_UNMOUNTED   - media does not have a name in the filesystem
+				  namespace
+		ERR_NOPROD      - no products available on the specified 
+		other		- all codes returned by load_product() 
+				  indicating problems in loading specific
+				  products 
+		SUCCESS		- media loaded and software tree built 
+				  successfully
+---------------------------------------------------------------------
+int
+mount_media(Module * media, char * mount_pt, MediaType type)
+
+	Description:
+		(SWMTOOL specific) Mounts the media device specified by the 
+		'mod' on the mount point specified by 'mount_pt'. 'type' allows
+		the caller to specify the type of the media.
+	Parameters: 
+		mod	    - pointer to media module 
+		mount_pt    - mount point for media
+		type        - media type specifier (see enum media_type)
+	Returns:
+		SUCCESS     - successful
+		ERR_MOUNTED - already mounted
+		ERR_MOUNTPT - the specified mount point doesn't exist
+		ERR_VOLUME  - volume management is running 
+		errno       - open or mount of specified device fails
+---------------------------------------------------------------------
+int
+unload_media(Module * media)
+
+	Description:
+		Unloads the specified media.  All data structures associated 
+		with the sub-modules of this media are freed. If 'mod' is 
+		NULL, the current media is unloaded.
+	Parameters: 
+		mod	- pointer to media module to unload 
+	Return:
+		ERR_INVALIDTYPE - 'mod' is not a media module 
+		other           - value returned during unmount attempt on 
+				  media 
+		SUCCESS         - media unload successful
+---------------------------------------------------------------------
+void
+set_eject_on_exit(int value)
+
+	Description:
+		Sets a value to indicate whether a previously mounted media
+		(CDROM only) should be ejected when unload_media is called. 
+		'value' of #!=0 indicates that the media should be ejected 
+		on when unloaded. A 'value' of 0 indicates that the media
+		should not be ejected.
+	Parameters: 
+		value	- '0' (set to eject on exit) or '# != 0' (set not to 
+			  eject on exit)
+	Return:
+		none
+---------------------------------------------------------------------
+Module *
+get_media_head(void)
+
+	Description:
+		 Return the pointer to the head of the media module list. 
+	Parameters: 
+		none 
+	Return: 
+		Module *  - pointer to module at the head of the media list
+---------------------------------------------------------------------
+Module *
+find_media(char * dir, char * device);
+
+	Description:
+		Traverse the media Modinfo list looking for a media whose 
+		device is 'dev' and whose directory is 'dir'. If only one of 
+		'dev' or 'dir' are specified, then only one is used in the
+		match. Return a pointer to that structure.
+	Parameters: 
+		dev	 - string containing device name of desired media 
+		dir      - string containing directory name of desired media
+	Return: 
+		NULL	 - no matching media found in tree 
+		Module * - pointer to matching media module
+---------------------------------------------------------------------
+			MODULE RELATED FUNCTIONS
+---------------------------------------------------------------------
+int
+set_current(Module * mod)
+
+	Description:
+		Each module type has a "current" module pointer. This
+		routine looks at the module type of 'mod' and sets the
+		appropriate "current" pointer to reference 'mod'. 
+		Currently accepted module types are: MEDIA, PRODUCT,
+		CATEGORY, METACLUSTER, CLUSTER, PACKAGE. Current CLUSTERS, 
+		METACLUSTERS, and PACKAGES are defined on a per-product
+		basis. PRODUCTS, and CATEGORIES are defined on a per-media 
+		basis.
+	Parameters:
+		mod	- pointer to module
+	Return:
+		SUCCESS     - if successful
+		ERR_NOMEDIA - if mod type is not a MEDIA and there is no 
+			      current media.
+		ERR_INVALID - if the specified module isn't part of the 
+			      current media.
+		ERR_NOPROD  - if mod type is CLUSTER or METACLUSTER and 
+			      there is no current product
+---------------------------------------------------------------------
+int
+set_default(Module * mod)
+
+	Description:
+		Each module type has a "default" module pointer. This
+		routine looks at the module type of 'mod' and sets the
+		appropriate "default" pointer to reference 'mod'. 
+		Currently accepted module types are: MEDIA, PRODUCT,
+		CATEGORY, METACLUSTER, CLUSTER, PACKAGE. Current CLUSTERS, 
+		METACLUSTERS, and PACKAGES are defined on a per-product
+		basis. PRODUCTS, and CATEGORIES are defined on a per-media 
+		basis.
+	Parameters:
+		mod	- pointer to module
+	Return:
+		SUCCESS     - if successful
+		ERR_NOMEDIA - if mod type is not a MEDIA and there is no 
+			      current media.
+		ERR_INVALID - if the specified module isn't part of the 
+			      current media.
+		ERR_NOPROD  - if mod type is CLUSTER or METACLUSTER and 
+			      there is no current product
+---------------------------------------------------------------------
+
+Module * get_current_media(void);
+Module * get_current_product(void);
+Module * get_current_category(ModType type);
+Module * get_current_metacluster(void);
+Module * get_current_cluster(void);
+Module * get_current_package(void);
+
+	Returns a pointer to the module which was previously defined as the
+	current one of that type.  If no module has been specified as the
+	"current one", then this function returns the same as the corresponding
+	call to get_default_xxx().   get_current_category() allows the 
+	caller to specify whether they wish to get the current MEDIA category
+	or the current PRODUCT category.  Currently only SWMTOOL uses 
+	categories.
+---------------------------------------------------------------------
+Module * get_default_media(void);
+Module * get_default_product(void);
+Module * get_default_category(ModType type);
+Module * get_default_metacluster(void);
+Module * get_default_cluster(void);
+Module * get_default_package(void);
+
+	Returns a pointer to the module which was previously defined as the
+	default one of that type.  If no module has been specified as the
+	"default one", then this function returns the first module of the
+	requested type found under the current media or product as appropriate.
+	get_default_category() allows the caller to specify whether they wish 
+	to get the default MEDIA category or the default PRODUCT category.  
+	Currently only SWMTOOL uses categories.
+---------------------------------------------------------------------
+Module *
+get_next(Module * mod)
+
+	Description:
+		Returns a pointer to the module in the chain which follows 
+		'mod'. Returns NULL if no module follows "mod". Provided to 
+		allow the caller to dereference the next pointer of the module
+		without knowledge of the underlying data structures.
+	Parameters:
+		mod	 - pointer to current module
+	Return:
+		NULL 	 - no next module
+		Module * - pointer to next module
+---------------------------------------------------------------------
+Module *
+get_sub(Module * mod)
+
+	Description:
+		Returns a pointer to the sub-module of 'mod'.  Returns NULL if 
+		'mod' has not sub-modules. Provided to allow the caller to 
+		dereference the sub pointer of the module without knowledge of 
+		the underlying data structures.
+	Parameters:
+		mod	 - pointer to current module
+	Return:
+		NULL	 - no next sub module
+		Module * - pointer to next sub module 
+---------------------------------------------------------------------
+Module *
+get_prev(Module * mod)
+
+	Description:
+		Returns a pointer to the module in the chain which precedes 
+		'mod'. Returns NULL if no module precedes 'mod'. Provided to 
+		allow the caller to dereference the previous pointer of the 
+		module without knowledge of the underlying data structures.
+	Parameters:
+		mod	 - pointer to current module
+	Return:
+		NULL	 - no preceding module
+		Module * - pointer to preceeding module
+---------------------------------------------------------------------
+Module *
+get_head(Module * mod)
+
+	Description:
+		Returns a pointer to the head of the chain of module "mod".  
+		Provided to allow the caller to dereference the head pointer of 
+		the module without knowledge of the underlying data structures.
+	Parameters:
+		mod	 - pointer to current module
+	Return:
+		Module * - pointer to the head module
+---------------------------------------------------------------------
+int
+mark_required(Module * modp)
+
+	Description:
+		Call 'mark_module()' for 'modp', setting the status of the module
+		and its sub-tree to REQUIRED.
+	Parameters:
+		modp	- pointer to module which heads the tree segment being marked
+			  (cannot be MEDIA or PRODUCT type)
+	Return:
+		all values returned by mark_module
+---------------------------------------------------------------------
+int
+mark_module(Module * modp, ModStatus status)
+	
+	Description:
+		Used to mark modules (other than PRODUCT and MEDIA) with
+		the specified 'status' (SELECTED or UNSELECTED). Marking
+		will affect 'modp' as well as all the modules in the sub-tree.
+		Modules marked as REQUIRED are not affected. If 'status' is
+		SELECTED, the reference count is incremented. If 'status' is
+		UNSELECTED, the reference count is set to '0'.
+	Parameters:
+		modp	- pointer to module which heads the tree segment
+			  being marked (cannot be MEDIA or PRODUCT type)
+		status	- either SELECTED or UNSELECTED
+	Return:       
+		ERR_INVALIDTYPE  - module type passed in was MEDIA or PRODUCT
+		SUCCESS          - all other conditions
+---------------------------------------------------------------------
+int
+mod_status(Module * mod)
+
+	Description:
+		Returns the status field of module 'mod'. MEDIA modules are
+		not accepted. Return value based on the following (hopefully
+		correct, but no guarantees) representation of the algorithm: 
+
+		(1)     'mod' type is PRODUCT with a status of REQUIRED, return
+			REQUIRED
+		(2)     'mod' type is PRODUCT and status is not REQUIRED and
+			there is a submodule, return the status of the submodule
+		(3)     'mod' type is not PRODUCT and is not LOCALE, if status
+			is REQUIRED, then return REQUIRED
+		(4)     'mod' type is not PRODUCT and is not REQUIRED and has no 
+			sub-modules, return the 'mod' status field.
+	    otherwise:         
+		(5)	if there is a sub-module, recursively call this routine
+			for that module;
+		(6)     if the module had sub-modules which all met criteria
+			(1)-(4), return the status of 'mod'
+		(7)     otherwise if none of the siblings of 'mod' were set to 
+			SELECTED, REQUIRED, or LOADED, then return UNSELECTED
+		(8)     otherwise, if they were all LOADED, all SELECTED, or all 
+			REQUIRED, then return LOADED, SELECTED, or REQUIRED
+			respectively
+		(9)     otherwise, if some were LOADED, *and* some were 
+			SELECTED or some were REQUIRED, then return PARTIAL.
+	Parameters:
+		mod	- pointer to module for which the status is to be 
+			  checked (cannot be of type MEDIA)
+	Return:
+		ERR_INVALIDTYPE  - module type was MEDIA
+		ERR_INVALID      - the tree is in an invalid state
+		REQUIRED
+		PARTIAL
+		SELECTED
+		UNSELECTED
+		LOADED           - see above
+---------------------------------------------------------------------
+int
+toggle_module(Module * mod)
+
+	Description:
+		Toggles the status if the module 'mod' and the sub-tree under
+		'mod'. If 'mod' is SELECTED, it becomes UNSELECTED (if refcnt 
+		is 1, otherwise refcnt is decremented). If 'mod' is PARTIAL,
+		and something under 'mod' is SELECTED (rather than REQUIRED)
+		then the sub-tree is UNSELECTED. Otherwise, everything is 
+		SELECTED. Used only by ttinstall, mainly for historical 
+		reasons.
+	Parameters:
+		mod     - pointer to module at head of sub-tree
+	Return:
+		#       - the modinfo status of 'mod' once the traversal is 
+			  completed (see 'ModStatus')
+---------------------------------------------------------------------
+MachineType
+get_machinetype(void)
+
+	Description:
+		Return the global machine "type" specifier.
+	Parameters:
+		none
+	Return:
+		MachineType  - MT_STANDALONE, MT_SERVER, MT_DATALESS, 
+			       MT_DISKLESS, or MT_SERVICE
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+void
+set_machinetype(MachineType type)
+
+	Description:
+		Set the global machine "type" specifier.
+	Parameters:
+		type	- machine type specifier (valid types: MT_SERVER, 
+		   	  MT_DATALESS, MT_DISKLESS, MT_CCLIENT, MT_SERVICE)
+	Return: 
+		none
+---------------------------------------------------------------------
+char * 
+get_rootdir(void)
+
+	Description:
+		Returns the rootdir previously set by a call to set_rootdir().
+		If set_rootdir() hasn't been called this returns a pointer to
+		a NULL string.
+	Parameters:
+		none
+	Return:
+		char *	- pointer to current rootdir string
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+void
+set_rootdir(char * newrootdir)
+
+	Description:
+		Sets the global 'rootdir' variable. Used to install packages 
+		to 'newrootdir'.  
+	Parameters:
+		newrootdir	- pathname used to set rootdir
+	Return: 
+		none 
+---------------------------------------------------------------------
+void
+set_current_locale(char * loc)
+
+	Description:
+		Set the "current" locale to be 'loc'.
+	Parameters: 
+		loc	- string containing location to be set 
+	Return: 
+		none
+---------------------------------------------------------------------
+char *
+get_current_locale(void)
+
+	Description:
+		Return the "current" locale.
+	Parameters:
+		none
+	Return:
+		char *  - pointer to the current locale string
+---------------------------------------------------------------------
+
+
+int toggle_product(Module * mod, ModStatus type);
+
+	Sets the status of the specified product "mod" and it's sub-tree to
+	"type". Returns the status of the product.
+
+int mark_module_action(Module * modp, Action action);
+
+	Marks the module "modp" and it's sub-tree with the "action" 
+	specified.  Allowed Actions are NO_ACTION_DEFINED, TO_BE_PRESERVED,
+	TO_BE_REPLACED, TO_BE_REMOVED, TO_BE_PKGADDED, TO_BE_SPOOLED, 
+	EXISTING_NO_ACTION, and ADDED_BY_SHARED_ENV.  Applications should
+	use the action appropriate for them.
+
+
+---------------------------------------------------------------------
+		FILE SYSTEM MOUNT RELATED FUNCTIONS
+---------------------------------------------------------------------
+
+int mount_fs(char *special, char *mountp, char *fstype);
+
+	SWMTOOL specific funtion to allow calls to mount(2) and put an 
+	entry into the mnttab.  This function is here because swmtool
+	cannot use the system(mount()) call.  "special" indicates the
+	block special node or directory to be mounted.  "mountp" indicates
+	the mount point.  "fstype" indicates the filsystem type.  If fstype
+	is NULL all fstypes are tried. Returns:
+		SUCCESS - if successful
+		ERR_FSTYPE - if fstype is NULL and sysfs() fails
+		-1 - if mount fails
+		ERR_LOCKFILE - if entry of mounted fs into mnttab was 
+				unsuccessful
+
+int umount_fs(char *mountp);
+
+	SWMTOOL specific funtion to allow calls to umount(2) and removes 
+	the entry in the mnttab.  This function is here because swmtool
+	cannot use the system(umount()) call.  "mountp" indicates
+	the mount point.  Returns:
+		SUCCESS - if successful
+		ERR_LOCKFILE - if entry of mounted fs into mnttab was 
+				unsuccessful or if the umount fails.
+
+int share_fs(char *fsname);
+
+	SWMTOOL specifc function.  Exports the specified filesystem "fsname" 
+	read-only to the world.  Returns errno if share command fails, 1 
+	if successful.  Starts up nfsd and mountd if necessary.
+
+int unshare_fs(char *fsname);
+
+	SWMTOOL specific function.  Unexports the specified filesystem 
+	"fsname" read-only to the world.  Returns ERR_SHARE if the
+	unshare command fails, SUCCESS if successful.  Stops nfsd and 
+	mountd if they were started by share_fs().
+
+
+---------------------------------------------------------------------
+			PACKAGE RELATED FUNCTIONS
+---------------------------------------------------------------------
+int
+add_pkg (char * pkg_dir, PkgFlags * pkg_params, char * prod_dir)
+
+	Description:
+		Adds the package specified by 'pkgdir', using the command
+		line arguments specified by 'pkg_params'. 'prod_dir' specifies
+		the location of the package to be installed. Has both an 
+		interactive and non-interactive mode.
+	Parameters:
+		pkg_dir	   - directory containing package
+		pkg_params - packaging command line arguments
+		prod_dir   - pathname for package to be installed
+	Return:
+		SUCCESS		- successful
+		ERR_PIPECREATE	- if input/output pipes cannot be created.
+		ERR_ULIMIT	- if ulimit returns error
+		ERR_FORKFAIL	- if the fork of the child process fails
+		other		- Exit Status of pkgadd
+---------------------------------------------------------------------
+void
+deselect_usr_pkgs(Module *prod)
+
+	Description:
+		Clear the SELECT state of packages under the Module Node-list
+		which are part of /usr. Used when creating a dataless machine
+		in initial install. 
+	Parameters:
+		prod	- pointer to product module 
+	Return:
+		none
+---------------------------------------------------------------------
+
+int package_selected(Node * np, char *foo);
+
+	Returns 1 if the package associated with the Node "np" is SELECTED
+	or REQUIRED.  Returns 0 otherwise.  "foo" is ignored, but must be
+	there so that this function can be used in walklist().
+
+---------------------------------------------------------------------
+
+int remove_pkg (char * pkg_dir, PkgFlags * pkg_params);
+
+	Removes the package specified by "pkgdir", using the command line
+	arguments specified by "pkg_params".  Has both an interactive
+	and non-interactive mode.  Not currently used, but available for
+	SWMTOOL.  Returns
+		SUCCESS - if successful
+		ERR_PIPECREATE if input/output pipes cannot be created.
+		ERR_FORKFAIL - if the fork of the child process fails
+		Exit Status of pkgadd
+
+
+---------------------------------------------------------------------
+			MISCELLANEOUS FUNCTIONS
+---------------------------------------------------------------------
+int
+get_sw_debug(void)
+
+	Description:
+		Return the current _sw_debug state.
+	Parameters:
+		none
+	Return:
+		0       - _sw_debug is currently deactivated
+		1       - _sw_debug is currently active
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+int
+set_sw_debug(int state)
+
+	Description:
+		Set the _sw_debug variable to "on" (!0) or "off" (0).
+		Arguments which are not '0' are assumed to mean '1'. The
+		old value is returned.
+	Parameters:
+		state   - '0' (clear) or '1' (set)
+	Return:
+		0,1	- old state	
+---------------------------------------------------------------------
+char *
+get_clustertoc_path(Module * mod)
+
+	Description:
+		Returns a pointer to the clustertoc file associated with the 
+		product 'mod'.  Path returned may or may not exist.
+	Parameters:       
+		mod	- pointer to product module structure 
+	Return: 
+		NULL	- 'mod' is not a valid product module pointer, or,
+			  if NULL, there is no current product
+		char *	- pathname to clustertoc file
+---------------------------------------------------------------------
+
+int path_is_readable(char *fn);
+
+	Returns SUCCESS if path "fn" is accessable, FAILURE if path "fn"
+	is not readable.
+
+void media_category(Module *mod);
+
+	Create the categories for the media based on the categories of
+	the products on that media.  Called after the media is loaded. 
+	"All Software" category is always created.  Currently SWMTOOL
+	is the only application which uses categories.
+
+---------------------------------------------------------------------
+void
+sw_lib_init(void(*alloc_proc)(int), FILE *logfile, int ptype, int disk_space)
+
+	Description:
+		Provides an application with the ability to specify information
+		to control some of the libraries default behavior. Defaults are
+		provided for all of these values, so calling this function is
+		optional. Only the functions which are to be changed from their
+		current values need to be filled in.
+	Parameters:
+		(*alloc_proc)(int)  - specifies the function to call if fatal 
+			  error
+			  (such as being unable to allocate memory) occurs.
+		logfile	- specifies the file to log non-fatal error or 
+		  	  informational messages to. stderr is the default
+		ptype	- specifies the default type of a package if no package
+			  type is defined. Default is PTYPE_USR.
+		disk_space - specifies the percent of free space which should 
+			  be used in calculating space requirements. To set 
+			  this to "0%" the argument "NO_EXTRA_SPACE" should be
+			  used. Default is 5% free space.
+	Return:
+		none
+---------------------------------------------------------------------
+char *
+get_err_str(int errno)
+
+	Description:
+		Retrieve the error message associated with 'errno'. Provided to 
+		allow applications which specify their own fatal error function 
+		to turn the error code passed to this function into a meaningful 
+		string. 
+	Parameters: 
+		errno	- install-library specific error codes 
+	Return: 
+		char *	- pointer to internationalized error string associated 
+			  with 'errno'
+---------------------------------------------------------------------
+void *
+xcalloc(size_t size)
+
+	Description:
+		Allocate 'size' bytes from the heap using calloc().
+	Parameters:    
+		size    - number of bytes to allocate 
+	Return:
+		NULL    - calloc() failure
+		void *  - pointer to allocated structure
+---------------------------------------------------------------------
+void
+xmalloc(size_t size)
+
+	Description:
+		Allocate 'size' bytes from the heap using malloc().
+	Parameters:    
+		size    - number of bytes to allocate 
+	Return:
+		NULL    - malloc() failure
+			 
+			 	 jjjjjkikkk
+		void *  - pointer to allocated structure
+---------------------------------------------------------------------
+void *
+xrealloc(void * ptr, size_t size)
+
+	Description:
+		Calls realloc() with the specfied parameters. xrealloc()
+		checks for realloc failures and adjusts the return value
+		automatically.   
+	Parameters:
+		ptr	- pointer to existing data block
+		size	- number of bytes additional
+	Return:
+		NULL    - realloc() failed
+		void *  - pointer to realloc'd structured
+---------------------------------------------------------------------
+void
+xfree(void * ptr)
+
+	Description:
+		Wrapper routine to system calls just in case some standard
+		additional tests on 'ptr' need to be performed.
+	Parameters:
+		ptr	- pointer to data structure to dealloc
+	Return:
+		none
+---------------------------------------------------------------------
+char *
+xstrdup(char * str)
+
+	Description:
+		Allocate space for the string from the heap, copy 'str' into
+		it, and return a pointer to it.
+	Parameters:
+		str	- string to duplicate
+	Return:
+		NULL	- duplication failed or 'str' was NULL
+		char *  - pointer to newly allocated/initialized structure
+---------------------------------------------------------------------
+int
+set_instdir_svc_svr(Module * prod)
+
+	Description:
+		Initial install specific function called when the machine
+		type is set to server. This function creates the necessary 
+		views and sets the necessary information to allow the space
+		code to correctly calculate the space required for the service.
+	Parameters:
+		prod	- pointer to the product module
+	Return:
+		ERR_NULLPKG  - the shared status of one of the packages
+			       associated with the product is a NULLPKG
+		SUCCESS      - all other cases
+---------------------------------------------------------------------
+void
+clear_instdir_svc_svr(Module * prod)
+
+	Description:
+		Initial install specific function called when machine type is
+		changed from being a server. This function destroys all service 
+		views associated with the media "/export".
+	Parameters:   
+		prod    - pointer to product module being manipulated
+	Return:
+		none
+---------------------------------------------------------------------
+void
+set_client_space(int num_clients, ClientType ctype, int swapsize)
+
+	Description:
+		Set the number of blocks currently required for additional 
+		/export/root or /export/swap. This is above any requirements 
+		placed by packages, based on number of clients and their swap 
+		size.
+	Parameters:
+		num_clients	- number of clients used for estimate
+		clienttype	- DISKLESS or CACHEONLY
+		swapsize        - size of per-client swap used for estimate
+	Return:
+		none
+	Note:
+		The "/" partition for each client is flatly calculated to be
+		15 MB.
+---------------------------------------------------------------------
+int
+percent_free_space(void)
+
+	Description:
+		Retrieve the value of the extra_disk_space global variable,
+		which is a # >= 0, and represents the amount of space the
+		software library was initialized to use as "desireable extra
+		free space on any given file system".
+	Parameters:
+		none
+	Return:
+		# >= 0  - current value of extra_disk_space global
+---------------------------------------------------------------------
+void
+set_action_for_machine_type(Module * prod)
+
+	Description:
+		 Called whenever the machine type changes.  Sets up the 
+		 necessary fields so that the space code correctly calculates 
+		 the needed space. Only used by initial install - glue
+		 for space calculations.
+	Parameters:
+		prod	- product module pointer
+	Return:
+		none
+---------------------------------------------------------------------
+			VIEW RELATED FUNCTIONS
+---------------------------------------------------------------------
+void
+clear_view(Module *prod)
+
+	Description:
+		Set the product status to UNSELETED. For all packages and
+		clusters under the product, set the status to UNSELECTED, 
+		set the shared field to NOTDUPLICATE (if not a NULLPKG), 
+		set the action field to NO_ACTION_DEFINED, clear the reference   
+		count, and for packages only, free the current installation base
+		directory field, if defined.
+	Parameters:
+		prod    - pointer to product module
+	Return:
+		none
+---------------------------------------------------------------------
+Module *
+get_current_view(Module * prod)
+
+	Description:
+		Return a pointer to the media module associated with the
+		current view wrt the product 'prod'.
+	Parameters: 
+		prod     - pointer to product module containing the view 
+	Return: 
+		NULL     - no current view media module, or invalid
+			   'prod' pointer
+		Module * - pointer to media module
+---------------------------------------------------------------------
+int
+load_default_view(Module * prod)
+
+	Description:
+		Make the default view associated with the product 'prod' 
+		the current view, and save the current view away in the
+		view lists.
+	Parameters: 
+		prod	- pointer to product module 
+	Return: 
+		SUCCESS	- always returns this
+---------------------------------------------------------------------
+int
+load_view(Module * prod, Module * media)
+
+	Description:
+		Make the view associated with 'media' current, and store away
+		the current view in the view lists. 
+	Parameters:
+		prod	- pointer to product module
+		media	- pointer to media module against which the view is to 
+			  be made current 
+	Return: 
+		SUCCESS - always returns this value
+---------------------------------------------------------------------
+void
+rm_view(Module * prod, Module * media)
+
+	Description:
+		Scan the list of views associated with 'prod'. If one matches
+		'media', then remove it from the list of views and destroy it.
+	Parameters:
+	 	prod	- pointer to product module
+		media	- pointer to media structure identifying view to delete
+	Return:
+		none
+---------------------------------------------------------------------
+			HASH LIST ACCESS FUNCTIONS
+---------------------------------------------------------------------
+int
+walklist(List * list, int (*proc)(Node *, caddr_t), caddr_t data)
+
+	Description:
+		Used to execute the 'proc' prodedure for every node
+		in the hash list headed by 'list'. 'data' is used
+		as the second parameter to the user supplied 'proc'
+		function. Used to walk modinfo node lists.
+	Parameters:
+		list	- pointer to head of Node list
+		proc	- user supplied function to be called for each
+			  node in the list
+		data	- user supplied parameter to be passed into 'proc'
+	Return:
+		0	- success
+		# != 0	- failure
+---------------------------------------------------------------------
+Node *
+findnode(List *list, char *key)
+
+	Description:
+		Look up an entry in the hash list table 'list' which matches
+		the key 'key'.
+	Parameters:
+		list	- pointer to head of hash table list
+		key	- node key to match against
+	Return:
+		NULL	- no match
+		Node *	- pointer to matching node
+	Note:
+		This function is VERY low level and should be avoided
+		at all possible cost.
+---------------------------------------------------------------------

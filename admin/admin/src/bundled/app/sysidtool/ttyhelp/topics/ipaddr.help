@@ -1,0 +1,21 @@
+
+---- Description ---------------------------------------------------
+
+     Specifies an IP address, which identifies your system in a 
+     network.  Similar to a phone number. 
+
+     An IP address is a series of four numbers separated by
+     periods.  Generally, each part of the address is a
+     number between 0 and 255.  The first number must be less
+     than 224 and usually the last number cannot be 0.
+
+     Internet addresses are usually assigned by network or system
+     administrators according to local and Internetwork policies.
+     Because creating duplicate IP addresses can cause network 
+     problems, do not guess or make up a number; check with your 
+     system or network administrator for help.
+
+
+---- See also ------------------------------------------------------
+
+     Internet Protocol (IP) address

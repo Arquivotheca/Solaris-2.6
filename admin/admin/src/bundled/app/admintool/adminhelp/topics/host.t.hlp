@@ -1,0 +1,16 @@
+---- Admintool:Hosts -------------------------------
+ 
+Managing hosts with Admintool enables you to manage
+host information without having to manually edit the
+/etc/hosts file. 
+
+Manage hosts with Admintool when you want to use
+network access commands such as rlogin and
+rcp. (There must be a host name and IP entry in the
+/etc/inet/hosts file for every system you want to
+access remotely.) 
+
+Admintool can be used to manage the /etc/inet/hosts
+file on the local system. It does not modify host
+information in global network name service databases
+such as NIS or NIS+.

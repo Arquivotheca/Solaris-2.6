@@ -1,0 +1,20 @@
+#	Copyright (c) 1995 Sun Microsystems, Inc.
+#		All Rights Reserved
+#
+# @(#)prototype 1.6 95/10/02
+#
+# prototype file for SUNW0volg 
+
+!search ../../gui
+i pkginfo=pkginfo
+i copyright=copyright
+i depend=depend
+
+d none ./usr 0775 root sys
+d none ./usr/lib 0775 root bin
+d none ./usr/lib/locale 0755 bin bin
+d none ./usr/lib/locale/C 0755 bin bin
+d none ./usr/lib/locale/C/LC_MESSAGES 0755 bin bin
+f none ./usr/lib/locale/C/LC_MESSAGES/volmissing_popup.info 0664 root bin
+f none ./usr/lib/locale/C/LC_MESSAGES/eject_popup.info 0664 root bin
+f none ./usr/lib/locale/C/LC_MESSAGES/SUNWvolg.po 0664 root bin

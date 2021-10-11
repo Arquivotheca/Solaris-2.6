@@ -1,0 +1,30 @@
+---- Add/Delete Members in a Group -----------------
+
+1. Choose Groups from the Browse menu.
+
+2. Select the group entry to modify from the
+   Admintool:Groups window. 
+
+3. Choose Modify from the Edit menu.
+
+   The Modify window contains the selected group
+   entry.
+
+4. Either type user names or delete user names in
+   the Members List text box. 
+
+   If adding additional group members, type user
+   names at the end of the list. Separate the user
+   names with commas. 
+
+   If deleting user names, use the mouse to select
+   the user name to delete. Press the Delete key to
+   delete the user name. You can also use the
+   Backspace key to delete the user name one
+   character at a time. 
+
+5. Click on OK.
+
+   The group information displayed in the main
+   window is updated.
+

@@ -1,0 +1,17 @@
+---- Description -----------------------------------
+
+     Specifies whether your system is on a network
+     that has subnets.
+
+     If the network to which your system is
+     connected is divided into subnets (usually
+     using routers or gateways), answer Yes.  If
+     you do not know if your network has subnets,
+     do not guess; check with your system
+     administrator for help.
+
+
+---- See also --------------------------------------
+
+     netmask
+     subnet

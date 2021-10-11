@@ -1,0 +1,95 @@
+AdapterId 06042h
+
+
+AdapterName "3Com EtherLink/MC Ethernet Adapter"
+
+
+NumBytes 2
+
+
+NamedItem
+
+Prompt  "Enable/Disable Adapter"
+
+Choice  " Adapter Enabled "    pos[0]=XXXXXXX1b
+Choice  " Adapter Disabled "   pos[0]=XXXXXXX0b
+
+Help
+
+"This controls whether the adapter is enabled or not.
+Use the Enabled setting for normal use.
+Use the Disabled setting if you are not using
+the adapter and enabling it causes a conflict
+with another device."
+
+NamedItem
+
+Prompt "I/O Address Range"
+
+choice "  300 to  307 " pos[0]=XXXXX00Xb  io 0300h-0307h
+choice " 1300 to 1307 " pos[0]=XXXXX01Xb  io 1300h-1307h
+choice " 2300 to 2307 " pos[0]=XXXXX10Xb  io 2300h-2307h
+choice " 3300 to 3307 " pos[0]=XXXXX11Xb  io 3300h-3307h
+
+Help
+
+"Determines the range of i/o addresses used by EtherLink/MC.
+The addresses in this range cannot be used by another
+installed device."
+
+
+NamedItem
+
+Prompt "Interrupt Level"
+
+choice " Channel 3 "  pos[1]=XXXX0100b  INT 3
+choice " Channel 7 "  pos[1]=XXXX0010b  INT 7
+choice " Channel 9 "  pos[1]=XXXX1000b  INT 9
+choice " Channel 12 " pos[1]=XXXX0001b  INT 12
+
+Help
+
+"Determines the interrupt level used by EtherLink/MC.
+This adapter's interrupt level can be shared with
+another device.  You may be able to improve performance
+by selecting a level that is not used by any other device."
+
+
+NamedItem
+
+Prompt "Packet Buffer RAM Address Range"
+
+choice " 0C0000 to 0C5FFF "  pos[0]=XXX00XXXb  mem 0c0000h-0C5FFFh
+choice " 0C8000 to 0CDFFF "  pos[0]=XXX01XXXb  mem 0c8000h-0CDFFFh
+choice " 0D0000 to 0D5FFF "  pos[0]=XXX10XXXb  mem 0d0000h-0D5FFFh
+choice " 0D8000 to 0DDFFF "  pos[0]=XXX11XXXb  mem 0d8000h-0DDFFFh
+
+Help
+
+"Determines the range of RAM and ROM addresses used by
+EtherLink/MC.  The addresses in this range cannot be
+used by any other installed device.  The range represents
+16K bytes of RAM addresses followed by 8K bytes of ROM
+addresses."
+
+
+NamedItem
+
+Prompt "Transceiver Type"
+
+choice " On-Board (BNC or RJ45) "  pos[0]=XX0XXXXXb
+choice " External (AUI) "          pos[0]=XX1XXXXXb
+
+Help
+
+"Determines the type of transceiver used by the EtherLink/MC.
+If you have a thin Ethernet network and wish to connect to
+the adapter's round BNC connector or you have a twisted pair
+Ethernet network and wish to connect to the adapter's 8 pin
+RJ45 connector (EtherLink/MC TP only), select On-Board.  If
+you have a drop cable from an external transceiver and wish
+to attach to the adapter's 15 pin AUI connector, select
+External."
+
+
+

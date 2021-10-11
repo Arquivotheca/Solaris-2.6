@@ -1,0 +1,23 @@
+To set up a disk with only / and swap, follow these steps:
+
+1. Go the the File System and Disk Editor screen.
+
+2. Set the size of swap by: 
+   a. Selecting the megabytes of swap field (32).
+   b. In the Entry Bar, type the size for swap 
+      and press Return.
+
+3. Determine the remaining disk space for / by
+   subtracting the number you specified for the new
+   swap in step 2, from the amount shown in the
+   Capacity field.
+
+   For example, if you specified swap to be 44
+   megabytes, and your Capacity is 198 megabytes,
+   subtract 44 from 100, leaving 54 for /.
+
+4. Set / size by:
+   a. Selecting the megabytes of swap field.
+   b. In the Entry Bar, type the size for / and
+      press Return.
+  

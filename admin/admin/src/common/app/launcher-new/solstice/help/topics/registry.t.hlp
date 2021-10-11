@@ -1,0 +1,35 @@
+---- Registering Applications in the
+      Solstice Launcher --------------------------
+
+Applications that display in the Solstice Launcher
+are registered. This means that you can add and
+remove applications, including homemade applications,
+to and from the launcher main window.
+
+There are two ways that applications are registered:
+
+- Local registry, which means registered applications
+  are private to the user (not local to the system).
+  Applications are registered locally with the
+  Add Application command from the launcher menu.
+
+  See "How to Add Applications to the Solstice
+  Launcher" for instructions on registering
+  applications locally. 
+
+- Global registry, which means registered
+  applications are global to all local and
+  remote users using the Solstice launcher.
+  Applications can only be registered
+  globally with the launcher command
+  line interface.
+
+  See the Solstice System Management Guide
+  for information on using the command
+  line interface to register applications
+  globally.
+
+If the user has a local registry file and
+global registry file is in place, then the
+applications from both files are displayed.
+

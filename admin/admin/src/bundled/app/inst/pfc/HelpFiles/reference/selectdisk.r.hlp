@@ -1,0 +1,20 @@
+---- About this Screen ------------------------
+
+The Solaris installation program automatically
+selects disks and a boot device that are valid 
+for installing Solaris software. So by default,
+you may have more disks selected than you need.
+
+Use the Suggested Minimum and Total Selected
+fields to determine if you can deselect disks.
+
+----- What is a Boot Device? ------------------
+
+A boot device is a partition or slice 
+configured as the primary device for installing 
+and automatically rebooting Solaris software. 
+The boot device is where root (/) will be 
+configured.
+
+
+

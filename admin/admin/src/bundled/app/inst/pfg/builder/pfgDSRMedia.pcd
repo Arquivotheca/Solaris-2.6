@@ -1,0 +1,185 @@
+Module: pfgDSRMedia
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.2 / Solaris 2.4";
+      lastWritten = "Thu Aug  1 10:00:07 1996";
+      copy = false;
+      inCreateMenu = true;
+      nodesUsed = dsr_media_dialog;
+        {
+          dsr_media_dialog = formWindow : pfgGUITemplates;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+          Group: Control
+            vip_x = 55;
+            vip_y = 30;
+              {
+                panelhelpText = XmText;
+                Group: Constraint
+                  leftOffset = 0;
+                  rightOffset = 0;
+                  topOffset = 0;
+              }
+              {
+                mediaSpecForm : form = XmForm;
+                Group: Widget
+                  rubberPositioning = False;
+                  resizePolicy = resize_any;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_widget;
+                  topWidget = panelhelpText;
+                  bottomAttachment = attach_widget;
+                  bottomWidget = messageBox;
+                  resizable = true;
+                  topOffset = 0;
+                  leftOffset = 10;
+                  rightOffset = 10;
+                    {
+                      mediaForm = XmForm;
+                      Group: Widget
+                        rubberPositioning = False;
+                        resizePolicy = resize_any;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        topAttachment = attach_form;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                        topOffset = 0;
+                          {
+                            mediaLabel = XmLabel;
+                            Group: Constraint
+                              leftAttachment = attach_form;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_none;
+                              resizable = true;
+                          }
+                          {
+                            radioBox = XmRadioBox;
+                            Group: Constraint
+                              leftAttachment = attach_form;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_widget;
+                              bottomAttachment = attach_form;
+                              resizable = true;
+                              leftOffset = 15;
+                              topWidget = mediaLabel;
+                                {
+                                  diskToggle = XmToggleButton;
+                                  Group: Widget
+                                    armCallback = "C:dsr_media_toggle_arm_cb";
+                                }
+                                {
+                                  tapeToggle = XmToggleButton;
+                                  Group: Widget
+                                    armCallback = "C:dsr_media_toggle_arm_cb";
+                                }
+                                {
+                                  floppyToggle = XmToggleButton;
+                                  Group: Widget
+                                    armCallback = "C:dsr_media_toggle_arm_cb";
+                                }
+                                {
+                                  nfsToggle = XmToggleButton;
+                                  Group: Widget
+                                    armCallback = "C:dsr_media_toggle_arm_cb";
+                                }
+                                {
+                                  rshToggle = XmToggleButton;
+                                  Group: Widget
+                                    armCallback = "C:dsr_media_toggle_arm_cb";
+                                }
+                          }
+                    }
+                    {
+                      deviceForm = XmForm;
+                      Group: Widget
+                        rubberPositioning = False;
+                        resizePolicy = resize_any;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = mediaForm;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                        topOffset = 10;
+                          {
+                            deviceLabel = XmLabel;
+                            Group: Widget
+                              alignment = alignment_beginning;
+                            Group: Constraint
+                              leftAttachment = attach_form;
+                              rightAttachment = attach_form;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_none;
+                              resizable = true;
+                              topOffset = 0;
+                              leftOffset = 0;
+                          }
+                          {
+                            deviceTextField = XmTextField;
+                            Group: Widget
+                              activateCallback = "C:dsr_media_continue_cb";
+                            Group: Constraint
+                              leftAttachment = attach_form;
+                              rightAttachment = attach_form;
+                              topAttachment = attach_widget;
+                              bottomAttachment = attach_form;
+                              resizable = true;
+                              leftOffset = 15;
+                              topWidget = deviceLabel;
+                              rightOffset = 15;
+                          }
+                    }
+                    {
+                      infoText = panelhelpText : pfgGUITemplates;
+                      Group: Widget
+                        cursorPositionVisible = False;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        bottomAttachment = attach_form;
+                        resizable = true;
+                        topWidget = deviceForm;
+                    }
+              }
+              {
+                messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = continueButton;
+                  initialFocus = continueButton;
+                    {
+                      continueButton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:dsr_media_continue_cb";
+                    }
+                    {
+                      gobackButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:dsr_media_goback_cb";
+                    }
+                    {
+                      button3 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      exitButton : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:pfgExit";
+                    }
+                    {
+                      helpButton : button5 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:pfgHelp(\"selectmedia.r\")";
+                    }
+              }
+        }
+}
+

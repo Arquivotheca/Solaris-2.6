@@ -1,0 +1,965 @@
+ident	"@(#)doc	1.9	94/11/18 SMI"
+
+
+libsysman - system management application interfaces
+
+libsysman provides C functions to perform administration of
+the followin system resources:  user accounts, including the
+/etc/passwd and /etc/shadow files, the /etc/group file, and
+a home directory; group membership via the /etc/group file;
+host registration via the /etc/hosts file; configuration
+of locally connected printers and access to printers connected
+to remote systems; serial port service management; and software
+package installation and removal.
+
+Generally, the library provides interfaces to:
+
+  "add"		for example, add a new user to the system (create
+		a new user account);
+  "delete"	for example, delete a printer configuration
+		from the system;
+  "modify"	change attributes of an existing configuration,
+		for example change the list of members of an
+		existing group;
+  "list"	get a list of all elements of a certain type,
+		for example get a list of all of the currently
+		configured serial port services for a system;
+  "get"		retrieve all attributes of a specific element
+		of a certain type, for example get all information
+		about a specific user account, including the
+		/etc/passwd entry and all secondary group
+		memberships from /etc/group.
+
+For some kinds of managed elements some of these concepts may not
+make sense; for example, you don't "add" serial ports to the system,
+you enable services on existing hardware ports.  Likewise, there is
+no "modify" operation on software packages, however you may install
+or remove (add or delete) packages as well as list the packages on
+the system or view the attributes of the package.  The interfaces
+defined in the sysman_iface.h interface file are the final word on
+the supported operations on each type of managed entity.
+
+Most functions take three arguments:  a pointer to a structure
+containing the input data, a character string buffer for returning
+error messages, and an integer specifying the length of the buffer
+so that the library doesn't write beyond the end of the buffer.
+For functions that allocate memory, such as the list functions,
+there are corresponding "free" functions that should be called
+to return the allocated memory to the free pool once the caller
+is done referencing the data.  The data structures are defined
+in the file sysman_types.h, which is automatically included by
+sysman_iface.h.  Some of the structures contain fields with
+names that end in "_key".  These key fields are used by the
+modify, delete, and get functions.  The following fields should
+be filled in for function calls:
+
+add -- the key field, plus all additional required fields, and
+optionally any optional fields (that's why they're called optional!).
+The key field and the value field for the key should be set to the
+same thing; for example, when adding a user account, set the username
+and username_key fields to the same value.  In an add operation, the
+key field is used to check for an existing entry to prevent duplicate-
+keyed entries from being added, while the non-key field value is what
+is actually added; setting the key and value fields to different values
+can inadvertantly circumvent this protection and result in inconsistent
+system data being added to the system.
+
+delete -- only the key fields need to be specified, all other field
+values will be ignored.
+
+modify -- all fields.  Note that fields that are NOT to be modified
+must also be specified with the current value of the item, as the
+library can't decide whether a NULL value means "don't modify" or
+"modify by clearing out the current value".  You may use the "get"
+function for getting current values to seed the data structure that
+you will pass to the modify function.
+
+list -- no values need to be speficied, all items of the requested
+type will be retrieved.
+
+get -- only the key fields need to be specified, all other input
+field values will be ignored.
+
+
+Usage:
+
+#include "sysman_iface.h"
+
+cc ... -lsysman -lserial -ladmldb -ladmutil -lsocket -lnsl -lgen -lm -lmp
+
+
+Ok, here we go!
+
+----------------------------------------------------------------
+
+sysman_*_user()
+
+typedef struct _user_arg_struct {
+	const char	*username_key;
+	const char	*username;
+	const char	*passwd;
+	const char	*uid;
+	const char	*group;
+	const char	*second_grps;
+	const char	*comment;
+	boolean_t	home_dir_flag;
+	const char	*path;
+	const char	*shell;
+	const char	*lastchanged;
+	const char	*minimum;
+	const char	*maximum;
+	const char	*warn;
+	const char	*inactive;
+	const char	*expire;
+	const char	*flag;
+} UserArgStruct;
+
+NOTES:
+
+passwd - "*LK*" for locked, "NP" for no passwd, "" for cleared until
+first login.  Any other string is treated as a plaintext password and
+is encrypted before being entered into the passwd file.  For modify,
+NULL indicates no change.
+
+group - can be numeric, or a group name if the name already exists in
+/etc/groups and can be looked up and translated to a gid for the
+passwd table entry
+
+second_grps - comma-separated list of secondary groups, can be gids
+and/or names; all MUST already exist in /etc/group, no new groups
+will be created as not enough information is supplied (would need
+both gid and name).
+
+home_dir_flag - on "add", TRUE means to create a home directory for
+the user and populate it with the appropriate files from /etc/skel.
+On "delete", TRUE means to remove the user's home directory.
+
+lastchanged - days since 1/1/70 since the passwd was last changed
+(maintained in the shadow file).  It seems that the database library
+allows this value to be "set", but I don't know why you'd ever want
+to stick a value in there.  A reasonable number is going to be
+around 9058 or so (10/20/94 is 9058).
+
+expire - days counted since 1/1/70 for date that account expires.
+
+flag - unused, just pass NULL.
+
+field names are mostly self-explanatory.  Note that the group
+entry can be either the group name or group id, the library
+will convert a name to a gid before storing in the /etc/passwd
+record.  second_grps is a comma-separated list, no spaces!,
+of group names and/or gids.  lastchanged, minimum, maximum,
+ward, inactive, expire, and flag are /etc/shadow fields, see
+shadow(4) for more details.
+
+X - required
+o - optional
+  - ignored
+			add	delete	modify	get
+username_key		X	X	X	X
+username		X		o
+passwd			X		o
+uid			X
+group			X		o
+second_grps		o		o
+comment			o		o
+home_dir_flag		X	X
+path			X		o
+shell			o		o
+clastchanged		o		o
+minimum			o		o
+maximum			o		o
+warn			o		o
+inactive		o		o
+expire			o		o
+flag
+
+
+int
+sysman_add_user(UserArgStruct *ua_p, char *buf, int bufsiz)
+
+Creates a new user entry to /etc/passwd, adds to existing
+secondary groups in /etc/group, creates home directory and
+populates with files from /etc/skel based on the shell.
+Secondary groups must already exist in /etc/group, this
+function will NOT create new group entries.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_MALLOC_ERR -- a dynamic memory allocation failed.
+SYSMAN_USER_NO_PASSWD -- a NULL passwd was supplied in the input
+  argument; a passwd must be supplied, even if it is "".
+SYSMAN_USER_BAD_GROUP -- either the primary group or one of the
+  secondary groups does not currently exist in the /etc/group
+  file
+SYSMAN_USER_BAD_HOME -- the home directory must be an absolute
+  path (start with '/'); it was either NULL, "", or didn't start
+  with /.
+SYSMAN_USER_GROUP_FAILED -- adding the user to secondary groups
+  in the /etc/group file failed.
+SYSMAN_USER_ADD_FAILED -- something failed, probably adding the
+  actual entry to the /etc/passwd file.
+SYSMAN_USER_HOME_DIR_FAILED -- something went wrong when trying
+  to create the user's home directory.
+SYSMAN_SUCCESS (always 0) -- operation completed successfully.
+
+
+int
+sysman_delete_user(UserArgStruct *ua_p, char *buf, int bufsiz)
+
+Removes a user entry from /etc/passwd, removes any mention of
+the user from secondary groups in /etc/group, and blows away
+the home directory (probably not good considering I provided
+for shared home dirs in add!)
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_USER_NO_USER -- the user to be deleted couldn't be found
+  in the /etc/passwd file.
+SYSMAN_USER_DEL_FAILED -- something failed, probably adding the
+  actual entry to the /etc/passwd file.
+SYSMAN_USER_GROUP_FAILED -- deleting the user from secondary groups
+  in the /etc/group file failed.
+SYSMAN_SUCCESS (always 0) -- operation completed successfully.
+
+
+int
+sysman_modify_user(UserArgStruct *ua_p, char *buf, int bufsiz)
+
+Updates a user entry.  Does NOT move an existing home directory,
+only changes the value of the home directory in the passwd file.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_USER_MOD_FAILED -- something failed, probably modifying
+  the actual entry in the /etc/passwd file.
+SYSMAN_USER_GROUP_FAILED -- modifying the user's membership in
+  secondary groups in the /etc/group file failed.
+SYSMAN_SUCCESS (always 0) -- operation completed successfully.
+
+
+int
+sysman_get_user(UserArgStruct *ua_p, char *buf, int bufsiz)
+void
+sysman_free_user(UserArgStruct *ua_p)
+
+Returns all of the data for a single user, specified by the
+username_key value.  Take a UserArgStruct, fill in the key,
+and pass the address:
+
+	UserArgStruct ua;
+
+	(void) sysman_get_user(&ua, ...);
+
+	printf("%s\n", ua.username);
+		...
+
+Note that this function will go out and get the secondary groups
+that the user belongs to and will return them as a comma separated
+list.  It's expected that the modify function on the GUI will first
+call this function to populate the modify screen with the existing
+values for the user.
+
+Free the memory allocated by the get_user function when you're
+done with it by calling
+
+	sysman_free_user(&ua);
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_USER_GET_FAILED -- something failed, probably getting
+  the actual entry from the /etc/passwd file.
+SYSMAN_USER_GROUP_FAILED -- couldn't determine user's secondary
+  group memberships, probably failed reading the /etc/group file.
+SYSMAN_SUCCESS (always 0) -- operation completed successfully.
+
+
+int
+sysman_list_user(UserArgStruct **ua_pp, char *buf, int bufsiz)
+void
+sysman_free_user_list(UserArgStruct *ua_p, int cnt)
+
+Returns the list of all users as they exist in the /etc/passwd
+file.  The return value is the number of records returned.
+Pass in the address of a (UserArgStruct *) and it'll come back
+as an array of 0 -> cnt-1 UserArgStruct records:
+
+	UserArgStruct *ua_p;
+
+	cnt = sysman_list_user(&ua_p, ...);
+	for (i = 0; i < cnt; i++) {
+		printf("%s\n", ua_p[i].username);
+		...
+	}
+
+Note that this function only fills in the stuff that you get from
+the passwd table -- no secondary groups, and the group comes back
+as a gid, not a group name.  This should provide a "gross" view
+of all users, if you want more detail use the "get" function.
+
+Free the memory allocated by the list_user function when you're
+done with it by calling
+
+	sysman_free_user_list(ua_p, cnt);
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_MALLOC_ERR -- a dynamic memory allocation failed.
+SYSMAN_USER_GET_FAILED -- something failed, probably reading
+  the entries from the /etc/passwd file.
+SYSMAN_SUCCESS (always 0) -- operation completed successfully.
+
+----------------------------------------------------------------
+
+sysman_*_group()
+
+typedef struct _group_arg_struct {
+	const char	*groupname_key;
+	const char	*gid_key;
+	const char	*groupname;
+	const char	*passwd;
+	const char	*gid;
+	const char	*members;
+} GroupArgStruct;
+
+field names are self-explanatory.  Note that there are two
+keys -- if you want to make sure that you get the entry that
+you want, specify both key values.  If you only specify one
+of the keys, you'll get the first occurance in the group file
+where that key is matched.
+
+X - required
+o - optional
+  - ignored
+			add	delete	modify	get
+groupname_key		X	X	X	X
+gid_key			X	X	X	X
+groupname		X
+passwd			o		o
+gid			X		o
+members			o		o
+
+
+int
+sysman_add_group(GroupArgStruct *ga_p, char *buf, int bufsiz)
+
+Creates a new group entry in /etc/group.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_GROUP_ADD_FAILED -- adding the group entry to /etc/group failed.
+
+
+int
+sysman_delete_group(GroupArgStruct *ga_p, char *buf, int bufsiz)
+
+Deletes a group entry from /etc/group.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_GROUP_DEL_FAILED -- deleting the group entry from /etc/group failed.
+
+
+int
+sysman_modify_group(GroupArgStruct *ga_p, char *buf, int bufsiz)
+
+Modifies a group entry in /etc/group.  Note that this is not
+an "append" function, if you want to add a user to a group you
+first have to "get" the group entry, append the username to the
+members list, and then pass that group entry back in via modify.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_GROUP_MOD_FAILED -- modfying the group entry in /etc/group failed.
+
+
+int
+sysman_get_group(GroupArgStruct *ga_p, char *buf, int bufsiz)
+void
+sysman_free_group(GroupArgStruct *ga_p)
+
+Returns all of the data for a single group.  Remember to
+specify both key values if you want to be sure to get the
+right entry!  Refer to the user section of the manual for
+descriptions of sysman_free_*() functions.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_GROUP_GET_FAILED -- getting the entry failed; maybe the key
+  was bad, and then entry doesn't exist?
+
+
+int
+sysman_list_group(GroupArgStruct **ga_pp, char *buf, int bufsiz)
+void
+sysman_free_group_list(GroupArgStruct *ga_p, int cnt)
+
+Returns the list of group entries from the /etc/group file.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_MALLOC_ERR -- a dynamic memory allocation failed.
+SYSMAN_GROUP_GET_FAILED -- reading /etc/group failed.
+
+----------------------------------------------------------------
+
+sysman_*_host()
+
+typedef struct _host_arg_struct {
+	const char	*ipaddr_key;
+	const char	*hostname_key;
+	const char	*ipaddr;
+	const char	*hostname;
+	const char	*aliases;
+	const char	*comment;
+} HostArgStruct;
+
+field names are self-explanatory.  Note that there are two
+keys -- if you want to make sure that you get the entry that
+you want, specify both key values.  If you only specify one
+of the keys, you'll get the first occurance in the host file
+where that key is matched.
+
+X - required
+o - optional
+  - ignored
+			add	delete	modify	get
+ipaddr_key		X	X	X	X
+hostname_key		X	X	X	X
+ipaddr			o		o
+hostname		X		o
+aliases			o		o
+comment			o		o
+
+
+int
+sysman_add_host(HostArgStruct *ha_p, char *buf, int bufsiz)
+
+Creates a new host entry in /etc/hosts.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_HOST_ADD_FAILED -- adding the host entry to /etc/host failed.
+
+
+int
+sysman_delete_host(HostArgStruct *ha_p, char *buf, int bufsiz)
+
+Deletes a host entry from /etc/hosts.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_HOST_DEL_FAILED -- deleting the host entry from /etc/host failed.
+
+
+int
+sysman_modify_host(HostArgStruct *ha_p, char *buf, int bufsiz)
+
+Modifies a host entry in /etc/hosts.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_HOSt_MOD_FAILED -- modfying the host entry in /etc/host failed.
+
+
+int
+sysman_get_host(HostArgStruct *ha_p, char *buf, int bufsiz)
+void
+sysman_free_host(HostArgStruct *ha_p)
+
+Returns all of the data for a single host.  Remember to
+specify both key values if you want to be sure to get the
+right entry!  Refer to the user section of the manual for
+descriptions of sysman_free_*() functions.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_HOST_GET_FAILED -- getting the entry failed; maybe the key
+  was bad, and then entry doesn't exist?
+
+
+int
+sysman_list_host(HostArgStruct **ha_pp, char *buf, int bufsiz)
+void
+sysman_free_host_list(HostArgStruct *ha_p, int cnt)
+
+Returns the list of host entries from the /etc/hosts file.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_MALLOC_ERR -- a dynamic memory allocation failed.
+SYSMAN_HOST_GET_FAILED -- reading /etc/host failed.
+
+----------------------------------------------------------------
+
+sysman_*_sw()
+
+typedef struct _sw_arg_struct {
+	int		non_interactive;
+	const char	*root_dir;
+	const char	*admin;
+	const char	*device;
+	const char	*response;
+	const char	*spool;
+	int		num_pkgs;
+	const char	**pkg_names;
+} SWArgStruct;
+
+non_interactive, root_dir, admin, device, response, and spool
+are as defined in the pkgadd(1M) and pkgrm(1M) man pages, see
+them for details.  non_interactive is a boolean, if it is non-zero
+then a -n is passed to the pkg* command.  When a spool directory
+is specified, many of the other fields are ignored as you would
+expect from the pkg command descriptions.  pkg_names is an array
+of strings containing pkg names of packages to be added or removed
+from the system.  num_pkgs is the length of the array.
+
+X - required
+o - optional
+  - ignored
+			add	delete
+non_interactive		o	o
+root_dir		o	o
+admin			o	o
+device			o	o
+response		o	o
+spool			o	o
+num_pkgs		X	X
+pkg_names		X	X
+
+
+int
+sysman_add_sw(SWArgStruct *swa_p, char *buf, int bufsiz)
+
+Reads software packages from media and installs them onto the
+system (or spools them to a directory if the "spool" field is
+a non-NULL value).
+
+
+int
+sysman_delete_sw(SWArgStruct *swa_p, char *buf, int bufsiz)
+
+Removes software packages from the system, or from a spool
+directory if "spool" is non-NULL.
+
+
+NOTE:  Since the pkg* commands are interactive but don't provide
+any hooks for answering questions, our GUI app will spawn an
+xterm and run the commands in the xterm.  There is a preprocessor
+define, "#define SYSMAN_GUI 1" in the sw_impl.c code that defines
+whether or not the xterm should be spawned.  I haven't tested this
+code without SYSMAN_GUI defined, so I'm not sure what happens if
+you try to have it run on a bare console (no window system).  I
+suspect that it won't work quite right since the pkg program output
+will be written down a pipe back to the program that spawned the
+pkg command.  I'll try to fix this if I have some time, but first
+I want to get all of the functionality implemented for our Solaris
+2.5 product.  -- bks, 10/10/94
+
+----------------------------------------------------------------
+
+sysman_*_serial()
+
+typedef struct _serial_arg_struct {
+	const char	*pmtag_key;
+	const char	*svctag_key;
+	const char	*port;
+	const char	*pmadm;
+	const char	*svctag;
+	const char	*identity;
+	const char	*portflags;
+	const char	*comment;
+	const char	*ttyflags;
+	const char	*modules;
+	const char	*prompt;
+	const char	*softcar;
+	const char	*termtype;
+	const char	*service;
+	const char	*device;
+	const char	*ttylabel;
+	const char	*timeout;
+} SerialArgStruct;
+
+I'm not sure what many of the fields in this structure are for,
+I just ripped the code from the existing serial port manager
+SNAG methods and tossed it into a library.  I'll try to document
+this better in the near future ...
+
+X - required
+o - optional
+  - ignored
+			add	delete	modify	get
+pmtag_key					X
+svctag_key					X
+port						X
+pmadm
+svctag
+identity
+portflags
+comment
+ttyflags
+modules
+prompt
+softcar
+termtype
+service
+device
+ttylabel
+timeout
+
+
+int sysman_modify_serial(SerialArgStruct *sa_p, char *buf, int bufsiz)
+
+Modify or add a service on a serial port.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_SERIAL_ERR_IS_CONSOLE -- attempted to modify the serial
+  port that is serving as the system console.
+SYSMAN_SERIAL_ERR_START_PORTMON --
+SYSMAN_SERIAL_ERR_ENABLE_PORTMON --
+SYSMAN_SERIAL_ERR_EEPROM --
+SYSMAN_SERIAL_ERR_TTYDEFS --
+SYSMAN_SERIAL_ERR_TTYADM --
+SYSMAN_SERIAL_FAILED -- operation failed, unknown reason
+
+
+int sysman_enable_serial(SerialArgStruct *sa_p, char *buf, int bufsiz)
+
+Enable an existing but disabled service on a serial port.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_SERIAL_ERR_IS_CONSOLE -- attempted to modify the serial
+  port that is serving as the system console.
+SYSMAN_SERIAL_ERR_START_PORTMON --
+SYSMAN_SERIAL_ERR_ENABLE_PORTMON --
+SYSMAN_SERIAL_ERR_EEPROM --
+SYSMAN_SERIAL_ERR_TTYDEFS --
+SYSMAN_SERIAL_ERR_TTYADM --
+SYSMAN_SERIAL_FAILED -- operation failed, unknown reason
+
+
+int sysman_disable_serial(SerialArgStruct *sa_p, char *buf, int bufsiz)
+
+Disable a service on a serial port.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_SERIAL_ERR_IS_CONSOLE -- attempted to modify the serial
+  port that is serving as the system console.
+SYSMAN_SERIAL_FAILED -- operation failed, unknown reason
+
+
+int sysman_delete_serial(SerialArgStruct *sa_p, char *buf, int bufsiz)
+
+Delete a service from a port.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_SERIAL_FAILED -- operation failed, unknown reason
+
+
+int sysman_get_serial(SerialArgStruct *sa_p, char *buf, int bufsiz)
+void sysman_free_serial(SerialArgStruct *sa_p)
+
+Get the data associated with a service on a port.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_MALLOC_ERR --
+SYSMAN_SERIAL_ERR_PMADM --
+SYSMAN_SERIAL_ERR_NOTFOUND --
+SYSMAN_SERIAL_FAILED -- operation failed, unknown reason
+
+
+int sysman_list_serial(SerialArgStruct **sa_pp, char *buf, int bufsiz)
+void sysman_free_serial_list(SerialArgStruct *sa_p, int cnt)
+
+List all serial port services for a system.  Note that there may
+be more than one service on any given port.
+
+Return Values:
+SYSMAN_BAD_INPUT -- required input was not supplied (usually a
+  NULL pointer).
+SYSMAN_MALLOC_ERR --
+SYSMAN_SERIAL_ERR_PMADM --
+SYSMAN_SERIAL_FAILED -- operation failed, unknown reason
+
+----------------------------------------------------------------
+
+sysman_*_printer()
+
+typedef struct _printer_arg_struct {
+	const char	*printername;
+	const char	*printertype;
+	const char	*printserver;
+	const char	*file_contents;
+	const char	*comment;
+	const char	*device;
+	const char	*notify;
+	const char	*protocol;
+	int		num_restarts;
+	boolean_t	default_p;
+	boolean_t	banner_req_p;
+	boolean_t	enable_p;
+	boolean_t	accept_p;
+	const char	*user_allow_list;
+} PrinterArgStruct;
+
+NOTES:
+
+printertype - type of printer, used to look up information about
+the printer in the terminfo database.  "PS" is reasonable for
+postscript printers.
+
+file_contents - If you don't pass anything for file_contents, the
+default (according to lpadmin) is "simple".  Probably not a bad
+idea, I don't know what else is reasonable to pass down, and my
+code doesn't do anything but pass it on through to lpadmin.  See
+the lpadmin man page for more info.
+
+device - for local printers, the /dev name of the port the printer
+is connected to.  For serial printers, /dev/term/a or something like
+that is probably correct; for parallel, /dev/bpp[0-9] for sparc or
+/dev/lp[0-9] for intel; and for SunPics SPARCprinters, /dev/lpvi.
+
+notify - How to notify the operator that a fault has occured; "write",
+"mail", or NULL are all reasonable, see man lpadmin for details.  The
+value of the notify field is given to lpadmin -A
+
+protocol - "bsd" or "s5"; specifies the print protocol that a print
+client uses to talk to a print server.  You can talk either protocol
+to a Solaris 2 machine, but only "bsd" when talking to a printer on
+a SunOS 4.x machine.  The printer folks are moving all s5 protocol
+functionality into the bsd protocol with the intent of end-of-lifing
+the s5 protocol, so it's strongly recommended that print clients
+configure to talk bsd.
+
+num_restarts - if the tcp port monitor isn't already running, the
+following command is run to start it up:
+sacadm -a -p tcp -t listen \
+-c \"/usr/lib/saf/listen tcp\" -v `nlsadmin -V` -n <num_restarts>
+Ok??  999 is a good value, that's the value that was in one of the
+printer mgr .h files.
+
+default_p - is this the default printer for the system?
+
+banner_req_p - Is a banner page required (that is, if a user submits
+a job with lp and requests that a banner page is NOT printed, will
+that request be honered by the printer, or does it ALWAYS print a
+banner page?)
+
+enable_p - Enable the printer after configuration?  Probably always B_TRUE.
+
+accept_p - Accept requests after configuration?  Probably always B_TRUE.
+
+user_allow_list - If you want to restrict printing to a specific
+set of users, pass their names in a comma-separated list.  NULL
+leaves the printer open to all users.
+
+X - required
+o - optional
+  - ignored
+			add	delete	modify	get
+			l r		l r
+printername		X X	X	X X	X
+printertype		X		o o
+printserver		  X		X
+file_contents		X		o o
+comment			o o		o o
+device			X		o
+notify			X		o
+protocol		  X		o o
+num_restarts		X X
+default_p		X X		o o
+banner_req_p		o		o
+enable_p		X X		X X
+accept_p		X X		X X
+user_allow_list		o		o
+
+
+int
+sysman_add_local_printer(PrinterArgStruct *pa_p, char *buf, int bufsiz)
+int
+sysman_add_remote_printer(PrinterArgStruct *pa_p, char *buf, int bufsiz)
+
+Configure a locally connected printer (a print server) or configure
+a system to print to a printer connected to some other machine (a
+print client).  Basically set up and call lpadmin/enable/accept.
+
+Return Values:
+SYSMAN_BAD_INPUT
+SYSMAN_PRINTER_NON_UNIQUE
+SYSMAN_PRINTER_LPADMIN_FAILED
+SYSMAN_PRINTER_LPSYSTEM_FAILED
+SYSMAN_PRINTER_NETACCESS_FAILED
+SYSMAN_PRINTER_ENABLE_FAILED
+SYSMAN_PRINTER_ACCEPT_FAILED
+SYSMAN_PRINTER_FAILED 
+
+
+int
+sysman_delete_printer(PrinterArgStruct *pa_p, char *buf, int bufsiz)
+
+Delete a printer configuration, either a server or a client.
+Basically calls reject/disable/lpadmin -x.
+
+Return Values:
+SYSMAN_BAD_INPUT
+SYSMAN_PRINTER_LPADMIN_FAILED
+SYSMAN_PRINTER_DISABLE_FAILED
+SYSMAN_PRINTER_REJECT_FAILED
+SYSMAN_PRINTER_FAILED
+
+
+int
+sysman_modify_local_printer(PrinterArgStruct *pa_p, char *buf, int bufsiz)
+int
+sysman_modify_remote_printer(PrinterArgStruct *pa_p, char *buf, int bufsiz)
+
+Reconfigure a locally connected printer (a print server) or configure
+a system to print to a printer connected to some other machine (a
+print client).  Basically set up and call lpadmin, and reject/accept
+and enable/disable as appropriate.
+
+Return Values:
+SYSMAN_BAD_INPUT
+SYSMAN_PRINTER_LPADMIN_FAILED
+SYSMAN_PRINTER_LPSYSTEM_FAILED
+SYSMAN_PRINTER_NETACCESS_FAILED
+SYSMAN_PRINTER_DISABLE_FAILED
+SYSMAN_PRINTER_REJECT_FAILED
+SYSMAN_PRINTER_GET_DEFAULT_FAILED
+SYSMAN_PRINTER_FAILED
+
+
+int
+sysman_list_printer_devices(char ***devices_pp, char *buf, int bufsiz)
+
+Returns a list of devices on the local system that can be configured
+as the printer device (via lpadmin -p -v).  We put these in a selection
+widget in the GUI so the user doesn't have to know the device name and
+type it in.  The list contains /dev/term/*, any parallel ports
+(/dev/bpp[0-9] on sparc, /dev/lp[0-9] on intel), and SunPics s-bus device
+/dev/lpvi.  Use like this:
+
+	char	**devs;
+
+	cnt = sysman_list_printer_devices(&devs, ...);
+
+	for (i = 0; i < cnt; i++) {
+		printf("device %s\n", devs[i]);
+	}
+
+	sysman_free_devices_list(devs, cnt);
+
+Return Values:
+SYSMAN_BAD_INPUT
+SYSMAN_MALLOC_ERR
+SYSMAN_PRINTER_FAILED
+
+
+void
+sysman_free_printer_devices_list(char **devices_p, int cnt)
+
+free the list returned from sysman_list_printer_devices()
+
+
+int
+sysman_get_default_printer_name(char **printer, char *buf, int bufsiz)
+
+get the name of the default printer:
+
+	int	status;
+	char	*printer;
+
+	status = sysman_get_default_printer_name(&printer, ...);
+
+	printf("printer %s\n", printer);
+
+	free(printer);
+
+If there is no default printer configured on the system,
+printer comes back as NULL but the status returned is 0.
+A status < 0 indicates an error, so don't go by a NULL
+name return as an error indication.
+
+Return Values:
+SYSMAN_BAD_INPUT
+SYSMAN_PRINTER_FAILED
+
+
+int
+sysman_get_printer(PrinterArgStruct *pa_p, char *buf, int bufsiz)
+void
+sysman_free_printer(PrinterArgStruct *pa_p)
+
+Get complete details about a printer:
+
+	PrinterArgStruct	pa;
+
+	status = sysman_get_printer(&pa, ...);
+
+	printr("%s\n", pa.printername);
+		...
+
+	sysman_free_printer(&pa);
+
+Return Values:
+SYSMAN_BAD_INPUT
+SYSMAN_PRINTER_LPSTAT_FAILED
+SYSMAN_PRINTER_LPSYSTEM_FAILED
+SYSMAN_PRINTER_GET_DEFAULT_FAILED
+SYSMAN_PRINTER_FAILED
+
+
+int
+sysman_list_printer(PrinterArgStruct **pa_pp, char *buf, int bufsiz)
+void
+sysman_free_printer_list(PrinterArgStruct *pa_p, int cnt)
+
+get a list of printers configured on the system:
+
+	PrinterArgStruct	*pa_p;
+
+	cnt = sysman_list_printer(&pa_p, ...);
+
+	for (i = 0; i < cnt; i++) {
+		...
+	}
+
+	sysman_free_printer_list(pa_p, cnt);
+
+Only three fields are filled in by this call, the intent
+is to give a "quick view" of all of the printers.  You
+get back printername, printserver, and comment.  Printername
+should always come back with a valid value, but printserver
+may be NULL (indicates a locally connected printer), and
+comment may be NULL if no description was configured for
+the printer (via lpadmin -p -D).
+
+Return Values:
+SYSMAN_BAD_INPUT
+SYSMAN_MALLOC_ERR
+SYSMAN_PRINTER_FAILED

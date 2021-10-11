@@ -1,0 +1,20 @@
+---- To preserve data  -------------------------
+
+  > Find the slice you want to preserve and click
+    once on the corresponding Preserve button
+
+    NOTE: If you're preserving data on / (root), 
+    /usr, /var, you must rename these file
+    systems because new versions are created when
+    Solaris is installed and existing versions are
+    overwritten.
+ 
+---- To rename file system names -----------------
+
+  > Click in the file system field and type a new
+    name
+
+---- To unpreserve data ---------------------------
+
+  > Click once on the Preserve button for the slice
+    you want to unpreserve

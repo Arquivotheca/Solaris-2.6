@@ -1,0 +1,11 @@
+name="ibm"
+        __title__="prototype ibm entry"
+        __category__="monitor"
+	monitor="ibm/vga.vda"
+        ;
+
+name="mfreq"
+        __title__="prototype mfreq entry"
+        __category__="monitor"
+	monitor="mfreq/mfreq38.vda"
+        ;

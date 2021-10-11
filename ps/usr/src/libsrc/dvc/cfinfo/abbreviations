@@ -1,0 +1,38 @@
+name="abbreviations"
+
+#
+# Attribute names
+#
+
+__ioa__="I/O address:"
+__irq__="Interrupt (IRQ):"
+__ipl__="Interrupt (IPL):"
+__bmemnum__="Bmemory Number:"
+__busaddr__="Bus Address:"
+__memaddr__="Memory address:"
+__memsize__="Memory size:"
+__resolution__="Resolution:"
+__ref__="Refresh rate:"
+__size__="Screen size:"
+__dma__="DMA channel:"
+__dmaspeed__="DMA speed:"
+__nbuttons__="Buttons:"
+__device__="Device:"
+__layout__="Keyboard Localization:"
+__position__="Screen Position:"
+__depth__="Depth Number:"
+__btype__="Bus Type:"
+__bmemaddr__="Memory Address:"
+__desktop__="Virtual Desktop Resolution:"
+
+#
+# Category names
+#
+
+audio="Audio interface cards"
+display="Video display adaptors"
+keyboard="Keyboards"
+lp="Parallel printer port"
+pointer="Pointing devices"
+serial="Serial communication ports"
+monitor="Monitor displays"

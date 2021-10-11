@@ -1,0 +1,11 @@
+---- About this Screen ------------------------
+
+This screen lets you specify the actual slice 
+where you want the root (/) file system to
+be configured. 
+
+---- Boot Device ------------------------------
+
+The boot device is the VTOC slice configured 
+as primary for booting Solaris software.
+

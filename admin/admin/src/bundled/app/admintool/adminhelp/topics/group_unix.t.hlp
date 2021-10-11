@@ -1,0 +1,14 @@
+---- UNIX Groups -----------------------------------
+
+Using UNIX(R) groups enables a system administrator
+to define a set of users that need to access the
+same file resources. Users in the same group can
+access each others' files based on the group
+permission set.
+
+Using Admintool to set up a UNIX group is convenient
+when a group of users are working on the same
+project and need access to the same files.
+
+
+

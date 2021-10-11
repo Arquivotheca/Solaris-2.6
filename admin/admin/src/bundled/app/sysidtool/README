@@ -1,0 +1,31 @@
+
+Copyright (c) 1991 Sun Microsystems, Inc.  All Rights Reserved.
+"@(#)README 1.1     94/03/24 SMI"
+
+README file for sysidtool
+
+The programs that are built here are:
+
+sysidnet - Identifies the hostname, IP address, primary interface
+		of the machine as well as the locale.
+
+sysidnis - Identifies the nameservice of the machine (as well as netmask
+		if necessary)
+
+sysidsys - Identifies the system information (timezone, date) as well
+		as netmask, if necessary
+
+sysidroot - Identifies the root password of the machine
+
+sysidconfig - Identifies device configuration information on Intel
+	(invokes kdmconfig)
+
+Subdirectories are:
+
+ttyhelp - Directories and files that implement the tty help screens
+
+xmhelp - Directories and files that implement the X motif help screens
+
+backend_simulator - Files and directories that contain the "backend"
+	simulator for sysidtool, including test programs and test cases
+	for the simulator code.

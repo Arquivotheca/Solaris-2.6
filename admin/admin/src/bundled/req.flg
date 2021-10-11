@@ -1,0 +1,13 @@
+#! /bin/sh
+#
+#ident  "@(#)req.flg    1.1     92/09/08 SMI"
+#
+# Copyright (c) 1992 by Sun Microsystems, Inc.
+#
+
+echo_file src/Makefile.master
+echo_file src/Makefile
+echo_file src/Targetdirs
+echo_file src/ENV
+echo_file src/bundled/Makefile
+find_files "s.*" src/common

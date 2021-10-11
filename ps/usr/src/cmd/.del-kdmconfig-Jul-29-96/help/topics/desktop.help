@@ -1,0 +1,4 @@
+Virtual screen resolution refers to the panning screen size, also
+known as the virtual desktop. This option is used primarily for 
+lab-tops. If panning is not desired, the virtual screen resolution 
+choice should be equal to or less than the display resolution selected.

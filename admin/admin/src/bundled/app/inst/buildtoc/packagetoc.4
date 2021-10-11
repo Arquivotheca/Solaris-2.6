@@ -1,0 +1,258 @@
+.\" @(#)packagetoc.4 1.2 92/04/28
+'\"macro stdmacro
+.\" Copyright (c) 1992 SunSoft, Inc. - All Rights Reserved
+'\"macro stdmacro
+.nr X
+.TH packagetoc 4 "24 Feb 1993"
+.SH NAME
+packagetoc \- package table of contents description file
+.SH DESCRIPTION
+.IX ".packagetoc " "" "\fL.packagetoc\fP \(em listing of software packages on product distribution media"
+.IX "package table of contents description file" ".packagetoc" "" "\(em \fLpackagetoc\fP"
+The package table of contents file, \f4.packagetoc,\fP
+is an
+.SM ASCII
+file containing all of the information necessary for installing a
+product release distributed in package form.  
+It centralizes and summarizes all of the relevant information about each
+package in the product.  This allows the install software to quickly read
+one file to obtain all of the relevant information about each package
+instead of having to examine each package at run time to obtain this
+information.
+The \f4.packagetoc\fP file
+resides in the top-level directory containing the product.
+.PP
+Each entry in the \f4.packagetoc\fP
+file is a line that establishes the value of
+a parameter in the following form:
+.PP
+.RS 15
+\f2PARAM\f4=\f2value\f1
+.RE
+.PP
+A line starting with a pound-sign, ``#'', is considered
+a comment and is ignored.
+.PP
+Parameters are grouped by package.  The start of a package description is 
+defined by a line of the form: 
+.PP
+.RS 15
+\f2PKG\f4=\f2value\f1
+.RE
+.PP
+There is no order implied or assumed for specifying the parameters for 
+a package with the exception of the \f2PKG\fP parameter, which must 
+appear first.  Only one occurence of a parameter is permitted per
+package. 
+.PP
+The parameters recognized are described below.  Those marked with an asterisk 
+are mandatory.
+.PP
+.TP 15
+\f2PKG*\f1
+The package identifier (e.g., SUNWaccu).
+.TP 15
+\f2PKGDIR*\f1
+The name of the directory containing the package.
+This directory is relative to the directory containing the product.  
+.TP 15
+\f2NAME*\f1
+The full name of the package.
+.TP 15
+\f2VENDOR\f1
+The name of the package's vendor.  
+.TP 15
+\f2VERSION\f1
+The version of the package.  
+.TP 15
+\f2PRODNAME\f1
+The name of the product to which this package 
+belongs.  
+.TP 15
+\f2PRODVERS\f1
+The version of the product to which this package 
+belongs.  
+.TP 15
+\f2SUNW_PKGTYPE\f1
+The package type. 
+Valid values are:
+.RS 15
+.TP 6
+.PD 0
+\f4root\f1
+indicates that the package will be installed in the / file system.  The \f4root\f1 packages are the only packages installed during dataless client
+installations.  The \f4root\f1 packages are spooled during a server installation
+to allow the later installation of diskless clients.
+.TP
+\f4usr\f1
+indicates that the package will be installed in the /usr file system.
+.TP
+\f4kvm\f1
+indicates that the package will be installed in the /usr/kvm file system.
+.TP
+\f4ow\f1
+indicates a package that is part of the bundled OpenWindows product release.
+
+If no SUNW_PKGTYPE macro is present, the package is assumed to be of type 
+\f4usr\f1.
+.RE
+.PD
+.TP 15
+\f2ARCH*\f1
+The architecture(s) supported by the package.  This macro is taken from the package's \f4pkginfo\f1 file and is subject to the same length and 
+formatting constraints.
+
+.B ttinstall
+currently assumes that exactly one architecture token is specified
+for a package.  I.e., 
+\f2ARCH=sparc.sun4c\f1
+is acceptable, but
+\f2ARCH=sparc.sun4c, sparc.sun4m\f1
+is not.
+.TP 15
+\f2DESC\f1
+A detailed textual description of the package.  
+.TP 15
+\f2BASEDIR*\f1
+The default installation base directory of the package.  
+.TP 15
+\f2SUNW_PDEPEND\f1
+A dependency specification for a prerequisite package. Each prerequisite dependency must appear as a separate macro. 
+See depend(4) for more information on dependencies and instance specifications. 
+.TP 15
+\f2SUNW_IDEPEND\f1
+A dependency specification for an incompatible package. Each incompatible dependency should appear as a separate macro.
+See depend(4)  for more information on dependencies and instance specifications. 
+.TP 15
+\f2SUNW_RDEPEND\f1
+A dependency specification for a reversed package dependency. Each reverse dependency should appear as a separate macro. 
+See depend(4) for more information on dependencies and instance specifications. 
+.TP 15
+\f2CATEGORY\f1
+The category of the package.
+.TP 15
+\f2SUNW_LOC\f1
+Indicates that this package contains localizations for other packages. Such localization packages are treated as special case packages. Each package which has a SUNW_LOC macro must have a corresponding SUNW_PKGLIST macro.
+The value specified by this macro should be a valid locale as defined in Appendix A of the ``Software Internationalization Guide.''
+.TP 15
+\f2SUNW_PKGLIST\f1
+A comma separate list of package identifiers. Currently this macro is used to indicate which packages are localizaed by a localization package.
+.TP 15
+\f2ROOTSIZE*\f1
+The space used by the package in the / file system. 
+.TP 15
+\f2USRSIZE*\f1
+The space used by the package in the /usr subtree of the file system. 
+.TP 15
+\f2VARSIZE*\f1
+The space used by the package in the /var subtree of the file system.  
+.TP 15
+\f2OPTSIZE*\f1
+The space used by the package in the /opt subtree of the file system. 
+.TP 15
+\f2EXPORTSIZE*\f1
+The space used by the package in the /export subtree of the file system.  
+.TP 15
+\f2USROWNSIZE*\f1
+The space used by the package in the /usr/openwin subtree of the file system.  
+.TP 15
+\f2SPOOLED_SIZE*\f1
+The space used by the spooled version of this package.
+This is used during the setup of a server by the initial system installation
+programs.
+
+.PP
+All sizes are specified in bytes.  Default disk
+partitions and file system sizes are derived from the values provided:
+accuracy is important.
+.SH EXAMPLES
+The following is an example package entry in a \f4.packagetoc\fP
+file.
+.PP
+.RS 6
+.nf
+.ft B
+#ident "@(#)packagetoc.4 1.2 92/04/28"
+PKG=SUNWaccr
+PKGDIR=SUNWaccr
+NAME=System Accounting, (Root)
+VENDOR=Sun Microsystems, Inc.
+VERSION=8.1
+PRODNAME=SunOS
+PRODVERS=5.0beta2
+SUNW_PKGTYPE=root
+ARCH=sparc
+DESC=System Accounting, (Root)
+BASEDIR=/
+CATEGORY=system
+ROOTSIZE= 11264
+VARSIZE= 15360
+OPTSIZE= 0
+EXPORTSIZE= 0
+USRSIZE= 0
+USROWNSIZE= 0
+.ft R
+.fi
+.RE
+.SH SEE ALSO
+.B cdtoc(4),
+.B clustertoc(4),
+.B order(4),
+.B pkginfo(4),
+.B pkgmap(4)
+.SH NOTES
+.PP
+The parameters
+\f2NAME\f1, \f2VENDOR\f1, \f2VERSION\f1, \f2PRODNAME\f1,
+\f2PRODVERS\f1, \f2SUNW_PKGTYPE\f1, \f2SUNW_LOC\f1, \f2SUNW_PKGLIST\f1,
+\f2ARCH\f1, \f2DESC\f1, \f2BASEDIR\f1, and \f2CATEGORY\f1 are assumed
+to have been taken directly from the package's \f4pkginfo\fP file.  The
+length and formatting restrictions placed on the values for these
+parameters are identical to those for the corresponding entries in the
+\f4pkginfo\fP file.
+.PP
+The length and formatting restrictions for the parameter \f2PKG\f1 are 
+specified in: \f4Jupiter Software Packaging/Clustering Requirements and Guidelines.\fP
+.PP
+The value specified for the parameter \f2PKGDIR\f1 should not exceed 255 characters.
+.PP
+The value specified for the parameters \f2ROOTSIZE\f1, \f2VARSIZE\f1,
+\f2OPTSIZE\f1, \f2EXPORTSIZE\f1, \f2USRSIZE\f1 and \f2USROWNSIZE\f1
+must be a single integer value.  The values can be derived from the
+package's \f4pkgmap\f1 file by counting all space consumed by any files
+installed in the applicable file system. The space includes that used
+for directory entries and any UFS overhead that exists because of the
+way the files are represented (directory allocation scheme; direct,
+indirect, double indirect blocks; fragments; etc.)
+.PP
+The following kinds of entries in the \f4pkgmap\f1 file should be 
+included in the space derivation:
+.RS 6
+.TP 5
+.PD 0
+\f4f\f1
+regular file
+.TP
+\f4c\f1
+character special file
+.TP
+\f4b\f1
+block special file
+.TP
+\f4p\f1
+pipe
+.TP
+\f4l\f1
+hard link
+.TP
+\f4s\f1
+symbolic link
+.TP
+\f4x, d\f1
+directory
+.TP
+\f4i\f1
+packaging installation script or information file (\f2copyright\f1, 
+\f2depend\f1, \f2postinstall\f1, \f2postremove\f1)
+.RE
+.PD

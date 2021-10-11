@@ -1,0 +1,124 @@
+---- Glossary --------------------------------------
+
+client - A system that obtains all or part of its
+resources from another system (a server).
+
+domain - A part of the Internet naming hierarchy.
+It represents a group of systems on a network that
+share administrative files.
+
+domain name - The identification of a group of
+systems on a local network.  The domain name is
+required for a name service to work properly.  An
+Internet domain name consists of component names
+separated by periods (for example:
+tundra.mpk.cal.us).  As you read a domain name from
+left to right, the component names identify more
+general (and usually remote) areas of
+administrative authority.
+
+/etc - A directory owned and maintained by a system
+administrator.  Contains user id data files,
+accounting programs, and installation information.
+
+gateway - A system that acts as a bridge between
+two physical networks, forwarding traffic between
+them.
+
+host name - The name by which a system is known to
+other systems on a network.  This name must be
+unique among all the systems within any given
+domain (usually, this means within any single
+organization).  A host name can be any combination
+of letters, numbers, and minus sign (-), but it
+cannot begin or end with a minus sign.
+
+Internet Protocol (IP) - A set of conventions used
+by Solaris-based systems to communicate with other
+systems via networks.
+
+IP address - A unique number that identifies a
+networked system so it can communicate via Internet
+Protocols.  It consists of four numbers separated
+by periods.  Most often, each part of the IP
+address is a number between 0 and 225; however, the
+first number must be less than 224, and the last
+number generally cannot be 0.
+
+IP addresses are logically divided into two parts:
+the network (similar to a telephone area code), and
+the host (similar to a phone number).
+
+name service - A distributed network database that
+contains key system information about all the
+systems on a network, so the systems can
+communicate with each other.  With a name service,
+the system information can be maintained, managed,
+and accessed on a network-wide basis.  Sun supports
+the following naming services: NIS+ and NIS
+(formerly YP).  Without a naming service, each
+system has to maintain its own copy of the system
+information in the local /etc files.
+
+name server - A server that provides a naming
+service to systems on a network.  When using NIS+,
+the name server can be a master or replica server;
+when using NIS, the name server can be a master or
+slave server.
+
+netmask - A bit mask. which is 32 bits long, used
+to determine important network or system
+information from an IP address.
+
+networked systems - A group of systems (called
+hosts) connected together through hardware and
+software, so they can communicate and share
+information; referred to as a local area network
+(LAN).  One or more servers are needed when systems
+area networked.  Networked systems can be set up as
+the following system types: standalone, server,
+diskless, or dataless.
+
+non-networked systems - Systems that are not
+connected to a network or do not rely on other
+systems.  Non-networked systems should be set up as
+system type standalone.
+
+NIS - Network Information Service, Plus.  A type of
+name service that is standard on SunOS 3.x, 4.x,
+and Solaris 1.x systems.
+
+NIS+ - Network Information Service, Plus.  The
+replacement for NIS that provides automatic
+information updating and adds security features
+such as authorization and authentication.  NIS+ is
+the standard name service on Solaris 2.x systems.
+
+server - A system that provides services to systems
+on a network To serve diskless clients, a server
+must have disk space set aside for each diskless
+client's root file system and swap space
+(/export/root, /export/swap).  To serve dataless
+clients, a server must provide the /usr and
+/usr/kvm file systems.
+
+Solaris installation program - A menu-driven,
+interactive program that enables you to set up a
+system to install Solaris.  If installing from a
+graphics monitor, a graphical user interface (GUI)
+is provided; if installing Solaris from a
+non-graphics monitor, a character user interface
+(CUI) is provided.
+
+subnet - A working scheme that divides a single
+logical network into smaller physical networks to
+simplify routing.
+
+system type - A term that defines how a system will
+be set up to run Solaris.  The valid system types
+are: standalone system, dataless client, and
+diskless client.
+
+time zone - Any of the 24 longitudinal divisions of
+the earth's surface for which a standard time is
+kept.

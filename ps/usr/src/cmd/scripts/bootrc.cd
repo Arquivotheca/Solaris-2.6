@@ -1,0 +1,71 @@
+#	@(#)bootrc.cd 1.6 94/09/09
+#
+# bootrc script for installations
+#
+
+# set the automatic timeout period.
+set boot_timeout 30
+
+# retrieve boot-path constructed by MDB
+set bootfile kernel/unix
+getprop boot-path bp
+getprop boot-args ba
+set bootargs "${ba}"
+
+# display current defaults
+echo "                        <<< Current Boot Parameters >>>
+Boot path: ${bp}
+Boot args: ${ba}
+
+"
+
+# display initial boot prompt
+echo "Select the type of installation you want to perform:
+
+        1 interactive
+        2 custom JumpStart
+
+Enter the number of your choice followed by the <ENTER> key.
+"
+echo -n "If you enter anything else, or if you wait for ${boot_timeout} seconds,
+an interactive installation will be started.
+
+Select type of installation: "
+
+# wait designated period for user's response
+readt ${boot_timeout} ba0 ba1 ba2 ba3 ba4 ba5 ba6 ba7 ba8
+
+# process option selected by the user, or default to normal (interactive)
+# installation if the timeout period has expired.
+if .streq ( ${ba0}X , 2X )
+	setprop boot-args install
+	echo '
+<<< starting automatic installation >>>
+'
+
+elseif .streq ( ${ba0}X , kadbX )
+	setprop boot-args -d
+	run kadb
+elseif .streq ( ${ba0}X , bshX )
+	console
+elseif .streq ( ${ba0}X , bootX ) || .streq ( ${ba0}X , bX )
+	if .strneq ( ${ba1}X , \\- , 1 )        # if first arg is a flag
+		set bootargs $ba1               # save it in bootargs
+		if ! .streq ( ${ba2}X , X )	# if second arg is present
+			set bootfile $ba2	# set bootfile to it
+		endif				#
+	elseif ! .streq ( ${ba1}X , X )		# elseif first arg is present
+		set bootfile $ba1               # set bootfile to it
+	endif
+	set bootargs "$bootargs $ba2 $ba3 $ba4 $ba5 $ba6 $ba7 $ba8"
+	setprop boot-args "$bootargs"
+	run $bootfile
+else
+	echo '
+
+<<< starting interactive installation >>>
+'
+endif
+
+echo "Booting kernel/unix..."
+run kernel/unix

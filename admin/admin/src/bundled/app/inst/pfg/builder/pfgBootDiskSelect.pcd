@@ -1,0 +1,260 @@
+Module: pfgBootDiskSelect
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.2 / Solaris 2.4";
+      lastWritten = "Tue May 21 15:08:29 1996";
+      nodesUsed = "bootdisk_dialog2,\ndisk_id1,\npromToggle";
+      copy = false;
+      inCreateMenu = true;
+        {
+          diskToggle1 = XmToggleButton;
+          Group: Widget
+            indicatorType = one_of_many;
+            valueChangedCallback = "C:change_toggle_states";
+            spacing = 10;
+          Group: Control
+            vip_x = 155;
+            vip_y = 85;
+        }
+        {
+          bootdisk_dialog2 = formWindow : pfgGUITemplates;
+          Group: Widget
+            initialFocus = okButton;
+            defaultButton = okButton;
+          Group: Control
+            vipComment = "";
+            vip_show_name = true;
+            vip_x = 155;
+            vip_y = 30;
+              {
+                panelhelpText = XmText;
+              }
+              {
+                disk_form : form = XmForm;
+                Group: Widget
+                  rubberPositioning = False;
+                  resizePolicy = resize_any;
+                  verticalSpacing = 10;
+                  marginWidth = 20;
+                    {
+                      bootdiskScrolledWindow = XmScrolledWindow;
+                      Group: Widget
+                        scrollingPolicy = automatic;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                        topWidget = label_form;
+                          {
+                            form_list = XmForm;
+                          }
+                    }
+                    {
+                      label_form = XmForm;
+                      Group: Widget
+                        rubberPositioning = False;
+                        resizePolicy = resize_any;
+                      Group: Constraint
+                        leftAttachment = attach_position;
+                        leftPosition = 2;
+                        rightAttachment = attach_none;
+                        topAttachment = attach_form;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                          {
+                            disk_label = XmLabel;
+                            Group: Constraint
+                              leftAttachment = attach_form;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_form;
+                              resizable = true;
+                          }
+                          {
+                            device_label = XmLabel;
+                            Group: Constraint
+                              leftAttachment = attach_widget;
+                              leftWidget = disk_label;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_form;
+                              resizable = true;
+                              leftOffset = 30;
+                          }
+                    }
+                    {
+                      devices_form = devices_form : pfgBootDiskSelect;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = bootdiskScrolledWindow;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                        leftOffset = 25;
+                          {
+                            rebootButton = XmToggleButton;
+                            Group: Widget
+                              set = True;
+                          }
+                          {
+                            label_form = XmForm;
+                          }
+                    }
+              }
+              {
+                messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = okButton;
+                    {
+                      okButton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:bootdiskOkCB";
+                        showAsDefault = 1;
+                    }
+                    {
+                      cancelButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:bootdiskCancelCB";
+                    }
+                    {
+                      resetButton : button5 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:bootdiskResetCB";
+                    }
+                    {
+                      customButton : button3 = XmPushButton;
+                      Group: Widget
+                        sensitive = False;
+                        managed = False;
+                    }
+                    {
+                      helpButton : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:pfgHelp(\"spotchangedisk.r\")";
+                    }
+              }
+        }
+        {
+          disk_id1 = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+          Group: Control
+            vip_x = 50;
+            vip_y = 140;
+            vipComment = "";
+            vip_show_name = true;
+              {
+                diskToggle1 = diskToggle1 : pfgBootDiskSelect;
+                Group: Widget
+                  alignment = alignment_beginning;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                optionMenu = XmOptionMenu;
+                Group: Widget
+                  subMenuId = pulldownMenu;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = diskToggle1;
+                  leftOffset = 30;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                solar_part_device_label = XmLabel;
+                Group: Widget
+                  managed = False;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = diskToggle1;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                  leftOffset = 30;
+              }
+              Popups:
+              {
+                pulldownMenu = XmPulldownMenu;
+              }
+        }
+        {
+          devices_form = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+          Group: Control
+            vip_x = 50;
+            vip_y = 30;
+              {
+                rebootButton = XmToggleButton;
+                Group: Widget
+                  valueChangedCallback = "C:set_prom_update";
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                label_form = XmForm;
+                Group: Widget
+                  rubberPositioning = False;
+                  resizePolicy = resize_any;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftOffset = 20;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                  leftWidget = rebootButton;
+                    {
+                      existing_label = XmLabel;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_none;
+                        topAttachment = attach_form;
+                        bottomAttachment = attach_form;
+                        resizable = true;
+                    }
+                    {
+                      existing_value = XmLabel;
+                      Group: Constraint
+                        leftAttachment = attach_widget;
+                        leftWidget = existing_label;
+                        rightAttachment = attach_form;
+                        topAttachment = attach_form;
+                        bottomAttachment = attach_form;
+                        resizable = true;
+                    }
+              }
+        }
+        {
+          promToggle = XmToggleButton;
+          Group: Widget
+            indicatorType = one_of_many;
+            valueChangedCallback = "C:change_toggle_states";
+            spacing = 10;
+            set = True;
+            labelString = " ";
+          Group: Control
+            vip_x = 50;
+            vip_y = 85;
+            vipComment = "";
+            vip_show_name = true;
+        }
+}
+

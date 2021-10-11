@@ -1,0 +1,105 @@
+
+---- To navigate this screen without function keys ------------------
+
+     Use:
+
+     > Arrow keys 
+
+     Or:
+
+     > Control-N...to move down
+       Control-F
+
+     > Control-P...to move up
+       Control-B
+
+
+---- Function and ESC keys ------------------------------------------
+
+
+     The default keys for navigation are function keys. However, if
+     your keyboard does not have functions keys, or you are running 
+     across a TIP line, you must use ESC key sequences.
+
+     > To activate ESC keys for navigation:
+
+       Press the ESC key once (legend at the bottom of each screen 
+       will show the ESC keys to use for navigation)
+
+
+     > To change the navigation legend on the main screen back to
+       show function keys:
+
+       Press ESC-f 	
+
+
+     > To use ESC key navigation (for example, ESC-2):
+
+       Hold down the ESC key and simultaneously press the number key
+
+
+---- Summary of navigation ------------------------------------------
+ 
+
+     Main Screens
+
+       F2, ESC-2 ............. go to next screen
+
+       F4, ESC-4 ............. change information entered
+
+       F6, ESC-6 ............. access help
+
+       L1-A, STOP-A .......... reboot system
+
+       Control-N ............. move down in menu
+       Control-F ............. move down in menu
+       Down arrow ............ move down in menu
+       Tab key ............... move down in menu
+
+       Control-P ............. move up in menu
+       Control-B ............. move up in menu
+       Up arrow .............. move up in menu
+       Shift-Tab ............. move up in menu
+
+       Control-H ............. back space in field
+       Control-U ............. back space in field
+       Back Space key ........ back space in field
+
+       Control-U ............. delete to beginning of line
+
+       Arrow keys ............ highlight option in menu
+
+       Return ................ select option in menu
+       spacebar .............. select option in menu
+       x ..................... select option in menu
+
+
+     Help Screens
+        
+       F2, ESC-2 = go to option selected
+
+       F3, ESC-3 = go to Help Subjects or Help Main Index
+
+       F5, ESC-5 = exit help
+
+
+     Other
+
+     > To use Control key navigation (for example, Control-U):
+      
+       Hold down the Control key and simultaneously press the letter key
+
+
+     > To use ESC key navigation (for example, ESC-2):
+
+       Hold down the ESC key and simultaneously press the number key
+
+
+   
+  
+
+
+
+
+
+

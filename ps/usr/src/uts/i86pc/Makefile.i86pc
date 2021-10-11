@@ -1,0 +1,209 @@
+#
+# uts/i86pc/Makefile.i86pc
+#
+# Copyright (c) 1996 by Sun Microsystems, Inc.
+# All rights reserved
+#
+#pragma ident	"@(#)Makefile.i86pc	1.103	96/10/09 SMI"
+#
+#	This makefile contains the common definitions for the i86pc unix
+#	and all i86pc implementation architecture dependent modules.
+#
+
+#
+#	Machine type (implementation architecture):
+#
+PLATFORM	 = i86pc
+
+OBJS_DIR	 = .
+LINTS_DIR	 = $(OBJS_DIR)
+LINT_LIB_DIR	 = $(UTSBASE)/$(PLATFORM)/lint-libs
+LINT_LIB	 = $(LINT_LIB_DIR)/llib-lunix.ln
+
+#
+#	Define the base directory for installation.
+#
+#	This is setup with the assumption that $(ROOT) will come to
+#	mean the location where machine independent stuff is installed
+#	(typically /proto). The machine dependent modules should be
+#	`installed' elsewhere (in this case, $(ROOT)/i86pc, aka /proto/i86pc).
+#	Note that this is only the location for the build to place these
+#	components. The packages will relocate these components as though
+#	anchored in the root.
+#
+BASE_INS_DIR	= $(ROOT)/$(PLATFORM)
+
+#
+#	Include the makefiles which define build rule templates, the
+#	collection of files per module, and a few specific flags. Note
+#	that order is significant, just as with an include path. The
+#	first build rule template which matches the files name will be
+#	used. By including these in order from most machine dependent
+#	to most machine independent, we allow a machine dependent file
+#	to be used in preference over a machine independent version
+#	(Such as a machine specific optimization, which preserves the
+#	interfaces.)
+#
+include $(UTSBASE)/$(PLATFORM)/Makefile.files
+include $(UTSBASE)/i86/Makefile.files
+include $(UTSBASE)/common/Makefile.files
+
+#
+#	The kernels modules which are "implementation architecture"
+#	specific for this machine are enumerated below. Note that most
+#	of these modules must exist (in one form or another) for each
+#	architecture.
+#
+#	Common Drivers (usually pseudo drivers) (/kernel/drv):
+#
+DRV_KMODS +=
+
+#
+#	Machine Specific Driver Modules (/kernel/drv):
+#
+# Bus independent device drivers
+BI_DRV_KMODS += aha asy
+BI_DRV_KMODS += adp
+BI_DRV_KMODS += blogic
+BI_DRV_KMODS += chanmux
+BI_DRV_KMODS += dpt
+BI_DRV_KMODS += elx
+BI_DRV_KMODS += fd fdc
+BI_DRV_KMODS += iee
+BI_DRV_KMODS += kd kdmouse
+BI_DRV_KMODS += logi
+BI_DRV_KMODS += lp
+BI_DRV_KMODS += mlx mscsi msm
+BI_DRV_KMODS += ncrs
+BI_DRV_KMODS += pcn
+BI_DRV_KMODS += pe
+BI_DRV_KMODS += smc
+BI_DRV_KMODS += tr
+BI_DRV_KMODS += trantor
+
+# EISA bus device drivers
+EISA_DRV_KMODS += csa
+EISA_DRV_KMODS += dsa
+EISA_DRV_KMODS += eha
+#EISA_DRV_KMODS += envm
+EISA_DRV_KMODS += iss
+EISA_DRV_KMODS += nee
+EISA_DRV_KMODS += nfe
+EISA_DRV_KMODS += riles
+EISA_DRV_KMODS += smce
+EISA_DRV_KMODS += smceu
+EISA_DRV_KMODS += smcf
+
+# ISA (or ISA+EISA) bus device drivers
+ISA_DRV_KMODS += ata
+ISA_DRV_KMODS += aic
+ISA_DRV_KMODS += el
+ISA_DRV_KMODS += eepro elink esa
+ISA_DRV_KMODS += ieef
+ISA_DRV_KMODS += nei
+ISA_DRV_KMODS += sbpro
+ISA_DRV_KMODS += tiqmouse
+
+# MC bus device drivers
+MC_DRV_KMODS += corvette
+MC_DRV_KMODS += mcis
+
+# PCI bus device drivers
+PCI_DRV_KMODS += dnet
+# 
+# Comment out iprb temporarily
+#
+# PCI_DRV_KMODS += iprb
+PCI_DRV_KMODS += pcscsi
+PCI_DRV_KMODS += sxp
+PCI_DRV_KMODS += chs
+
+# Graphics card device drivers
+OW_DRV_KMODS  = p9000 p9100
+OW_DRV_KMODS += xsvc
+
+# Driver-related modules
+DRVR_REL_KMODS += ansi
+DRVR_REL_KMODS += char
+DRVR_REL_KMODS += emap
+
+# The full kernel driver modules list.
+DRV_KMODS +=    $(BI_DRV_KMODS)
+DRV_KMODS +=    $(EISA_DRV_KMODS)
+DRV_KMODS +=    $(ISA_DRV_KMODS)
+DRV_KMODS +=    $(MC_DRV_KMODS)
+DRV_KMODS +=    $(PCI_DRV_KMODS)
+DRV_KMODS +=    $(OW_DRV_KMODS)
+DRV_KMODS +=    $(DRVR_REL_KMODS)
+
+#
+#	Streams Modules (/kernel/strmod):
+#
+# Streams modules
+STRMOD_KMODS += vuidkd vuid2ps2 vuid3ps2 vuidm3p vuidm4p vuidm5p
+
+#
+#	'Misc' Modules (/kernel/misc):
+#
+MISC_KMODS +=   mse
+
+#
+#	'Mach' Modules (/kernel/mach):
+#
+MACH_KMODS +=   apic
+MACH_KMODS +=   ast
+MACH_KMODS +=	compaq
+MACH_KMODS +=   corollary
+MACH_KMODS +=   mp
+MACH_KMODS +=   syspro
+MACH_KMODS +=   tpf
+MACH_KMODS +=   wysemp
+
+#
+#	Include machine independent rules. Note that this does not imply
+#	that the resulting module from rules in Makefile.uts is	machine
+#	independent. Only that the build rules are machine independent.
+#
+include $(UTSBASE)/Makefile.uts
+
+#
+#	Define the actual specific platforms
+#
+MACHINE_DEFS	 = -D$(PLATFORM) -D_MACHDEP -Di86 
+
+#
+#	Debugging level
+#
+#	Special knowledge of which special debugging options effect which
+#	file is used to optimize the build if these flags are changed.
+#
+DEBUG_DEFS	=
+$(NOT_RELEASE_BUILD)DEBUG_DEFS	+= -DDEBUG
+
+#
+#	Build `options'. These are mostly historical and the need for these
+#	is largely removed by the module technology. However, the static
+#	build will continue to require these.
+#
+OPTION_DEFS	 = -DSYSACCT -DC2_AUDIT -DQUOTA
+
+#
+#	Collect the preprocessor definitions to be associated with *all*
+#	files.
+#
+# Without += we overwrite ALL_DEFS as set in ./Makefile.files
+ALL_DEFS	 = $(MACHINE_DEFS) $(DEBUG_DEFS) $(OPTION_DEFS)
+GENASSYM_DEFS	 = $(MACHINE_DEFS) $(OPTION_DEFS)
+
+#
+# Flags for compiler bug workarounds, should be removed when they get fixed.
+# 
+# In ON Makefile.i86pc, 2/28/95, but not relevant to code in PS source tree.
+# These bugs are fixed in 3.0.1 compiler.
+ALWAYS_DEFS	+= -Dbug1139151
+
+#
+#	Temporary define of MP. As soon as #if MPs go off from common tree
+#	This should be removed
+ALWAYS_DEFS	+= -DMP
+

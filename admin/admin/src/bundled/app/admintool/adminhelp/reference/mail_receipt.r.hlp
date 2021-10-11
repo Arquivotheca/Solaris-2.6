@@ -1,0 +1,11 @@
+---- Admintool:Package Administration: Mail 
+Recipients -----------------------------------------
+
+Mail Recipients
+    Defines a list of users to whom mail should be
+    sent following installation of a package. If the
+    list is empty, no mail is sent.
+
+See the "Topics" help for more information about
+using Admintool:Package Administration to set
+preferences during installation.

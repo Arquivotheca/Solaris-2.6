@@ -1,0 +1,26 @@
+class="win" name="eizo"
+	__wclass__="XSCREENCONFIG"
+	__category__="display"
+	__title__="Prototype AA51/AC51 entry"
+
+	size="var,__size__"
+	__size__="string,15-inch,17-inch,19-inch"
+	__dimx__="string,12,13.5,15"
+	__dimy__="string,9.5,11,12"
+
+	position="var,__position__"
+	__position__="string,left,right,top,bottom"
+
+	device="SUNW8514"
+	pmifile="/usr/openwin/share/etc/devdata/svpmi/SUNW8514/eizo.pmi"
+
+	res="var,__resolution__"
+	__resolution__="string,1280x1024,1024x768"
+	__pmimap__="string,eizo,eizo"
+
+	dpix="string,106"
+	dpiy="string,113"
+
+	__group__="string,eizo"
+	__members__="string,eizo"
+	;

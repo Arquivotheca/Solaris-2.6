@@ -1,0 +1,14 @@
+class="win" name="MOUSEMAN-S"
+	__wclass__="XINPUT"
+	__category__="pointer"
+	__title__="Logitech MouseMan serial mouse"
+
+	ddxHandler="ddxSUNWx86mouse.so.1"
+	ddxInitFunc="ddxSUNWmouseProc"
+
+ 	buttons="var,__nbuttons__"
+ 	__nbuttons__="string,3,2"
+	strmod="vuidm4p"
+
+	dev="string,/dev/tty00"
+	;

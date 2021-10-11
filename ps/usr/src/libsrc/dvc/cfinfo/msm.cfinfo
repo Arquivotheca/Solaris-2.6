@@ -1,0 +1,23 @@
+class="sysbus" name="msm"
+	__wclass__="XINPUT"
+	__wname__="MS-B"
+	__category__="pointer"
+	__title__="Microsoft bus mouse"
+
+	ddxHandler="ddxSUNWx86mouse.so.1"
+	ddxInitFunc="ddxSUNWmouseProc"
+
+	buttons="var,__nbuttons__"
+	__nbuttons__="string,2,3"
+	strmod="vuidm5p"
+	dev="/dev/msm"
+
+	ioaddr="var,__ioa__"
+	__ioa__="numeric,0x23c,0x238"
+	interrupts="numeric,1","var,__irq__"
+	__irq__="numeric,5,3,2,4"
+	ignore-hardware-nodes="numeric,1"
+
+	__common__="name","class"
+	__driver__="interrupts","ioaddr","ignore-hardware-nodes"
+	;

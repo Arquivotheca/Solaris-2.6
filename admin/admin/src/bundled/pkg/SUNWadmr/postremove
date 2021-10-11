@@ -1,0 +1,14 @@
+#! /bin/sh
+#
+#ident	"@(#)postremove	1.1	92/04/29 SMI"
+#
+# Copyright (c) 1991 by Sun Microsystems, Inc.
+#
+# post-remove script for apps package.  Need to remove the file which controls
+# executing sysIDtool since it is not longer there.
+
+if [ -f ${BASEDIR}/etc/.UNCONFIGURED ]; then
+	rm -f ${BASEDIR}/etc/.UNCONFIGURED
+fi
+
+exit 0

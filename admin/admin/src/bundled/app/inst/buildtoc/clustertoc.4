@@ -1,0 +1,190 @@
+.\" @(#)clustertoc.4 1.2 93/02/24
+'\"macro stdmacro
+.\" Copyright (c) 1992 SunSoft, Inc. - All Rights Reserved
+'\"macro stdmacro
+.nr X
+.TH clustertoc 4 "24 Feb 1993"
+.SH NAME
+clustertoc \- cluster table of contents description file
+.SH DESCRIPTION
+.IX ".clustertoc " "" "\fL.clustertoc\fP \(em listing of software packages on product distribution media"
+.IX "package table of contents description file" ".clustertoc" "" "\(em \fLclustertoc\fP"
+The cluster table of contents file, \f4.clustertoc,\fP
+is an
+.SM ASCII
+file that describes a hierarchical view of a software product. 
+A \f4.clustertoc\fP file is required for the base OS product.
+The file resides in the
+top-level directory containing the product.
+.PP
+The hierarchy described by \f4.clustertoc\f1 can be of arbitrary depth, 
+although the 
+initial system installation
+programs assume that it has three levels.  The hierarchy is described
+bottom-up, with the packages described in \f4.packagetoc\f1 at the
+lowest layer.  The next layer is the \f2cluster\f1 layer which collects
+packages into functional units.  The highest layer is the
+\f2meta-cluster\f1 layer which collects packages and clusters together
+into typical configurations.
+.PP
+The hierarchy exists to facilitate the selection or deselection of software for installation at varying levels of granualarity.  Interacting at the package
+level gives the finest level of control over what software is to be installed.
+.PP
+Each entry in the \f4.clustertoc\fP file is a line that establishes the 
+value of a parameter in the following form:
+.PP
+.RS 16
+\f2PARAM\f4=\f2value\f1
+.RE
+.PP
+A line starting with a pound-sign, ``#'', is considered
+a comment and is ignored.
+.PP
+Parameters are grouped by cluster or meta-cluster.  The start of a cluster description is defined by a line of the form: 
+.PP
+.RS 16
+\f2CLUSTER\f4=\f2value\f1
+.PP
+.RE
+The start of a meta-cluster description is defined by a line of the form: 
+.PP
+.RS 16
+\f2METACLUSTER\f4=\f2value\f1
+.RE
+.PP
+There is no order implied or assumed for specifying the parameters for 
+a (meta-)cluster with the exception of the \f2CLUSTER\fP or \f2METACLUSTER\f1
+parameter, which must appear first and the END parameter which must appear last.
+.PP
+Each parameter is described below.  All of the parameters are mandatory.
+.PP
+.TP 16
+\f2CLUSTER\f1
+The cluster identifier (e.g., SUNWCacc).
+The identifier specified must be unique within the package and cluster 
+identifier namespace defined by a product's \f4.packagetoc\f1 
+and \f4.clustertoc\f1 files.  
+
+The identifiers used are subject to the same constraints as those
+for package identifiers.  These constraints are (from pkginfo(4)):
+
+``All characters in the abbreviation must be alphanumeric and the first may 
+not be numeric. The abbreviation is limited to a maximum length of nine 
+characters.  install, new, and all are reserved abbreviations.''
+
+A cluster must be described before another cluster or meta-cluster 
+may refer to it.  
+.TP 16
+\f2METACLUSTER\f1
+The metacluster identifier (e.g., \f2SUNWCprog\f1).
+The identifier specified must be unique within the package and cluster 
+identifier namespace defined by a product's \f4.packagetoc\f1 
+and \f4.clustertoc\f1 files.  
+
+The identifiers used are subject to the same constraints as those
+for package identifiers.  These constraints are (from pkginfo(4)):
+
+``All characters in the abbreviation must be alphanumeric and 
+the first may not be numeric. The abbreviation is limited to a maximum 
+length of nine characters.  install, new, and all are reserved abbreviations.''
+
+Meta-clusters may \f4not\f1
+contain references to other meta-clusters.
+.TP 16
+\f2NAME\f1
+The full name of the (meta-)cluster.
+
+The length of the name string supplied may not exceed 256 characters.  
+.TP 16
+\f2VENDOR\f1
+The name of the (meta-)cluster's vendor.  
+
+The length of the vendor string supplied may not exceed 256 characters.  
+.TP 16
+\f2VERSION\f1
+The version of the (meta-)cluster.  
+
+The length of the version string supplied may not exceed 256 characters.  
+.TP 16
+\f2DESC\f1
+An informative textual description of the (meta-)cluster's contents.
+
+The length of the description supplied may not exceed 256 characters.  
+
+The text should contain no newlines.
+.TP 16
+\f2SUNW_CSRMEMBER\f1
+Indicates that the package or cluster is a part of 
+the (meta-) cluster currently being described.  The value specified is the identifier of the package or cluster.  There may be an arbitrary
+number of \f2SUNW_CSRMEMBER\f1 parameters per (meta-)cluster.
+.SH EXAMPLES
+The following is an example of a cluster description in a \f4.clustertoc\fP
+file.
+.PP
+.RS 4
+.nf
+.ft B
+# ident "@(#)clustertoc.4 1.2 93/02/24"
+CLUSTER=SUNWCacc
+NAME=System Accounting
+DESC=System accounting utilities
+VENDOR=Sun Microsystems, Inc.
+VERSION=7.2
+SUNW_CSRMEMBER=SUNWaccr
+SUNW_CSRMEMBER=SUNWaccu
+END
+.ft R
+.fi
+.RE
+.PP
+The following is an example of a meta-cluster description in a \f4.clustertoc\fP 
+file.
+.RS 4
+.nf
+.ft B
+# required meta-cluster description for Solaris 2.0 FCS
+METACLUSTER=SUNWCreq
+NAME=Core System Support
+DESC=A pre-defined software configuration consisting of the minimum 
+required software for a standalone, non-networked workstation.
+VENDOR=Sun Microsystems, Inc.
+VERSION=2.0
+SUNW_CSRMEMBER=SUNWadmr
+SUNW_CSRMEMBER=SUNWcar
+SUNW_CSRMEMBER=SUNWCcs
+SUNW_CSRMEMBER=SUNWCcg6
+SUNW_CSRMEMBER=SUNWCdfb
+SUNW_CSRMEMBER=SUNWkvm
+SUNW_CSRMEMBER=SUNWCnis
+SUNW_CSRMEMBER=SUNWowdv
+SUNW_CSRMEMBER=SUNWter
+END
+.ft R
+.fi
+.RE
+.SH SEE ALSO
+.B cdtoc(4),
+.B order(4),
+.B packagetoc(4)
+.SH NOTES
+The current implementation of 
+the initial system installation programs
+depend on the \f1.clustertoc\f1 describing three required meta-clusters
+for the base OS product:
+.RS 4
+.TP 11
+.PD 0
+\f2SUNWCall\f1
+contains all of the software packages in
+the OS distribution.
+.TP 
+\f2SUNWCuser\f1
+contains the typical software pacakges
+for an end-user of the OS distribution.
+.TP 
+\f2SUNWCreq\f1
+contains the bare-minimum packages required
+to boot and configure the OS to the point of running a multi-user shell.
+.RE
+.PD
+.\".Ee

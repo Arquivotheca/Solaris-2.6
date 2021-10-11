@@ -1,0 +1,8 @@
+name="aha"
+	__title__="Adaptec 154x SCSI host adaptor"
+	__category__="scsi"
+
+	class="sysbus"
+
+	__auto__="string,true"
+	;

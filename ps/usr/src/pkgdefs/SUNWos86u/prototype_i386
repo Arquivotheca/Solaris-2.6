@@ -1,0 +1,98 @@
+#	Copyright (c) 1996 Sun Microsystems, Inc.
+#		All Rights Reserved
+#
+#	@(#)prototype_i386	1.48	96/08/13 (c) Sun Microsystems, Inc.
+#
+# This required package information file contains a list of package contents.
+# The 'pkgmk' command uses this file to identify the contents of a package
+# and their location on the development machine when building the package.
+# Can be created via a text editor or through use of the 'pkgproto' command.
+
+#!search <pathname pathname ...>	# where to find pkg objects
+#!include <filename>			# include another 'prototype' file
+#!default <mode> <owner> <group>	# default used if not specified on entry
+#!<param>=<value>			# puts parameter in pkg environment
+
+!plat=usr/platform
+!plat_mach=usr/platform/i86pc
+!mach_lib=usr/platform/i86pc/lib
+!mach_lib_fs=usr/platform/i86pc/lib/fs
+!com=usr/platform/i86pc/lib/fs/nfs
+!boot=usr/platform/i86pc/lib/fs/ufs
+!fs=usr/lib/fs
+!old_com=usr/lib/fs/nfs/drv.i86pc
+!old_boot=usr/lib/fs/ufs
+!old_nfs=usr/lib/fs/nfs
+!default 0711 root bin
+
+#
+# Include ISA independent files (prototype_com)
+#
+!include prototype_com
+
+d none usr/bin 775 root bin
+f none usr/bin/loadfont 555 bin bin
+f none usr/bin/pcmapkeys 555 bin bin
+d none usr/share 755 root sys
+d none usr/share/lib 755 root sys
+d none usr/share/lib/fonts 555 bin bin
+f none usr/share/lib/fonts/437.bdf 444 bin bin
+f none usr/share/lib/fonts/646g.bdf 444 bin bin
+f none usr/share/lib/fonts/646y.bdf 444 bin bin
+f none usr/share/lib/fonts/850.bdf 444 bin bin
+f none usr/share/lib/fonts/861.bdf 444 bin bin
+f none usr/share/lib/fonts/863.bdf 444 bin bin
+f none usr/share/lib/fonts/865.bdf 444 bin bin
+f none usr/share/lib/fonts/866.bdf 444 bin bin
+f none usr/share/lib/fonts/8859-1.bdf 444 bin bin
+f none usr/share/lib/fonts/8859-2.bdf 444 bin bin
+f none usr/share/lib/fonts/8859-3.bdf 444 bin bin
+f none usr/share/lib/fonts/8859-4.bdf 444 bin bin
+f none usr/share/lib/fonts/8859-5.bdf 444 bin bin
+f none usr/share/lib/fonts/8859-7.bdf 444 bin bin
+f none usr/share/lib/fonts/8859-9.bdf 444 bin bin
+s none usr/share/lib/fonts/8859.bdf=./8859-1.bdf
+f none usr/share/lib/fonts/csfr.bdf 444 bin bin
+f none usr/share/lib/fonts/greek.bdf 444 bin bin
+d none usr/sbin 0775 root bin
+f none usr/sbin/devconfig 0755 root sys
+d none $devcfgdir/lib 0775 root bin
+d none $devcfgdir/lib/locale 0775 root bin
+d none $devcfgdir/lib/locale/C 0775 root bin
+d none $devcfgdir/lib/locale/C/help 0775 root bin
+f none $devcfgdir/lib/locale/C/help/devconfig.info 0444 root sys
+f none $devcfgdir/lib/cui.cui 0444 root sys
+d none $plat 0755 root sys
+d none $plat_mach 0755 root sys
+d none $mach_lib 0755 bin bin
+d none $mach_lib_fs 0755 bin bin
+d none $com 0755 bin bin
+f none $com/gluecode.com 0555 bin bin
+f none $com/smc.com 0555 bin bin
+d none $boot 0755 root sys
+f none $boot/bootblk 0444 bin bin
+f none $boot/mboot 0444 bin bin
+f none $boot/pboot 0444 bin bin
+# The following entries are temporary for S495_14 and possibly S495_15.
+d none $fs 0775 root sys
+d none $fs/ufs 0755 root sys
+d none $old_com 0755 root sys
+d none $old_boot 0755 root sys
+d none $old_nfs 0755 root sys
+f none $old_com/gluecode.com=$com/gluecode.com 0444 bin bin
+f none $old_com/smc.com=$com/smc.com 0444 bin bin
+f none $old_boot/bootblk=$boot/bootblk 0444 bin bin
+f none $old_boot/mboot=$boot/mboot 0444 bin bin
+f none $old_boot/pboot=$boot/pboot 0444 bin bin
+
+
+
+
+
+
+
+
+
+
+
+

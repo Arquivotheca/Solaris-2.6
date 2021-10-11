@@ -1,0 +1,32 @@
+About Admintool
+	admintool.t.hlp
+The Help System
+	athelp.t.hlp
+Group 14 (the sysadmin Group)
+	group_14.t.hlp
+About Admintool:Users
+	user.t.hlp
+User Accounts
+	user_account.t.hlp
+Package Administration
+	pkg_admin.t.hlp
+Password Security
+	user_passwd_opts.t.hlp
+Password Setting
+	user_passwd_setting.t.hlp
+About Admintool:Groups
+	group.t.hlp
+UNIX Groups
+	group_unix.t.hlp
+About Admintool:Hosts
+	host.t.hlp
+IP Addresses
+	host_IP.t.hlp
+About Admintool:Printers
+	printer.t.hlp
+About Admintool:Serial Ports
+	serial.t.hlp
+About Admintool:Software
+	software.t.hlp
+The Source Media Path
+	media.t.hlp

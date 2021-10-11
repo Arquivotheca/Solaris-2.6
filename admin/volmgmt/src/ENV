@@ -1,0 +1,78 @@
+#! /bin/csh
+#
+#ident  "@(#)ENV 1.1 95/02/01 SMI"
+#
+# Copyright (c) 1995 by Sun Microsystems, Inc.
+#
+# To do a CBE full build with debug options
+#	Set ROOT, SRC, PROTO and CBE_PATH
+#	source ENV
+#	make install
+
+#===========================================
+# Required to change parameters 
+#=========================================== 
+ 
+# Root and source must be mutually exclusive directories. e.g. :
+setenv ROOT ""
+setenv SRC ""
+
+setenv PROTO "/"
+setenv CBE_PATH "/opt/SUNWspro/bin"
+
+# ==============================================================
+# Optional to change parameters
+# ==============================================================
+
+setenv VERSION "Solaris 2.5"
+
+setenv PATH "${CBE_PATH}:/usr/ccs/bin:/usr/bin:/usr/sbin:/sbin:$PATH"
+
+# Debug options for entire tree
+setenv DEBUG_CFLAGS "-g"
+setenv DEBUG_CCFLAGS "-g +d"
+
+# Purify support
+# setenv PURIFY purify
+# setenv PATH "${PATH}:/net/cimarron/export/dist/local/config/purify"
+
+# QA partner support
+#	setenv QAPCH "#" if you do NOT want QA Partner linked in
+#	setenv QAPCH "" if you DO want QA Partner linked in
+#setenv QAPCH "#"
+# setenv QAPCH ""
+
+# Patch specific stuff
+#setenv PATCHTOOLS  /net/benet.eng/benet/Sustaining/PatchTools
+#setenv PAUDIT_DIR $SRC/pkg/paudit_dir
+
+# General set up
+setenv LD_LIBRARY_PATH ${ROOT}/usr/lib:${ROOT}/usr/snadm/lib
+setenv OPENWINHOME ${PROTO}/usr/openwin
+setenv MOTIFHOME ${PROTO}/usr/dt
+setenv TMPDIR /tmp
+
+# CH toggle whether we are root. Since package's can only be properly
+# created as root this will also toggle pkg creation.
+#	setenv CH "#" if not root
+#	setenv CH "" if root.
+setenv CH "#"
+
+# Toggles contents of mcs string and whether we strip. 
+#	setenv RELEASE_BUILD "#" if not release build and don't strip
+#	setenv RELEASE_BUILD ""  if release build and strip
+setenv RELEASE_BUILD "#"
+
+# Make sure these aren't set in the environment.
+unsetenv LDFLAGS
+unsetenv CFLAGS
+unsetenv CCFLAGS
+
+# unset these variables because in the full source product, the man page package
+# build sets them and will screw up our build.
+unsetenv PKGINFODIR
+unsetenv PKGNAME
+unsetenv PROTOTYPE
+
+# following lines make life easier for the builder
+alias make 'make -e \!*'

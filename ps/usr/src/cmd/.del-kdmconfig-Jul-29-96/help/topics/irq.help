@@ -1,0 +1,16 @@
+
+---- Description -----------------------------------------------------
+
+     Specifies the interrupt number of the device.
+	
+     While Solaris can share IRQs among multiple devices, you 
+     should assign a unique IRQ to each device for performance
+     reasons.
+
+     NOTE: Before attempting to use a single IRQ for two or more 
+     devices, check the manufacturer's documentation for the 
+     device; some hardware cards are not able to share IRQs with 
+     other cards.
+    
+
+	

@@ -1,0 +1,35 @@
+#
+# Copyright (c) 1992-1993, by Sun Microsystems, Inc.
+#
+#ident	"@(#)Makefile.files	1.1	94/05/10 SMI"
+#
+# uts/ppc/Makefile.files
+#
+#	This Makefile defines all file modules in the directory uts/ppc
+#	and it's children. These are the source files which ppc
+#	"implementation architecture" dependent.
+#
+
+#
+#		object lists
+#
+
+#
+#		driver modules
+#
+
+#
+#	platform specific modules 
+#
+
+#
+#	Build up defines and paths.
+#
+LINT_DEFS	+= -Dppc
+INC_PATH	+= -I$(UTSBASE)/ppc
+
+#
+# Inlined assembler routines. XXXPPC_later
+#
+#INLINES		+= $(UTSBASE)/ppc/ml/ppc.il
+INLINES		=

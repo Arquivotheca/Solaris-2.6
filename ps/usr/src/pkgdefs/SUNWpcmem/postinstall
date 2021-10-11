@@ -1,0 +1,161 @@
+#!/bin/sh
+
+# ident	"@(#)postinstall	1.14	96/05/03 SMI"
+# SUNWpcmem postinstall script
+
+PATH="/bin:/usr/bin:/usr/sbin:${PATH}"
+export PATH
+
+ADDDRV=/usr/sbin/add_drv
+
+DRVALIAS="${BASEDIR}/etc/driver_aliases"
+
+if test ! -f ${DRVALIAS} -o ! -w ${DRVALIAS}; then
+	echo "SUNWpcmem: file ${DRVALIAS} is missing/inaccessible." >&2
+	exit 1
+fi
+
+trap "rm -f /tmp/$$.*;exit" 0 1 2 3 13 15
+TMP=/tmp/$$.pcmemvold
+
+#
+# add_drv_alias - add driver aliases
+#
+add_drv_alias()
+{
+	DRIVER="$1"
+	ALIAS="$2"
+
+	echo "$DRIVER \"$ALIAS\"" >>${DRVALIAS}
+}
+
+#
+# manipulate the vold.conf and rmmount.conf configurations file
+#
+
+add_to_file()
+{
+
+    cp $1 $TMP
+
+    (	echo "/$2"
+	echo 'a'
+	echo "$3"
+	echo '.'
+	echo 'w'
+	echo 'q'
+    ) | ed -s $TMP >/dev/null
+
+    mv $TMP $1
+}
+
+remove_token()
+{
+
+    cp $1 $TMP
+
+    (	echo "g/$2/s///g"
+	echo 'g/ $/s///g'
+	echo 'w'
+	echo 'q'
+    ) | ed -s $TMP >/dev/null
+
+    mv $TMP $1
+}
+
+add_token()
+{
+
+    cp $1 $TMP
+
+    (	echo "/$2"
+	echo 'a'
+	echo "$3"
+	echo '.'
+	echo '-1,.j'
+	echo 'w'
+	echo 'q'
+    ) | ed -s $TMP >/dev/null
+
+    mv $TMP $1
+}
+
+#
+# vold.conf processing
+#
+FILE="$BASEDIR/etc/vold.conf"
+
+if test -f $FILE ; then
+
+  #
+  # clear out any old pcmem lines in vold.conf
+  #
+  egrep -v 'use pcmem drive' $FILE >$TMP
+  mv $TMP $FILE
+
+  #
+  # clear out any old pcmem entries in vold.conf
+  #
+  remove_token "$FILE" 'pcmem'
+
+  #
+  # add the entries to vold.conf
+  #
+  #     label dos label_dos.so floppy pcmem     <--- NEW ADD
+  #     label cdrom label_cdrom.so cdrom
+  #     label sun label_sun.so floppy pcmem     <--- NEW ADD
+  #
+  add_token "$FILE" 'label_dos.so' ' pcmem'
+  add_token "$FILE" 'label_sun.so' ' pcmem'
+
+  #
+  # add the line of "use pcmem drive ..." after following lines:
+  #
+  #     "use cdrom drive ..."
+  #     "use floppy drive ..."
+  #
+  # Default adding after this line
+  USELINE="Devices to use"
+
+  if (/bin/fgrep -s "use cdrom" $FILE) then
+        USELINE="use cdrom"
+  fi
+ 
+  if (/bin/fgrep -s "use floppy" $FILE) then
+        USELINE="use floppy"
+  fi
+ 
+  add_to_file "$FILE" "$USELINE"  \
+        'use pcmem drive /dev/rdsk/c*s2 dev_pcmem.so pcmem%d forceload=true'
+
+fi
+
+#
+# rmmount.conf processing
+#
+FILE="$BASEDIR/etc/rmmount.conf"
+
+if test -f $FILE ; then
+
+    #
+    # clear out any old pcmem entries in rmmount.conf
+    #
+    remove_token "$FILE" 'pcmem'
+
+    #
+    # add the new pcmem entries to rmmount.conf
+    #	Note the spaces in here --v
+    add_token "$FILE" 'ident_ufs.so' ' pcmem'
+    add_token "$FILE" 'ident_pcfs.so' ' pcmem'
+
+fi
+
+${ADDDRV} -b ${BASEDIR} -n -m '* 0666 bin bin' pcmem
+${ADDDRV} -b ${BASEDIR} -n -m '* 0666 bin bin' pcram
+
+add_drv_alias pcmem 'pccard,memory'
+add_drv_alias pcmem 'pccard1c,40'	# Mitsubishi card with CIS
+
+touch ${BASEDIR}/reconfigure
+
+exit 0

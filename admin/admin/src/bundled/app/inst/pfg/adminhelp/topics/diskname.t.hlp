@@ -1,0 +1,52 @@
+---- Naming conventions for disks -------------
+
+Disk naming conventions for the Solaris 2.x 
+environment are compliant with SVR4 Interface 
+Definition (SVID). Conventions are based on logical
+names, not physical names.
+
+Disks are designated in the Solaris installation
+program as follows:
+
+  Disk          Interface         Platform
+  =========================================
+  cntndn        Ex: SCSI,IPI       SPARC
+  cndn          Ex: IDE            x86
+                    SMD            SPARC
+  where:
+   c = logical controller number
+   t = physical bus target number
+   d = drive number
+
+---- Slices and fdisk partitions --------------
+
+A slice is a specific area of a Solaris disk where
+file systems are laid out for Solaris software.
+You can configure up to 8 slices on a disk (0-7).
+Slice 2 represents the entire disk. You will see
+a disk's slices 0-7 when you access the Customize
+Disk screen. 
+
+To access slices on an x86 system, you must first
+choose an fdisk partiton for installing Solaris
+software. There are four fdisk paritions; each one
+can contain a separate operating system, any of
+which can be reserved for Solaris software. After
+designating which fdisk partition to use for Solaris
+software, you can lay out file systems on slices 
+0-7 on the Solaris fdisk partition. Slices are 
+displayed on the Customize Disk screen. x86 systems
+have two extra slices that consume disk space: the
+boot slice and alternate sector slice. These extra
+slices are required and cannot be deleted.
+
+---- Customary assignments of slices ----------
+
+The customary assignments of slices for a disk on
+which root is found are:
+
+    0 = root (operating system)
+    1 = swap (virtual memory space)
+    2 = entire disk
+    6 = /usr, executable programs, program
+        libraries, and documentation

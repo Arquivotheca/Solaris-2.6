@@ -1,0 +1,19 @@
+#------------------------------------------------- 
+#
+# sccsid[]="@(#)eject_popup.info  1.3  95/02/01 Sunsoft";
+#
+# Copyright (c) 1995 by Sunsoft.
+#
+#------------------------------------------------- 
+:panel
+This window notifies the user, located
+at the system console, that someone has
+ejected previously managed media and
+it needs to be manually removed from the
+drive.
+#
+
+:ok
+Click the "OK" button once you have manually
+removed the specified media from the drive.
+#

@@ -1,0 +1,11 @@
+#
+# Copyright (c) 1992 Sun Microsystems, Inc.  All Rights Reserved.
+#
+
+#pragma ident	"@(#).del-logi.conf-Aug-01-96	1.9	95/11/15 SMI"
+
+# This is an old-style, non-conformant, driver.conf file.
+# This file is not meant to be modified in the field.
+ignore-hardware-nodes=1;
+
+#name="logi" class="sysbus" interrupts=1,3 ioaddr=0x23c ;

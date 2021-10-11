@@ -1,0 +1,25 @@
+class="win" name="SUNWvga4-excrt"
+	__wclass__="XSCREENCONFIG"
+	__category__="display"
+	__title__="prototype super vga4 16 color external CRT device entry"
+
+	size="var,__size__"
+	__size__="string,15-inch,17-inch,19-inch"
+	__dimx__="string,12,13.5,15"
+	__dimy__="string,9.5,11,12"
+
+	position="var,__position__"
+	__position__="string,left,right,top,bottom"
+
+	device="SUNWvga4"
+ 	pmifile="prototype pmifile entry"
+
+	res="var,__resolution__"
+	__resolution__="string,1024x768,800x600"
+
+	dpix="string,90"
+	dpiy="string,90"
+
+	__group__="string,SUNWvga4-excrt"
+	__members__="string,ast486sl,versa50-4,ibm750,tosh4600c,tosh4700ct"
+	;

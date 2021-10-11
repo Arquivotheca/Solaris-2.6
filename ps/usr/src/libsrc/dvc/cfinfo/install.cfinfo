@@ -1,0 +1,8 @@
+name="install_map"
+	devices="tmp"
+	dev="tmp"
+	__default__="tmp/root"
+	__krndrv__="/kernel/drv"
+	__pltfrm__="/platform"
+	__usr__="/usr"
+	;

@@ -1,0 +1,54 @@
+#
+#	@(#)prototype_com 1.16 96/08/26
+#
+# This required package information file contains a list of package contents.
+# The 'pkgmk' command uses this file to identify the contents of a package
+# and their location on the development machine when building the package.
+# Can be created via a text editor or through use of the 'pkgproto' command.
+
+#!search
+#!default 0711 root bin
+
+# packaging files
+i pkginfo
+i copyright
+i depend
+#
+# source locations relative to the prototype file
+#
+# SUNWsadml
+#
+d none usr 0775 root sys
+d none usr/bin 0775 root bin
+f none usr/bin/solstice 0555 bin bin
+d none usr/snadm 0755 root bin
+d none usr/snadm/etc 0755 bin bin
+# f none usr/snadm/etc/launcher.icon 0644 bin bin
+d none usr/snadm/lib 0755 root bin
+f none usr/snadm/lib/liblauncher.so.3 0644 bin bin
+s none usr/snadm/lib/liblauncher.so=./liblauncher.so.3
+d none usr/snadm/bin 0755 root bin
+f none usr/snadm/bin/soladdapp 0755 root bin
+f none usr/snadm/bin/soldelapp 0755 root bin
+d none usr/snadm 0755 root bin
+d none usr/snadm/classes 0755 bin bin
+d none usr/snadm/classes/locale 0755 bin bin
+d none usr/snadm/classes/locale/C 0755 bin bin
+d none usr/snadm/classes/locale/C/LC_MESSAGES 0755 bin bin
+d none usr/snadm/classes/locale/C/help 0755 bin bin
+d none usr/snadm/classes/locale/C/help/solstice 0755 bin bin
+d none usr/snadm/classes/locale/C/help/solstice/howto 0755 bin bin
+f none usr/snadm/classes/locale/C/help/solstice/howto/Howto 0644 root sys
+f none usr/snadm/classes/locale/C/help/solstice/howto/addapp.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/solstice/howto/launch.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/solstice/howto/modprop.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/solstice/howto/props.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/solstice/howto/path.h.hlp 0644 root sys
+d none usr/snadm/classes/locale/C/help/solstice/reference 0755 bin bin
+f none usr/snadm/classes/locale/C/help/solstice/reference/Reference 0644 root sys
+f none usr/snadm/classes/locale/C/help/solstice/reference/glossary.r.hlp 0644 root sys
+d none usr/snadm/classes/locale/C/help/solstice/topics 0755 bin bin
+f none usr/snadm/classes/locale/C/help/solstice/topics/Topics 0644 root sys
+f none usr/snadm/classes/locale/C/help/solstice/topics/athelp.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/solstice/topics/registry.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/solstice/topics/solstice.t.hlp 0644 root sys

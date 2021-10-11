@@ -1,0 +1,92 @@
+#
+#ident	"@(#)apm.msgs	1.6	92/01/28 SMI"
+#
+# Copyright (c) 1990 Sun Microsystems, Inc.  All Rights Reserved.
+#
+
+CFILE APM_MSGS
+
+PREFIX ASH
+
+#
+# Command Usage Messages.
+#
+
+BASE	0	USAGE
+
+USAGE1  1 "Usage:  apm  -c class [version]  -m method  [-h host]  [-d domain]"
+USAGE2  2 "             [-t AuthType]  [-f AuthFlavor]  [-g ClientGroup]  [-n | -p]"
+USAGE3  3 "             [-x AckSecs AckUsecs]  [-y RepSecs RepUsecs]"
+USAGE4  4 "             [-k PingCnt]  [-w PingSecs PingUsecs]  [-i DelaySecs DelayUsecs]"
+USAGE5  5 "             [-r ServerProg ServerVers]  [-u [file]]  [-l]"
+USAGE6  6 "             [-D DebugCategories]  [-a name[=value] name[=value] ...]"
+
+MNEMONIC 7 "(see man page for available mnemonic options)"
+
+#
+# General Displayed Text Strings.
+#
+
+BASE	50	GENERAL
+
+COMPSTAT    1	"Completion Status:"
+COMPINDENT  2	"  "
+SUCCESS	    3	"Success"
+FAILURE	    4	"Failure"
+EXITSTAT    5	"(exit status %d)"
+MISSERR	    6	"No error specification returned (probably couldn't allocate any memory)"
+CLEAN	    7	"Clean"
+DIRTY	    8	"Possibly Dirty"
+UNKNOWN	    9	"Unknown"
+F_RESULTS  10	"Formatted Results from Method: %s"
+U_RESULTS  11	"Unformatted Results from Method: %s"
+I_RESULTS  12	"Results from Method Corrupted!"
+ROW	   13	"  Row %d"
+NONE	   14	"<none>"
+UNFERRORS  15	"Unformatted Error Text From Method:"
+ESYSTEM	   16	"System"
+ECLASS	   17	"Class"
+COMPFMT	   18	"%s %s Error %d"
+ARGFMT	   19	"    %s=%s"
+
+#
+# Command Error Messages.
+#
+
+BASE	100	ERRORS
+
+UNKNOWN_ERR 	     0	"Unknown error.\n"
+
+MISSING_CLASS	     1 "Missing class name specification.\n"
+MISSING_METHOD	     2 "Missing method name specification.\n"
+MISSING_HOST	     3 "Missing hostname specification.\n"
+MISSING_DOMAIN	     4 "Missing domain name specification.\n"
+MISSING_ACKTIME	     5 "Missing request acknowledgement timeout specification.\n"
+MISSING_REPTIME	     6 "Missing request result timeout specification.\n"
+BAD_ACKTIME	     7 "Bad request acknowledgement timeout specification.\n"
+BAD_REPTIME	     8 "Bad request result timeout specification.\n"
+MISSING_AGENT	     9 "Missing method server specification.\n"
+BAD_AGENT	     10 "Bad method server specification.\n"
+NOHANDLE	     11 "Unable to allocate handle to hold method input arguments.\n"
+BAD_ARGUMENT	     12 "Invalid argument name specification."
+SET_FAIL	     13 "Failure constructing set of method inputs.  Framework error %d: %s\n"
+ROWFAIL		     14 "Unable to move to next row in result table.  Framework error %d: %s\n"
+ARGFAIL		     15 "Unable to get next argument in result table.  Framework error %d: %s\n"
+OPEN		     16 "Unable to open unformatted input file.  open() error %d: %s\n"
+MALLOC		     17 "Unable to allocate buffer space for input.  malloc() error %d: %s\n"
+REALLOC		     18 "Unable to extend buffer space for input.  realloc() error %d: %s\n"
+READ		     19 "Unable to read unformatted input.  read() error %d: %s\n"
+SET_UNFMT	     20 "Unable to set value of unformatted input.  Framework error %d: %s\n"
+MISSING_ARGSPEC	     21 "Missing %s or %s specification: %s\n"
+BAD_AUTHTYPE	     22 "Unknown authentication type specification.\n"
+MISSING_AUTHTYPE     23 "Missing authentication type specification.\n"
+BAD_AUTHFLAVOR	     24 "Unknown authentication flavor specification.\n"
+MISSING_AUTHFLAVOR   25 "Missing authentication flavor specification.\n"
+MISSING_CLIENTGROUP  26 "Missing client's preferred group specification.\n"
+MISSING_PINGTIME     27 "Missing ping acknowledgement timeout specification.\n"
+BAD_PINGTIME	     28 "Bad ping acknowledgement timeout specification.\n"
+MISSING_DELAYTIME    29 "Missing initial ping delay specification.\n"
+BAD_DELAYTIME	     30 "Bad initial ping delay specification.\n"
+MISSING_PING_CNT     31 "Missing ping retries specification.\n"
+BAD_PING_CNT         32 "Bad ping retries specification.\n"
+INITFAIL	     33 "Framework error %d during initialization: %s\n"

@@ -1,0 +1,211 @@
+#
+#ident	"@(#)Targetdirs	1.34	96/01/24 SMI"
+#
+# Copyright (c) 1989 by Sun Microsystems, Inc.
+#
+#
+# The list is built of owner-group combinations.  ROOT.SYS occurs twice
+# because some directories owned by root and in group sys are subdirectories
+# of directories having other owner-group attributes.
+#
+# It is easier to think in terms of directory names without the ROOT macro
+# prefix.  ROOTDIRS is TARGETDIRS with ROOT prefixes.  It is necessary
+# to work with ROOT prefixes when controlling conditional assignments.
+#
+# Symbolic links are added to the end of the list when IFNOTPROTO is not
+# '#', as when the superuser is doing a full build with ownerships and
+# output is going to a ROOT which is not /proto.  SYMLINKS are omitted
+# otherwise, because the NSE stumbles over them too often.  Hence the
+# use of IFNOTPROTO before the incremental assignment of SYMLINKS to
+# TARGETDIRS.
+#
+
+IFNOTPROTO:sh=	/usr/bin/echo \\043
+$(CH) IFNOTPROTO=
+
+SYMLINKS=	$(SYM.ROOT.BIN)
+
+TARGETDIRS=	$(ROOT.SYS) $(ROOT.BIN) $(OTHERS)
+
+$(IFNOTPROTO) TARGETDIRS += $(SYMLINKS)
+
+ROOT.SYS= \
+	/etc \
+	/usr \
+	/usr/share \
+	/sbin \
+	/export \
+	/var
+
+ROOT.BIN= \
+	/usr/bin \
+	/usr/include \
+	/usr/lib \
+	/usr/lib/locale \
+	/usr/lib/locale/C \
+	/usr/lib/locale/C/LC_MESSAGES \
+	/usr/sbin \
+	/usr/sbin/install.d \
+	/usr/openwin \
+	/usr/openwin/lib \
+	/usr/openwin/lib/locale \
+	/usr/openwin/lib/locale/C \
+	/usr/openwin/lib/locale/C/help \
+	/usr/openwin/lib/locale/C/help/install.help \
+	/usr/openwin/lib/locale/C/help/install.help/howto \
+	/usr/openwin/lib/locale/C/help/install.help/reference \
+	/usr/openwin/lib/locale/C/help/install.help/topics \
+	/usr/openwin/lib/locale/C/help/installtool.help \
+	/usr/openwin/lib/locale/C/help/installtool.help/howto \
+	/usr/openwin/lib/locale/C/help/installtool.help/reference \
+	/usr/openwin/lib/locale/C/help/installtool.help/topics \
+	/usr/openwin/lib/locale/C/install_misc \
+	/usr/openwin/lib/locale/C/app-defaults \
+	/usr/snadm \
+	/usr/snadm/bin
+
+OTHERS= /usr/include/admin \
+	/usr/snadm/lib \
+	/usr/snadm/classes \
+	/usr/snadm/classes/locale \
+	/usr/snadm/classes/locale/C \
+	/usr/snadm/classes/locale/C/LC_MESSAGES \
+	/usr/snadm/classes/locale/C/help \
+	/usr/snadm/classes/locale/C/help/sysidtty.help \
+	/usr/snadm/classes/locale/C/help/sysidtty.help/howto \
+	/usr/snadm/classes/locale/C/help/sysidtty.help/reference \
+	/usr/snadm/classes/locale/C/help/sysidtty.help/topics \
+	/usr/snadm/classes/locale/C/help/sysidxm.help \
+	/usr/snadm/classes/locale/C/help/sysidxm.help/howto \
+	/usr/snadm/classes/locale/C/help/sysidxm.help/reference \
+	/usr/snadm/classes/locale/C/help/sysidxm.help/topics \
+	/usr/snadm/classes/locale/C/help/admintool \
+	/usr/snadm/classes/locale/C/help/admintool/howto \
+	/usr/snadm/classes/locale/C/help/admintool/reference \
+	/usr/snadm/classes/locale/C/help/admintool/topics \
+	/usr/snadm/classes/locale/C/help/solstice \
+	/usr/snadm/classes/locale/C/help/solstice/howto \
+	/usr/snadm/classes/locale/C/help/solstice/reference \
+	/usr/snadm/classes/locale/C/help/solstice/topics \
+	/etc/lp \
+	/etc/rc2.d \
+	/etc/init.d \
+	/usr/dt \
+	/usr/dt/lib \
+	/usr/dt/lib/app-defaults \
+	/usr/share/man \
+	/export/exec \
+	/export/exec/kvm \
+	/export/share \
+	/var/sadm \
+	/var/sadm/softinfo \
+	/Misc/jumpstart_sample \
+	/Misc/jumpstart_sample/x86-begin.conf \
+	/Tools \
+	/opt/$(UNB_ADM_DIR) \
+	/opt/$(UNB_ADM_DIR)/bin \
+	/opt/$(UNB_ADM_DIR)/lib \
+	/opt/$(UNB_ADM_DIR)/lib/locale \
+	/opt/$(UNB_ADM_DIR)/lib/locale/C \
+	/opt/$(UNB_ADM_DIR)/lib/locale/C/LC_MESSAGES \
+	/opt/$(UNB_ADM_DIR)/etc \
+	/opt/$(UNB_ADM_DIR)/man \
+	/opt/$(UNB_ADM_DIR)/classes \
+	/opt/$(UNB_ADM_DIR)/classes/locale \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/LC_MESSAGES \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/app-defaults \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/dbmgr \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/dbmgr/howto \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/dbmgr/reference \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/dbmgr/topics \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/groupmgr \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/groupmgr/howto \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/groupmgr/reference \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/groupmgr/topics \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/hostmgr \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/hostmgr/howto \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/hostmgr/reference \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/hostmgr/topics \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/policymgr \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/policymgr/howto \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/policymgr/reference \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/policymgr/topics \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/printmgr \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/printmgr/howto \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/printmgr/reference \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/printmgr/topics \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/serialmgr \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/serialmgr/howto \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/serialmgr/reference \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/serialmgr/topics \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/usermgr \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/usermgr/howto \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/usermgr/reference \
+	/opt/$(UNB_ADM_DIR)/classes/locale/C/help/usermgr/topics \
+	/cdbuild \
+	/package
+
+SYM.ROOT.BIN=  \
+	/bin  \
+	/lib
+
+# prepend the ROOT prefix
+
+ROOTDIRS=	$(TARGETDIRS:%=$(ROOT)%)
+
+# conditional assignments
+#
+# Target directories with non-default values for owner and group must
+# be referenced here, using their fully-prefixed names, and the non-
+# default values assigned.  If a directory is mentioned above and not
+# mentioned below, it has default values for attributes.
+#
+# The default values for OWNER, GROUP, and DIRMODE are specified in
+# /usr/src/Makefile.master.
+#
+$(ROOT.SYS:%=$(ROOT)%) \
+$(ROOT.BIN:%=$(ROOT)%) \
+$(SYM.ROOT.BIN:%=$(ROOT)%):=	OWNER= root
+
+$(ROOT.SYS:%=$(ROOT)%) :=	GROUP= sys
+
+# file mode
+#
+$(ROOT)/sbin  \
+$(ROOT)/usr  \
+$(ROOT)/usr/bin  \
+$(ROOT)/usr/sbin  \
+$(ROOT)/usr/sbin/install.d  \
+$(ROOT)/usr/include  \
+$(ROOT)/usr/lib \
+$(ROOT)/export \
+$(ROOT)/var \
+$(ROOT)/etc  \
+$(ROOT)/etc/init.d  \
+$(ROOT)/etc/rc2.d :=	DIRMODE=775
+
+$(ROOT)/etc/lp :=	DIRMODE=775
+$(ROOT)/etc/lp :=	OWNER=lp
+$(ROOT)/etc/lp :=	GROUP=lp
+
+$(ROOT)/usr/share/man :=	OWNER=bin
+$(ROOT)/usr/share/man :=	GROUP=bin
+
+$(ROOT)/opt \
+$(ROOT)/usr/dt \
+$(ROOT)/usr/dt/lib/app-defaults \
+$(ROOT)/usr/openwin/lib/locale/C/app-defaults := DIRMODE=775
+
+# symlink assignments, LINKDEST is the value of the symlink
+#
+$(ROOT)/bin:=		LINKDEST=usr/bin
+$(ROOT)/lib:=		LINKDEST=usr/lib
+
+# Installing a directory symlink calls for overriding INS.dir to install
+# a symlink.
+#
+$(SYMLINKS:%=$(ROOT)%):=  \
+   INS.dir= -$(RM) -r $@; $(SYMLINK) $(LINKDEST) $@; \
+	     $(CHOWN) $(OWNER) $@; $(CHGRP) $(GROUP) $@

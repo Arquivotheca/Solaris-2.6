@@ -1,0 +1,29 @@
+#
+# uts/sparc/Makefile.files
+#
+#pragma ident  "@(#)Makefile.files 1.1     95/02/14 SMI"
+#
+# Copyright (c) 1991-1995, by Sun Microsystems, Inc.
+# All rights reserved.
+#
+#	This Makefile defines all file modules and build rules for the
+# directory uts/sparc and it's children. These are the source files which
+# are specific to the sparc processor.
+#
+
+#
+#       object lists
+#
+# <DRVR_NAME>_OBJS +=   <drvr_name>.o
+
+#
+#	Build up paths and defines.
+#
+LINT_DEFS	+= -Dsparc
+INC_PATH	+= -I$(UTSBASE)/sparc
+
+#
+# Inlined assembler routines.
+#
+INLINES		+= $(UTSBASE)/sparc/ml/sparc.il
+

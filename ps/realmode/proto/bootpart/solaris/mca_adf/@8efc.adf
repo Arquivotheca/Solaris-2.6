@@ -1,0 +1,299 @@
+
+AdapterID 08EFCh
+
+AdapterName  "IBM PS/2 SCSI-2 Fast/Wide Adapter/A"
+
+NumBytes 6
+
+fixedresources
+	pos[3]=XX00XXXXb
+	pos[4]=01111100b
+	pos[5]=XX001XXXB
+	int 0eh
+
+Begin Device 2 2 2 NoDMA
+
+nameditem
+	Prompt "I/O Address"
+	  Choice  "3540-3547"
+	    pos[0]=XXXX000Xb
+	    io 3540h-3547h
+	  Choice  "3548-354F"
+	    pos[0]=XXXX001Xb
+	    io 3548h-354Fh
+	  Choice  "3550-3557"
+	    pos[0]=XXXX010Xb
+	    io 3550h-3557h
+	  Choice  "3558-355F"
+	    pos[0]=XXXX011Xb
+	    io 3558h-355Fh
+	  Choice  "3560-3567"
+	    pos[0]=XXXX100Xb
+	    io 3560h-3567h
+	  Choice  "3568-356F"
+	    pos[0]=XXXX101Xb
+	    io 3568h-356Fh
+	  Choice  "3570-3577"
+	    pos[0]=XXXX110Xb
+	    io 3570h-3577h
+	  Choice  "3578-357F"
+	    pos[0]=XXXX111Xb
+	    io 3578h-357Fh
+	Help
+"This allows you to choose the I/O address for the adapter.
+Each adapter must have a unique address range.	Under normal
+circumstances, this address range does not need to be
+changed.  Use the F5=Previous or the F6=Next keys to change
+this assignment in the 'Change configuration' window.
+Conflicting assignments are marked with an asterisk and must
+be changed to use the adapter."
+
+nameditem
+	Prompt	"DMA Arbitration Level"
+	  Choice  "Level C"
+	    pos[1]=XXXX1100b
+	    arb 0ch
+	  Choice  "Level D"
+	    pos[1]=XXXX1101b
+	    arb 0dh
+	  Choice  "Level E"
+	    pos[1]=XXXX1110b
+	    arb 0eh
+	  Choice  "Level 8"
+	    pos[1]=XXXX1000b
+	    arb 8
+	  Choice  "Level 9"
+	    pos[1]=XXXX1001b
+	    arb 9
+	  Choice  "Level A"
+	    pos[1]=XXXX1010b
+	    arb 0ah
+	  Choice  "Level B"
+	    pos[1]=XXXX1011b
+	    arb 0bh
+	  Choice  "Level 1"
+	    pos[1]=XXXX0001b
+	    arb 1
+	  Choice  "Level 3"
+	    pos[1]=XXXX0011b
+	    arb 3
+	  Choice  "Level 5"
+	    pos[1]=XXXX0101b
+	    arb 5
+	  Choice  "Level 6"
+	    pos[1]=XXXX0110b
+	    arb 6
+	  Choice  "Level 7"
+	    pos[1]=XXXX0111b
+	    arb 7
+	Help
+"This selects the Arbitration level adapter will use to transfer data.
+Under normal circumstances, select <Level C>.  Use the F5=Previous
+or the F6=Next keys to change this assignment in the 'Change
+configuration' window."
+
+End
+
+nameditem
+	Prompt	"SCSI Adapter Address (ID)"
+	  Choice "7"
+	    pos[1]=1110XXXXb
+	    pos[2]=X0111XXXb
+	  Choice "6"
+	    pos[1]=1100XXXXb
+	    pos[2]=X0110XXXb
+	  Choice "5"
+	    pos[1]=1010XXXXb
+	    pos[2]=X0101XXXb
+	  Choice "4"
+	    pos[1]=1000XXXXb
+	    pos[2]=X0100XXXb
+	  Choice "3"
+	    pos[1]=0110XXXXb
+	    pos[2]=X0011XXXb
+	  Choice "2"
+	    pos[1]=0100XXXXb
+	    pos[2]=X0010XXXb
+	  Choice "1"
+	    pos[1]=0010XXXXb
+	    pos[2]=X0001XXXb
+	  Choice "0"
+	    pos[1]=0000XXXXb
+	    pos[2]=X0000XXXb
+	Help
+"This allows you to change the SCSI ID of the adapter.
+Under normal circumstances, select <7>.  Use the F5=Previous
+or the F6=Next keys to change this assignment in the 'Change
+configuration' window."
+
+nameditem
+	Prompt	"Move Mode Support"
+	  Choice "Enabled"
+	    pos[2]=XXXXX1XXb
+	  Choice "Disabled"
+	    pos[2]=XXXXX0XXb
+	Help
+"This allows you to Enable or Disable Micro Channel
+Subsystem Control Block Move Mode for this adapter.
+Under normal circumstances, select <Enabled>.  Use the
+F5=Previous or the F6=Next keys to change this assignment in the
+'Change configuration' window."
+
+nameditem
+	Prompt	"Wait State Support"
+	  Choice "Disabled"
+	    pos[3]=XXXX0XXXb
+	  Choice "Enabled"
+	    pos[3]=XXXX1XXXb
+	Help
+"This allows you to Enable or Disable Bus Master wait
+states for this adapter.
+Under normal circumstances, select <Disabled>.	Use the
+F5=Previous or the F6=Next keys to change this assignment in the
+'Change configuration' window."
+
+NamedItem
+	Prompt "Data Parity Exception Handling"
+	if (I_Data_Parity eq 1) {
+	   Choice "Enabled"
+	     pos[3]=XXXXX1XXb
+	   }
+
+	Choice "Disabled"
+	   pos[3]=XXXXX0XXb
+	Help
+"This Adapter can generate and detect data parity on Micro Channel.
+If the System does not support Data Parity Exception Handling,
+this feature will always be disabled.
+If the system supports this feature, it can be changed for this adapter
+by selecting 'Change Configuration' and then using
+the F5=Previous and the F6=Next keys."
+
+
+NamedItem
+	Prompt "Selected Feedback Return Exception"
+	if (I_Sel_Fbk_Rtn eq 1) {
+	   Choice "Enabled"
+	     pos[3]=XXXXXX1Xb
+	   }
+
+	Choice "Ignored"
+	   pos[3]=XXXXXX0Xb
+	Help
+"This Adapter has the capability to support the Micro Channel Selected
+Feedback Return Exception feature.
+If the System does not support the Selected Feedback Return feature,
+this feature will always be ignored.
+If the system supports this feature, it can be changed for this adapter
+by selecting 'Change Configuration' and then using
+the F5=Previous and the F6=Next keys."
+
+
+NamedItem
+	Prompt	"100ns Streaming Data Transfer Support"
+	If (I_100ns_Stream_Data eq 1) {
+	   Choice "Enabled"
+	     pos[3]=XXXXXXX1b
+	   }
+
+	Choice "Disabled"
+	   pos[3]=XXXXXXX0b
+	Help
+"This Adapter supports the 100 ns Streaming Data Micro Channel protocol,
+which provides better performance on the Micro Channel.
+If the system does not support this feature the Streaming Data Support
+will always be disabled.
+If the system supports this feature, it can be changed for this adapter
+by selecting 'Change Configuration' and then using
+the F5=Previous and the F6=Next keys."
+
+NamedItem
+	Prompt	"Target Mode"
+	  Choice "Enabled"      pos[5]=0XXXXXXXb
+	  Choice "Disabled"     pos[5]=1XXXXXXXb
+	Help
+"Target mode should be disabled only if this system is sharing SCSI
+devices with another system and there are more than 15 devices to
+be shared.  Only 15 devices can be configured on each adapter.
+When target mode is enabled, this adapter appears as a processor
+device on the other system and unless you have specialized software
+that can communicate between the two systems through these processor
+devices (peer-to-peer communication), there is no advantage in having
+target mode enabled.  When target mode is disabled, this adapter does
+not appear as a device to the other system, and one more device can be
+shared by the two systems.  If your system is not sharing any SCSI
+devices with another system on this adapter, it does not matter whether
+you enable or disable target mode.  The normal default for this option
+is enabled."
+
+NamedItem
+	Prompt	"SCSI Disconnect"
+	  Choice "Enabled"      pos[5]=X0XXXXXXb
+	  Choice "Disabled"     pos[5]=X1XXXXXXb
+	Help
+"Disconnect is a SCSI-bus procedure in which a device logically stops
+communicating with the adapter during certain operations and then
+reestablishes communication with the adapter when the operation is
+complete.  Disconnect should not be confused with the 'Presence Error
+Reporting' option for a device in 'Set and view SCSI device
+configuration.'  If you are using an operating system that is
+single-threaded and issues commands to only one device at a time (such
+as DOS), disabling SCSI disconnect might result in a slight
+performance improvement.  If your operating system is multi-threaded
+(such as OS/2), disabling SCSI disconnect will degrade the performance
+of the SCSI subsystem.	The normal default for this option is
+enabled."
+
+NamedItem
+	Prompt	"Fast SCSI - External"
+	  Choice "Disabled"     pos[5]=XXXXX0XXb
+	  Choice "Enabled"      pos[5]=XXXXX1XXb
+	Help
+"If you have one or more Fast SCSI devices attached externally in
+one of the following configurations on this adapter, enabling Fast
+SCSI external improves performance :
+  - One external SCSI device enclosure model 3511.
+  - Up to three external SCSI device enclosures model 3510.
+  - Any external configuration in which the SCSI cable length does not
+    exceed 3 meters.
+Refer to the documentation that came with the device to determine
+whether it is a Fast SCSI device.  The normal default for this option
+is disabled."
+
+NamedItem
+	Prompt	"Wide SCSI messages - External"
+	  Choice "Enabled"      pos[5]=XXXXXX0Xb
+	  Choice "Disabled"     pos[5]=XXXXXX1Xb
+	Help
+"The setting for this should be 'Enabled' unless you have a Wide SCSI
+device attached to the adapter through a narrow (8 bits wide) external
+interface cable.  Refer to the documentation that came with the device
+and cable you are using to determine whether it is necessary to
+disable Wide SCSI messages. The normal default for this option is
+enabled."
+
+NamedItem
+	Prompt	"Wide SCSI messages - Internal"
+	  Choice "Enabled"      pos[5]=XXXXXXX0b
+	  Choice "Disabled"     pos[5]=XXXXXXX1b
+	Help
+"The setting for this should be 'Enabled' unless you have a Wide SCSI
+device attached to the adapter through a narrow (8 bits wide) internal
+interface cable.  Refer to the documentation that came with the device
+and cable you are using to determine whether it is necessary to
+disable Wide SCSI messages. The normal default for this option is
+enabled."
+
+ADPItem 1 prompt "ROM Address Range" EXEC
+	Help
+"This field shows the address of the 32K block of memory that is
+assigned to the adapter.  Only one SCSI Adapter will have the ROM
+assigned, and any other SCSI Adapter installed will share that
+address range.	If you are in the 'Change Configuration' window,
+you can change the setting.  Use F5 and F6 to scroll through the
+choices, the Up and Down arrow keys to move from field to field.
+If a setting conflicts with another, an asterisk (*) appears next to
+the conflict.  You must fix conflicts before you use the adapter.
+If the ESDI adapter is also installed, then the address of the SCSI
+adapter must be greater than the ESDI adapter address."
+

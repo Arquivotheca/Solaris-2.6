@@ -1,0 +1,9 @@
+---- Adding users to the sysadmin group
+         without a name service -----------------------------------
+
+1.      Become superuser on your system.
+2.      Edit the /etc/group file.
+        Modify the sysadmin group entry to add a comma
+        separated list of members (user names).
+3.      Log out and back in to activate this new group
+	membership.

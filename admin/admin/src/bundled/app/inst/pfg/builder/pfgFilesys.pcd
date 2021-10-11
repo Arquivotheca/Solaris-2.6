@@ -1,0 +1,250 @@
+Module: pfgFilesys
+{
+      autoCuil = false;
+      nodesUsed = "filesys_dialog,\nspace_dialog,\nfilesys_entry,\nspace_entry";
+      copy = false;
+      inCreateMenu = true;
+      release = "TeleUSE v3.0.2 / Solaris 2.4";
+      lastWritten = "Fri Oct 11 15:19:15 1996";
+        {
+          filesys_dialog = formWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 130;
+            vip_y = 85;
+              {
+                panelhelpText = XmText;
+              }
+              {
+                filesysForm : form = XmForm;
+                Group: Widget
+                  marginWidth = 20;
+                    {
+                      filesysColumnLabel = XmLabel;
+                      Group: Constraint
+                        topAttachment = attach_form;
+                        leftAttachment = attach_form;
+                        leftOffset = 25;
+                    }
+                    {
+                      diskColumnLabel = XmLabel;
+                      Group: Constraint
+                        topAttachment = attach_opposite_widget;
+                        topWidget = filesysColumnLabel;
+                        leftAttachment = attach_widget;
+                        leftWidget = filesysColumnLabel;
+                    }
+                    {
+                      sizeColumnLabel = XmLabel;
+                      Group: Constraint
+                        leftAttachment = attach_widget;
+                        leftWidget = diskColumnLabel;
+                        topAttachment = attach_opposite_widget;
+                        topWidget = diskColumnLabel;
+                    }
+                    {
+                      optionsColumnLabel = XmLabel;
+                      Group: Constraint
+                        leftAttachment = attach_widget;
+                        leftWidget = sizeColumnLabel;
+                        topAttachment = attach_opposite_widget;
+                        topWidget = sizeColumnLabel;
+                    }
+                    {
+                      filesysScrolledWindow = XmScrolledWindow;
+                      Group: Widget
+                        scrollingPolicy = automatic;
+                      Group: Constraint
+                        rightAttachment = attach_form;
+                        leftAttachment = attach_form;
+                        bottomAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = filesysColumnLabel;
+                          {
+                            filesysRowColumn = XmRowColumn;
+                            Group: Widget
+                              marginHeight = 0;
+                          }
+                    }
+              }
+              {
+                messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = continueButton;
+                Group: Control
+                  collapsed = False;
+                    {
+                      continueButton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: filesysContinueCB";
+                    }
+                    {
+                      gobackButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: filesysGobackCB";
+                    }
+                    {
+                      customizeButton : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: filesysCustomizeCB";
+                    }
+                    {
+                      exitButton : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgExit";
+                    }
+                    {
+                      helpButton : button5 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"diskpart.t\")";
+                    }
+              }
+        }
+        {
+          space_dialog = formWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 45;
+            vip_y = 85;
+              {
+                panelhelpText = XmText;
+              }
+              {
+                spaceForm : form = XmForm;
+                Group: Widget
+                  marginWidth = 20;
+                    {
+                      filesysColumnLabel = XmLabel;
+                      Group: Widget
+                        recomputeSize = False;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        topAttachment = attach_form;
+                    }
+                    {
+                      minsizeColumnLabel = XmLabel;
+                      Group: Constraint
+                        topAttachment = attach_opposite_widget;
+                        topWidget = filesysColumnLabel;
+                        leftAttachment = attach_widget;
+                        leftWidget = filesysColumnLabel;
+                    }
+                    {
+                      spaceScrolledWindow = XmScrolledWindow;
+                      Group: Widget
+                        scrollingPolicy = automatic;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = filesysColumnLabel;
+                        bottomAttachment = attach_form;
+                        rightAttachment = attach_form;
+                          {
+                            spaceRowColumn = XmRowColumn;
+                          }
+                    }
+              }
+              {
+                messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = continueButton;
+                Group: Control
+                  collapsed = False;
+                    {
+                      continueButton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: filesysSpaceContinueCB";
+                    }
+                    {
+                      cancelButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: filesysSpaceCancelCB";
+                    }
+                    {
+                      button3 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      button4 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+        {
+          filesys_entry = XmForm;
+          Group: Control
+            vip_x = 45;
+            vip_y = 30;
+              {
+                filesysFilesysLabel = XmLabel;
+                Group: Widget
+                  marginHeight = 0;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  topAttachment = attach_form;
+              }
+              {
+                filesysDiskLabel = XmLabel;
+                Group: Widget
+                  marginHeight = 0;
+                Group: Constraint
+                  bottomAttachment = attach_form;
+                  topAttachment = attach_form;
+                  leftAttachment = attach_widget;
+                  leftWidget = filesysFilesysLabel;
+              }
+              {
+                filesysSizeLabel = XmLabel;
+                Group: Widget
+                  marginHeight = 0;
+                Group: Constraint
+                  bottomAttachment = attach_form;
+                  topAttachment = attach_form;
+                  leftAttachment = attach_widget;
+                  leftWidget = filesysDiskLabel;
+              }
+              {
+                filesysOptionsLabel = XmLabel;
+                Group: Widget
+                  marginHeight = 0;
+                Group: Constraint
+                  bottomAttachment = attach_form;
+                  topAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  leftAttachment = attach_widget;
+                  leftWidget = filesysSizeLabel;
+              }
+        }
+        {
+          space_entry = XmForm;
+          Group: Control
+            vip_x = 130;
+            vip_y = 30;
+              {
+                spaceFilesysLabel = XmLabel;
+                Group: Widget
+                  marginHeight = 0;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  topAttachment = attach_form;
+              }
+              {
+                spaceMinsizeLabel = XmLabel;
+                Group: Widget
+                  marginHeight = 0;
+                Group: Constraint
+                  bottomAttachment = attach_form;
+                  topAttachment = attach_form;
+                  leftAttachment = attach_widget;
+                  leftWidget = spaceFilesysLabel;
+              }
+        }
+}
+

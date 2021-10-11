@@ -1,0 +1,45 @@
+Module: pfgAutoquery
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Fri Dec  2 09:04:09 1994";
+      nodesUsed = autoquery_dialog;
+      copy = false;
+      inCreateMenu = true;
+        {
+          autoquery_dialog = baseWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 55;
+            vip_y = 30;
+              {
+                :Inherited panelhelpText = panelhelpText;
+              }
+              {
+                :Inherited messageBox = messageBox;
+                Group: Widget
+                  defaultButton = continueButton;
+                    {
+                      :Inherited continueButton : button1 = XmPushButton;
+                    }
+                    {
+                      :Inherited gobackButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: autoqueryGobackCB";
+                    }
+                    {
+                      :Inherited customizeButton : button3 = XmPushButton;
+                    }
+                    {
+                      :Inherited exitButton : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgExit";
+                    }
+                    {
+                      :Inherited helpButton : button5 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"autolayout.t\")";
+                    }
+              }
+        }
+}
+

@@ -1,0 +1,6 @@
+---- User Account Information ----------------------
+
+A user account, which enables a user to log in to a
+system, consists of four main components: entries in
+the /etc/passwd file, entries in the /etc/shadow
+file, a home directory, and initialization files.

@@ -1,0 +1,33 @@
+class="sysbus" name="kd"
+	__wclass__="XINPUT"
+	__wname__="ATKBD"
+	__category__="keyboard"
+	__title__="AT keyboard"
+
+	layout="var,__layout__"
+	__layout__="string,1,1001,35,36,37,38,39,40,42,43,44,45,46,47,48,49,50"
+
+	__mapdir__="string,8859,8859,8859,8859,8859,8859,8859,8859,8859,\
+8859,8859,8859,8859,korean,tchinese,japan,8859"
+	__mapfile__="string,en_US,en_US,fr_FR,da_DK,de_DE,it_IT,nl_NL,\
+no_NO,es_ES,sv_SE,fr_CH,de_CH,en_UK,ko_KR,zh_TW,ja_JP,fr_CA"
+
+	__locale__="string,US-English,US-English (Microsoft Natural keyboard),French,Danish,German,\
+Italian,Dutch,Norwegian,Spanish,Swedish,Swiss-French,Swiss-German,\
+UK-English,Korean,Taiwanese,Japanese(106),French-Canadian"
+
+        type="string,101,101,101,101,101,101,101,101,101,101,101,101,\
+101,103,101,106,101"
+
+        ddxHandler="ddxSUNWkbd.so.1"
+        ddxInitFunc="ddxSUNWkbdProc"
+
+        dev="/dev/vt00"
+
+        interrupts="numeric,6","numeric,1"
+        reg="numeric,0","numeric,0xA0000","numeric,0x60000"
+        lang="numeric,1"
+
+        __common__="class","name"
+        __driver__="lang","interrupts","reg"
+	;

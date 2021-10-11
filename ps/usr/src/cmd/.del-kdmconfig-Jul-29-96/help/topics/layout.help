@@ -1,0 +1,14 @@
+ 
+---- Description -----------------------------------------------------
+
+     Solaris supports the AT keyboard with several
+     international layouts and languages.  Currently the
+     following languages and layouts are supported;
+         
+                US-English, UK-English,
+                Japanese (J3100), Japanese (106),
+                French, Belgian-French, French-Canadian, 
+                Swiss-French, Danish, Dutch, Belgian-Dutch,
+                Norwegian, Swedish, German, Swiss-German, 
+                Italian, Spanish, Korean, and Taiwanese.
+

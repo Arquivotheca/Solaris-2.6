@@ -1,0 +1,49 @@
+Module: pfgIntro
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.2 / Solaris 2.4";
+      lastWritten = "Fri Jun 28 20:20:56 1996";
+      nodesUsed = intro_dialog;
+      copy = false;
+      inCreateMenu = true;
+        {
+          intro_dialog = baseWindow : pfgGUITemplates;
+          Group: Widget
+            initialFocus = continueButton;
+          Group: Control
+            vip_x = 35;
+            vip_y = 30;
+              {
+                panelhelpText = XmText;
+              }
+              {
+                messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = continueButton;
+                    {
+                      continueButton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: introContinueCB";
+                    }
+                    {
+                      gobackButton : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:introGobackCB";
+                    }
+                    {
+                      exitButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgExit";
+                    }
+                    {
+                      helpButton : button3 = XmPushButton;
+                    }
+                    {
+                      button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+}
+

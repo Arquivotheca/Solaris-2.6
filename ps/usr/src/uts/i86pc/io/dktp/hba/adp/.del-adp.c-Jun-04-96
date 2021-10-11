@@ -1,0 +1,2512 @@
+/*
+ * Copyright (c) 1995 Sun Microsystems, Inc.
+ * All Rights Reserved.
+ */
+
+#pragma ident	"@(#).del-adp.c-Jun-04-96	1.20	95/06/28 SMI"
+
+#include <sys/scsi/scsi.h>
+#include <sys/debug.h>
+
+#include <sys/dktp/adp/him_equ.h>
+#include <sys/dktp/adp/adpcmd.h>
+#include <sys/dktp/adp/adp.h>
+#include <sys/dktp/adp/him_scb.h>
+#include <sys/pci.h>
+
+#ifdef PCI_DDI_EMULATION
+#define	OLD_PCI
+#else
+#undef OLD_PCI
+#endif
+
+/*
+ *
+ * External references
+ */
+
+static int adp_tran_tgt_init(dev_info_t *, dev_info_t *,
+			scsi_hba_tran_t *, struct scsi_device *);
+static int adp_tran_tgt_probe(struct scsi_device *, int (*)());
+static void adp_tran_tgt_free(dev_info_t *, dev_info_t *,
+			scsi_hba_tran_t *, struct scsi_device *);
+static struct scsi_pkt *adp_tran_init_pkt(struct scsi_address *ap,
+	struct scsi_pkt *pkt, struct buf *bp, int cmdlen, int statuslen,
+	int tgtlen, int flags, int (*callback)(), caddr_t arg);
+static void adp_tran_destroy_pkt(struct scsi_address *ap, struct scsi_pkt *pkt);
+
+static int adp_abort(struct scsi_address *ap, struct scsi_pkt *pkt);
+static int adp_reset(struct scsi_address *ap, int level);
+static int adp_capchk(char *cap, int tgtonly, int *cidxp);
+static int adp_getcap(struct scsi_address *ap, char *cap, int tgtonly);
+static int adp_setcap(struct scsi_address *ap, char *cap, int value, int
+    tgtonly);
+static struct scsi_pkt *adp_pktalloc(struct scsi_address *ap, int cmdlen,
+	int statuslen, int tgtlen, int (*callback)(), caddr_t arg);
+static void adp_pktfree(struct scsi_address *ap, struct scsi_pkt *pkt);
+static struct scsi_pkt *adp_dmaget(struct scsi_pkt *pkt, struct buf *bp,
+	int (*callback)(caddr_t), caddr_t arg);
+static int adp_scsi_impl_dmaget(struct scsi_pkt *pkt, struct buf *bp,
+    int (*callback)(caddr_t), caddr_t callback_arg, ddi_dma_lim_t *dmalimp);
+static void adp_dmafree(struct scsi_address *ap, struct scsi_pkt *pkt);
+static void adp_sync_pkt(struct scsi_address *ap, struct scsi_pkt *pkt);
+static int adp_transport(struct scsi_address *ap, struct scsi_pkt *pktp);
+
+#ifdef ADP_DEBUG
+void adp_dump_block(struct cfp *adp_blkp);
+void adp_dump_scb(struct sp *scbp);
+static void adp_trace();
+#endif
+
+#ifdef ADP_DEBUG
+static void adp_savescb(struct cfp *adp_blkp,
+    struct sp *scbp);
+static struct sp *adp_retscb(struct cfp
+*adp_blkp, struct sp *scbp);
+#endif
+
+/*
+ * Local Function Prototypes
+ */
+static int adp_cfginit(struct adp *adp);
+#ifdef OLD_PCI
+static int adp_xlate_vec(struct cfp *adp_blkp);
+#endif
+static u_int adp_dummy_intr(caddr_t arg);
+static u_int adp_intr(caddr_t arg);
+static void adp_pollret(struct cfp *adp_blkp,
+    struct scsi_pkt *pktp);
+static void adp_chkstatus(struct scsi_pkt *pktp, struct sp *scbp);
+void PH_ScbCompleted(struct sp *scbp);
+static int adp_setup_tran(dev_info_t *dip, struct adp *adpp);
+static struct adp *adp_alloc_adp(dev_info_t *dip);
+static int adp_blkinit(dev_info_t *dip, struct adp *adpp);
+static void adp_enable_int(unsigned int ioaddr);
+static void adp_disable_int(int ioaddr);
+static u_int adp_run_callbacks(caddr_t arg);
+static struct sp
+	*adp_retpkt(struct cfp *adp_blkp);
+static int adp_search_pci(uint *ioaddr, dev_info_t *devi);
+static int adp_check_device_id(dev_info_t *devi, int device_id);
+static int adp_getedt(struct cfp *adp_blkp);
+static int adp_fix_negotiation(struct scsi_device *sd, struct cfp *adp_blkp);
+
+/*
+ * Local static data
+ */
+static int adp_pgsz = 0;
+static int adp_pgmsk;
+static int adp_pgshf;
+
+static kmutex_t adp_global_mutex;
+static int adp_up = 0;
+
+/*
+ * DMA limits for data transfer
+ */
+static ddi_dma_lim_t adp_dmalim = {
+	0,		/* address low				*/
+	0xffffffffU,	/* address high				*/
+	0,		/* counter max				*/
+	1,		/* burstsize 				*/
+	DMA_UNIT_8,	/* minimum xfer				*/
+	0,		/* dma speed				*/
+	(u_int)DMALIM_VER0,	/* version			*/
+	0xffffffffU,	/* address register			*/
+	0x003fffff,	/* counter register			*/
+	512,		/* sector size				*/
+	ADP_MAX_DMA_SEGS, /* scatter/gather list length		*/
+	0xffffffffU	/* request size				*/
+};
+
+
+#ifdef ADP_DEBUG
+#define		DENT	0x0001	/* Display function names on entry	*/
+#define		DPKT	0x0002 	/* Display packet data			*/
+#define		DDATA	0x0004	/* Display all data			*/
+#define		DTEMP	0x0008	/* Display wrt to currrent debugging	*/
+#define		DCHN	0x0010	/* Display channel number on fn. entry	*/
+#define		DSTUS	0x0020	/* Display interrupt status		*/
+#define		DINIT	0x0040	/* Display init data			*/
+#define		DTEST	0x0080	/* Display test data			*/
+#define		DPROBE	0x0100	/* Display probe data			*/
+
+int	adp_debug = 0;
+
+#endif
+
+static int adp_errs[] = {
+	CMD_CMPLT,		/* 0x00	No adapter status available	*/
+	CMD_TRAN_ERR,		/* 0x01 Illegal code			*/
+	CMD_TRAN_ERR,   	/* 0x02 Illegal code			*/
+	CMD_TRAN_ERR,   	/* 0x03 Illegal code			*/
+	CMD_ABORTED,		/* 0x04	Command aborted by host		*/
+	CMD_ABORTED,		/* 0x05	Command aborted by host adapter */
+	CMD_TRAN_ERR,   	/* 0x06 Illegal code			*/
+	CMD_TRAN_ERR,   	/* 0x07 Illegal code			*/
+	CMD_TRAN_ERR,   	/* 0x08 Illegal code			*/
+	CMD_TRAN_ERR,   	/* 0x09 Illegal code			*/
+	CMD_TRAN_ERR,   	/* 0x0a Illegal code			*/
+	CMD_TRAN_ERR,   	/* 0x0b Illegal code			*/
+	CMD_TRAN_ERR,   	/* 0x0c Illegal code			*/
+	CMD_TRAN_ERR,   	/* 0x0d Illegal code			*/
+	CMD_TRAN_ERR,   	/* 0x0e Illegal code			*/
+	CMD_TRAN_ERR,   	/* 0x0f Illegal code			*/
+	CMD_TRAN_ERR,   	/* 0x10 Illegal code			*/
+	CMD_INCOMPLETE,		/* 0x11	Selection timeout		*/
+/*	could be CMD_TIMEOUT, but unexpected by scsi_hba_probe		*/
+	CMD_DATA_OVR,		/* 0x12	Data overrun/underrun error	*/
+	CMD_UNX_BUS_FREE,	/* 0x13	Unexpected bus free		*/
+	CMD_TRAN_ERR,		/* 0x14	Target bus phase sequence error */
+	CMD_TRAN_ERR,   	/* 0x15 Illegal code			*/
+	CMD_TRAN_ERR,   	/* 0x16 Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x17	Invalid SCSI linking operation	*/
+	CMD_TRAN_ERR,   	/* 0x18 Illegal code			*/
+	CMD_TRAN_ERR,   	/* 0x19 Illegal code			*/
+	CMD_TRAN_ERR,   	/* 0x1a Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x1b	Auto-request sense failed	*/
+	CMD_TAG_REJECT,		/* 0x1c	Taged Queing rejected by target */
+	CMD_TRAN_ERR,		/* 0x1d Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x1e Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x1f Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x20	Host adpater hardware error	*/
+	CMD_BDR_FAIL,		/* 0x21	Target did'nt respond to ATN (RESET) */
+	CMD_ABORTED,		/* 0x22	SCSI bus reset by host adapter	*/
+	CMD_RESET,		/* 0x23	SCSI bus reset by other device	*/
+	CMD_TRAN_ERR,		/* 0x24 Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x25 Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x26 Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x27 Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x28 Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x29 Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x2a Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x2b Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x2c Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x2d Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x2e Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x2f Illegal code			*/
+	CMD_TRAN_ERR,		/* 0x30 No available index?		*/
+};
+
+static int adp_getinfo(dev_info_t *dip, ddi_info_cmd_t infocmd,
+		void *arg, void **result);
+static int adp_identify(dev_info_t *dev);
+static int adp_probe(dev_info_t *);
+static int adp_attach(dev_info_t *dev, ddi_attach_cmd_t cmd);
+static int adp_detach(dev_info_t *dev, ddi_detach_cmd_t cmd);
+
+static struct dev_ops	adp_ops = {
+	DEVO_REV,		/* devo_rev, */
+	0,			/* refcnt  */
+	adp_getinfo,		/* info */
+	adp_identify,		/* identify */
+	adp_probe,		/* probe */
+	adp_attach,		/* attach */
+	adp_detach,		/* detach */
+	nulldev,		/* no reset */
+	(struct cb_ops *)0,	/* driver operations */
+	NULL			/* bus operations */
+};
+
+#include <sys/modctl.h>
+
+#ifdef OLD_PCI
+char _depends_on[] = "misc/xpci misc/scsi";
+#else
+char _depends_on[] = "misc/scsi";
+#endif
+
+extern struct mod_ops mod_driverops;
+
+static struct modldrv modldrv = {
+	&mod_driverops,	/* Type of module. This one is a driver */
+	"Adaptec 2940/3940 Type SCSI Host Adapter Driver",
+	&adp_ops,	/* driver ops */
+};
+
+static struct modlinkage modlinkage = {
+	MODREV_1, (void *)&modldrv, NULL
+};
+
+int
+_init(void)
+{
+	int	status;
+
+	if ((status = scsi_hba_init(&modlinkage)) != 0) {
+		return (status);
+	}
+
+	mutex_init(&adp_global_mutex, "AHAx2940 global Mutex",
+		MUTEX_DRIVER, (void *)NULL);
+
+	if ((status = mod_install(&modlinkage)) != 0) {
+		scsi_hba_fini(&modlinkage);
+		mutex_destroy(&adp_global_mutex);
+	}
+	return (status);
+}
+
+int
+_fini(void)
+{
+	int	status;
+
+	if ((status = mod_remove(&modlinkage)) == 0) {
+		scsi_hba_fini(&modlinkage);
+		mutex_destroy(&adp_global_mutex);
+	}
+	return (status);
+}
+
+int
+_info(struct modinfo *modinfop)
+{
+	return (mod_info(&modlinkage, modinfop));
+}
+
+
+/*ARGSUSED*/
+
+/*
+ * the traditional x86 scsi hba adp_blk structure is the
+ * cfp structure in the adp driver
+ *
+ * tran_tgt_private points to the adp structure
+ * tran_hba_private points to the adp_blk
+ */
+
+static int
+adp_tran_tgt_init(
+	dev_info_t		*hba_dip,
+	dev_info_t		*tgt_dip,
+	scsi_hba_tran_t		*hba_tran,
+	struct scsi_device	*sd)
+{
+	int 	targ;
+	int	lun;
+	struct	adp *hba_adpp;
+	struct	adp *unit_adpp;
+	struct	cfp	*adp_blkp;
+
+	targ = sd->sd_address.a_target;
+	lun = sd->sd_address.a_lun;
+
+#ifdef ADP_DEBUG
+	if (adp_debug & DINIT)
+	cmn_err(CE_CONT, "%s%d: %s%d <%d,%d>\n",
+		ddi_get_name(hba_dip), ddi_get_instance(hba_dip),
+		ddi_get_name(tgt_dip), ddi_get_instance(tgt_dip),
+		targ, lun);
+#endif
+
+	hba_adpp = SDEV2ADP(sd);
+	adp_blkp = hba_adpp->a_blkp;
+
+	if (targ < 0 || targ > ((int)adp_blkp->Cf_MaxTargets) ||
+		lun < 0 || lun > 7 || targ == ((int)adp_blkp->Cf_ScsiId)) {
+		cmn_err(CE_WARN, "%s%d: %s%d bad address <%d,%d>\n",
+			ddi_get_name(hba_dip), ddi_get_instance(hba_dip),
+			ddi_get_name(tgt_dip), ddi_get_instance(tgt_dip),
+			targ, lun);
+		return (DDI_FAILURE);
+	}
+
+
+	unit_adpp = kmem_zalloc(sizeof (struct adp) + sizeof (struct adp_unit),
+			KM_SLEEP);
+
+	ASSERT(unit_adpp != (struct adp *)0);
+
+	bcopy((caddr_t)hba_adpp, (caddr_t)unit_adpp, sizeof (*hba_adpp));
+	unit_adpp->a_unitp = (struct adp_unit *)(unit_adpp+1);
+	unit_adpp->a_unitp->au_lim = adp_dmalim;
+
+	if (TRAN2BLK(hba_tran)->ab_flag & ADP_GT1GIG)
+		unit_adpp->a_unitp->au_gt1gig = 1;
+
+	hba_tran->tran_tgt_private = unit_adpp;
+
+	mutex_enter(&adp_global_mutex);
+	ADP2BLK(hba_adpp)->ab_child++;
+	mutex_exit(&adp_global_mutex);
+
+#ifdef ADP_DEBUG
+	if (adp_debug & DINIT) {
+	cmn_err(CE_CONT, "adp_tran_tgt_init: <%d,%d> adp %x unit %x tran %x\n",
+		targ, lun, unit_adpp, unit_adpp->a_unitp, hba_tran);
+	}
+#endif
+	return (DDI_SUCCESS);
+}
+
+/*ARGSUSED*/
+static void
+adp_tran_tgt_free(
+	dev_info_t		*hba_dip,
+	dev_info_t		*tgt_dip,
+	scsi_hba_tran_t		*hba_tran,
+	struct scsi_device	*sd)
+{
+	struct adp *adp;
+	struct adp *adp_unitp;
+
+	adp_unitp = hba_tran->tran_tgt_private;
+/*	decrement count in block (per driver instance) structure	*/
+	mutex_enter(&adp_global_mutex);
+	adp = SDEV2ADP(sd);
+	ADP2BLK(adp)->ab_child--;
+
+	mutex_exit(&adp_global_mutex);
+
+#ifdef ADP_DEBUG
+	if (adp_debug & DINIT) {
+		cmn_err(CE_WARN, "adp_tran_tgt_free: <%d,%d> adp_unit at %x\n",
+		sd->sd_address.a_target, sd->sd_address.a_lun, adp_unitp);
+	}
+#endif
+
+	kmem_free((caddr_t) adp_unitp, sizeof (struct adp)
+		+ sizeof (struct adp_unit));
+}
+
+/*ARGSUSED*/
+static int
+adp_tran_tgt_probe(
+	struct scsi_device	*sd,
+	int			(*callback)())
+{
+	struct adp	*adp = SDEV2ADP(sd);
+	int	rval;
+	char		*s;
+/*
+ * Refer to adp_getedt for explanation of adp_fix_negotiation
+ */
+	if (adp_fix_negotiation(sd, adp->a_blkp))
+		cmn_err(CE_WARN,
+		"adp: SCSI negotiation setup fail target %d",
+		sd->sd_address.a_target);
+
+	rval = scsi_hba_probe(sd, callback);
+
+	switch (rval) {
+		case SCSIPROBE_NOMEM:
+			s = "scsi_probe_nomem";
+			break;
+		case SCSIPROBE_EXISTS:
+			s = "scsi_probe_exists";
+			break;
+		case SCSIPROBE_NONCCS:
+			s = "scsi_probe_nonccs";
+			break;
+		case SCSIPROBE_FAILURE:
+			s = "scsi_probe_failure";
+			break;
+		case SCSIPROBE_BUSY:
+			s = "scsi_probe_busy";
+			break;
+		case SCSIPROBE_NORESP:
+			s = "scsi_probe_noresp";
+			break;
+		default:
+			s = "???";
+			break;
+	}
+
+#ifdef ADP_DEBUG
+	if (adp_debug & DPROBE)
+	cmn_err(CE_CONT, "adp%d: %s target %d lun %d %s\n",
+		ddi_get_instance(ADP_DIP(adp)),
+		ddi_get_name(sd->sd_dev),
+		sd->sd_address.a_target,
+		sd->sd_address.a_lun, s);
+#endif
+
+	return (rval);
+}
+
+/* For comments, refer to adp_getedt */
+static int
+adp_fix_negotiation(struct scsi_device *sd, struct cfp *adp_blkp)
+{
+	int target = sd->sd_address.a_target;
+	caddr_t			buf;
+	struct sp		*scbp;
+
+	if (ddi_iopb_alloc(adp_blkp->ab_dip, &adp_dmalim,
+			sizeof (struct sp),
+			&buf) == DDI_FAILURE) {
+#ifdef ADP_DEBUG
+		cmn_err(CE_NOTE, "adp_fix_negotiation: alloc fail");
+#endif
+		return (1);
+	}
+	bzero((caddr_t)buf, sizeof (struct sp));
+	scbp = (struct sp *) buf;
+	scbp->SP_ConfigPtr = adp_blkp;
+	scbp->SP_Tarlun = (target << 4);
+
+	(void) PH_Special(FORCE_RENEGOTIATE, adp_blkp, scbp);
+
+	ddi_iopb_free((caddr_t) scbp);
+
+#ifdef ADP_DEBUG
+	if (adp_debug & DPROBE)
+	cmn_err(CE_CONT, "adp_fix: %s target %d lun %d\n",
+		ddi_get_name(sd->sd_dev),
+		sd->sd_address.a_target,
+		sd->sd_address.a_lun);
+#endif
+	return (0);
+}
+
+/*
+ * This is called with the global mutex held
+ * returns 0 on success, 1 on failure.
+ *
+ * This routine is needed to track information on the ability of each
+ * target to correctly handle wide and/or synchronous SCSI negotiation.
+ * The Adaptec HIM code does not support all mechanisms indicating inability
+ * to support wide or synchronous SCSI transfer with targets.
+ * Hence we must prevent
+ * some forms of negotiation with targets that will fail to negotiate.
+ * Here we query each target using a SCSI inquiry, and store the capabilities
+ * in the Cf_ScsiOption array. Then when adp_tran_tgt_probe is called, we
+ * use a HIM function (FORCE_RENEGOTIATE) to turn back wide and/or synchronous
+ * negotiation for those targets that can support it.
+ */
+static int
+adp_getedt(struct cfp *adp_blkp)
+{
+	caddr_t			buf;
+	struct			scsi_pkt *pkt;
+	struct sp		*scbp;
+	struct adp_scsi_cmd	*cmd;
+	struct scsi_inquiry	*inqp;
+	int			target;
+
+	pkt = kmem_zalloc(sizeof (struct scsi_pkt), KM_SLEEP);
+	if (pkt == (struct scsi_pkt *)0)
+		return (1);
+
+	cmd = kmem_zalloc(sizeof (struct adp_scsi_cmd), KM_SLEEP);
+	if (cmd == (struct adp_scsi_cmd *)0) {
+		(void) kmem_free(pkt, sizeof (struct scsi_pkt));
+		return (1);
+	}
+	cmd->cmd_pkt = pkt;
+
+	if (ddi_iopb_alloc(adp_blkp->ab_dip, &adp_dmalim,
+			sizeof (struct scsi_inquiry) + sizeof (struct sp),
+			&buf) == DDI_FAILURE) {
+#ifdef ADP_DEBUG
+		cmn_err(CE_NOTE, "adp_getedt: scb alloc fail");
+		(void) kmem_free(pkt, sizeof (struct scsi_pkt));
+		(void) kmem_free(cmd, sizeof (struct adp_scsi_cmd));
+		return (1);
+#endif
+	}
+	bzero((caddr_t)buf, sizeof (struct sp)+ sizeof (struct scsi_inquiry));
+	scbp = (struct sp *) buf;
+	inqp = (struct scsi_inquiry *)(scbp+1);
+
+/*	Permit PH_ScbCompleted to dereference Sp_cmdp			*/
+	scbp->Sp_cmdp = cmd;
+	cmd->cmd_private = (opaque_t) scbp;
+	pkt->pkt_ha_private = cmd;
+
+	scbp->SP_Cmd = EXEC_SCB;
+	scbp->SP_ConfigPtr = adp_blkp;
+	scbp->Sp_CDB[0] = SCMD_INQUIRY;
+/*	data transfer							*/
+	scbp->SP_RejectMDP = 1;
+	scbp->Sp_CDB[4] = sizeof (struct scsi_inquiry);
+	scbp->SP_DisEnable = 0;
+
+	scbp->Sp_paddr	  = ADP_KVTOP(scbp);
+
+/* 	set SCSI cdb physical address 					*/
+	scbp->SP_CDBPtr = scbp->Sp_paddr +
+		((u_char *)&(scbp->Sp_CDB[0]) - (u_char *)scbp);
+
+/*	Hand craft scatter gather list of one				*/
+	scbp->Sp_sg_list[0].data_addr =  (ulong) ADP_KVTOP(inqp);
+	scbp->Sp_sg_list[0].data_len = (ulong) sizeof (struct scsi_inquiry);
+
+	cmd->cmd_scblen		= (u_char) sizeof (struct scsi_arq_status);
+	cmd->cmd_privlen	= sizeof (struct adp_scsi_cmd);
+	pkt->pkt_cdbp		= (opaque_t) scbp->Sp_CDB;
+	pkt->pkt_scbp		= (u_char *) &scbp->Sp_sense;
+	pkt->pkt_flags		= FLAG_NOINTR;
+	adp_blkp->ab_flag	|= ADP_POLLING;
+
+	bcopy((char *)pkt->pkt_cdbp, (char *)scbp->Sp_CDB_save, 6);
+	scbp->SP_CDBLen  = (unchar) 6;
+	scbp->Sp_CDBLen_save = scbp->SP_CDBLen;
+	bcopy((char *)&scbp->Sp_control, (char *)&scbp->Sp_control_save, 4);
+
+	for (target = 0; target < (int) adp_blkp->Cf_MaxTargets; target++) {
+
+		if (target == ((int)adp_blkp->Cf_ScsiId))
+			continue;
+		scbp->SP_Tarlun = (unchar) (target << 4);
+		pkt->pkt_reason = CMD_INCOMPLETE;
+		scbp->SP_ResCnt = 0;
+		scbp->SP_HaStat = HOST_SEL_TO;
+		adp_blkp->ab_scbp = (struct sp *)0;
+		bzero((caddr_t)inqp, sizeof (struct scsi_inquiry));
+
+/*		these are reset in pollret on failure			*/
+		scbp->SP_SegCnt = (unsigned char) 1;
+		scbp->SP_SegPtr = (paddr_t)(scbp->Sp_paddr +
+			((caddr_t)scbp->Sp_sg_list - (caddr_t)scbp));
+		scbp->Sp_SegCnt_save = scbp->SP_SegCnt;
+		scbp->Sp_SegPtr_save = scbp->SP_SegPtr;
+
+
+		mutex_enter(&adp_blkp->ab_mutex);
+
+#ifdef ADP_DEBUG
+		adp_savescb(adp_blkp, scbp);
+#endif
+		PH_ScbSend(scbp);
+#ifdef ADP_DEBUG
+		adp_blkp->ab_pkts_out++;
+#endif
+		adp_pollret(adp_blkp, pkt);
+
+		if (pkt->pkt_reason == CMD_CMPLT ||
+			(pkt->pkt_reason == CMD_DATA_OVR &&
+			scbp->SP_TargStat == UNIT_GOOD)) {
+
+			if (!(inqp->inq_sync)) {
+				adp_blkp->Cf_ScsiOption[target]
+				&= ~SYNC_MODE;
+			}
+
+			if (!(inqp->inq_wbus16)) {
+				adp_blkp->Cf_ScsiOption[target]
+				&= ~WIDE_MODE;
+			}
+			mutex_exit(&adp_blkp->ab_mutex);
+		} else {
+			mutex_exit(&adp_blkp->ab_mutex);
+		}
+
+	}
+
+	adp_blkp->ab_flag &= ~ADP_POLLING;
+	ddi_iopb_free((caddr_t)scbp);
+	(void) kmem_free(pkt, sizeof (struct scsi_pkt));
+	(void) kmem_free(cmd, sizeof (struct adp_scsi_cmd));
+	adp_blkp->CFP_SuppressNego = 0;
+	return (0);
+}
+
+/*
+ *		Autoconfiguration routines
+ */
+
+/*ARGSUSED*/
+static int
+adp_getinfo(dev_info_t *dip, ddi_info_cmd_t infocmd, void *arg, void **result)
+{
+	return (DDI_FAILURE);
+}
+
+static int
+adp_identify(dev_info_t *dip)
+{
+	char *dname = ddi_get_name(dip);
+	int	device_id;
+	char	buf[13];
+
+#ifdef ADP_DEBUG
+	if (adp_debug & DINIT)
+		cmn_err(CE_WARN, "identify %s\n", dname);
+#endif
+
+	if (strcmp(dname, "adp") == 0)
+		return (DDI_IDENTIFIED);
+
+	bcopy(dname, buf, 12);
+
+	device_id = (int)((buf[11] - '0'));
+	device_id |= (int)((buf[10] - '0') << 4);
+	device_id |= (int)((buf[9] - '0') << 8);
+	device_id |= (int)((buf[8] - '0') << 12);
+
+	if ((strncmp(dname, "pci9004", 7) == 0) &&
+		(!(adp_check_device_id(dip, device_id))))
+		return (DDI_IDENTIFIED);
+	else
+		return (DDI_NOT_IDENTIFIED);
+}
+
+static int
+adp_probe(register dev_info_t *devi)
+{
+	uint ioaddr;
+
+	return (adp_search_pci(&ioaddr, devi));
+}
+
+static int
+adp_search_pci(register uint *ioaddr, dev_info_t *devi)
+{
+	ulong 			base;
+	ddi_acc_handle_t	cfg_handle;
+	ushort_t		vendorid, deviceid;
+
+	if (pci_config_setup(devi, &cfg_handle) != DDI_SUCCESS) {
+#ifdef DPT_DEBUG
+	if (adp_debug & DINIT)
+		cmn_err(CE_CONT, "adp_search_pci: setup fail");
+#endif
+		return (DDI_PROBE_FAILURE);
+	}
+
+	vendorid = pci_config_getw(cfg_handle, PCI_CONF_VENID);
+
+	if (vendorid != ADAPTEC_PCI_ID) {
+#ifdef ADP_DEBUG
+		if (adp_debug & DINIT)
+			cmn_err(CE_CONT, "adp_search_pci: bad vendor %x\n",
+				vendorid);
+#endif
+		pci_config_teardown(&cfg_handle);
+		return (DDI_PROBE_FAILURE);
+	}
+
+	deviceid = pci_config_getw(cfg_handle, PCI_CONF_DEVID);
+
+	if (adp_check_device_id(devi, (int)deviceid)) {
+#ifdef ADP_DEBUG
+		if (adp_debug & DINIT)
+		cmn_err(CE_CONT, "adp_search_pci: bad device %x\n",
+			deviceid);
+#endif
+		pci_config_teardown(&cfg_handle);
+		return (DDI_PROBE_FAILURE);
+	}
+
+	base = pci_config_getl(cfg_handle, PCI_CONF_BASE0);
+	base &= 0xffffe;
+
+	pci_config_teardown(&cfg_handle);
+
+#ifdef ADP_DEBUG
+	if (adp_debug & DINIT)
+		cmn_err(CE_CONT,
+			"adp_search_pci: reg %x ved %x dev %x bas %x irq %x\n",
+			*ioaddr, vendorid, deviceid, base,
+			pci_config_getl(cfg_handle, PCI_CONF_ILINE) & 0x0f);
+#endif
+
+	*ioaddr = base;
+	return (DDI_SUCCESS);
+}
+
+/* returns 0 on success, 1 on failure */
+static int
+adp_check_device_id(dev_info_t *devi, int device_id)
+{
+	int		len, count, num_devices;
+	int		*p, *dev_ids;
+
+	if (ddi_getlongprop(DDI_DEV_T_ANY, devi, DDI_PROP_DONTPASS,
+		"device_ids", (caddr_t)&dev_ids,
+		&len) != DDI_PROP_SUCCESS) {
+			cmn_err(CE_WARN, "adp_check_device_id: no property");
+		return (1);
+	}
+
+	num_devices = len / sizeof (int);
+
+	if (num_devices < 1)
+		return (1);
+
+	for (count = 0, p = dev_ids; count < num_devices; p++) {
+		if (device_id == *p) {
+			(void) kmem_free(dev_ids, len);
+			return (0);
+		}
+	}
+	(void) kmem_free(dev_ids, len);
+	return (1);
+}
+
+static void
+adp_disable_int(int base)
+{
+	Ph_WriteHcntrl((AIC_7870 *)base,
+		(u_char) (inb(base + HCNTRL) & ~INTEN));
+}
+
+static void
+adp_enable_int(unsigned int base)
+{
+
+	Ph_WriteHcntrl((AIC_7870 *)base,
+		(u_char) (inb(base + HCNTRL) | INTEN));
+}
+
+static int
+adp_detach(dev_info_t *dip, ddi_detach_cmd_t cmd)
+{
+	register struct	cfp *adp_blkp;
+
+	switch (cmd) {
+	case DDI_DETACH:
+	{
+		scsi_hba_tran_t	*tran;
+
+/*		tran saved by scsi_hba_attach (3rd param) called in attach */
+		tran = (scsi_hba_tran_t *) ddi_get_driver_private(dip);
+		if (!tran)
+			return (DDI_SUCCESS);
+
+		adp_blkp = TRAN2BLK(tran);
+		if (!adp_blkp)
+			return (DDI_SUCCESS);
+
+		if (adp_blkp->ab_child) {
+#ifdef ADP_DEBUG
+			if (adp_debug & DINIT) {
+				cmn_err(CE_WARN,
+				"adp_detach: blk %x failure with %d children",
+				adp_blkp, adp_blkp->ab_child);
+			}
+#endif
+			return (DDI_FAILURE);
+		}
+
+		ddi_remove_softintr(adp_blkp->ab_softid);
+		adp_disable_int(adp_blkp->ab_ioaddr);
+		ddi_remove_intr(dip, adp_blkp->ab_intr_idx,
+				adp_blkp->ab_iblock);
+		mutex_destroy(&adp_blkp->ab_mutex);
+		ddi_iopb_free((caddr_t)adp_blkp->CFP_HaDataPtr);
+
+		(void) kmem_free((caddr_t)TRAN2ADP(tran), sizeof (struct adp) +
+			sizeof (struct cfp));
+
+		scsi_hba_tran_free(tran);
+
+		ddi_prop_remove_all(dip);
+		if (scsi_hba_detach(dip) != DDI_SUCCESS) {
+			cmn_err(CE_WARN, "adp: scsi_hba_detach failed\n");
+		}
+
+#ifdef ADP_DEBUG
+		if (adp_debug & DINIT)
+			cmn_err(CE_WARN, "adp_detach success");
+#endif
+
+		return (DDI_SUCCESS);
+	}
+	default:
+		return (DDI_FAILURE);
+	}
+}
+
+/*
+ * Allocate an adp structure, an adp_blk (cfp) structure
+ * and call scsi_hba_tran_alloc to allocate a scsi_tranport structure
+ */
+static struct adp *
+adp_alloc_adp(dev_info_t *dip)
+{
+	register struct adp *adp;
+
+	adp = (struct adp *) kmem_zalloc(sizeof (struct adp) +
+			sizeof (struct cfp), KM_SLEEP);
+	if (adp == (struct adp *)0)
+		return ((struct adp *)0);
+
+	adp->a_blkp = (struct cfp *) (adp + 1);
+	adp->a_blkp->ab_dip = dip;
+
+	if ((adp->a_tran = scsi_hba_tran_alloc(dip, 0)) ==
+		(scsi_hba_tran_t *)0) {
+		(void) kmem_free((caddr_t)adp, sizeof (struct adp) +
+			sizeof (struct cfp));
+		return ((struct adp *)0);
+	}
+
+/*
+ *	this enables graceful failure early in adp_attach until fix in
+ *	scsi_hba_tran_alloc XXX
+ */
+	adp->a_tran->tran_hba_dip = dip;
+
+	return (adp);
+}
+
+/*ARGSUSED*/
+static int
+adp_attach(dev_info_t *dip, ddi_attach_cmd_t cmd)
+{
+	register struct adp *adp;
+
+	switch (cmd) {
+	case DDI_ATTACH:
+		break;
+
+	default:
+		return (DDI_FAILURE);
+	}
+
+	adp = adp_alloc_adp(dip);
+	if (!adp)
+		return (DDI_FAILURE);
+
+	if (adp_blkinit(dip, adp) != DDI_SUCCESS) {
+		scsi_hba_tran_free(adp->a_tran);
+		kmem_free((caddr_t)adp, sizeof (struct adp) +
+			sizeof (struct cfp));
+		return (DDI_FAILURE);
+	}
+
+	if (adp_setup_tran(dip, adp) != DDI_SUCCESS)
+		return (DDI_FAILURE);
+
+	if (ddi_add_softintr(dip, DDI_SOFTINT_LOW,
+		&adp->a_blkp->ab_softid, 0, 0, adp_run_callbacks,
+		(caddr_t)adp->a_blkp) != DDI_SUCCESS) {
+		cmn_err(CE_WARN, "adp)attach: cannot add softintr\n");
+		return (DDI_FAILURE);
+	}
+
+	adp_enable_int(ADP2BLK(adp)->CFP_BaseAddress);
+
+/*	XXX deallocate resources on failure				*/
+	if (adp_getedt(adp->a_blkp)) {
+		return (DDI_FAILURE);
+	}
+
+#ifdef ADP_DEBUG
+	if (adp_debug & DINIT)
+		cmn_err(CE_WARN, "adp_attach: adp %x blk %x\n",
+			adp, adp->a_blkp);
+#endif
+	return (DDI_SUCCESS);
+}
+
+static int
+adp_setup_tran(dev_info_t *dip, struct adp *adpp)
+{
+	struct	cfp *adp_blkp = adpp->a_blkp;
+	register scsi_hba_tran_t	*hba_tran;
+
+	hba_tran = adpp->a_tran;
+
+/*	tgt_private always points to the adp structure			*/
+	hba_tran->tran_tgt_private	= adpp;
+
+/*	hba_private always points to the adp_blk (him_config) struct	*/
+	hba_tran->tran_hba_private	= adpp->a_blkp;
+
+	hba_tran->tran_tgt_init		= adp_tran_tgt_init;
+	hba_tran->tran_tgt_probe	= adp_tran_tgt_probe;
+	hba_tran->tran_tgt_free		= adp_tran_tgt_free;
+
+	hba_tran->tran_start 		= adp_transport;
+	hba_tran->tran_abort		= adp_abort;
+	hba_tran->tran_reset		= adp_reset;
+	hba_tran->tran_getcap		= adp_getcap;
+	hba_tran->tran_setcap		= adp_setcap;
+	hba_tran->tran_init_pkt 	= adp_tran_init_pkt;
+	hba_tran->tran_destroy_pkt	= adp_tran_destroy_pkt;
+	hba_tran->tran_dmafree		= adp_dmafree;
+	hba_tran->tran_sync_pkt		= adp_sync_pkt;
+
+	if (scsi_hba_attach(dip, &adp_dmalim, hba_tran,
+			SCSI_HBA_TRAN_CLONE, NULL) != DDI_SUCCESS) {
+		cmn_err(CE_WARN, "adp_attach: scsi_hba_attach fail");
+
+		mutex_enter(&adp_global_mutex);
+		adp_disable_int(adp_blkp->CFP_BaseAddress);
+		ddi_remove_intr(dip, adp_blkp->ab_intr_idx,
+			adp_blkp->ab_iblock);
+		mutex_destroy(&adp_blkp->ab_mutex);
+		ddi_iopb_free((caddr_t)adp_blkp->CFP_HaDataPtr);
+		mutex_exit(&adp_global_mutex);
+
+		kmem_free((caddr_t)adpp, sizeof (struct adp) +
+			sizeof (struct cfp));
+		scsi_hba_tran_free(hba_tran);
+		return (DDI_FAILURE);
+	}
+
+	ddi_report_dev(dip);
+
+	return (DDI_SUCCESS);
+}
+
+static int
+adp_blkinit(dev_info_t *dip, struct adp *adpp)
+{
+	int i, len, bus, device;
+	unsigned int ioaddr;
+	struct cfp *adp_blkp = adpp->a_blkp;
+	int *regp;
+	int reglen;
+
+	/* get the hba's address */
+	if (ddi_getlongprop(DDI_DEV_T_NONE, dip, DDI_PROP_DONTPASS,
+	    "reg", (caddr_t)&regp, &reglen) != DDI_PROP_SUCCESS) {
+#ifdef ADP_DEBUG
+		if (adp_debug & DINIT)
+			cmn_err(CE_WARN,
+				"adp_blkinit: reg property not found\n");
+#endif
+		return (DDI_FAILURE);
+	}
+
+/*	get the values from the first member of the reg triplet */
+	device = (((*regp) >> 3) & 0xf);
+	bus = (((*regp) >> 8) & 0xf);
+	len = sizeof (int);
+	kmem_free(regp, reglen);
+
+	mutex_enter(&adp_global_mutex);
+
+/*	all this to get the io address					*/
+	if (adp_search_pci(&ioaddr, dip) != DDI_SUCCESS) {
+		mutex_exit(&adp_global_mutex);
+		return (DDI_FAILURE);
+	}
+
+	if (!(adp_up)) {
+		adp_pgsz = ddi_ptob(adp_blkp->ab_dip, 1L);
+		adp_pgmsk = adp_pgsz - 1;
+		for (i = adp_pgsz, len = 0; i > 1; len++)
+			i >>= 1;
+		adp_pgshf = len;
+		adp_up = 1;
+	}
+
+	adp_blkp->CFP_BaseAddress = ioaddr;
+	adp_blkp->Cf_BusNumber = (unsigned char) bus;
+	adp_blkp->Cf_DeviceNumber = (unsigned char) device;
+	if (adp_cfginit(adpp) != DDI_SUCCESS) {
+		mutex_exit(&adp_global_mutex);
+		return (DDI_FAILURE);
+	}
+
+	mutex_exit(&adp_global_mutex);
+	return (DDI_SUCCESS);
+}
+
+/*
+ * This is called with the global mutex held
+ */
+static int
+adp_cfginit(struct adp *adp)
+{
+	struct cfp *adp_blkp = adp->a_blkp;
+	struct hsp *him_datap;
+	struct bios_info_block *biosp;
+	int intr_idx;
+	unsigned int him_data_size;
+	caddr_t buf;
+#ifdef ADP_DEBUG
+	int status;
+#endif
+
+/*	XXX								*/
+	adp_blkp->Cf_NumberScbs = DEFAULT_NUM_SCBS;
+
+/*
+ *	Suppress negotiation of synchronous or Wide (16 bit) xfers
+ */
+	adp_blkp->CFP_SuppressNego = 1;
+
+/*	Note that Cf_AccessMode is set to 0 (default) by bzero 		*/
+	PH_GetConfig(adp_blkp);
+
+/*	Impose narrow async SCSI until getedt done			*/
+	adp_blkp->CFP_SuppressNego = 1;
+	adp_blkp->CFP_ResetBus = 1;
+
+	him_data_size = adp_blkp->Cf_HimDataSize;
+
+#ifdef ADP_DEBUG
+	if (adp_debug & DINIT) {
+		cmn_err(CE_WARN,
+			"adp_cfginit: IO Addr %x Chan %d IRQ %x DataSize %x\n",
+		adp_blkp->CFP_BaseAddress, adp_blkp->Cf_ScsiChannel,
+		adp_blkp->Cf_IrqChannel, adp_blkp->Cf_HimDataSize);
+		cmn_err(CE_WARN, "AccessMode %x Host id %x NonTagScbs %d\n",
+			adp_blkp->Cf_AccessMode,
+			adp_blkp->Cf_ScsiId, adp_blkp->Cf_MaxNonTagScbs);
+	}
+#endif
+
+/*	allocate hsp						*/
+	if (ddi_iopb_alloc(adp_blkp->ab_dip, &adp_dmalim,
+		him_data_size, &buf) == DDI_FAILURE) {
+#ifdef ADP_DEBUG
+		cmn_err(CE_WARN, "adp_cfginit: hsp alloc fail");
+#endif
+		return (DDI_FAILURE);
+	}
+	bzero((caddr_t)buf, him_data_size);
+	him_datap = (struct hsp *) buf;
+	adp_blkp->CFP_HaDataPtr = him_datap;
+
+
+/*	allocate bios_info area						*/
+	if (ddi_iopb_alloc(adp_blkp->ab_dip, &adp_dmalim,
+		sizeof (struct bios_info_block),
+		&buf) == DDI_FAILURE) {
+#ifdef ADP_DEBUG
+		cmn_err(CE_NOTE, "adp_cfginit: biosinfo alloc fail");
+#endif
+		ddi_iopb_free((caddr_t) him_datap);
+		return (DDI_FAILURE);
+	}
+	bzero((caddr_t)buf, sizeof (struct bios_info_block));
+	biosp = (struct bios_info_block *) buf;
+
+	if (PH_GetBiosInfo(adp_blkp, adp_blkp->Cf_BusNumber,
+		adp_blkp->Cf_DeviceNumber, biosp) == 0) {
+		if (biosp->bi_global & BI_GIGABYTE) {
+			adp_blkp->ab_flag |= ADP_GT1GIG;
+#ifdef ADP_DEBUG
+			if (adp_debug & DINIT)
+				cmn_err(CE_NOTE,
+					"adp_cfginit: bios GT1GIT");
+#endif
+		}
+	}
+#ifdef ADP_DEBUG
+	else {
+		if (adp_debug & DINIT)
+			cmn_err(CE_NOTE, "adp_cfginit: get biosinfo fail");
+	}
+#endif
+
+	ddi_iopb_free((caddr_t)biosp);
+
+/*	Release the first scb used by the Bios				*/
+	adp_blkp->CFP_BiosActive = 0;
+	adp_blkp->Cf_HaDataPhy =
+		ADP_KVTOP(him_datap);
+
+#ifdef ADP_DEBUG
+	if (adp_debug & DINIT)
+		cmn_err(CE_NOTE, "adp_cfginit: hsp paddr %x",
+		adp_blkp->Cf_HaDataPhy);
+#endif
+
+/*	Set to 2 per advice of Paul Von Stanwitz 04/26/95		*/
+	adp_blkp->Cf_MaxNonTagScbs = 1;
+
+#ifdef ADP_DEBUG
+	if ((status = PH_InitHA(adp_blkp)) != 0) {
+		if (adp_debug & DINIT)
+			cmn_err(CE_WARN, "adp_cfginit: initHA fail %x", status);
+			ddi_iopb_free((caddr_t) him_datap);
+		return (DDI_FAILURE);
+	}
+#else
+	if (PH_InitHA(adp_blkp)) {
+		ddi_iopb_free((caddr_t) him_datap);
+		return (DDI_FAILURE);
+	}
+#endif
+	drv_usecwait(2 * SEC_INUSEC);
+
+/*	PH_InitHA may adjust the physical address of the data block	*/
+
+#ifdef ADP_DEBUG
+	if (adp_debug & DINIT)
+	cmn_err(CE_NOTE, "adp_cfginit: hsp paddr %x vaddr %x",
+		adp_blkp->Cf_HaDataPhy, adp_blkp->CFP_HaDataPtr);
+#endif
+
+/*
+ *	PH_InitHA just enabled interrupts, but we are not ready
+ *	to take interrupts, so disable them
+ *	this is safe because we hold the global mutex
+ */
+	adp_disable_int(adp_blkp->CFP_BaseAddress);
+
+#ifdef OLD_PCI
+	intr_idx = adp_xlate_vec(adp_blkp);
+#else
+	intr_idx = 0;
+#endif
+	if (intr_idx < 0) {
+		ddi_iopb_free((caddr_t) him_datap);
+		return (DDI_FAILURE);
+	}
+
+/*
+ * 	Establish initial dummy interrupt handler
+ * 	get iblock cookie to initialize mutexes used in the
+ * 	real interrupt handler
+ */
+	if (ddi_add_intr(adp_blkp->ab_dip, intr_idx,
+			(ddi_iblock_cookie_t *) &adp_blkp->ab_iblock,
+			(ddi_idevice_cookie_t *) 0, adp_dummy_intr,
+			(caddr_t) adp)) {
+			ddi_iopb_free((caddr_t) him_datap);
+		cmn_err(CE_WARN, "adp_cfginit: cannot add dummy intr");
+		return (DDI_FAILURE);
+	}
+
+	mutex_init(&adp_blkp->ab_mutex, "adp mutex", MUTEX_DRIVER,
+			adp_blkp->ab_iblock);
+
+	ddi_remove_intr(adp_blkp->ab_dip, intr_idx,
+			adp_blkp->ab_iblock);
+
+	/* Establish real interrupt handler */
+	if (ddi_add_intr(adp_blkp->ab_dip, intr_idx,
+			(ddi_iblock_cookie_t *) &adp_blkp->ab_iblock,
+			(ddi_idevice_cookie_t *) 0, adp_intr,
+			(caddr_t) adp)) {
+			cmn_err(CE_WARN, "adp_cfginit: cannot add intr");
+			ddi_iopb_free((caddr_t) him_datap);
+			mutex_destroy(&adp_blkp->ab_mutex);
+		return (DDI_FAILURE);
+	}
+	adp_blkp->ab_intr_idx = intr_idx;
+
+	return (DDI_SUCCESS);
+}
+
+/* Abort specific command on target device */
+/* returns 0 on failure, 1 on success */
+static int
+adp_abort(struct scsi_address *ap, struct scsi_pkt *pktp)
+{
+	struct	cfp *adp_blkp;
+	struct  sp *scbp;
+	int 	status;
+
+	adp_blkp = ADDR2BLK(ap);
+
+	mutex_enter(&adp_blkp->ab_mutex);
+
+/*	abort last packet transmistted by this controller 		*/
+	if (!pktp) {
+		scbp = adp_blkp->ab_last_scbp;
+	} else {
+		scbp = (struct sp *)
+			PKT2CMD(pktp)->cmd_private;
+	}
+
+	if (PH_Special(ABORT_SCB, adp_blkp, scbp))
+		status = 0;
+	else
+		status = 1;
+
+	mutex_exit(&adp_blkp->ab_mutex);
+
+	return (status);
+}
+
+/* returns 0 on failure, 1 on success */
+static int
+adp_reset(struct scsi_address *ap, int level)
+{
+
+	struct	cfp *adp_blkp = ADDR2BLK(ap);
+	int ret = 0;
+
+	switch (level) {
+
+	case RESET_ALL:
+		if (PH_Special(SOFT_HA_RESET, adp_blkp,
+			(struct sp *) 0) == 0)
+			ret = 1;
+
+		drv_usecwait(2*SEC_INUSEC);
+		/* Delay 2 seconds for the devices on scsi bus to settle */
+
+		break;
+
+	case RESET_TARGET:
+	{
+		caddr_t			buf;
+		struct sp		*scbp;
+		struct adp_scsi_cmd	*cmd;
+
+		cmd = kmem_zalloc(sizeof (struct adp_scsi_cmd), KM_SLEEP);
+		if (cmd == (struct adp_scsi_cmd *)0)
+			break;
+
+		if (ddi_iopb_alloc(adp_blkp->ab_dip, &adp_dmalim,
+				sizeof (struct sp),
+				&buf) == DDI_FAILURE) {
+#ifdef ADP_DEBUG
+			cmn_err(CE_NOTE, "adp_reset: scb alloc failed");
+			break;
+#endif
+		}
+		bzero((caddr_t)buf, sizeof (struct sp));
+		scbp = (struct sp *) buf;
+
+/*		Permit PH_ScbCompleted to dereference Sp_cmdp		*/
+		scbp->Sp_cmdp = cmd;
+
+		scbp->SP_Cmd = HARD_RST_DEV;
+		scbp->SP_ConfigPtr = adp_blkp;
+
+/* 		initialize target and lun 				*/
+		scbp->SP_Tarlun = (ap->a_target << 4) | ap->a_lun;
+
+		PH_ScbSend(scbp);
+
+/* 		Delay 2 seconds for the device to settle		*/
+		drv_usecwait(2*SEC_INUSEC);
+
+		kmem_free(cmd, sizeof (struct adp_scsi_cmd));
+		ddi_iopb_free((caddr_t) scbp);
+
+		ret = 1;
+		break;
+	}
+
+	default:
+		break;
+	}
+
+	return (ret);
+}
+
+static int
+adp_capchk(char *cap, int tgtonly, int *cidxp)
+{
+	register int	cidx;
+
+	if ((tgtonly != 0 && tgtonly != 1) || cap == (char *) 0)
+		return (FALSE);
+
+	if ((cidx = scsi_hba_lookup_capstr(cap)) == -1)
+		return (FALSE);
+
+	*cidxp = cidx;
+	return (TRUE);
+}
+
+static int
+adp_getcap(struct scsi_address *ap, char *cap, int tgtonly)
+{
+	int	ckey;
+
+	if (adp_capchk(cap, tgtonly, &ckey) != TRUE)
+		return (UNDEFINED);
+
+	switch (ckey) {
+
+		case SCSI_CAP_GEOMETRY:
+		{
+			int	total_sectors, h, s;
+
+			total_sectors = (ADDR2ADPUNITP(ap))->au_total_sectors;
+
+			if (((ADDR2ADPUNITP(ap))->au_gt1gig) &&
+				total_sectors > 0x200000) {
+				h = 255;
+				s = 63;
+			} else {
+				h = 64;
+				s = 32;
+			}
+			return (ADP_SETGEOM(h, s));
+
+		}
+		case SCSI_CAP_ARQ:
+			return (TRUE);
+		default:
+			break;
+	}
+	return (UNDEFINED);
+}
+
+static int
+adp_setcap(struct scsi_address *ap, char *cap, int value, int tgtonly)
+{
+	int	ckey, status = FALSE;
+
+	if (adp_capchk(cap, tgtonly, &ckey) != TRUE) {
+		return (UNDEFINED);
+	}
+
+	switch (ckey) {
+		case SCSI_CAP_SECTOR_SIZE:
+			(ADDR2ADPUNITP(ap))->au_lim.dlim_granular =
+				(u_int)value;
+			status = TRUE;
+			break;
+
+		case SCSI_CAP_ARQ:
+			if (tgtonly) {
+				(ADDR2ADPUNITP(ap))->au_arq = (u_int)value;
+				status = TRUE;
+			}
+			break;
+
+		case SCSI_CAP_TOTAL_SECTORS:
+			(ADDR2ADPUNITP(ap))->au_total_sectors = value;
+			status = TRUE;
+			break;
+
+		case SCSI_CAP_GEOMETRY:
+		default:
+			break;
+	}
+	return (status);
+}
+
+static struct scsi_pkt *
+adp_tran_init_pkt(struct scsi_address *ap, struct scsi_pkt *pkt,
+	struct buf *bp, int cmdlen, int statuslen, int tgtlen,
+	int flags, int (*callback)(caddr_t), caddr_t arg)
+{
+	struct scsi_pkt		*new_pkt = (struct scsi_pkt *)0;
+	struct adp_scsi_cmd	*cmd;
+
+	/*
+	 * Allocate a pkt
+	 */
+	if (!pkt) {
+		pkt = adp_pktalloc(ap, cmdlen, statuslen,
+			tgtlen, callback, arg);
+		if (pkt == (struct scsi_pkt *)0)
+			return ((struct scsi_pkt *)0);
+		cmd = PKT2CMD(pkt);
+		cmd->cmd_flags = flags;
+		new_pkt = pkt;
+	} else {
+		new_pkt = (struct scsi_pkt *)0;
+	}
+
+	/*
+	 * Set up dma info
+	 */
+	if (bp) {
+		if (adp_dmaget(pkt, bp, callback, arg) ==
+				(struct scsi_pkt *)0) {
+			if (new_pkt)
+				adp_pktfree(ap, new_pkt);
+			return ((struct scsi_pkt *)0);
+		}
+	}
+
+	return (pkt);
+}
+
+static void
+adp_tran_destroy_pkt(struct scsi_address *ap, struct scsi_pkt *pkt)
+{
+	adp_dmafree(ap, pkt);
+	adp_pktfree(ap, pkt);
+}
+
+static struct scsi_pkt *
+adp_pktalloc(struct scsi_address *ap, int cmdlen, int statuslen,
+    int tgtlen, int (*callback)(), caddr_t arg)
+{
+	register struct adp_scsi_cmd *cmd;
+	register struct scsi_pkt *pkt;
+	register struct sp	*scbp;
+	struct	 cfp	*adp_blkp;
+	caddr_t			buf;
+
+	adp_blkp = ADDR2BLK(ap);
+
+/*	request minimum target_privte area from scsi_hba_pkt_alloc	*/
+	if (tgtlen <= PKT_PRIV_LEN)
+		tgtlen = PKT_PRIV_LEN;
+
+/*	must pass 0 for sizeof status and cdb fields, as these use dma	*/
+	pkt = scsi_hba_pkt_alloc(adp_blkp->ab_dip, ap, 0,
+		0, tgtlen, sizeof (struct adp_scsi_cmd),
+		callback, arg);
+	if (pkt == (struct scsi_pkt *)0) {
+		return ((struct scsi_pkt *)0);
+	}
+
+/*	scsi_hba_pkt_alloc put addr of target_private in pkt_private	*/
+/*	and put addr struct adp_scsi_cmd in pkt->pkt_ha_private		*/
+/*	it also set pkt->pkt_address					*/
+
+	cmd = PKT2CMD(pkt);
+	cmd->cmd_pkt = pkt;
+
+	if (ddi_iopb_alloc(adp_blkp->ab_dip, &adp_dmalim,
+			sizeof (struct sp),
+				&buf) == DDI_FAILURE) {
+#ifdef ADP_DEBUG
+		cmn_err(CE_NOTE, "adp: scb alloc failed");
+#endif
+		scsi_hba_pkt_free(ap, pkt);
+		return ((struct scsi_pkt *)0);
+	}
+	bzero((caddr_t)buf, sizeof (struct sp));
+	scbp = (struct sp *) buf;
+
+	cmd->cmd_private = (opaque_t) buf;
+/*	cmd_private is used to communicate the completed scb		*/
+/*	and to save and free scb memory					*/
+/*	in other drivers this area is known as the ccb			*/
+
+/* 	initialize scb 							*/
+	scbp->SP_Cmd = EXEC_SCB;
+	scbp->SP_CDBLen  = (unchar) cmdlen;
+	scbp->Sp_cmdp = cmd;
+	scbp->SP_ConfigPtr = adp_blkp;
+
+	/*	initialize arq 						*/
+	if ((ADDR2ADPUNITP(ap))->au_arq)  {
+		scbp->SP_AutoSense = 1;
+	}
+
+/* 	initialize target and lun 					*/
+	scbp->SP_Tarlun = (ap->a_target << 4) | ap->a_lun;
+
+	scbp->Sp_paddr	  = ADP_KVTOP(scbp);
+
+/* 	auto request sense data physical address 			*/
+	scbp->Sp_SensePtr = scbp->Sp_paddr +
+		((caddr_t)(&scbp->Sp_sense.sts_sensedata) - (caddr_t)scbp);
+	scbp->Sp_SenseLen = ADP_SENSE_LEN;
+/* 	set SCSI cdb physical address 					*/
+	scbp->SP_CDBPtr = scbp->Sp_paddr +
+		((u_char *)&(scbp->Sp_CDB[0]) - (u_char *)scbp);
+
+
+
+	cmd->cmd_cdblen		= (u_char) cmdlen;
+	cmd->cmd_scblen		= (u_char) statuslen;
+	cmd->cmd_privlen	= sizeof (struct adp_scsi_cmd);
+
+	pkt->pkt_cdbp		= (opaque_t) scbp->Sp_CDB;
+	pkt->pkt_scbp		= (u_char *) &scbp->Sp_sense;
+
+#ifdef ADP_DEBUG
+	if (adp_debug & DPKT) {
+		cmn_err(CE_WARN, "adp_pktalloc:cmdpktp %x cdbp %x sdbp %x\n",
+			cmd, cmd->cmd_pkt->pkt_cdbp, cmd->cmd_pkt->pkt_scbp);
+		cmn_err(CE_WARN, "scbp %x pktp %x\n", scbp, pkt);
+	}
+#endif
+	return (pkt);
+}
+
+/*
+ * packet free
+ */
+static void
+adp_pktfree(struct scsi_address *ap, struct scsi_pkt *pkt)
+{
+	register struct adp_scsi_cmd *cmd = PKT2CMD(pkt);
+
+	ddi_iopb_free((caddr_t)cmd->cmd_private);
+	scsi_hba_pkt_free(ap, pkt);
+}
+
+/*
+ * Dma resource deallocation
+ */
+/*ARGSUSED*/
+static void
+adp_dmafree(struct scsi_address *ap, register struct scsi_pkt *pktp)
+{
+	register struct adp_scsi_cmd *cmd = PKT2CMD(pktp);
+
+/* 	Free the mapping.  						*/
+	if (cmd->cmd_dmahandle) {
+		if (ddi_dma_free(cmd->cmd_dmahandle) == DDI_FAILURE)
+			cmn_err(CE_PANIC, "ddi_dma_free error");
+		cmd->cmd_dmahandle = NULL;
+	}
+}
+
+
+/*
+ * Dma sync
+ */
+/*ARGSUSED*/
+static void
+adp_sync_pkt(struct scsi_address *ap, struct scsi_pkt *pktp)
+{
+	register struct adp_scsi_cmd *cmd = PKT2CMD(pktp);
+	int	i;
+
+	if (cmd->cmd_dmahandle) {
+		i = ddi_dma_sync(cmd->cmd_dmahandle, 0, 0,
+			(cmd->cmd_cflags & CFLAG_DMASEND) ?
+			DDI_DMA_SYNC_FORDEV : DDI_DMA_SYNC_FORCPU);
+		if (i != DDI_SUCCESS) {
+			cmn_err(CE_WARN, "adp: sync pkt fail");
+		}
+	}
+}
+
+/*
+ * Dma resource allocation
+ */
+static struct scsi_pkt *
+adp_dmaget(struct scsi_pkt *pktp, struct buf *bp,
+	int (*callback)(caddr_t), caddr_t arg)
+{
+
+	register struct adp_scsi_cmd *cmd = PKT2CMD(pktp);
+	register struct sp *scbp;
+	struct adp_sg *dmap;
+	ddi_dma_cookie_t dmack;
+	ddi_dma_cookie_t *dmackp = &dmack;
+	int	cnt;
+	int	bxfer;
+	off_t	offset;
+	off_t	len;
+
+	scbp = (struct sp *)cmd->cmd_private;
+
+	if (!bp->b_bcount) {
+/* 		XXX workaround for scdk_start_drive mistake		*/
+		pktp->pkt_resid = 0;
+		scbp->SP_SegCnt = 0;
+		scbp->SP_SegPtr = 0;
+		return (pktp);
+	}
+
+/* 	for read or write						*/
+	scbp->SP_RejectMDP = 1;
+
+/*	setup dma memory and position to the next xfer segment		*/
+	if (adp_scsi_impl_dmaget(pktp, bp, callback, arg,
+			&(PKT2ADPUNITP(pktp)->au_lim)) == 0)
+		return ((struct scsi_pkt *)0);
+	if (ddi_dma_segtocookie(cmd->cmd_dmaseg, &offset, &len,
+			dmackp) == DDI_FAILURE)
+		cmn_err(CE_PANIC, "ddi_dma_segtocookie error");
+
+	if (bp->b_bcount <= dmackp->dmac_size)
+		cmd->cmd_totxfer = 0;
+
+/* 	set address of scatter gather segs 				*/
+	dmap = scbp->Sp_sg_list;
+
+/* 	whether or not single block xfer, 7770 wants scatter gather	*/
+	for (bxfer = 0, cnt = 1; ; cnt++, dmap++) {
+		bxfer += dmackp->dmac_size;
+
+		dmap->data_len = (ulong) dmackp->dmac_size;
+		dmap->data_addr = (ulong) dmackp->dmac_address;
+
+#ifdef ADP_DEBUG
+		if (adp_debug & DPKT)
+		cmn_err(CE_WARN,
+			"totxfer %x bxfer %x cnt %x bcnt %x siz %x addr %x\n",
+			cmd->cmd_totxfer, bxfer, cnt,
+			bp->b_bcount, dmackp->dmac_size,
+			dmackp->dmac_address);
+
+#endif
+/*		check for end of list condition			*/
+		if (bp->b_bcount == (bxfer + cmd->cmd_totxfer))
+			break;
+		ASSERT(bp->b_bcount > (bxfer + cmd->cmd_totxfer));
+/* 		check end of physical scatter-gather list limit */
+		if (cnt >= (int)ADP_MAX_DMA_SEGS)
+			break;
+		if (ddi_dma_nextseg(cmd->cmd_dmawin, cmd->cmd_dmaseg,
+			&cmd->cmd_dmaseg) != DDI_SUCCESS)
+			break;
+		if (ddi_dma_segtocookie(cmd->cmd_dmaseg, &offset, &len,
+				dmackp) == DDI_FAILURE)
+			cmn_err(CE_PANIC, "ddi_dma_segtocookie error");
+	}
+
+	scbp->SP_SegCnt = (unsigned char) cnt;
+
+/* 		physical address of scatter gather list 		*/
+	scbp->SP_SegPtr = (paddr_t)(scbp->Sp_paddr +
+		((caddr_t)scbp->Sp_sg_list - (caddr_t)scbp));
+
+	cmd->cmd_totxfer += bxfer;
+	pktp->pkt_resid = bp->b_bcount - cmd->cmd_totxfer;
+
+	return (pktp);
+}
+
+static int
+adp_scsi_impl_dmaget(struct scsi_pkt *pktp, struct buf *bp,
+    int (*callback)(caddr_t), caddr_t callback_arg, ddi_dma_lim_t *dmalimp)
+{
+	register struct adp_scsi_cmd *cmd = PKT2CMD(pktp);
+	int 		flags;
+	int 		status;
+
+	if (!cmd->cmd_dmahandle) {
+		if (bp->b_flags & B_READ) {
+			cmd->cmd_cflags &= ~CFLAG_DMASEND;
+			flags = DDI_DMA_READ;
+		} else {
+			flags = DDI_DMA_WRITE;
+			cmd->cmd_cflags |= CFLAG_DMASEND;
+		}
+
+		if (cmd->cmd_flags & PKT_CONSISTENT)
+			flags |= DDI_DMA_CONSISTENT;
+		if (cmd->cmd_flags & PKT_DMA_PARTIAL)
+			flags |= DDI_DMA_PARTIAL;
+
+		status = ddi_dma_buf_setup(PKT2TRAN(pktp)->tran_hba_dip,
+				bp, flags, callback, callback_arg, dmalimp,
+				&cmd->cmd_dmahandle);
+
+		if (status) {
+			switch (status) {
+			case DDI_DMA_NORESOURCES:
+				bp->b_error = 0;
+				break;
+			case DDI_DMA_TOOBIG:
+				bp->b_error = EINVAL;
+				break;
+			case DDI_DMA_NOMAPPING:
+			default:
+				bp->b_error = EFAULT;
+				break;
+			}
+			return (0);
+		}
+	} else {
+		/*
+		 * get next segment
+		 */
+		status = ddi_dma_nextseg(cmd->cmd_dmawin, cmd->cmd_dmaseg,
+				&cmd->cmd_dmaseg);
+		if (status == DDI_SUCCESS)
+			return (1);
+		else if (status == DDI_DMA_STALE)
+			return (0);
+
+		/* fall through at end of segment */
+	}
+
+	/*
+	 * move to the next window
+	 */
+	status = ddi_dma_nextwin(cmd->cmd_dmahandle, cmd->cmd_dmawin,
+			&cmd->cmd_dmawin);
+	if (status == DDI_DMA_STALE)
+		return (0);
+	if (status == DDI_DMA_DONE) {
+		/*
+		 * reset to first window
+		 */
+		if (ddi_dma_nextwin(cmd->cmd_dmahandle, NULL,
+		    &cmd->cmd_dmawin) != DDI_SUCCESS)
+			return (0);
+	}
+
+	/*
+	 * get first segment
+	 */
+	if (ddi_dma_nextseg(cmd->cmd_dmawin, NULL, &cmd->cmd_dmaseg) !=
+	    DDI_SUCCESS)
+		return (0);
+	return (1);
+}
+
+/*ARGSUSED*/
+static int
+adp_transport(struct scsi_address *ap, register struct scsi_pkt *pktp)
+{
+	register struct cfp *adp_blkp;
+	register struct	sp *scbp;
+
+	scbp = (struct sp *)PKT2CMD(pktp)->cmd_private;
+	adp_blkp = PKT2BLK(pktp);
+
+#if ADP_DEBUG
+	if (adp_debug & DPKT)
+		cmn_err(CE_WARN, "adp_tran: chan %x scbp %x blk %x cmd %x",
+			adp_blkp->Cf_ScsiChannel, scbp, adp_blkp,
+				PKT2CMD(pktp));
+#endif
+
+	mutex_enter(&adp_blkp->ab_mutex);
+
+/*	track the last outstanding scb (scsi_pkt) for adp_abort		*/
+	adp_blkp->ab_last_scbp = scbp;
+
+/*	save data stolen by him code on error				*/
+	bcopy((char *)pktp->pkt_cdbp, (char *)scbp->Sp_CDB_save, MAX_CDB_LEN);
+	scbp->Sp_CDBLen_save = scbp->SP_CDBLen;
+	bcopy((char *)&scbp->Sp_control, (char *)&scbp->Sp_control_save, 4);
+	scbp->Sp_SegCnt_save = scbp->SP_SegCnt;
+	scbp->Sp_SegPtr_save = scbp->SP_SegPtr;
+
+/*	initialize in case of packet reuse 				*/
+	scbp->SP_TargStat = 0;
+	scbp->SP_HaStat = 0;
+	scbp->SP_ResCnt = 0;
+	pktp->pkt_state = 0;
+	pktp->pkt_statistics = 0;
+	pktp->pkt_resid = 0;
+
+
+/*	initialize the compleded poll packet to null			*/
+	adp_blkp->ab_scbp = (struct sp *)0;
+
+/*	Set default, then handle special cases				*/
+/*	Do this here because of packet reuse by both target and him	*/
+	scbp->SP_DisEnable = 1;
+
+	if (pktp->pkt_flags & FLAG_NOINTR) {
+		adp_blkp->ab_flag |= ADP_POLLING;
+	}
+
+/*	disable disconnect when requested or for polling		*/
+	if (pktp->pkt_flags & (FLAG_NODISCON | FLAG_NOINTR)) {
+		scbp->SP_DisEnable = 0;
+	}
+#ifdef ADP_DEBUG
+	adp_savescb(adp_blkp, scbp);
+#endif
+
+	PH_ScbSend(scbp);
+
+#ifdef ADP_DEBUG
+	adp_blkp->ab_pkts_out++;
+#endif
+
+	if (pktp->pkt_flags & FLAG_NOINTR) {
+		adp_pollret(adp_blkp, pktp);
+		adp_blkp->ab_flag &= ~ADP_POLLING;
+	}
+
+	mutex_exit(&adp_blkp->ab_mutex);
+	return (TRAN_ACCEPT);
+}
+
+/*
+ * allows us to run stacked up callbacks beyond the
+ * polling loop inside adp_pollret
+ */
+static u_int
+adp_run_callbacks(caddr_t arg)
+{
+	register struct cfp *adp_blkp =
+		(struct cfp *) arg;
+	register struct	sp *scbp;
+	struct scsi_pkt *pkt;
+
+	mutex_enter(&adp_blkp->ab_mutex);
+	if (!adp_blkp->ab_scbp_que) {
+		ASSERT(!(adp_blkp->ab_flag & ADP_POLL_TRIGGER_ON));
+		mutex_exit(&adp_blkp->ab_mutex);
+		return (DDI_INTR_UNCLAIMED);
+	}
+	ASSERT(adp_blkp->ab_flag & ADP_POLL_TRIGGER_ON);
+
+	while (adp_blkp->ab_scbp_que) {
+		scbp = adp_retpkt(adp_blkp);
+		ASSERT(scbp);
+
+#ifdef ADP_DEBUG
+		if (adp_retscb(adp_blkp, scbp) != scbp)
+			cmn_err(CE_WARN, "adp_run_callbacks: retscb fail");
+		adp_blkp->ab_pkts_out--;
+#endif
+
+		mutex_exit(&adp_blkp->ab_mutex);
+
+		pkt = CMD2PKT(scbp->Sp_cmdp);
+		adp_chkstatus(pkt, scbp);
+		ASSERT(pkt->pkt_comp);
+		(*pkt->pkt_comp)(pkt);
+		mutex_enter(&adp_blkp->ab_mutex);
+	}
+
+	adp_blkp->ab_flag &= ~ADP_POLL_TRIGGER_ON;
+	adp_blkp->ab_pkts_done = 0;
+
+	mutex_exit(&adp_blkp->ab_mutex);
+	return (DDI_INTR_CLAIMED);
+}
+
+static void
+adp_savepkt(register struct cfp *adp_blkp,
+	register struct sp *scbp)
+{
+	register struct	sp *cp;
+
+#ifdef ADP_DEBUG
+	if (adp_debug & DTEST)
+		cmn_err(CE_WARN, "adp_savepkt scb: %x", scbp);
+#endif
+
+	cp = adp_blkp->ab_scbp_que;
+	if (!cp) {
+		adp_blkp->ab_scbp_que = scbp;
+		scbp->Sp_pforw = scbp;
+		scbp->Sp_pback = scbp;
+		return;
+	}
+
+	cp->Sp_pback->Sp_pforw = scbp;
+	scbp->Sp_pback = cp->Sp_pback;
+	scbp->Sp_pforw = cp;
+	cp->Sp_pback = scbp;
+}
+
+static struct sp *
+adp_retpkt(register struct cfp *adp_blkp)
+{
+	register struct	sp *cp;
+
+	cp = adp_blkp->ab_scbp_que;
+
+/*	empty list						*/
+	if (!cp) {
+		return ((struct sp *)0);
+	}
+
+/*	single entry on the list				*/
+	if (cp == cp->Sp_pforw) {
+		adp_blkp->ab_scbp_que =
+			(struct sp *)0;
+		return (cp);
+	}
+
+	if (adp_blkp->ab_scbp_que == cp)
+			adp_blkp->ab_scbp_que = cp->Sp_pforw;
+	cp->Sp_pback->Sp_pforw = cp->Sp_pforw;
+	cp->Sp_pforw->Sp_pback = cp->Sp_pback;
+	return (cp);
+}
+
+/*
+ * adp_savescb() and adp_retscb() are for debugging purposes only
+ */
+#ifdef ADP_DEBUG
+static void
+adp_savescb(register struct cfp *adp_blkp,
+	register struct sp *scbp)
+{
+	register struct	sp *cp;
+
+	cp = adp_blkp->ab_scboutp;
+	if (!cp) {
+		adp_blkp->ab_scboutp = scbp;
+		scbp->Sp_forw = scbp;
+		scbp->Sp_back = scbp;
+		return;
+	}
+
+	cp->Sp_back->Sp_forw = scbp;
+	scbp->Sp_back = cp->Sp_back;
+	scbp->Sp_forw = cp;
+	cp->Sp_back = scbp;
+}
+
+static struct sp *
+adp_retscb(register struct cfp *adp_blkp,
+	register struct sp *scbp)
+{
+	register struct	sp *cp;
+
+	for (cp = adp_blkp->ab_scboutp; cp; ) {
+		if (cp != scbp) {
+			cp = cp->Sp_forw;
+			ASSERT(cp != adp_blkp->ab_scboutp);
+			continue;
+		}
+/*		check for single entry on the list			*/
+		if (cp == cp->Sp_forw) {
+			adp_blkp->ab_scboutp = NULL;
+			return (cp);
+		}
+
+/*		check for first entry on the list			*/
+		if (adp_blkp->ab_scboutp == cp)
+			adp_blkp->ab_scboutp = cp->Sp_forw;
+		cp->Sp_back->Sp_forw = cp->Sp_forw;
+		cp->Sp_forw->Sp_back = cp->Sp_back;
+		return (cp);
+
+	}
+	cmn_err(CE_WARN, "adp_retscb: NO match");
+	return ((struct sp *) 0);
+}
+
+#endif
+
+/*
+ * adp_pollret is always called with the mutex held
+ * PH_IntHandler is used to poll for completion because
+ * it transfers control to the HIM SCSI state machine
+ *
+ * polled packets are single threaded by control of the mutex
+ * and are not allowed to disconnect
+ */
+static void
+adp_pollret(register struct cfp *adp_blkp,
+		register struct scsi_pkt *pktp)
+{
+	register struct sp *scbp;
+	int poll_done = FALSE;
+	ushort pkts_done = adp_blkp->ab_pkts_done;
+	int i, j;
+#ifdef ADP_DEBUG
+	u_char OMgrStat, status;
+#endif
+
+	scbp = (struct sp *)
+		PKT2CMD(pktp)->cmd_private;
+
+#if ADP_DEBUG
+	if (adp_debug & DPKT) {
+		OMgrStat = 0xff;
+		cmn_err(CE_WARN, "adp_pollret: scbp %x pktp %x \n",
+			scbp, pktp);
+	}
+#endif
+
+	i = 50;
+
+	while (i > 0) {
+
+		for (j = 0; j < 1000; j++)
+			drv_usecwait(10);
+
+#ifdef ADP_DEBUG
+		status = PH_IntHandler(adp_blkp);
+
+		if (adp_debug & DPKT && OMgrStat != scbp->SP_MgrStat)
+			cmn_err(CE_WARN,
+			"pollret:[%x] PH_IntHandler stat %x Mgr stat %x",
+				i, status, scbp->SP_MgrStat);
+			OMgrStat = scbp->SP_MgrStat;
+#else
+		(void) PH_IntHandler(adp_blkp);
+
+#endif
+		if (scbp == adp_blkp->ab_scbp) {
+			poll_done = TRUE;
+			adp_blkp->ab_scbp =
+				(struct sp *)0;
+			break;
+		}
+
+/*		a non-poll packet has finished scsi phases	*/
+		if (adp_blkp->ab_pkts_done > pkts_done) {
+			pkts_done = adp_blkp->ab_pkts_done;
+			continue;
+		}
+
+		i--;
+	}
+
+	if (poll_done == TRUE)
+		adp_chkstatus(pktp, scbp);
+	else {
+		(void) PH_Special(ABORT_SCB, adp_blkp, scbp);
+		pktp->pkt_reason   = CMD_INCOMPLETE;
+		scbp->SP_SegCnt = 0;
+		scbp->SP_SegPtr = 0;
+/*
+		for (i = 0; i < sizeof (scbp->_RsvdX); i++) {
+			scbp->_RsvdX[i] = 0;
+		}
+*/
+#ifdef ADP_DEBUG
+		if (adp_debug & DPKT)
+			cmn_err(CE_WARN, "pollret timeout pkt %x scb %x",
+			pktp, scbp);
+#endif
+	}
+
+#ifdef ADP_DEBUG
+	if (adp_retscb(adp_blkp, scbp) != scbp)
+		cmn_err(CE_WARN, "adp_pollret: retscb fail");
+	adp_blkp->ab_pkts_out--;
+#endif
+
+}
+
+/*ARGSUSED*/
+static void
+adp_chkstatus(register struct scsi_pkt *pktp,
+		register struct sp *scbp)
+{
+	struct	scsi_arq_status *arqp;
+
+	ASSERT(scbp->SP_HaStat < ADP_UNKNOWN_ERROR);
+
+	pktp->pkt_state  = 0;
+	*pktp->pkt_scbp  = scbp->SP_TargStat;
+	pktp->pkt_reason   = adp_errs[scbp->SP_HaStat];
+
+
+#ifdef ADP_DEBUG
+	if (adp_debug & DPKT)
+		cmn_err(CE_WARN, "cmd %x t %x l %x tstat %x reason %x",
+		(*(pktp->pkt_cdbp)),
+		((scbp->SP_Tarlun >> 4) & 0xF), scbp->SP_Tarlun & LUN,
+		scbp->SP_TargStat,
+		pktp->pkt_reason);
+#endif
+
+	if (pktp->pkt_reason == CMD_CMPLT &&
+		scbp->SP_TargStat == UNIT_GOOD) {
+
+		pktp->pkt_resid = 0;
+		pktp->pkt_state =
+			(STATE_XFERRED_DATA|STATE_GOT_BUS|
+			STATE_GOT_TARGET|STATE_SENT_CMD|STATE_GOT_STATUS);
+		scbp->SP_SegCnt = 0;
+		scbp->SP_SegPtr = 0;
+		return;
+	}
+
+	if (scbp->SP_TargStat == STATUS_CHECK &&
+		scbp->SP_AutoSense) {
+
+		if (scbp->SP_HaStat != HOST_SNS_FAIL) {
+			pktp->pkt_reason   = CMD_CMPLT;
+			pktp->pkt_state  |=
+			(STATE_GOT_BUS|STATE_GOT_TARGET|STATE_SENT_CMD|
+			STATE_GOT_STATUS|STATE_ARQ_DONE);
+
+			arqp = (struct scsi_arq_status *)pktp->pkt_scbp;
+			arqp->sts_rqpkt_reason = CMD_CMPLT;
+/*			XXX need valid data here			*/
+			arqp->sts_rqpkt_resid  =  0;
+			arqp->sts_rqpkt_state |= STATE_XFERRED_DATA;
+
+		} else {
+/*			pkt_reason has been set to CMD_TRAN_ERR		*/
+			cmn_err(CE_WARN,
+				"adp_chkstatus: auto request sense fail");
+		}
+	}
+
+
+	switch (scbp->SP_HaStat) {
+
+		case  HOST_DU_DO:
+#ifdef ADP_DEBUG
+			adp_trace();
+			if (scbp->SP_ResCnt == 0) {
+				if (adp_debug & DSTUS)
+					cmn_err(CE_WARN, "overrun");
+			} else {
+#else
+			if (scbp->SP_ResCnt != 0) {
+
+#endif
+/*				underrun per Frits of scsi-steer	*/
+				pktp->pkt_reason   = CMD_CMPLT;
+				pktp->pkt_resid  = scbp->SP_ResCnt;
+#ifdef ADP_DEBUG
+				if (adp_debug & DSTUS)
+					cmn_err(CE_WARN, "underrun: resid %x",
+						pktp->pkt_resid);
+#endif
+			}
+
+			pktp->pkt_state =
+			(STATE_XFERRED_DATA|STATE_GOT_BUS|
+			STATE_GOT_TARGET|STATE_SENT_CMD|STATE_GOT_STATUS);
+			break;
+
+		case  HOST_SEL_TO:
+			pktp->pkt_statistics |= STAT_TIMEOUT;
+			pktp->pkt_state |= STATE_GOT_BUS;
+#ifdef ADP_DEBUG
+			if (adp_debug & DSTUS)
+				cmn_err(CE_WARN, "adp: selection timeout");
+#endif
+			break;
+
+		case  HOST_ABT_HA:
+		case  HOST_ABT_HOST:
+#ifdef ADP_DEBUG
+			if (adp_debug & DSTUS)
+				cmn_err(CE_WARN, "adp: cmd aborted");
+#endif
+
+			pktp->pkt_statistics |= STAT_ABORTED;
+			break;
+
+		case  HOST_RST_HA:
+		case  HOST_RST_OTHER:
+#ifdef ADP_DEBUG
+			if (adp_debug & DSTUS)
+				cmn_err(CE_WARN, "adp: bus reset");
+#endif
+			pktp->pkt_statistics |= STAT_DEV_RESET;
+			break;
+
+		default:
+			break;
+	}
+
+/*	restore the cdb in case it was re-used by him code on error	*/
+	bcopy((char *)scbp->Sp_CDB_save, (char *)pktp->pkt_cdbp, MAX_CDB_LEN);
+
+/*	restore scb as well						*/
+	scbp->SP_CDBLen = scbp->Sp_CDBLen_save;
+	bcopy((char *)&scbp->Sp_control_save, (char *)&scbp->Sp_control, 4);
+	scbp->SP_SegCnt = scbp->Sp_SegCnt_save;
+	scbp->SP_SegPtr = scbp->Sp_SegPtr_save;
+}
+
+/* Autovector Interrupt Entry Point */
+/* Dummy return to be used before mutexes has been initialized		*/
+/* guard against interrupts from drivers sharing the same irq line	*/
+/*ARGSUSED*/
+static u_int
+adp_dummy_intr(caddr_t arg)
+{
+	return (DDI_INTR_UNCLAIMED);
+}
+
+static u_int
+adp_intr(caddr_t arg)
+{
+	struct cfp *adp_blkp;
+	unsigned char status;
+
+	adp_blkp = ADP_BLKP(arg);
+
+	mutex_enter(&adp_blkp->ab_mutex);
+	status = PH_IntHandler(adp_blkp);
+	mutex_exit(&adp_blkp->ab_mutex);
+
+	if (status & 0x70) {
+		return (DDI_INTR_CLAIMED);
+	} else {
+		return (DDI_INTR_UNCLAIMED);
+	}
+}
+
+/*
+ * This function is called from PH_IntHandler HIM layer for a completed
+ *  command. The controller mutex is held.
+ */
+void
+PH_ScbCompleted(register struct sp *scbp)
+{
+	register struct cfp *adp_blkp = scbp->SP_ConfigPtr;
+	register struct scsi_pkt *pkt = CMD2PKT(scbp->Sp_cmdp);
+
+/*	Permits isolated scbs to be sent to HIM code (see adp_reset)	*/
+	if (pkt == (struct scsi_pkt *)0) {
+		return;
+	}
+
+/* 	just save the pointer to the polled scb that completed 		*/
+	if (pkt->pkt_flags & FLAG_NOINTR) {
+
+#ifdef ADP_DEBUG
+		if (adp_debug &DPKT)
+			cmn_err(CE_WARN, "Complete scb %x pkt %x", scbp,
+				pkt);
+#endif
+		ASSERT(adp_blkp->ab_scbp == (struct sp *)0);
+		adp_blkp->ab_scbp = scbp;
+
+/*		adp_pollret will handle all details			*/
+		return;
+	}
+
+/*
+ *	adp_pollret holds the adp_blk mutex, so we should not run the
+ *	callback here because adp_pollret cannot give up the mutex.
+ *	stack up non polled completions and maintain a counter
+ */
+
+	if (adp_blkp->ab_flag & ADP_POLLING) {
+		adp_blkp->ab_pkts_done++;
+		adp_savepkt(adp_blkp, scbp);
+		if (!(adp_blkp->ab_flag & ADP_POLL_TRIGGER_ON)) {
+			ddi_trigger_softintr(adp_blkp->ab_softid);
+			adp_blkp->ab_flag |= ADP_POLL_TRIGGER_ON;
+		}
+		return;
+	}
+
+#ifdef ADP_DEBUG
+	if (adp_retscb(adp_blkp, scbp) != scbp)
+		cmn_err(CE_WARN, "adp_run_callbacks: retscb fail");
+	adp_blkp->ab_pkts_out--;
+#endif
+
+	mutex_exit(&adp_blkp->ab_mutex);
+	adp_chkstatus(pkt, scbp);
+	(*pkt->pkt_comp)(pkt);
+	mutex_enter(&adp_blkp->ab_mutex);
+}
+
+#ifdef OLD_PCI
+static int
+adp_xlate_vec(struct cfp *adp_blkp)
+{
+	register int vec = adp_blkp->Cf_IrqChannel;
+	int	 intrspec[3];
+
+	if (vec < 3 || vec > 15) {
+#ifdef ADP_DEBUG
+		if (adp_debug & DINIT)
+		cmn_err(CE_WARN, "adp_xlate_irq: bad IRQ %d", vec);
+#endif
+		return (-1);
+	}
+
+	/* create an interrupt spec using default interrupt priority level */
+	intrspec[0] = 2;
+	intrspec[1] = 5;
+	intrspec[2] = vec; /* set irq */
+
+	if (ddi_ctlops(adp_blkp->ab_dip, adp_blkp->ab_dip,
+		DDI_CTLOPS_XLATE_INTRS,
+		(caddr_t)intrspec, ddi_get_parent_data(adp_blkp->ab_dip))
+		!= DDI_SUCCESS) {
+#ifdef ADP_DEBUG
+		if (adp_debug & DINIT)
+		cmn_err(CE_WARN, "adp_xlate_vec: interrupt create failed");
+#endif
+		return (-1);
+	}
+
+	return (0);
+}
+#endif
+
+#ifdef ADP_DEBUG
+
+void
+adp_dump_block(struct cfp *adp_blkp)
+{
+	struct sp *s;
+	int i;
+
+	PRF("id %x dip 0x%x ioaddr %x IRQ %d int_idx %d conf flg %x",
+		adp_blkp->CFP_AdapterId & 0xffff, adp_blkp->ab_dip,
+		adp_blkp->CFP_BaseAddress, adp_blkp->Cf_IrqChannel,
+		adp_blkp->ab_intr_idx, adp_blkp->CFP_ConfigFlags & 0xff);
+
+	PRF(" dma %x scbp %x last scb %x him_data %x child %d flg %x\n",
+		adp_blkp->Cf_DmaChannel, adp_blkp->ab_scbp,
+		adp_blkp->ab_last_scbp, adp_blkp->CFP_HaDataPtr,
+		adp_blkp->ab_child, adp_blkp->ab_flag);
+
+	PRF("ab_scbp_que %x pkts_out %d pkts_done %d\n",
+		adp_blkp->ab_scbp_que,
+		adp_blkp->ab_pkts_out,
+		adp_blkp->ab_pkts_done);
+	PRF("scb head %x ", adp_blkp->ab_scboutp);
+	s = adp_blkp->ab_scboutp;
+	i = 0;
+	while (s) {
+		PRF(" %x ", s);
+		s = s->Sp_forw;
+		if (adp_blkp->ab_scboutp == s)
+			break;
+		i++;
+		if (i > 8)
+			break;
+	}
+	PRF("\nSCSI options ");
+	for (i = 0; i < adp_blkp->Cf_MaxTargets; i++) {
+		PRF(" %x ", adp_blkp->Cf_ScsiOption[i]);
+	}
+}
+
+char *_HBA_status[] = {
+	"No adapter status available",		/* 0x00 */
+	"HBA Unknown Status",			/* 0x01 */
+	"HBA Unknown Status",			/* 0x02 */
+	"HBA Unknown Status",			/* 0x03 */
+	"Command aborted by host",		/* 0x04 */
+	"HBA Unknown Status",			/* 0x05 */
+	"HBA Unknown Status",			/* 0x06 */
+	"HBA Unknown Status",			/* 0x07 */
+	"HBA Unknown Status",			/* 0x08 */
+	"HBA Unknown Status",			/* 0x09 */
+	"HBA Unknown Status",			/* 0x0a */
+	"HBA Unknown Status",			/* 0x0b */
+	"HBA Unknown Status",			/* 0x0c */
+	"HBA Unknown Status",			/* 0x0d */
+	"HBA Unknown Status",			/* 0x0e */
+	"HBA Unknown Status",			/* 0x0f */
+	"HBA Unknown Status",			/* 0x10 */
+	"Selection timeout",			/* 0x11 */
+	"Data overrun or underrun error",	/* 0x12 */
+	"Unexpected bus free",			/* 0x13 */
+	"Target bus phase sequence error",	/* 0x14 */
+	"HBA Unknown Status",			/* 0x15 */
+	"HBA Unknown Status",			/* 0x16 */
+	"Invalid SCSI linking operation",	/* 0x17 */
+	"HBA Unknown Status",			/* 0x18 */
+	"HBA Unknown Status",			/* 0x19 */
+	"HBA Unknown Status",			/* 0x1a */
+	"Auto request sense failed",		/* 0x1b */
+	"Tagged Queuing rejected by target",	/* 0x1c */
+	"HBA Unknown Status",			/* 0x1d */
+	"HBA Unknown Status",			/* 0x1e */
+	"HBA Unknown Status",			/* 0x1f */
+	"Host adpater hardware error",		/* 0x20 */
+	"Target did'nt respond to ATN (RESET)",	/* 0x21 */
+	"SCSI bus reset by host adapter",	/* 0x22 */
+	"SCSI bus reset by other device",	/* 0x23 */
+	"HBA Unknown Status",			/* 0x24 */
+	"HBA Unknown Status",			/* 0x25 */
+	"HBA Unknown Status",			/* 0x26 */
+	"HBA Unknown Status",			/* 0x27 */
+	"HBA Unknown Status",			/* 0x28 */
+	"HBA Unknown Status",			/* 0x29 */
+	"HBA Unknown Status",			/* 0x2a */
+	"HBA Unknown Status",			/* 0x2b */
+	"HBA Unknown Status",			/* 0x2c */
+	"HBA Unknown Status",			/* 0x2d */
+	"HBA Unknown Status",			/* 0x2e */
+	"HBA Unknown Status",			/* 0x2f */
+	"No Available Index"			/* 0x30 */
+};
+
+void
+adp_dump_scb(struct sp *scbp)
+{
+	int i;
+
+	PRF("Cmd %x targ %d lun %d Channel %d addr adp_scsi_cmd %x\n",
+		scbp->SP_Cmd & 0xff,
+	    ((scbp->SP_Tarlun >> 4) & 0xF), scbp->SP_Tarlun & LUN,
+	    scbp->SP_Tarlun & CHANNEL, scbp->Sp_cmdp);
+
+	if (scbp->SP_AutoSense)
+		PRF("Auto Request Sense Enabled\n");
+	else
+		PRF("No Auto Request Sense\n");
+
+	if (scbp->SP_NoUnderrun)
+		PRF("Data Underrun, not considered as error\n");
+	else
+		PRF("Data Underrun, considered as error\n");
+
+	if (scbp->SP_DisEnable)
+		PRF("Allow target disconnection\n");
+	else
+		PRF("No target disconnection\n");
+
+	if (scbp->SP_TagEnable)
+		PRF("Tagged Queuing supported\n");
+	else
+		PRF("No tagged Queuing\n");
+
+	PRF("SegCnt %x SegPtr %x CDBLen %x\n", scbp->SP_SegCnt,
+		scbp->SP_SegPtr, scbp->SP_CDBLen);
+
+	PRF("Status of  %x ResCnt %x\n", scbp->SP_Stat,
+		scbp->SP_ResCnt);
+
+	PRF("CDB: ");
+	for (i = 0; i < scbp->SP_CDBLen; i++) {
+		PRF("%x ", scbp->Sp_CDB[i] & 0xff);
+	}
+	PRF("\nSensePtr %x SenseLen %x\n", scbp->Sp_SensePtr,
+		scbp->Sp_SenseLen);
+
+	i = scbp->SP_HaStat & 0xff;
+	if ((i < 0) || (i > HOST_NOAVL_INDEX))
+		i = 0x24;
+	PRF("i 0x%x HBA Status %s\n", i, _HBA_status[i]);
+
+	PRF("Target Status %x Sp_forw %x Sp_back %x\n",
+		scbp->SP_TargStat, scbp->Sp_forw, scbp->Sp_back);
+}
+
+static void
+adp_trace()
+{
+}
+#endif
+
+/* The following functions need to be supplied for HIM */
+
+
+/*ARGSUSED*/
+ushort
+Ph_CalcStandardSize(ushort number_scbs)
+{
+	return (0);
+}
+
+/*ARGSUSED*/
+void
+Ph_SetStandardHaData(cfp_struct  *cfp)
+{
+	ASSERT(cfp != (cfp_struct *)0);
+}
+
+/*ARGSUSED*/
+void
+Ph_GetStandardConfig(cfp_struct  *cfp)
+{
+	ASSERT(cfp != (cfp_struct *)0);
+}
+
+/*ARGSUSED*/
+void
+Ph_StandardLoadFuncPtrs(cfp_struct  *cfp)
+{
+	ASSERT(cfp != (cfp_struct *)0);
+}
+
+/*ARGSUSED*/
+ulong
+PH_ReadConfigOSM(cfp_struct *cfp, u_char bus, u_char dev, u_char reg)
+{
+	ddi_acc_handle_t	cfg_handle;
+	ulong ret;
+
+	ASSERT(cfp->ab_dip);
+	if (pci_config_setup(cfp->ab_dip, &cfg_handle) != DDI_SUCCESS) {
+		pci_config_teardown(&cfg_handle);
+		return (NO_CONFIG_OSM);
+	}
+
+	ret = pci_config_getl(cfg_handle, (ulong) reg);
+	pci_config_teardown(&cfg_handle);
+
+	return (ret);
+}
+
+/*ARGSUSED*/
+ulong
+PH_WriteConfigOSM(cfp_struct *cfp, u_char bus, u_char dev, u_char reg,
+	ulong val)
+{
+	ddi_acc_handle_t	cfg_handle;
+
+	ASSERT(cfp->ab_dip);
+	if (pci_config_setup(cfp->ab_dip, &cfg_handle) != DDI_SUCCESS) {
+		pci_config_teardown(&cfg_handle);
+		return (NO_CONFIG_OSM);
+	}
+
+	pci_config_putl(cfg_handle, (ulong) reg, val);
+	pci_config_teardown(&cfg_handle);
+
+	return (val);
+}
+
+ulong
+PH_GetNumOfBusesOSM()
+{
+	return (NO_CONFIG_OSM);
+}

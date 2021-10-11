@@ -1,0 +1,43 @@
+---- The Auto-layout Feature (Initial Option) ------
+
+The auto-layout feature takes the file systems 
+you've requested and allocates all the disk space 
+to them.
+
+    NOTE: If disk space is tight, auto-layout may 
+    create file systems you did not request.  When 
+    disk space is tight, auto-layout has to break up
+    some of the file systems that you requested into
+    smaller file systems to fit the available disk 
+    space.
+
+    For example:
+
+    
+    Disks:       A - 95 Mbytes 
+                 B - 95 Mbytes
+    =======================================
+    File systems:
+                 /     12 Mbytes
+                 /usr  88 Mbytes
+                 /swap 88 Mbytes
+
+    Auto-layout cannot put any combination of the 
+    file systems shown on disk A or B without
+    exceeding the available space. To accommodate
+    the above problem, auto-layout would create
+    additional file systems and reduce the Mbytes
+    of some of the original file systems. 
+
+    Using the above example:
+
+    Disk A - 95 Mbytes
+    ==================
+    /        12 Mbytes
+    /usr     81 Mbytes
+  
+
+    Disk B - 95 Mbytes
+    ======================
+    /usr/openwin  7 Mbytes
+    /swap        88 Mbytes

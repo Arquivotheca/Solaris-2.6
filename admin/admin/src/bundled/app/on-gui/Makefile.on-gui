@@ -1,0 +1,46 @@
+#
+#ident	"@(#)Makefile.on-gui 1.3 94/10/19 SMI"
+#
+# Copyright (c) 1992 by Sun Microsystems, Inc.
+#
+#	on-gui/Makefile.on-gui prototype with NSE compatibility in mind.
+#	Definitions common to command source.
+#
+# include global definitions; SRC should be defined in the shell.
+include $(SRC)/Makefile.master
+
+FILEMODE=	0755
+#LIBFILEMODE=	0444
+ROOTBIN=	$(ROOT)/usr/bin
+ROOTLIB=	$(ROOT)/usr/lib
+ROOTSBIN=	$(ROOT)/sbin
+ROOTUSRSBIN=	$(ROOT)/usr/sbin
+ROOTETC=	$(ROOT)/etc
+
+# storing LDLIBS in two macros allows reordering of options
+# LDFLAGS += -s
+
+ROOTPROG=	$(PROG:%=$(ROOTBIN)/%)
+ROOTSHFILES=	$(SHFILES:%=$(ROOTBIN)/%)
+ROOTLIBPROG=	$(PROG:%=$(ROOTLIB)/%)
+ROOTSBINPROG=	$(PROG:%=$(ROOTSBIN)/%)
+ROOTUSRSBINPROG=$(PROG:%=$(ROOTUSRSBIN)/%)
+ROOTETCPROG=	$(PROG:%=$(ROOTETC)/%)
+
+$(ROOTBIN)/%: %
+	$(INS.file)
+
+$(ROOTLIB)/%: %
+	$(INS.file)
+
+$(ROOTSBIN)/%: %
+	$(INS.file)
+
+$(ROOTUSRSBIN)/%: %
+	$(INS.file)
+
+$(ROOTETC):
+	$(INS.dir)
+
+$(ROOTETC)/%: %
+	$(INS.file)

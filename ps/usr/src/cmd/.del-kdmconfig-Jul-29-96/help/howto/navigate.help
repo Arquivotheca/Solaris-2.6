@@ -1,0 +1,110 @@
+
+---- Function and ESC keys ------------------------------------------
+
+     The default keys for navigation are function keys.  However, if
+     your keyboard does not have functions keys, or you are running 
+     across a TIP line, you must use ESC key sequences.
+
+     > To activate ESC keys for navigation, press the ESC key once; 
+       when you exit Help and return to main screens, you'll see the 
+       legend at the bottom shows the ESC keys to use for navigation
+
+     > To change the navigation legend on the main screen back to
+       show function keys, press the ESC key once, then press the
+       letter "f" key once.
+
+     > To use ESC key navigation (for example, ESC-2), press the ESC
+       key once, then press the number key.
+
+
+---- Return and Enter ---------------------------------------------
+
+     > Use Return or Enter to mark options in menus
+
+
+
+---- Summary of navigation ----------------------------------------
+ 
+     > Main Screens
+
+       ESC       ............. activate/show ESC key legend
+       ESC-f     ............. activate/show Function key legend
+       F2, ESC-2 ............. continue to next screen
+       F4, ESC-4 ............. change information entered
+       F6, ESC-6 ............. access help
+       Control-N, down arrow . move down in menu
+       Control-P, up arrow ... move up in menu
+       Control-H ............. back space in field
+       Control-U ............. back space in field
+       Back Space key ........ back space in field
+       Arrow keys ............ highlight option in menu
+       Return  ........ ...... mark option in menu
+       
+
+     > Help Screens
+        
+       F2, ESC-2 = go to (option selected)
+       F3, ESC-3 = go to Help Subjects or Help Main Index
+       F5, ESC-5 = exit help
+
+     > To use Control key navigation (for example, Control-U), hold
+       down the Control key and simultaneously press the letter key.
+
+     > To use ESC key navigation (for example, ESC-2), hold down the 
+       ESC key and simultaneously press the number key.
+  
+
+---- Text fields ----------------------------------------------------
+
+     > To enter information, start typing at the cursor
+
+     > To validate and commit data, press Return 
+
+     > To move from field-to-field use:
+
+       Up arrow or Control-P
+       Down arrow or Control-N    
+
+     > To erase a current value, use one of the following:
+
+       Back Space key
+       Control-H
+       Control-U
+
+
+---- Menus -----------------------------------------------------------
+
+     > To highlight an item you want to select, use the arrow keys
+
+     > To select an item [X], press Return
+         
+     > To deselect an item [ ], use the arrow keys to move to 
+       another field and press Return
+
+
+---- Screens ---------------------------------------------------------
+
+     > To change information on confirmation screens, choose F4 or 
+       ESC-4
+
+     > To access Help, choose F6 or ESC-6
+
+     > To exit the Solaris installation program, choose F5 or ESC-5
+
+     > To advance to the next screen, choose F2 or ESC-2
+
+     > To get back to a confirmation screen you've already passed, 
+       press the F2 key to continue to that screen. 
+
+
+---- Help Screens ----------------------------------------------------
+  
+     > To exit help and return to the screen you left, choose F5 or
+       ESC-5
+
+     > To select a help subject, use the arrow keys to highlight the 
+       option, and press Return to mark it [X]
+
+     > To go to the subject you've selected, choose F2 or ESC-2
+
+     > To go to the Help Main Index, choose F3 or ESC-3

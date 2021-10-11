@@ -1,0 +1,12 @@
+Helper*Background:				grey85
+Helper*Foreground:				black
+*AdminHelp*Background:				grey85
+*AdminHelp*Foreground:				black
+*AdminHelp*fontList:				-*-medium-r-*--14-*:
+*AdminHelp*rowcolumn*fontList:			-*-bold-r-*--14-*:
+*AdminHelp*rowcol*fontList:			-*-bold-r-*--14-*:
+*AdminHelp*helptext.Background:			grey85
+*AdminHelp*helptext.rows:			15
+*AdminHelp*helptext.columns:			52
+*AdminHelp*helpsubjs.visibleItemCount:		4
+*AdminHelp*helpsubjs.Background:		grey85

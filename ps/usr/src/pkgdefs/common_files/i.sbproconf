@@ -1,0 +1,183 @@
+#!/bin/sh
+#
+#ident  "@(#)i.sbproconf 1.5 96/10/07 SMI"
+#
+# Copyright (c) 1996 by Sun Microsystems, Inc.
+# All Rights Reserved.
+#
+PATH="/usr/bin:/usr/sbin:${PATH}"
+export PATH
+log=/dev/null
+
+upd_17_110() {
+	d="$1"
+	cp $d /tmp/sbconf.$$
+	sed -e '/^#ident/c\
+#ident	"@(#)sbpro.conf	1.11	96/06/07 SMI"
+	    ' -e '/^# the SoundBlaster 16./a\
+#\
+# This driver may also support certain "Sound Blaster compatible" devices,\
+# certain devices based on the Analog Devices AD184x chip, the Crystal\
+# Semiconductors CS4231 chip, and/or certain "Microsoft Windows Sound System\
+# (MWSS) compatible" devices.  For a current list of cards and motherboards\
+# known to work with this driver, consult the latest version of the "x86\
+# Device Configuration Guide," and/or the "x86 Driver Update Guide."
+	    ' -e '/^#     are 2, 5, 7, and 10.  Do not use the obsolete/a\
+#\
+#     See also the comments near the end of this file for MWSS IRQ settings.
+	    ' < /tmp/sbconf.$$ > $d
+	cat << //EOF >> $d
+
+
+##########  Entries for AD184x and compatible devices  ##########
+#
+# FOR A LIST OF SUPPORTED CARDS known to work with this driver,
+# consult the latest version of the "x86 Device Configuration Guide,"
+# and/or the "x86 Driver Update Guide."  The Guide will contain more
+# specific information about the settings for each type of card or
+# motherboard.
+#
+# Any CS4231-based devices supported by this driver are programmed in
+# AD1848 compatibility mode.  There is no special support for the more
+# advanced CS4231 features in this driver.
+#
+# The appropriate entry below must be modified to match your device's
+# configuration, and uncommented.  Edit the line containing the I/O
+# address of your card so that it reflects the IRQ and DMA setting you
+# want to use.
+#
+# If your device has a "Microsoft Windows Sound System" compatibility
+# register, the IRQ and DMA will be programmed from the entries below.
+# The "type" property must be specified as "MWSS_AD184x".
+#
+# If your device has jumpers to select IRQ and/or DMA, or you have set
+# them using a setup utility, your entry below must match that setting.
+# The "type" property must be specified as "AD184x".
+#
+# Notes on "interrupts" property:
+#     MWSS-compatibility allows the use of IRQ 7, 9, 10, or 11.
+#
+#     It is ESSENTIAL that you ensure that the IRQ you select does not
+#     conflict with the IRQ of any other device in the system.  An IRQ
+#     conflict may cause your system to hang when the driver attaches.
+#     If this happens, reboot your system without the "-r" option and
+#     change the IRQ to a non-conflicting value.
+#
+# Notes on "dma-channels" property:
+#     The sbpro support for the AD184x uses one DMA channel for both
+#     play and record; simultaneous play/record is not supported in
+#     this driver.  Entries should specify one DMA channel, which may
+#     be 0, 1, or 3.
+
+# WARNING:  READ AND UNDERSTAND the above comments before uncommenting
+#           or modifying the entries below.
+
+# name="sbpro" class="sysbus" type="MWSS_AD184x"
+#     reg=-1,25,0,1,0x530,8 interrupts=5,9 dma-channels=3;
+
+# name="sbpro" class="sysbus" type="MWSS_AD184x"
+#     reg=-1,26,0,1,0x604,8 interrupts=5,10 dma-channels=0;
+
+# name="sbpro" class="sysbus" type="MWSS_AD184x"
+#     reg=-1,27,0,1,0xe80,8 interrupts=5,7 dma-channels=1;
+
+# name="sbpro" class="sysbus" type="MWSS_AD184x"
+#     reg=-1,28,0,1,0xf40,8 interrupts=5,11 dma-channels=0;
+//EOF
+}
+
+add_ignore() {
+	# Add an 'ignore-hardware-nodes' line if one is not present
+	grep 'ignore-hardware-nodes' $1 > /dev/null
+	if [ $? -ne 0 ] ; then
+		cat >> $1 <<EOT
+
+# This is an old-style, non-conformant, driver.conf file.
+# This file is not meant to be modified in the field.
+ignore-hardware-nodes=1;
+
+EOT
+	fi
+}
+
+while read src dest
+do
+	if [ ! -f $dest ] ; then
+		cp $src $dest
+		echo "no existing sbpro.conf file -- new one installed" > $log
+		add_ignore $dest
+		continue
+	fi
+
+	grep 'Entries for AD184x and compatible devices' \
+	    $dest > $log 2>&1
+	if [ $? = 0 ] ; then
+		echo "new sbpro.conf file already installed" > $log
+		add_ignore $dest
+		continue
+	fi
+
+	grep 'Notes on "dma-channels" property for SB16 cards:' \
+	    $dest > $log 2>&1
+	if [ $? = 0 ] ; then
+		echo "intermediate sbpro.conf file was installed" > $log
+		upd_17_110 $dest
+		add_ignore $dest
+		continue
+	fi
+
+	# Find the (single) active entry in an old sbpro.conf file
+	grep -v '^[ 	]*#' $dest | grep -v '^[ 	]*$' > /tmp/sbconf.$$
+
+	# SBPRO entries for varying legal DMA channels
+	grep 'dmachan=1[^,]' /tmp/sbconf.$$ > $log 2>&1
+	if [ $? = 0 ] ; then
+		cp $src $dest
+		echo "found a PRO entry with dmachan=1, copied new" > $log
+		add_ignore $dest
+		continue
+	fi
+	grep 'dmachan=3[^,]' /tmp/sbconf.$$ > $log 2>&1
+	if [ $? = 0 ] ; then
+		sed -e '/type="SBPRO"/s/dma-channels=1/dma-channels=3/' \
+		   < $src > $dest
+		echo "found a PRO entry with dmachan=3, edited new" > $log
+		add_ignore $dest
+		continue
+	fi
+	grep 'dmachan=0[^,]' /tmp/sbconf.$$ > $log 2>&1
+	if [ $? = 0 ] ; then
+		sed -e '/type="SBPRO"/s/dma-channels=1/dma-channels=0/' \
+		   < $src > $dest
+		echo "found a PRO entry with dmachan=0, edited new" > $log
+		add_ignore $dest
+		continue
+	fi
+
+	# Check for legal SB16 entry
+	grep 'dmachan=[013],[567]' /tmp/sbconf.$$ > $log 2>&1
+	if [ $? != 0 ] ; then
+		echo "# Could not integrate illegal entry from previous sbpro.conf file:" > $dest
+		sed -e 's/^/# /' < /tmp/sbconf.$$ >> $dest
+		echo "# See notes below for legal DMA values" >> $dest
+		echo "" >> $dest
+		echo "" >> $dest
+		cat $src >> $dest
+		echo "No existing legal SBPRO or SB16 entry; copied new" > $log
+		add_ignore $dest
+		continue
+	fi
+
+	DMA=`grep 'dmachan=[013],[567]' /tmp/sbconf.$$ \
+		| sed -e 's/.*dmachan=\(.,.\).*/\1/'`
+	INT=`grep interrupts /tmp/sbconf.$$ \
+		| sed -e 's/.*interrupts=.,\(.\).*/\1/'`
+	sed -e "/interrupts=5,${INT}.*type=.SB16./s/;/ dma-channels=${DMA};/"\
+	   < $src > $dest
+	echo "found an SB16 entry, edited new" > $log
+	add_ignore $dest
+	continue
+done
+
+rm -f /tmp/sbconf.$$
+exit 0

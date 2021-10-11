@@ -1,0 +1,207 @@
+Module: pfgUseDisks
+{
+      autoCuil = false;
+      nodesUsed = usedisks_dialog;
+      copy = false;
+      inCreateMenu = true;
+      release = "TeleUSE v3.0.2 / Solaris 2.4";
+      lastWritten = "Fri May 10 07:29:06 1996";
+        {
+          usedisks_dialog = twolistWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 170;
+            vip_y = 30;
+              {
+                panelhelpText = XmText;
+              }
+              {
+                form = XmForm;
+                Group: Widget
+                  marginWidth = 20;
+                  fractionBase = 9;
+                  rubberPositioning = False;
+                  resizePolicy = resize_any;
+                    {
+                      availableLabel = XmLabel;
+                    }
+                    {
+                      availableScrolledList = XmScrolledList;
+                      Group: Constraint
+                        bottomAttachment = attach_widget;
+                        bottomWidget = rowColumn1;
+                    }
+                    {
+                      totalAvailableLabel = XmLabel;
+                      Group: Widget
+                        alignment = alignment_end;
+                      Group: Constraint
+                        leftAttachment = attach_none;
+                        rightAttachment = attach_widget;
+                        topAttachment = attach_none;
+                        bottomAttachment = attach_opposite_widget;
+                        resizable = true;
+                        bottomWidget = totalAvailableValue;
+                        rightWidget = totalAvailableValue;
+                    }
+                    {
+                      totalAvailableValue = XmLabel;
+                      Group: Widget
+                        alignment = alignment_end;
+                      Group: Constraint
+                        leftAttachment = attach_none;
+                        rightAttachment = attach_position;
+                        rightPosition = 4;
+                        topAttachment = attach_widget;
+                        topWidget = buttonForm;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                    }
+                    {
+                      buttonForm = XmRowColumn;
+                      Group: Constraint
+                        bottomAttachment = attach_widget;
+                        bottomWidget = rowColumn1;
+                          {
+                            addButton = XmPushButton;
+                            Group: Widget
+                              width = 50;
+                          }
+                          {
+                            removeButton = XmPushButton;
+                            Group: Widget
+                              width = 50;
+                          }
+                          {
+                            autoAddButton = XmPushButton;
+                            Group: Widget
+                              sensitive = False;
+                              width = 50;
+                          }
+                          {
+                            removeAllButton = XmPushButton;
+                            Group: Widget
+                              sensitive = False;
+                              width = 50;
+                          }
+                          {
+                            solarButton = XmPushButton;
+                            Group: Widget
+                              sensitive = False;
+                              width = 50;
+                          }
+                    }
+                    {
+                      selectedLabel = XmLabel;
+                    }
+                    {
+                      selectedScrolledList = XmScrolledList;
+                    }
+                    {
+                      rowColumn = XmRowColumn;
+                      Group: Widget
+                        entryAlignment = alignment_end;
+                      Group: Constraint
+                        bottomAttachment = attach_opposite_widget;
+                        rightAttachment = attach_widget;
+                        rightWidget = rowColumn1;
+                        topAttachment = attach_opposite_widget;
+                        topWidget = rowColumn1;
+                        bottomWidget = rowColumn1;
+                          {
+                            recommendLabel = XmLabel;
+                          }
+                          {
+                            minimumLabel = XmLabel;
+                          }
+                          {
+                            useTotalLabel = XmLabel;
+                          }
+                    }
+                    {
+                      rowColumn1 = XmRowColumn;
+                      Group: Widget
+                        entryAlignment = alignment_end;
+                      Group: Constraint
+                        bottomAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        rightOffset = 20;
+                          {
+                            recommendValue = XmLabel;
+                          }
+                          {
+                            minimumValue = XmLabel;
+                          }
+                          {
+                            useTotalValue = XmLabel;
+                          }
+                    }
+                    {
+                      boot_device_form = boot_device_form : pfgUseDisks;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_none;
+                        topAttachment = attach_widget;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                        topWidget = totalAvailableValue;
+                    }
+              }
+              {
+                messageBox = XmMessageBox;
+                    {
+                      continueButton = XmPushButton;
+                    }
+                    {
+                      gobackButton = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: disksGobackCB";
+                    }
+                    {
+                      exitButton = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgExit";
+                    }
+                    {
+                      helpButton = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"spotseldisk.r\")";
+                    }
+                    {
+                      button5 = XmPushButton;
+                    }
+              }
+        }
+        {
+          boot_device_form = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+          Group: Control
+            vip_x = 55;
+            vip_y = 30;
+              {
+                boot_label = XmLabel;
+                Group: Widget
+                  alignment = alignment_beginning;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_none;
+                  resizable = true;
+              }
+              {
+                changeButton = XmPushButton;
+                Group: Widget
+                  activateCallback = "C:changeBootCB";
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_widget;
+                  topWidget = boot_label;
+                  bottomAttachment = attach_none;
+                  resizable = true;
+              }
+        }
+}
+

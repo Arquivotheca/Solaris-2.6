@@ -1,0 +1,137 @@
+---- About This Screen ------------------------------
+
+This screen is where you can edit a disk. The Free
+field will change as you edit the size of a slice.
+     
+    NOTE: The software will not allow you to generate
+    negative free space.
+
+---- Editable Fields --------------------------------
+
+The editable are on this screen are:
+
+- Mount point
+- Size (MB)
+
+---- Entry Field ------------------------------------
+    
+Entry displays your entry for the mount point.
+
+---- Recommended Field ------------------------------
+
+Recommended is the recommended value for the current
+file system which includes all subsidiary file 
+systems and approximately 15% extra free space beyond
+what is needed to install the Solaris software.
+
+---- Minimum Field ----------------------------------
+
+Minimum is the value for the current file system 
+which includes all subsidiary file systems without 
+the 15% extra free space used in the Recommended 
+value. A file system should be no smaller than the 
+Minimum or a space warning is displayed.
+
+---- File Systems With Recommended and 
+     Minimum Sizes ----------------------------------
+  
+When you highlight the following file systems, you 
+will see a Recommended and Minimum value:
+
+     /(root)
+     /opt
+     /usr 
+     /usr/openwin
+     /var
+     swap
+
+---- Creating Swap Space ---------------------------
+ 
+If you manually layout your file systems, you should
+create a swap file system, especially for systems
+with only 16 Mbytes of memory. The following table
+lists the recommended sizes for swap space based on
+a system's physical memory.
+ 
+Physical Memory (Mbytes)    Swap Size (Mbytes)
+-----------------------     ------------------
+16 - 64                     32
+64 - 128                    64
+128 - 512                   128
+Greater than 512            256
+ 
+    NOTE: Auto-layout automatically creates swap
+    space with the recommended sizes shown
+    above.
+ 
+You may need more or less swap space based on the
+applications that the system will run.
+  
+---- Slices -----------------------------------------
+
+There are eight slices on a disk, numbered 0-7. 
+A slice is a physical subset of the disk, except
+slice 2, which by convention, represents the entire
+disk.  
+
+    NOTE: Under SunOS 4.1.x, a slice was known as a 
+    partition.
+
+x86 systems have two extra slices that consume disk
+space: the boot slice, and the Alternate sector 
+slice. These slices are required and cannot be 
+edited.
+
+---- Specifying Overlapping Slices ------------------
+
+> To create an overlapping slice, enter the keyword
+  'overlap' in the mount point field. With this 
+  mount point, the slice can overlap any other 
+  slice(s). 
+
+> To edit starting cylinders, and to view ending 
+  cylinders, press F4; change the disk editor options
+  accordingly.  
+ 
+    NOTE: The software will not allow you to generate
+    negative free space.
+ 
+---- Solaris Partition Size Field (x86 Only) --------
+
+The size of the Solaris fdisk partition will be
+larger than the Capacity because of the OS overhead.
+
+---- OS Overhead (x86 Only) Field -------------------
+
+This value accounts for the boot and alternate 
+sector slices.
+
+---- [Usable] Capacity Field ------------------------
+
+This is the size of the disk you're editing that
+you can actually work with as you size file systems.
+
+---- Rounding Error Field ---------------------------
+
+This value reflects the loss in megabytes due to
+rounding down numbers. It is always a positive 
+number.
+   
+---- Allocated Field --------------------------------
+
+This field shows the amount of disk space you have
+currently configured.
+
+---- Free Field -------------------------------------
+
+This field shows how much disk space is left to
+allocate. It will change as you edit slices, but
+will not go below 0.  
+
+---- Navigation -------------------------------------
+
+- To move between fields, use arrow keys (up, down, 
+  right, left) or Tab key
+ 
+- To erase contents of a field, use Delete key or
+  Back Space, or spacebar	

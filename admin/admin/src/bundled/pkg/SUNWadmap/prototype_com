@@ -1,0 +1,163 @@
+#
+#	@(#)prototype_com 1.16 95/12/20
+#
+# This required package information file contains a list of package contents.
+# The 'pkgmk' command uses this file to identify the contents of a package
+# and their location on the development machine when building the package.
+# Can be created via a text editor or through use of the 'pkgproto' command.
+
+#!search
+#!default 0711 root bin
+
+# packaging files
+i pkginfo
+i copyright
+i depend
+#
+# source locations relative to the prototype file
+#
+# SUNWadmap
+#
+d none usr 0775 root sys
+d none usr/bin 0775 root bin
+f none usr/bin/admintool 4511 root sys
+d none usr/sbin 0775 root bin
+s none usr/sbin/swmtool=../bin/admintool
+f none usr/sbin/sys-unconfig 0755 bin bin
+f none usr/sbin/sysidconfig 0711 root sys
+f none usr/sbin/sysidlib 0755 root sys
+f none usr/sbin/sysidnet 0711 root sys
+f none usr/sbin/sysidnis 0711 root sys
+f none usr/sbin/sysidroot 0711 root sys
+f none usr/sbin/sysidsys 0711 root sys
+f none usr/sbin/sysidtty 0755 root sys
+f none usr/sbin/sysiduilib 0755 root sys
+f none usr/sbin/bpgetfile 0555 bin bin
+d none usr/snadm 0755 root bin
+d none usr/snadm/classes 0755 bin bin
+d none usr/snadm/classes/locale 0755 bin bin
+d none usr/snadm/classes/locale/C 0755 bin bin
+d none usr/snadm/classes/locale/C/LC_MESSAGES 0755 bin bin
+d none usr/snadm/etc 0755 bin bin
+f none usr/snadm/etc/admintool.xpm 0644 bin bin
+d none usr/openwin 0775 root bin
+d none usr/openwin/lib 0775 root bin
+d none usr/openwin/lib/locale 0775 root bin
+d none usr/openwin/lib/locale/C 0775 root bin
+d none usr/openwin/lib/locale/C/app-defaults 0775 root bin
+f none usr/openwin/lib/locale/C/app-defaults/Admin 0664 bin bin
+d none usr/snadm/classes/locale/C/help 0755 bin bin
+d none usr/snadm/classes/locale/C/help/sysidtty.help 0755 bin bin
+d none usr/snadm/classes/locale/C/help/sysidtty.help/howto 0755 bin bin
+f none usr/snadm/classes/locale/C/help/sysidtty.help/howto/Howto 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/howto/navigate.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/howto/sysid.help 0644 root sys
+d none usr/snadm/classes/locale/C/help/sysidtty.help/reference 0755 bin bin
+f none usr/snadm/classes/locale/C/help/sysidtty.help/reference/Reference 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/reference/glossary.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/reference/navigate.help 0644 root sys
+d none usr/snadm/classes/locale/C/help/sysidtty.help/topics 0755 bin bin
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/Topics 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/confirm.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/date.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/domain.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/hostname.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/ipaddr.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/location.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/name_service.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/navigate.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/netif.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/netmask.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/nsserver.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/standalone.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/subnet.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/sysid.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidtty.help/topics/timezone.help 0644 root sys
+d none usr/snadm/classes/locale/C/help/sysidxm.help 0755 bin bin
+d none usr/snadm/classes/locale/C/help/sysidxm.help/howto 0755 bin bin
+f none usr/snadm/classes/locale/C/help/sysidxm.help/howto/Howto 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/howto/navigate.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/howto/sysid.help 0644 root sys
+d none usr/snadm/classes/locale/C/help/sysidxm.help/reference 0755 bin bin
+f none usr/snadm/classes/locale/C/help/sysidxm.help/reference/Reference 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/reference/glossary.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/reference/navigate.help 0644 root sys
+d none usr/snadm/classes/locale/C/help/sysidxm.help/topics 0755 bin bin
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/Topics 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/confirm.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/date.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/domain.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/hostname.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/ipaddr.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/location.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/name_service.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/navigate.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/netif.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/netmask.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/nsserver.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/standalone.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/subnet.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/sysid.help 0644 root sys
+f none usr/snadm/classes/locale/C/help/sysidxm.help/topics/timezone.help 0644 root sys
+d none usr/snadm/classes/locale/C/help/admintool 0755 bin bin
+s none usr/snadm/classes/locale/C/help/swmtool=./admintool
+d none usr/snadm/classes/locale/C/help/admintool/howto 0755 bin bin
+f none usr/snadm/classes/locale/C/help/admintool/howto/Howto 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/howto/group_add.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/howto/group_del.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/howto/group_mod.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/howto/group_14.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/howto/user_add.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/howto/user_del.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/howto/user_mod.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/howto/host_add.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/howto/host_del.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/howto/host_mod.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/howto/print_add.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/howto/print_del.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/howto/print_mod.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/howto/serial_mod.h.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/howto/software_add.h.hlp 0644 root sys
+d none usr/snadm/classes/locale/C/help/admintool/reference 0755 bin bin
+f none usr/snadm/classes/locale/C/help/admintool/reference/Reference 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/glossary.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/group_window.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/hosts_window.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/printer_remote_window.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/printer_window.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/serial_window.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/software_custom_window.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/software_window.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/user_window.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/window_glossary.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/key_shortcuts.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/existing_files.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/existing_partial_install.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/existing_pkgs.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/incorrect_run_level.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/install_depend_unmet.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/install_setuid_files.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/insufficient_space.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/interactive.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/mail_receipt.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/removal_depend_unmet.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/run_setuid_scripts.r.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/reference/show_copyrights.r.hlp 0644 root sys
+d none usr/snadm/classes/locale/C/help/admintool/topics 0755 bin bin
+f none usr/snadm/classes/locale/C/help/admintool/topics/Topics 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/group.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/group_unix.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/group_14.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/user.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/user_account.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/user_passwd_opts.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/user_passwd_setting.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/host.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/host_IP.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/printer.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/serial.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/software.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/media.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/admintool.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/athelp.t.hlp 0644 root sys
+f none usr/snadm/classes/locale/C/help/admintool/topics/pkg_admin.t.hlp 0644 root sys

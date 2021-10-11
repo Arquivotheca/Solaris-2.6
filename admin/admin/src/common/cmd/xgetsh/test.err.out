@@ -1,0 +1,18 @@
+Missing matching quote:
+echo `gettext SUNW_BLOT_BLOB "Trailing double \"`
+
+Missing matching quote:
+echo `gettext SUNW_BLOT_BLOB 'Traling double in single \"`
+
+Missing matching quote:
+echo `gettext SUNW_BLOT_BLOB "Traling quoted \"test\"`
+
+Missing matching quote:
+echo `gettext SUNW_BLOT_BLOB "Traling quoted \"test\"`
+
+Missing matching quote:
+echo `gettext SUNW_BLOT_BLOB "Trailing double \"`
+
+Missing matching quote:
+echo `gettext SUNW_BLOT_BLOB 'Traling double in single \"`
+

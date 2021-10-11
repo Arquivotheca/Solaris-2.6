@@ -1,0 +1,36 @@
+
+class="win" name="intergraph"
+        __wclass__="XSCREEN"
+
+        ddxHandler="ddxSUNWintergraph.so.1" ddxInitFunc="SUNWintergraphInit"
+        ;
+
+class="win" name="intergraph"
+        __wclass__="XSCREENCONFIG"
+        __category__="display"
+	__xinside__="TRUE"
+        __title__="prototype intergraph entry"
+
+        device="intergraph"
+
+	res="var,__resolution__"
+	__resolution__="string,1024x768,800x600,640x480"
+
+        defdepth="var,__depth__"
+        __depth__="string,8,24"
+
+        size="var,__size__"
+        __size__="string,15-inch,17-inch,19-inch"
+        __dimx__="string,12,13.5,15"
+        __dimy__="string,9.5,11,12"
+
+
+        position="var,__position__"
+        __position__="string,left,right,top,bottom"
+	
+        pmifile="/usr/openwin/share/etc/devdata/svpmi/intergraph/win1000-1.xqa"
+	monitor="mfreq/mfreq48.vda"
+        dpix="string,90"
+        dpiy="string,90"
+        ;
+

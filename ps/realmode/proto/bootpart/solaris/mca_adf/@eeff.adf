@@ -1,0 +1,53 @@
+
+AdapterId 0EEFFh
+
+AdapterName  "IBM Dual Async Adapter"
+
+NumBytes 1
+
+Begin Device 6 0 0
+NamedItem
+	Prompt "Connector 1"
+      choice "SERIAL 1"  pos[0]=XXXX000Xb  io 03f8h-03ffh  int 4
+      choice "SERIAL 2"  pos[0]=XXXX001Xb  io 02f8h-02ffh  int 3
+      choice "SERIAL 3"  pos[0]=XXXX010Xb  io 3220h-3227h  int 3
+      choice "SERIAL 4"  pos[0]=XXXX011Xb  io 3228h-322fh  int 3
+      choice "SERIAL 5"  pos[0]=XXXX100Xb  io 4220h-4227h  int 3
+      choice "SERIAL 6"  pos[0]=XXXX101Xb  io 4228h-422fh  int 3
+      choice "SERIAL 7"  pos[0]=XXXX110Xb  io 5220h-5227h  int 3
+      choice "SERIAL 8"  pos[0]=XXXX111Xb  io 5228h-522fh  int 3
+   Help
+"The IBM Dual Async Adapter can be set as Serial 1 through 8.
+If you are in the 'Change Configuration' window, you can change
+the setting.  Use F5 and F6 to scroll through the choices.
+If a setting conflicts with another, an asterisk (*) appears next to
+the conflicts.	You must fix conflicts before you use the adapter.
+Use the Up and Down arrow keys to move from field to field.
+(If you are not in the 'Change Configuration' window and you need
+to change the setting, return to the 'Set Configuration' window then
+select 'Change configuration'.)"
+
+End
+Begin Device 6 0 0
+NamedItem
+	Prompt "Connector 2"
+      choice "SERIAL 1"  pos[0]=1000XXXXb  io 03f8h-03ffh  int 4
+      choice "SERIAL 2"  pos[0]=1001XXXXb  io 02f8h-02ffh  int 3
+      choice "SERIAL 3"  pos[0]=1010XXXXb  io 3220h-3227h  int 3
+      choice "SERIAL 4"  pos[0]=1011XXXXb  io 3228h-322fh  int 3
+      choice "SERIAL 5"  pos[0]=1100XXXXb  io 4220h-4227h  int 3
+      choice "SERIAL 6"  pos[0]=1101XXXXb  io 4228h-422fh  int 3
+      choice "SERIAL 7"  pos[0]=1110XXXXb  io 5220h-5227h  int 3
+      choice "SERIAL 8"  pos[0]=1111XXXXb  io 5228h-522fh  int 3
+   Help
+"The IBM Dual Async Adapter can be set as Serial 1 through 8.
+If you are in the 'Change Configuration' window, you can change
+the setting.  Use F5 and F6 to scroll through the choices.
+If a setting conflicts with another, an asterisk (*) appears next to
+the conflicts.	You must fix conflicts before you use the adapter.
+Use the Up and Down arrow keys to move from field to field.
+(If you are not in the 'Change Configuration' window and you need
+to change the setting, return to the 'Set Configuration' window then
+select 'Change configuration'.)"
+End
+

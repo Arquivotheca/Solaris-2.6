@@ -1,0 +1,23 @@
+---- Admintool:Package Administration: Run setuid/
+setgid Scripts -------------------------------------
+
+Run setuid/setgid Scripts
+    Determines if action scripts provided by package
+    developers contain possible security impact. 
+    Options are: 
+
+    Ask		Installer will be prompted for
+		instructions when setuid/setgid
+		scripts can be enabled after
+		installation.
+
+    Yes		Ignore security impact of action
+		scripts.
+
+    Abort	Abort installation if action scripts
+		may have a negative security impact.
+
+See the "Topics" help for more information about
+using Admintool:Package Administration to set
+preferences during installation.
+

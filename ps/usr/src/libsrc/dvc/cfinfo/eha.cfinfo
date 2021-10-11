@@ -1,0 +1,8 @@
+name="eha"
+	__title__="Adaptec 174x SCSI host adaptor"
+	__category__="scsi"
+
+	class="sysbus"
+
+	__auto__="string,true"
+	;

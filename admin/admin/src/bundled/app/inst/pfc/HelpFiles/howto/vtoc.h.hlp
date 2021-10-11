@@ -1,0 +1,27 @@
+---- To access a disk's layout --------------------------------
+
+     You can use a disk's current file system layout by
+     loading its Volume Table of Contents (VTOC) label.
+     Loading the VTOC label will overwrite the current
+     layout on the Customize Disk: screen, with the disk's 
+     own file systems and slices.
+
+     To load a disk's existing file system layout:
+
+     1. Go to the File System and Disk Layout screen and
+        press F4 to customize.
+
+     2. Select a disk to customize on the Customize Disk:
+        screen and press F4 for options.
+
+     3. Select 'Load existing slices from VTOC label' from
+        the menu and press F2.
+
+     NOTE: If you decide to edit the file system layout from
+     the VTOC, you will probably want to turn on the option,
+     'Show cylinder boundaries' from F4_Options.
+          
+
+     
+
+

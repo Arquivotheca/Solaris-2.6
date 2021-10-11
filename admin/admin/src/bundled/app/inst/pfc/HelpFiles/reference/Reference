@@ -1,0 +1,32 @@
+Allocate Client Services Screen
+	allocate.r.hlp
+Customize Disks Screen
+	spotcustdisk.r.hlp
+Customize Software Screen
+	spotsoft_cust.r.hlp
+Disk Editor Properties Screen
+	spotdiskprops.r.hlp
+File System Modifications Summary Screen
+	filechanges.r.hlp
+Glossary
+	glossary.r.hlp
+Mount Remote File System Screen
+	mount.r.hlp
+Preserve Data Screen
+	spotpreserve.r.hlp
+Select Auto-layout Constraints Screen
+	constraints.r.hlp
+Select Boot Disk
+	bootdisk.r.hlp
+Select Disks
+	selectdisk.r.hlp
+Select Disk to Customize Screen
+	spotseldisk.r.hlp
+Select Media for Backup Screen
+	selectmedia.r.hlp
+Select Root Location
+	bootdev.r.hlp
+Select Version to Upgrade Screen
+	version.r.hlp
+Server's Exportable File Systems Screen
+	spotserverexp.r.hlp

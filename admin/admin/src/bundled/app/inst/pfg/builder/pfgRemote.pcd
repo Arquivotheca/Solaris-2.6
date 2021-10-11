@@ -1,0 +1,198 @@
+Module: pfgRemote
+{
+      autoCuil = false;
+      nodesUsed = remote_dialog;
+      copy = false;
+      inCreateMenu = true;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Fri Dec 16 07:38:28 1994";
+        {
+          remote_dialog = formWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 45;
+            vip_y = 30;
+              {
+                :Inherited panelhelpText = XmText;
+                Group: Widget
+                  managed = False;
+              }
+              {
+                :Inherited form = XmForm;
+                Group: Widget
+                  marginWidth = 20;
+                  marginHeight = 10;
+                Group: Constraint
+                  topAttachment = attach_form;
+                    {
+                      serverLabelText = labelText : pfgGUITemplates;
+                      Group: Constraint
+                        topAttachment = attach_form;
+                        leftAttachment = attach_form;
+                          {
+                            :Inherited serverLabel : label = XmLabel;
+                            Group: Constraint
+                              rightWidget = serverText;
+                              bottomWidget = serverText;
+                              topWidget = serverText;
+                          }
+                          {
+                            :Inherited serverText : textField = XmTextField;
+                            Group: Widget
+                              activateCallback = "C: remoteServerCB";
+                          }
+                    }
+                    {
+                      ipLabelText = labelText : pfgGUITemplates;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = serverLabelText;
+                        rightAttachment = attach_opposite_widget;
+                        rightWidget = serverLabelText;
+                          {
+                            :Inherited ipLabel : label = XmLabel;
+                            Group: Constraint
+                              rightWidget = ipText;
+                              bottomWidget = ipText;
+                              topWidget = ipText;
+                          }
+                          {
+                            :Inherited ipText : textField = XmTextField;
+                          }
+                    }
+                    {
+                      filesysLabelText = labelText : pfgGUITemplates;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = ipLabelText;
+                        rightAttachment = attach_opposite_widget;
+                        rightWidget = ipLabelText;
+                          {
+                            :Inherited filesysLabel : label = XmLabel;
+                            Group: Constraint
+                              rightWidget = filesysText;
+                              bottomWidget = filesysText;
+                              topWidget = filesysText;
+                          }
+                          {
+                            :Inherited filesysText : textField = XmTextField;
+                          }
+                    }
+                    {
+                      remoteList = XmScrolledList;
+                      Group: Widget
+                        scrollBarDisplayPolicy = static;
+                        listSizePolicy = constant;
+                        visibleItemCount = 5;
+                        browseSelectionCallback = "C: remoteRemlistCB";
+                      Group: Constraint
+                        topAttachment = attach_widget;
+                        topWidget = filesysLabelText;
+                        rightAttachment = attach_opposite_widget;
+                        rightWidget = filesysLabelText;
+                        rightOffset = "-16";
+                        bottomAttachment = attach_widget;
+                        bottomWidget = mountPointLabelText;
+                    }
+                    {
+                      mountPointLabelText = labelText : pfgGUITemplates;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        bottomAttachment = attach_form;
+                        rightAttachment = attach_opposite_widget;
+                        rightWidget = filesysLabelText;
+                          {
+                            :Inherited mountPointLabel : label = XmLabel;
+                            Group: Constraint
+                              rightWidget = mountPointText;
+                              bottomWidget = mountPointText;
+                              topWidget = mountPointText;
+                          }
+                          {
+                            :Inherited mountPointText : textField = XmTextField;
+                          }
+                    }
+                    {
+                      buttonRowColumn = XmRowColumn;
+                      Group: Widget
+                        entryAlignment = alignment_center;
+                        spacing = 10;
+                      Group: Constraint
+                        topAttachment = attach_opposite_widget;
+                        leftAttachment = attach_widget;
+                        leftWidget = remoteList;
+                        topWidget = filesysLabelText;
+                        leftOffset = 10;
+                          {
+                            addButton = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C: remoteAddCB";
+                          }
+                          {
+                            removeButton = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C: remoteRemoveCB";
+                          }
+                          {
+                            testButton = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C: remoteTestCB";
+                          }
+                    }
+                    {
+                      remoteLabel = XmLabel;
+                      Group: Constraint
+                        rightAttachment = attach_form;
+                        topAttachment = attach_form;
+                        rightOffset = 50;
+                    }
+                    {
+                      summaryList = XmScrolledList;
+                      Group: Widget
+                        visibleItemCount = 15;
+                        listSizePolicy = constant;
+                        scrollBarDisplayPolicy = static;
+                      Group: Constraint
+                        rightAttachment = attach_form;
+                        bottomAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = remoteLabel;
+                        leftAttachment = attach_widget;
+                        leftWidget = buttonRowColumn;
+                        leftOffset = 20;
+                    }
+              }
+              {
+                :Inherited messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = continueButton;
+                    {
+                      :Inherited continueButton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: remoteContinueCB";
+                    }
+                    {
+                      :Inherited cancelButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: remoteCancelCB";
+                    }
+                    {
+                      :Inherited helpButton : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"mount.r\")";
+                    }
+                    {
+                      :Inherited button4 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      :Inherited button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+}
+

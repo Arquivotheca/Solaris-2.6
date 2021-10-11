@@ -1,0 +1,14 @@
+class="win" name="LOGI-S"
+	__wclass__="XINPUT"
+	__category__="pointer"
+	__title__="Logitech C-7 or C-5 serial mouse"
+
+	ddxHandler="ddxSUNWx86mouse.so.1"
+	ddxInitFunc="ddxSUNWmouseProc"
+
+	buttons="var,__nbuttons__"
+	__nbuttons__="string,3,2"
+	strmod="vuidm5p"
+
+	dev="string,/dev/tty00"
+	;

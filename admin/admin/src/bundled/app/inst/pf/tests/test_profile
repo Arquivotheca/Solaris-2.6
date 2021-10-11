@@ -1,0 +1,7 @@
+install_type initial_install
+cluster SUNWCreq add
+filesys any auto /
+filesys any auto /var
+filesys any auto /opt
+filesys any auto /usr
+filesys any auto /usr/openwin

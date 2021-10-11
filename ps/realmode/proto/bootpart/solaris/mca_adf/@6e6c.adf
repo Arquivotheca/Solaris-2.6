@@ -1,0 +1,47 @@
+
+AdapterId	06e6ch
+
+AdapterName	"ACPA/A"
+
+NumBytes	1
+
+NamedItem	Prompt	"Address Selection"
+
+choice	"FDC0-FDC7"	pos[0]=xxxxx001b	io 0fdc0h-0fdc7h
+choice	"FDC8-FDCF"	pos[0]=xxxxx011b	io 0fdc8h-0fdcfh
+choice	"FDD0-FDD7"	pos[0]=xxxxx101b	io 0fdd0h-0fdd7h
+choice	"FDD8-FDDF"	pos[0]=xxxxx111b	io 0fdd8h-0fddfh
+choice	"Disable"	pos[0]=xxxxxxx0b
+
+Help
+"The base address of the ACPA/A can be at one of 4 different
+locations. Choose a location which does not conflict with any
+other installed board.  'Disable' will cause the ACPA/A to 
+not be available.  This assignment need only be changed if it
+is in conflict with another board.  Conflicting assignments
+are marked with an asterisk.  Use the F5=Previous and the 
+F6=Next keys to change address selection when you are in the
+'Change configuration' window."
+
+
+NamedItem	Prompt	"Interrupt Selection"
+
+choice	"Interrupt 3"	pos[0]=xx000xxxb	int 3
+choice	"Interrupt 4"	pos[0]=xx001xxxb	int 4
+choice	"Interrupt 5"	pos[0]=xx010xxxb	int 5
+choice	"Interrupt 6"	pos[0]=xx011xxxb	int 6
+choice	"Interrupt 9"	pos[0]=xx100xxxb	int 9
+choice	"Interrupt 10"	pos[0]=xx101xxxb	int 10
+choice	"Interrupt 11"	pos[0]=xx110xxxb	int 11
+choice	"Interrupt 12"	pos[0]=xx111xxxb	int 12
+			
+Help
+"The interupt select chooses which interrupt level the ACPA/A
+will use for interrupts.  Minimize the amount of interrupt
+sharing by assigning other installed boards to different levels.
+Conflicting assignments are marked with an asterisk.  Use the
+F5=Previous and the F6=Next keys to change the interrupt level
+selection if you are in the 'Change configuration' window."
+
+
+

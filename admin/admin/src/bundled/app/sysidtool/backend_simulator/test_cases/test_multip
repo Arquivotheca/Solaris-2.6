@@ -1,0 +1,61 @@
+
+machine {
+	name = foo;
+	domainname = bar.com;
+	rootpass = "2a2abcde";
+	interfaces { 
+	{ le, 0, 129.152.221.1, 255.255.255.0, 129.152.221.255, 0 }
+	{ le, 1, 129.152.222.2,	255.255.0.0, 129.152.222.255, 
+		<up, running, broadcast> }
+	}
+	sysidtool {
+		configured = 1;
+		bootparamed = 0;
+		networked = 1;
+		autobound = 1;
+		subnetted = 0;
+		rootpass = 1;
+		termtype = sun;
+	}
+}
+nameservice {
+	domainname = fun.com;
+	type = nisplus;
+	server = broadcast;
+	map {
+		name = hosts;
+		{ foo, 129.152.221.1 }
+		{ bar, 129.152.221.2 }
+	}
+	map {
+		name = netmask;
+		{ 129.152.0.0, 255.255.255.0, "foo bar" }
+	}
+	map {
+		name = timezone;
+		{ foo, US/Mountain }
+	}
+}
+nameservice {
+	domainname = bar.com;
+	type = nis;
+	server = rmtc;
+	serverip = 129.152.221.1;
+	map {
+		name = locale;
+		{ foo, German }
+	}
+	map {
+		name = bootparams;
+		{ bar, root=install-1:/disk2,install=install-1:/disk2 }
+	}
+	map {
+		name = ether;
+		{ foo, 1:2:3:4:5:6 }
+		{ bar, 7:8:9:10:11:12 }
+	}
+	map {
+		name = password;
+		{ epg, "a2d./7", 5954, 11, "Ed Gronke", /home/epg, /bin/csh }
+	}
+}

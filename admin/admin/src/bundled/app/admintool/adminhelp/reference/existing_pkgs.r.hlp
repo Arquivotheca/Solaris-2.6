@@ -1,0 +1,39 @@
+---- Admintool:Package Administration: Existing
+Packages -------------------------------------------
+
+Existing Packages
+    Determines how to handle installation if a
+    previous version of the package (including a
+    partially installed instance) already
+    exists. Options are:   
+
+    Ask		Installer will be prompted for
+		instructions when existing packages
+		are found. 
+
+    Overwrite	Overwrite an existing package, if
+		only one instance exists. If there
+		is more than one instance, but only
+		one has the same architecture, it
+		overwrites that instance. Otherwise,
+		the installer is prompted with
+		existing instances and asked which
+		to overwrite.
+
+    Install Unique
+		Do not overwrite an existing
+		instance of a package. Instead, a
+		new instance of the package is
+		created. The new instance will be
+		assigned the next available instance
+		identifier. 
+
+     Abort	Exit without installing if an
+		instance of the package already
+		exists (does not overwrite existing
+		packages).
+
+See the "Topics" help for more information about
+using Admintool:Package Administration to set
+preferences during installation.
+

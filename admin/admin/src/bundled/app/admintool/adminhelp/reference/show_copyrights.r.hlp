@@ -1,0 +1,17 @@
+---- Admintool:Package Administration: Show
+Copyrights -----------------------------------------
+
+Show Copyrights
+    Displays copyright information associated with a
+    package during installation. Options are:
+
+    Yes	Show copyright information during
+	installation.
+
+    No	Do not show copyright information during
+	installation. 
+
+See the "Topics" help for more information about
+using Admintool:Package Administration to set
+preferences during installation.
+

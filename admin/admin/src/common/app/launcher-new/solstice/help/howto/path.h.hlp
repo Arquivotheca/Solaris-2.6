@@ -1,0 +1,18 @@
+---- How to Use the File Selection Window -----
+
+1. Use the Filter text box to specify a path
+   name using a regular expressions, such as the
+   wildcard character (*). When a new value is
+   entered, the Directories and File lists are
+   updated appropriately.
+
+2. Select a filename from the Files list to 
+   update the Open File text box.
+
+3. Click on OK to place the Open File text box
+   value into the field from which the File
+   Selection window was invoked.
+
+   The application filename is displayed in
+   the Application Path text box in the Add
+   Application window.

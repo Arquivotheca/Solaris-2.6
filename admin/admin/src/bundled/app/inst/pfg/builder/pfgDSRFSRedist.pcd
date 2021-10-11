@@ -1,0 +1,844 @@
+Module: pfgDSRFSRedistribute
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.2 / Solaris 2.4";
+      lastWritten = "Wed Jul 17 16:35:49 1996";
+      copy = false;
+      inCreateMenu = true;
+      nodesUsed = "dsr_fsredist_dialog,\ndsr_fsredist_entry,\ndsr_fsredist_filter_dialog,\ndsr_fsredist_collapse_dialog,\ndsr_fsredist_collapse_entry";
+        {
+          dsr_fsredist_dialog = formWindow : pfgGUITemplates;
+          Group: Widget
+            initialFocus = continueButton;
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+          Group: Control
+            vip_x = 85;
+            vip_y = 30;
+              {
+                panelhelpText = XmText;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_none;
+                  resizable = true;
+              }
+              {
+                fsredistForm : form = XmForm;
+                Group: Widget
+                  rubberPositioning = False;
+                  resizePolicy = resize_any;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_widget;
+                  topOffset = 0;
+                  bottomAttachment = attach_widget;
+                  resizable = true;
+                  topWidget = panelhelpText;
+                  leftOffset = 0;
+                  rightOffset = 0;
+                  bottomWidget = messageBox;
+                    {
+                      entrySizeForm = XmForm;
+                      Group: Widget
+                        rubberPositioning = False;
+                        resizePolicy = resize_any;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        topAttachment = attach_form;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                        leftOffset = 10;
+                        rightOffset = 40;
+                          {
+                            activeSliceLabel = XmLabel;
+                            Group: Constraint
+                              leftAttachment = attach_form;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_none;
+                              resizable = true;
+                          }
+                          {
+                            activeSliceTextField = XmTextField;
+                            Group: Widget
+                              editable = False;
+                              cursorPositionVisible = False;
+                              traversalOn = False;
+                            Group: Constraint
+                              leftAttachment = attach_opposite_widget;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_widget;
+                              topWidget = activeSliceLabel;
+                              bottomAttachment = attach_form;
+                              resizable = true;
+                              leftWidget = activeSliceLabel;
+                          }
+                          {
+                            activeReqSizeLabel = XmLabel;
+                            Group: Constraint
+                              leftAttachment = attach_none;
+                              rightAttachment = attach_widget;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_none;
+                              resizable = true;
+                              rightWidget = activeCurrSizeLabel;
+                              rightOffset = 25;
+                          }
+                          {
+                            activeReqSizeTextField = XmTextField;
+                            Group: Widget
+                              editable = False;
+                              cursorPositionVisible = False;
+                              traversalOn = False;
+                            Group: Constraint
+                              leftAttachment = attach_none;
+                              rightAttachment = attach_opposite_widget;
+                              topAttachment = attach_widget;
+                              bottomAttachment = attach_form;
+                              resizable = true;
+                              topWidget = activeReqSizeLabel;
+                              rightWidget = activeReqSizeLabel;
+                          }
+                          {
+                            activeCurrSizeLabel = XmLabel;
+                            Group: Constraint
+                              leftAttachment = attach_none;
+                              rightAttachment = attach_form;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_none;
+                              resizable = true;
+                              rightOffset = 0;
+                          }
+                          {
+                            activeCurrSizeTextField = XmTextField;
+                            Group: Widget
+                              editable = False;
+                              cursorPositionVisible = False;
+                              traversalOn = False;
+                            Group: Constraint
+                              leftAttachment = attach_none;
+                              rightAttachment = attach_opposite_widget;
+                              topAttachment = attach_widget;
+                              bottomAttachment = attach_form;
+                              resizable = true;
+                              rightWidget = activeCurrSizeLabel;
+                              topWidget = activeCurrSizeLabel;
+                          }
+                    }
+                    {
+                      frame = XmFrame;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = entrySizeForm;
+                        bottomAttachment = attach_form;
+                        resizable = true;
+                        leftOffset = 10;
+                        rightOffset = 10;
+                        topOffset = 10;
+                          {
+                            frameForm = XmForm;
+                            Group: Widget
+                              rubberPositioning = False;
+                              resizePolicy = resize_any;
+                                {
+                                  slicesForm = XmForm;
+                                  Group: Widget
+                                    rubberPositioning = False;
+                                    resizePolicy = resize_any;
+                                  Group: Constraint
+                                    leftAttachment = attach_form;
+                                    rightAttachment = attach_form;
+                                    topAttachment = attach_form;
+                                    bottomAttachment = attach_widget;
+                                    resizable = true;
+                                    leftOffset = 10;
+                                    rightOffset = 10;
+                                    bottomWidget = infoForm;
+                                    bottomOffset = 10;
+                                      {
+                                        sliceLabelForm = XmForm;
+                                        Group: Widget
+                                          rubberPositioning = False;
+                                          resizePolicy = resize_any;
+                                        Group: Constraint
+                                          leftAttachment = attach_form;
+                                          rightAttachment = attach_form;
+                                          topAttachment = attach_form;
+                                          bottomAttachment = attach_none;
+                                          resizable = true;
+                                            {
+                                              fsColumnLabel = XmLabel;
+                                              Group: Constraint
+                                                leftAttachment = attach_form;
+                                                rightAttachment = attach_none;
+                                                topAttachment = attach_form;
+                                                bottomAttachment = attach_none;
+                                                resizable = true;
+                                            }
+                                            {
+                                              sliceColumnLabel = XmLabel;
+                                              Group: Constraint
+                                                leftAttachment = attach_widget;
+                                                leftWidget = fsColumnLabel;
+                                                rightAttachment = attach_none;
+                                                topAttachment = attach_form;
+                                                bottomAttachment = attach_none;
+                                                resizable = true;
+                                            }
+                                            {
+                                              vfstabColumnLabel = XmLabel;
+                                              Group: Widget
+                                                managed = False;
+                                              Group: Constraint
+                                                leftAttachment = attach_widget;
+                                                leftWidget = sliceColumnLabel;
+                                                rightAttachment = attach_none;
+                                                topAttachment = attach_form;
+                                                bottomAttachment = attach_none;
+                                                resizable = true;
+                                            }
+                                            {
+                                              currFreeSizeColumnLabel = XmLabel;
+                                              Group: Constraint
+                                                leftAttachment = attach_widget;
+                                                leftWidget = sliceColumnLabel;
+                                                rightAttachment = attach_none;
+                                                topAttachment = attach_form;
+                                                bottomAttachment = attach_none;
+                                                resizable = true;
+                                            }
+                                            {
+                                              spaceNeededColumnLabel = XmLabel;
+                                              Group: Constraint
+                                                leftAttachment = attach_widget;
+                                                leftWidget = currFreeSizeColumnLabel;
+                                                rightAttachment = attach_none;
+                                                topAttachment = attach_form;
+                                                bottomAttachment = attach_none;
+                                                resizable = true;
+                                            }
+                                            {
+                                              ALOptionsColumnLabel = XmLabel;
+                                              Group: Constraint
+                                                leftAttachment = attach_widget;
+                                                leftWidget = spaceNeededColumnLabel;
+                                                rightAttachment = attach_none;
+                                                topAttachment = attach_form;
+                                                bottomAttachment = attach_none;
+                                                resizable = true;
+                                            }
+                                            {
+                                              finalSizeColumnLabel = XmLabel;
+                                              Group: Constraint
+                                                leftAttachment = attach_widget;
+                                                leftWidget = ALOptionsColumnLabel;
+                                                rightAttachment = attach_none;
+                                                topAttachment = attach_form;
+                                                bottomAttachment = attach_none;
+                                                resizable = true;
+                                            }
+                                      }
+                                      {
+                                        slicesScrolledWindow = XmScrolledWindow;
+                                        Group: Widget
+                                          scrollingPolicy = automatic;
+                                        Group: Constraint
+                                          leftAttachment = attach_form;
+                                          rightAttachment = attach_form;
+                                          topAttachment = attach_widget;
+                                          topWidget = sliceLabelForm;
+                                          bottomAttachment = attach_form;
+                                          resizable = true;
+                                            {
+                                              slicesRowColumn = XmRowColumn;
+                                            }
+                                      }
+                                }
+                                {
+                                  infoForm = XmForm;
+                                  Group: Widget
+                                    rubberPositioning = False;
+                                    resizePolicy = resize_any;
+                                  Group: Constraint
+                                    leftAttachment = attach_form;
+                                    rightAttachment = attach_form;
+                                    topAttachment = attach_none;
+                                    bottomAttachment = attach_form;
+                                    resizable = true;
+                                    leftOffset = 10;
+                                    rightOffset = 30;
+                                    bottomOffset = 10;
+                                      {
+                                        moreButtonsForm = XmForm;
+                                        Group: Widget
+                                          rubberPositioning = False;
+                                          resizePolicy = resize_any;
+                                        Group: Constraint
+                                          leftAttachment = attach_form;
+                                          rightAttachment = attach_none;
+                                          topAttachment = attach_form;
+                                          bottomAttachment = attach_form;
+                                          resizable = true;
+                                            {
+                                              collapseButton = XmPushButton;
+                                              Group: Widget
+                                                activateCallback = "C:dsr_fsredist_collapse_cb";
+                                              Group: Constraint
+                                                leftAttachment = attach_form;
+                                                rightAttachment = attach_none;
+                                                topAttachment = attach_none;
+                                                bottomAttachment = attach_form;
+                                                resizable = true;
+                                            }
+                                            {
+                                              filterButton = XmPushButton;
+                                              Group: Widget
+                                                activateCallback = "C:dsr_fsredist_filter_button_cb";
+                                              Group: Constraint
+                                                leftAttachment = attach_widget;
+                                                rightAttachment = attach_none;
+                                                topAttachment = attach_opposite_widget;
+                                                bottomAttachment = attach_form;
+                                                resizable = true;
+                                                leftWidget = collapseButton;
+                                                topWidget = collapseButton;
+                                                leftOffset = 10;
+                                            }
+                                      }
+                                      {
+                                        totalsForm = XmForm;
+                                        Group: Widget
+                                          rubberPositioning = False;
+                                          resizePolicy = resize_any;
+                                        Group: Constraint
+                                          leftAttachment = attach_widget;
+                                          rightAttachment = attach_form;
+                                          topAttachment = attach_form;
+                                          bottomAttachment = attach_none;
+                                          resizable = true;
+                                          leftWidget = moreButtonsForm;
+                                            {
+                                              additionalSpaceLabel = XmLabel;
+                                              Group: Widget
+                                                alignment = alignment_end;
+                                              Group: Constraint
+                                                leftAttachment = attach_form;
+                                                rightAttachment = attach_widget;
+                                                topAttachment = attach_form;
+                                                bottomAttachment = attach_none;
+                                                resizable = true;
+                                                rightWidget = additionalSpaceValue;
+                                                rightOffset = 5;
+                                            }
+                                            {
+                                              allocatedSpaceLabel = XmLabel;
+                                              Group: Widget
+                                                alignment = alignment_end;
+                                              Group: Constraint
+                                                leftAttachment = attach_form;
+                                                rightAttachment = attach_opposite_widget;
+                                                topAttachment = attach_widget;
+                                                bottomAttachment = attach_form;
+                                                resizable = true;
+                                                rightWidget = additionalSpaceLabel;
+                                                topWidget = additionalSpaceLabel;
+                                                rightOffset = 0;
+                                            }
+                                            {
+                                              additionalSpaceValue = XmLabel;
+                                              Group: Widget
+                                                alignment = alignment_end;
+                                              Group: Constraint
+                                                leftAttachment = attach_none;
+                                                rightAttachment = attach_form;
+                                                topAttachment = attach_form;
+                                                bottomAttachment = attach_none;
+                                                resizable = true;
+                                            }
+                                            {
+                                              allocatedSpaceValue = XmLabel;
+                                              Group: Widget
+                                                alignment = alignment_end;
+                                              Group: Constraint
+                                                leftAttachment = attach_none;
+                                                rightAttachment = attach_form;
+                                                topAttachment = attach_widget;
+                                                topWidget = additionalSpaceValue;
+                                                bottomAttachment = attach_form;
+                                                resizable = true;
+                                            }
+                                      }
+                                }
+                          }
+                    }
+              }
+              {
+                messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = continueButton;
+                  minimizeButtons = True;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_none;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                Group: Control
+                  collapsed = False;
+                    {
+                      continueButton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:dsr_fsredist_continue_cb";
+                    }
+                    {
+                      gobackButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:dsr_fsredist_goback_cb";
+                    }
+                    {
+                      resetButton : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:dsr_fsredist_reset_cb";
+                    }
+                    {
+                      exitButton : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:pfgExit";
+                    }
+                    {
+                      helpButton : button5 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:pfgHelp(\"constraints.r\")";
+                    }
+              }
+        }
+        {
+          dsr_fsredist_entry = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+          Group: Control
+            vip_x = 85;
+            vip_y = 85;
+              {
+                frame = XmFrame;
+                    {
+                      form = XmForm;
+                      Group: Widget
+                        rubberPositioning = False;
+                        resizePolicy = resize_any;
+                          {
+                            fsValue = XmLabel;
+                            Group: Widget
+                              alignment = alignment_beginning;
+                            Group: Constraint
+                              leftAttachment = attach_form;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_none;
+                              resizable = true;
+                          }
+                          {
+                            sliceValue = XmLabel;
+                            Group: Constraint
+                              leftAttachment = attach_widget;
+                              leftWidget = fsValue;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_none;
+                              resizable = true;
+                          }
+                          {
+                            vfstabValue = XmLabel;
+                            Group: Widget
+                              managed = False;
+                            Group: Constraint
+                              leftAttachment = attach_widget;
+                              leftWidget = sliceValue;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_none;
+                              resizable = true;
+                          }
+                          {
+                            currFreeSizeValue = XmLabel;
+                            Group: Constraint
+                              leftAttachment = attach_widget;
+                              leftWidget = sliceValue;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_none;
+                              resizable = true;
+                          }
+                          {
+                            spaceNeededValue = XmLabel;
+                            Group: Constraint
+                              leftAttachment = attach_widget;
+                              leftWidget = currFreeSizeValue;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_none;
+                              resizable = true;
+                          }
+                          {
+                            ALOptionsMenu = XmOptionMenu;
+                            Group: Widget
+                              subMenuId = pulldownMenu;
+                            Group: Constraint
+                              leftAttachment = attach_widget;
+                              leftWidget = spaceNeededValue;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_none;
+                              resizable = true;
+                          }
+                          {
+                            finalSizeTextField = XmTextField;
+                            Group: Widget
+                              activateCallback = "C:dsr_fsredist_finalsize_cb";
+                            Group: Constraint
+                              leftAttachment = attach_widget;
+                              leftWidget = ALOptionsMenu;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_none;
+                              resizable = true;
+                          }
+                          Popups:
+                          {
+                            pulldownMenu = XmPulldownMenu;
+                            Group: Constraint
+                              leftAttachment = attach_none;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_none;
+                              bottomAttachment = attach_none;
+                              resizable = true;
+                                {
+                                  fixedButton = XmPushButton;
+                                  Group: Widget
+                                    activateCallback = "C:dsr_fsredist_option_cb";
+                                }
+                                {
+                                  moveButton = XmPushButton;
+                                  Group: Widget
+                                    activateCallback = "C:dsr_fsredist_option_cb";
+                                }
+                                {
+                                  changeButton = XmPushButton;
+                                  Group: Widget
+                                    activateCallback = "C:dsr_fsredist_option_cb";
+                                }
+                                {
+                                  availableButton = XmPushButton;
+                                  Group: Widget
+                                    activateCallback = "C:dsr_fsredist_option_cb";
+                                }
+                                {
+                                  collapseFSButton = XmPushButton;
+                                  Group: Widget
+                                    activateCallback = "C:dsr_fsredist_option_cb";
+                                }
+                          }
+                    }
+              }
+        }
+        {
+          dsr_fsredist_filter_dialog = formWindow : pfgGUITemplates;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+          Group: Control
+            vip_x = 85;
+            vip_y = 140;
+            collapsed = False;
+              {
+                panelhelpText = XmText;
+                Group: Constraint
+                  leftOffset = 0;
+                  rightOffset = 0;
+                  topOffset = 0;
+              }
+              {
+                separator = XmSeparator;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_widget;
+                  topWidget = panelhelpText;
+                  bottomAttachment = attach_none;
+                  resizable = true;
+              }
+              {
+                filterform : form = XmForm;
+                Group: Widget
+                  rubberPositioning = False;
+                  resizePolicy = resize_any;
+                  fractionBase = 4;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_widget;
+                  topWidget = separator;
+                  topOffset = 10;
+                  bottomAttachment = attach_widget;
+                  bottomWidget = messageBox;
+                  resizable = true;
+                  leftOffset = 10;
+                  rightOffset = 10;
+                Group: Control
+                  collapsed = False;
+                    {
+                      radioLabel = XmLabel;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_none;
+                        topAttachment = attach_form;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                    }
+                    {
+                      radioBox = XmRadioBox;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_none;
+                        topAttachment = attach_widget;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                        leftOffset = 10;
+                        topWidget = radioLabel;
+                          {
+                            allToggle = XmToggleButton;
+                            Group: Widget
+                              valueChangedCallback = "C:dsr_fsredist_filter_toggle_value_cb";
+                          }
+                          {
+                            failedFSToggle = XmToggleButton;
+                            Group: Widget
+                              valueChangedCallback = "C:dsr_fsredist_filter_toggle_value_cb";
+                          }
+                          {
+                            vfstabSlicesToggle = XmToggleButton;
+                            Group: Widget
+                              valueChangedCallback = "C:dsr_fsredist_filter_toggle_value_cb";
+                          }
+                          {
+                            nonVfstabSlicesToggle = XmToggleButton;
+                            Group: Widget
+                              valueChangedCallback = "C:dsr_fsredist_filter_toggle_value_cb";
+                          }
+                          {
+                            sliceNameToggle = XmToggleButton;
+                            Group: Widget
+                              valueChangedCallback = "C:dsr_fsredist_filter_toggle_value_cb";
+                          }
+                          {
+                            mntpntNameToggle = XmToggleButton;
+                            Group: Widget
+                              valueChangedCallback = "C:dsr_fsredist_filter_toggle_value_cb";
+                          }
+                    }
+                    {
+                      reLabel = XmLabel;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_none;
+                        topAttachment = attach_widget;
+                        topWidget = radioBox;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                        topOffset = 20;
+                    }
+                    {
+                      reTextField = XmTextField;
+                      Group: Widget
+                        activateCallback = "C:dsr_fsredist_filter_ok_cb";
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                        leftOffset = 10;
+                        topWidget = reLabel;
+                        topOffset = 0;
+                        rightOffset = 10;
+                    }
+              }
+              {
+                messageBox = XmMessageBox;
+                Group: Control
+                  collapsed = False;
+                    {
+                      okButton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:dsr_fsredist_filter_ok_cb";
+                    }
+                    {
+                      cancelButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:dsr_fsredist_filter_cancel_cb";
+                    }
+                    {
+                      button3 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      button4 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      helpButton : button5 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:pfgHelp(\"constraints.r\")";
+                    }
+              }
+        }
+        {
+          dsr_fsredist_collapse_dialog = formWindow : pfgGUITemplates;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+          Group: Control
+            vip_x = 85;
+            vip_y = 195;
+              {
+                panelhelpText = XmText;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  leftOffset = 0;
+                  rightAttachment = attach_form;
+                  rightOffset = 0;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_none;
+                  resizable = true;
+              }
+              {
+                collapseForm : form = XmForm;
+                Group: Widget
+                  fractionBase = 6;
+                  rubberPositioning = False;
+                  resizePolicy = resize_any;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  leftOffset = 10;
+                  rightAttachment = attach_form;
+                  rightOffset = 10;
+                  topAttachment = attach_widget;
+                  topWidget = panelhelpText;
+                  bottomAttachment = attach_widget;
+                  bottomWidget = messageBox;
+                  resizable = true;
+                    {
+                      fsColumnLabel = XmLabel;
+                      Group: Widget
+                        alignment = alignment_beginning;
+                      Group: Constraint
+                        leftAttachment = attach_position;
+                        rightAttachment = attach_none;
+                        topAttachment = attach_form;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                        leftPosition = 1;
+                    }
+                    {
+                      parentColumnLabel = XmLabel;
+                      Group: Constraint
+                        leftAttachment = attach_widget;
+                        leftWidget = fsColumnLabel;
+                        rightAttachment = attach_none;
+                        topAttachment = attach_form;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                    }
+                    {
+                      scrolledWindow = XmScrolledWindow;
+                      Group: Widget
+                        scrollingPolicy = automatic;
+                      Group: Constraint
+                        leftAttachment = attach_position;
+                        rightAttachment = attach_position;
+                        topAttachment = attach_widget;
+                        topWidget = fsColumnLabel;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                        leftPosition = 1;
+                        rightPosition = 5;
+                          {
+                            collapseRowColumn = XmRowColumn;
+                          }
+                    }
+              }
+              {
+                messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = okButton;
+                    {
+                      okButton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:dsr_fsredist_collapse_ok_cb";
+                    }
+                    {
+                      cancelButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:dsr_fsredist_collapse_cancel_cb";
+                    }
+                    {
+                      button3 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      button4 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      helpButton : button5 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:pfgHelp(\"constraints.r\")";
+                    }
+              }
+        }
+        {
+          dsr_fsredist_collapse_entry = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+          Group: Control
+            vip_x = 85;
+            vip_y = 250;
+              {
+                fsValue = XmToggleButton;
+                Group: Widget
+                  alignment = alignment_beginning;
+                  valueChangedCallback = "C:dsr_fsredist_collapse_toggle_value_cb";
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_none;
+                  resizable = true;
+              }
+              {
+                parentValue = XmLabel;
+                Group: Widget
+                  alignment = alignment_beginning;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = fsValue;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_none;
+                  resizable = true;
+              }
+        }
+}
+

@@ -1,0 +1,29 @@
+domain "messages"
+msgid  "Copy \"test\" was no OK."
+msgstr
+msgid  "Copy \"test\""
+msgstr
+msgid  "\"test\""
+msgstr
+msgid  "Copy \"single test\" was no OK."
+msgstr
+msgid  "Copy single \'test\' was no OK."
+msgstr
+msgid  "Copy 'test' was no OK."
+msgstr
+msgid  "Next Line \"test\" was no OK next line."
+msgstr
+msgid  "Next Line \"test\"   next line."
+msgstr
+msgid  "Next Line \"test\"     next line."
+msgstr
+msgid  "Next Line \"single test\" was no OK next line."
+msgstr
+msgid  "Next Line \"test\" was no OK next line.another line."
+msgstr
+msgid  "Next Line \"test\"   next line.   another line."
+msgstr
+msgid  "Next Line \"test\"     next line.     another line."
+msgstr
+msgid  "Next Line \"single test\" was no OK next line. another line."
+msgstr

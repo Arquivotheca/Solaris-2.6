@@ -1,0 +1,94 @@
+#!/bin/sh
+
+# ident	"@(#)postinstall	1.20	96/05/03 SMI"
+# SUNWpcser postinstall script
+
+PATH="/bin:/usr/bin:/usr/sbin:${PATH}"
+export PATH
+
+ADDDRV=/usr/sbin/add_drv
+
+DRVALIAS="${BASEDIR}/etc/driver_aliases"
+
+if test ! -f ${DRVALIAS} -o ! -w ${DRVALIAS}; then
+	echo "SUNWpcser: file ${DRVALIAS} is missing/inaccessible." >&2
+	exit 1
+fi
+
+trap "rm -f /tmp/$$.*;exit" 0 1 2 3 13 15
+TMP=/tmp/$$
+
+#
+# add_drv_alias - add driver aliases
+#
+add_drv_alias()
+{
+	DRIVER="$1"
+	ALIAS="$2"
+
+	echo "$DRIVER \"$ALIAS\"" >>${DRVALIAS}
+}
+
+#
+# this function updates the $BASEDIR/etc/remote file with
+#	the PCMCIA serial port entries
+#
+update_etc_remote()
+{
+
+    egrep -s '^pc0:' $BASEDIR/etc/remote
+
+    if [ "$?" != 0 ]
+      then
+	cp $BASEDIR/etc/remote $TMP.remote
+	( echo "1"
+	  echo "i"
+	  echo "# The next 17 lines are for the PCMCIA serial/modem cards."
+	  echo "#"
+          echo "pc0:\\"
+          echo '	:dv=/dev/cua/pc0:br#38400:el=^C^S^Q^U^D:ie=%$:oe=^D:nt:hf:'
+          echo "pc1:\\"
+       	  echo '	:dv=/dev/cua/pc1:br#38400:el=^C^S^Q^U^D:ie=%$:oe=^D:nt:hf:'
+          echo "pc2:\\"
+       	  echo '	:dv=/dev/cua/pc2:br#38400:el=^C^S^Q^U^D:ie=%$:oe=^D:nt:hf:'
+          echo "pc3:\\"
+       	  echo '	:dv=/dev/cua/pc3:br#38400:el=^C^S^Q^U^D:ie=%$:oe=^D:nt:hf:'
+          echo "pc4:\\"
+       	  echo '	:dv=/dev/cua/pc4:br#38400:el=^C^S^Q^U^D:ie=%$:oe=^D:nt:hf:'
+          echo "pc5:\\"
+       	  echo '	:dv=/dev/cua/pc5:br#38400:el=^C^S^Q^U^D:ie=%$:oe=^D:nt:hf:'
+          echo "pc6:\\"
+       	  echo '	:dv=/dev/cua/pc6:br#38400:el=^C^S^Q^U^D:ie=%$:oe=^D:nt:hf:'
+          echo "pc7:\\"
+       	  echo '	:dv=/dev/cua/pc7:br#38400:el=^C^S^Q^U^D:ie=%$:oe=^D:nt:hf:'
+	  echo "." ; echo "w" ; echo "q"
+	) | ed -s $TMP.remote > /dev/null
+	cp $TMP.remote $BASEDIR/etc/remote
+      fi
+
+}
+
+${ADDDRV} -b ${BASEDIR} -n -m '* 0666 uucp uucp' pcser
+
+#
+# add all known aliases to make life simpler for users
+#	pccard,serial - generic serial/modem with CISTPL_FUNCID
+#	pccard102,5 - Megahertz CC3144 modem
+#	pccard102,2 - Megahertz XJ124FM
+#	"PC,Intel MODEM 2400+ iNC110US A-" - Intel 2400+ modem
+#
+#
+add_drv_alias pcser 'pccard,serial'
+add_drv_alias pcser 'pccard102,5'	# Megahertz fast
+add_drv_alias pcser 'pccard102,2' 	# Megahertz slow
+add_drv_alias pcser 'pccard,Intel_MODEM_2400+_iNC110US_A-'
+add_drv_alias pcser 'pccard101,562,1'   # 3Com 3C562 MF modem+ethernet
+
+#
+# update the $BASEDIR/etc/remote file
+#
+update_etc_remote
+
+touch ${BASEDIR}/reconfigure
+
+exit 0

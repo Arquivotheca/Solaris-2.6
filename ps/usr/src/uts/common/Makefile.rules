@@ -1,0 +1,436 @@
+#
+# uts/common/Makefile.rules
+#
+# Copyright (c) 1996 by Sun Microsystems, Inc.
+#
+#pragma	ident	"@(#)Makefile.rules	1.72	96/08/29 SMI"
+#
+#	This Makefile defines all the file build rules for the directory
+# uts/common and it's children. These are the source files which may
+# be considered common to all SunOS systems.
+#
+
+#
+#	This was implemented by pattern matching rules of the form:
+#
+# $(OBJS_DIR)/%.o:	 $(UTSBASE)/common/os/%.c
+#	$(COMPILE.c) -o $@ $<
+#
+# $(LINTS_DIR)/%.ln:	$(UTSBASE)/common/os/%.c
+#	@($(LHEAD) $(LINT.c) $< $(LTAIL))
+#
+#	For each directory containing source. This proved to slow under
+#	Nse because it caused a significant additional number of stats
+#	and stats are real slow under TFS. If TFS performance should
+#	improve, one might consider returning to the former implementation.
+#	In the former implementation, this file (Makefile.rules) was not
+#	needed and the pattern matching rules were in Makefile.files.
+#
+
+#
+#	C objects build rules
+#
+#	The following are alphabetized by source file path. Please maintain
+# this ordering.
+#
+$(OBJS_DIR)/asy.o:		$(UTSBASE)/common/io/asy.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/asy.c
+
+$(OBJS_DIR)/at_keyprocess.o:	$(UTSBASE)/common/io/at_keyprocess.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/at_keyprocess.c
+
+$(OBJS_DIR)/ata.o:		$(UTSBASE)/common/io/dktp/controller/ata.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/controller/ata.c
+
+$(OBJS_DIR)/dadk.o:		$(UTSBASE)/common/io/dktp/dcdev/dadk.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/dcdev/dadk.c
+
+$(OBJS_DIR)/gda.o:		$(UTSBASE)/common/io/dktp/dcdev/gda.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/dcdev/gda.c
+
+$(OBJS_DIR)/cmdk.o:		$(UTSBASE)/common/io/dktp/disk/cmdk.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/disk/cmdk.c
+
+$(OBJS_DIR)/genlb.o:		$(UTSBASE)/common/io/dktp/disk/genlb.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/disk/genlb.c
+
+$(OBJS_DIR)/snlb.o:		$(UTSBASE)/common/io/dktp/disk/snlb.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/disk/snlb.c
+
+$(OBJS_DIR)/objmgr.o:		$(UTSBASE)/common/io/dktp/drvobj/objmgr.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/drvobj/objmgr.c
+
+$(OBJS_DIR)/strategy.o:		$(UTSBASE)/common/io/dktp/drvobj/strategy.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/drvobj/strategy.c
+
+$(OBJS_DIR)/adp.o:		$(UTSBASE)/common/io/dktp/hba/adp/adp.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/adp/adp.c
+
+$(OBJS_DIR)/adp_him.o:		$(UTSBASE)/common/io/dktp/hba/adp/adp_him.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/adp/adp_him.c
+
+$(OBJS_DIR)/adp_him_init.o:	$(UTSBASE)/common/io/dktp/hba/adp/adp_him_init.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/adp/adp_him_init.c
+
+$(OBJS_DIR)/himd.o:		$(UTSBASE)/common/io/dktp/hba/adp/himd.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/adp/himd.c
+
+$(OBJS_DIR)/himdinit.o:		$(UTSBASE)/common/io/dktp/hba/adp/himdinit.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/adp/himdinit.c
+
+$(OBJS_DIR)/himdiopt.o:		$(UTSBASE)/common/io/dktp/hba/adp/himdiopt.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/adp/himdiopt.c
+
+$(OBJS_DIR)/himdopt.o:		$(UTSBASE)/common/io/dktp/hba/adp/himdopt.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/adp/himdopt.c
+
+$(OBJS_DIR)/ghd.o:		$(UTSBASE)/common/io/dktp/hba/ghd/ghd.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ghd/ghd.c
+
+$(OBJS_DIR)/ghd_debug.o:	$(UTSBASE)/common/io/dktp/hba/ghd/ghd_debug.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ghd/ghd_debug.c
+
+$(OBJS_DIR)/ghd_dma.o:		$(UTSBASE)/common/io/dktp/hba/ghd/ghd_dma.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ghd/ghd_dma.c
+
+$(OBJS_DIR)/ghd_queue.o:	$(UTSBASE)/common/io/dktp/hba/ghd/ghd_queue.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ghd/ghd_queue.c
+
+$(OBJS_DIR)/ghd_scsa.o:		$(UTSBASE)/common/io/dktp/hba/ghd/ghd_scsa.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ghd/ghd_scsa.c
+
+$(OBJS_DIR)/ghd_scsi.o:		$(UTSBASE)/common/io/dktp/hba/ghd/ghd_scsi.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ghd/ghd_scsi.c
+
+$(OBJS_DIR)/ghd_timer.o:	$(UTSBASE)/common/io/dktp/hba/ghd/ghd_timer.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ghd/ghd_timer.c
+
+$(OBJS_DIR)/53c710.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/53c710.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/53c710.c
+
+$(OBJS_DIR)/53c810.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/53c810.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/53c810.c
+
+$(OBJS_DIR)/53c825_compaq.o:	$(UTSBASE)/common/io/dktp/hba/ncrs/53c825_compaq.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/53c825_compaq.c
+
+$(OBJS_DIR)/busops.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/busops.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/busops.c
+
+$(OBJS_DIR)/cam.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/cam.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/cam.c
+
+$(OBJS_DIR)/ccb.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/ccb.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/ccb.c
+
+$(OBJS_DIR)/devops.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/devops.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/devops.c
+
+$(OBJS_DIR)/init.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/init.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/init.c
+
+$(OBJS_DIR)/interrupt.o:	$(UTSBASE)/common/io/dktp/hba/ncrs/interrupt.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/interrupt.c
+
+$(OBJS_DIR)/ncr.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/ncr.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/ncr.c
+
+$(OBJS_DIR)/ncr_clock.o:	$(UTSBASE)/common/io/dktp/hba/ncrs/ncr_clock.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/ncr_clock.c
+
+$(OBJS_DIR)/ncr_conf.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/ncr_conf.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/ncr_conf.c
+
+$(OBJS_DIR)/ncr_eisa.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/ncr_eisa.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/ncr_eisa.c
+
+$(OBJS_DIR)/ncr_geom.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/ncr_geom.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/ncr_geom.c
+
+$(OBJS_DIR)/ncr_hba.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/ncr_hba.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/ncr_hba.c
+
+$(OBJS_DIR)/ncr_intr.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/ncr_intr.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/ncr_intr.c
+
+$(OBJS_DIR)/ncr_sni.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/ncr_sni.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/ncr_sni.c
+
+$(OBJS_DIR)/queue.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/queue.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/queue.c
+
+$(OBJS_DIR)/script.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/script.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/script.c
+
+$(OBJS_DIR)/sg.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/sg.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/sg.c
+
+$(OBJS_DIR)/syncio.o:		$(UTSBASE)/common/io/dktp/hba/ncrs/syncio.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/syncio.c
+
+$(OBJS_DIR)/transport.o:        $(UTSBASE)/common/io/dktp/hba/ncrs/transport.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/hba/ncrs/transport.c
+
+$(OBJS_DIR)/sccd_audio.o:	$(UTSBASE)/common/io/dktp/scdev/sccd_audio.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/scdev/sccd_audio.c
+
+$(OBJS_DIR)/scdk.o:		$(UTSBASE)/common/io/dktp/scdev/scdk.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/scdev/scdk.c
+
+$(OBJS_DIR)/scdk_watch.o:	$(UTSBASE)/common/io/dktp/scdev/scdk_watch.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/scdev/scdk_watch.c
+
+$(OBJS_DIR)/sctarget.o:		$(UTSBASE)/common/io/dktp/scdev/sctarget.c 
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/dktp/scdev/sctarget.c
+
+$(OBJS_DIR)/fd.o:		$(UTSBASE)/common/io/fd.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/fd.c
+
+$(OBJS_DIR)/fdc.o:		$(UTSBASE)/common/io/fdc.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/fdc.c
+
+$(OBJS_DIR)/lp.o:		$(UTSBASE)/common/io/lp/lp.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/lp/lp.c
+
+$(OBJS_DIR)/pcelx.o:            $(UTSBASE)/common/io/pcmcia/pcelx.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/pcmcia/pcelx.c
+
+$(OBJS_DIR)/pcgld.o:              $(UTSBASE)/common/io/pcmcia/pcgld.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/pcmcia/pcgld.c
+
+$(OBJS_DIR)/pcmem.o:            $(UTSBASE)/common/io/pcmcia/pcmem.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/pcmcia/pcmem.c
+
+$(OBJS_DIR)/pcram.o:            $(UTSBASE)/common/io/pcmcia/pcram.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/pcmcia/pcram.c
+
+$(OBJS_DIR)/pcser.o:            $(UTSBASE)/common/io/pcmcia/pcser.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/pcmcia/pcser.c
+
+$(OBJS_DIR)/pcser_cis.o:        $(UTSBASE)/common/io/pcmcia/pcser_cis.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/pcmcia/pcser_cis.c
+
+$(OBJS_DIR)/pcn.o:		$(UTSBASE)/common/io/pcn/pcn.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/pcn/pcn.c
+
+$(OBJS_DIR)/sysinit.o:		$(UTSBASE)/common/io/sysinit.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/sysinit.c
+
+$(OBJS_DIR)/vuidm3p.o:		$(UTSBASE)/common/io/vuidmice/vuidm3p.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/vuidmice/vuidm3p.c
+
+$(OBJS_DIR)/vuidm4p.o:		$(UTSBASE)/common/io/vuidmice/vuidm4p.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/vuidmice/vuidm4p.c
+
+$(OBJS_DIR)/vuidm5p.o:		$(UTSBASE)/common/io/vuidmice/vuidm5p.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/vuidmice/vuidm5p.c
+
+$(OBJS_DIR)/vuidmice.o:		$(UTSBASE)/common/io/vuidmice/vuidmice.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/vuidmice/vuidmice.c
+
+$(OBJS_DIR)/vuidps2.o:		$(UTSBASE)/common/io/vuidmice/vuidps2.c
+	$(COMPILE.c) -o $@ $(UTSBASE)/common/io/vuidmice/vuidps2.c
+
+#
+#	Lint `object' build rules
+#
+#	The following are alphabetized by source file path. Please maintain
+# this ordering.
+#
+$(LINTS_DIR)/asy.ln:	$(UTSBASE)/common/io/asy.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/asy.c $(LTAIL))
+
+$(LINTS_DIR)/at_keyprocess.ln:	$(UTSBASE)/common/io/at_keyprocess.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/at_keyprocess.c $(LTAIL))
+
+$(LINTS_DIR)/ata.ln:		$(UTSBASE)/common/io/dktp/controller/ata.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/controller/ata.c $(LTAIL))
+
+$(LINTS_DIR)/dadk.ln:           $(UTSBASE)/common/io/dktp/dcdev/dadk.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/dcdev/dadk.c $(LTAIL))
+
+$(LINTS_DIR)/gda.ln:		$(UTSBASE)/common/io/dktp/dcdev/gda.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/dcdev/gda.c $(LTAIL))
+
+$(LINTS_DIR)/cmdk.ln:		$(UTSBASE)/common/io/dktp/disk/cmdk.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/disk/cmdk.c $(LTAIL))
+
+$(LINTS_DIR)/genlb.ln:		$(UTSBASE)/common/io/dktp/disk/genlb.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/disk/genlb.c $(LTAIL))
+
+$(LINTS_DIR)/snlb.ln:		$(UTSBASE)/common/io/dktp/disk/snlb.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/disk/snlb.c $(LTAIL))
+
+$(LINTS_DIR)/objmgr.ln:		$(UTSBASE)/common/io/dktp/drvobj/objmgr.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/drvobj/objmgr.c $(LTAIL))
+
+$(LINTS_DIR)/strategy.ln:	$(UTSBASE)/common/io/dktp/drvobj/strategy.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/drvobj/strategy.c $(LTAIL))
+
+$(LINTS_DIR)/adp.ln:		$(UTSBASE)/common/io/dktp/hba/adp/adp.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/adp/adp.c $(LTAIL))
+
+$(LINTS_DIR)/adp_him.ln:	$(UTSBASE)/common/io/dktp/hba/adp/adp_him.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/adp/adp_him.c $(LTAIL))
+
+$(LINTS_DIR)/adp_him_init.ln:	$(UTSBASE)/common/io/dktp/hba/adp/adp_him_init.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/adp/adp_him_init.c $(LTAIL))
+
+$(LINTS_DIR)/himd.ln:           $(UTSBASE)/common/io/dktp/hba/adp/himd.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/adp/himd.c $(LTAIL))
+
+$(LINTS_DIR)/himdinit.ln:	$(UTSBASE)/common/io/dktp/hba/adp/himdinit.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/adp/himdinit.c $(LTAIL))
+
+$(LINTS_DIR)/himdiopt.ln:	$(UTSBASE)/common/io/dktp/hba/adp/himdiopt.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/adp/himdiopt.c $(LTAIL))
+
+$(LINTS_DIR)/himdopt.ln:	$(UTSBASE)/common/io/dktp/hba/adp/himdopt.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/adp/himdopt.c $(LTAIL))
+
+$(LINTS_DIR)/ghd.ln:		$(UTSBASE)/common/io/dktp/hba/ghd/ghd.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ghd/ghd.c $(LTAIL))
+
+$(LINTS_DIR)/ghd_debug.ln:	$(UTSBASE)/common/io/dktp/hba/ghd/ghd_debug.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ghd/ghd_debug.c $(LTAIL))
+
+$(LINTS_DIR)/ghd_dma.ln:	$(UTSBASE)/common/io/dktp/hba/ghd/ghd_dma.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ghd/ghd_dma.c $(LTAIL))
+
+$(LINTS_DIR)/ghd_queue.ln:	$(UTSBASE)/common/io/dktp/hba/ghd/ghd_queue.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ghd/ghd_queue.c $(LTAIL))
+
+$(LINTS_DIR)/ghd_scsa.ln:	$(UTSBASE)/common/io/dktp/hba/ghd/ghd_scsa.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ghd/ghd_scsa.c $(LTAIL))
+
+$(LINTS_DIR)/ghd_scsi.ln:	$(UTSBASE)/common/io/dktp/hba/ghd/ghd_scsi.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ghd/ghd_scsi.c $(LTAIL))
+
+$(LINTS_DIR)/ghd_timer.ln:	$(UTSBASE)/common/io/dktp/hba/ghd/ghd_timer.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ghd/ghd_timer.c $(LTAIL))
+
+$(LINTS_DIR)/53c710.ln:		$(UTSBASE)/common/io/dktp/hba/ncrs/53c710.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/53c710.c $(LTAIL))
+
+$(LINTS_DIR)/53c810.ln:		$(UTSBASE)/common/io/dktp/hba/ncrs/53c810.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/53c810.c $(LTAIL))
+
+$(LINTS_DIR)/53c825_compaq.ln:	$(UTSBASE)/common/io/dktp/hba/ncrs/53c825_compaq.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/53c825_compaq.c $(LTAIL))
+
+$(LINTS_DIR)/busops.ln:		$(UTSBASE)/common/io/dktp/hba/ncrs/busops.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/busops.c $(LTAIL))
+
+$(LINTS_DIR)/cam.ln:		$(UTSBASE)/common/io/dktp/hba/ncrs/cam.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/cam.c $(LTAIL))
+
+$(LINTS_DIR)/ccb.ln:		$(UTSBASE)/common/io/dktp/hba/ncrs/ccb.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/ccb.c $(LTAIL))
+
+$(LINTS_DIR)/devops.ln:		$(UTSBASE)/common/io/dktp/hba/ncrs/devops.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/devops.c $(LTAIL))
+
+$(LINTS_DIR)/init.ln:		$(UTSBASE)/common/io/dktp/hba/ncrs/init.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/init.c $(LTAIL))
+
+$(LINTS_DIR)/interrupt.ln:	$(UTSBASE)/common/io/dktp/hba/ncrs/interrupt.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/interrupt.c $(LTAIL))
+
+$(LINTS_DIR)/ncr.ln:		$(UTSBASE)/common/io/dktp/hba/ncrs/ncr.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/ncr.c $(LTAIL))
+
+$(LINTS_DIR)/ncr_clock.ln:	$(UTSBASE)/common/io/dktp/hba/ncrs/ncr_clock.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/ncr_clock.c $(LTAIL))
+
+$(LINTS_DIR)/ncr_conf.ln:	$(UTSBASE)/common/io/dktp/hba/ncrs/ncr_conf.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/ncr_conf.c $(LTAIL))
+
+$(LINTS_DIR)/ncr_eisa.ln:	$(UTSBASE)/common/io/dktp/hba/ncrs/ncr_eisa.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/ncr_eisa.c $(LTAIL))
+
+$(LINTS_DIR)/ncr_geom.ln:	$(UTSBASE)/common/io/dktp/hba/ncrs/ncr_geom.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/ncr_geom.c $(LTAIL))
+
+$(LINTS_DIR)/ncr_hba.ln:	$(UTSBASE)/common/io/dktp/hba/ncrs/ncr_hba.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/ncr_hba.c $(LTAIL))
+
+$(LINTS_DIR)/ncr_intr.ln:	$(UTSBASE)/common/io/dktp/hba/ncrs/ncr_intr.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/ncr_intr.c $(LTAIL))
+
+$(LINTS_DIR)/ncr_sni.ln:	$(UTSBASE)/common/io/dktp/hba/ncrs/ncr_sni.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/ncr_sni.c $(LTAIL))
+
+$(LINTS_DIR)/queue.ln:		$(UTSBASE)/common/io/dktp/hba/ncrs/queue.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/queue.c $(LTAIL))
+
+$(LINTS_DIR)/script.ln:		$(UTSBASE)/common/io/dktp/hba/ncrs/script.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/script.c $(LTAIL))
+
+$(LINTS_DIR)/sg.ln:		$(UTSBASE)/common/io/dktp/hba/ncrs/sg.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/sg.c $(LTAIL))
+
+$(LINTS_DIR)/syncio.ln:		$(UTSBASE)/common/io/dktp/hba/ncrs/syncio.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/syncio.c $(LTAIL))
+
+$(LINTS_DIR)/transport.ln:	$(UTSBASE)/common/io/dktp/hba/ncrs/transport.c 
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/hba/ncrs/transport.c $(LTAIL))
+
+$(LINTS_DIR)/sccd_audio.ln:	$(UTSBASE)/common/io/dktp/scdev/sccd_audio.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/scdev/sccd_audio.c $(LTAIL))
+
+$(LINTS_DIR)/scdk.ln:		$(UTSBASE)/common/io/dktp/scdev/scdk.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/scdev/scdk.c $(LTAIL))
+
+$(LINTS_DIR)/scdk_watch.ln:	$(UTSBASE)/common/io/dktp/scdev/scdk_watch.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/scdev/scdk_watch.c $(LTAIL))
+
+$(LINTS_DIR)/sctarget.ln:	$(UTSBASE)/common/io/dktp/scdev/sctarget.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/dktp/scdev/sctarget.c $(LTAIL))
+
+$(LINTS_DIR)/fd.ln:	$(UTSBASE)/common/io/fd.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/fd.c $(LTAIL))
+
+$(LINTS_DIR)/fdc.ln:	$(UTSBASE)/common/io/fdc.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/fdc.c $(LTAIL))
+
+$(LINTS_DIR)/lp.ln:		$(UTSBASE)/common/io/lp/lp.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/lp/lp.c $(LTAIL))
+
+$(LINTS_DIR)/pcelx.ln:          $(UTSBASE)/common/io/pcmcia/pcelx.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/pcmcia/pcelx.c $(LTAIL))
+
+$(LINTS_DIR)/pcgld.ln:          $(UTSBASE)/common/io/pcmcia/pcgld.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/pcmcia/pcgld.c $(LTAIL))
+
+$(LINTS_DIR)/pcmem.ln:          $(UTSBASE)/common/io/pcmcia/pcmem.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/pcmcia/pcmem.c $(LTAIL))
+
+$(LINTS_DIR)/pcram.ln:          $(UTSBASE)/common/io/pcmcia/pcram.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/pcmcia/pcram.c $(LTAIL))
+
+$(LINTS_DIR)/pcser.ln:          $(UTSBASE)/common/io/pcmcia/pcser.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/pcmcia/pcser.c $(LTAIL))
+
+$(LINTS_DIR)/pcser_cis.ln:      $(UTSBASE)/common/io/pcmcia/pcser_cis.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/pcmcia/pcser_cis.c $(LTAIL))
+
+$(LINTS_DIR)/pcn.ln:            $(UTSBASE)/common/io/pcn/pcn.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/pcn/pcn.c $(LTAIL))
+
+$(LINTS_DIR)/sysinit.ln:	$(UTSBASE)/common/io/sysinit.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/sysinit.c $(LTAIL))
+
+$(LINTS_DIR)/vuidm3p.ln:	$(UTSBASE)/common/io/vuidmice/vuidm3p.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/vuidmice/vuidm3p.c $(LTAIL))
+
+$(LINTS_DIR)/vuidm4p.ln:	$(UTSBASE)/common/io/vuidmice/vuidm4p.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/vuidmice/vuidm4p.c $(LTAIL))
+
+$(LINTS_DIR)/vuidm5p.ln:	$(UTSBASE)/common/io/vuidmice/vuidm5p.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/vuidmice/vuidm5p.c $(LTAIL))
+
+$(LINTS_DIR)/vuidmice.ln:	$(UTSBASE)/common/io/vuidmice/vuidmice.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/vuidmice/vuidmice.c $(LTAIL))
+
+$(LINTS_DIR)/vuidps2.ln:	$(UTSBASE)/common/io/vuidmice/vuidps2.c
+	@($(LHEAD) $(LINT.c) $(UTSBASE)/common/io/vuidmice/vuidps2.c $(LTAIL))

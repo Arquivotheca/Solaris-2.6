@@ -1,0 +1,42 @@
+---- Keyboard Shortcuts ----------------------------
+
+Arrow Keys
+    The arrow keys, used after the pulldown menu is
+    displayed, move the cursor up and down a menu
+    list or side-to-side across the available menus. 
+
+Enter Key
+    The Enter key completes the current operation,
+    but does not remove the window from the
+    display. The Enter key has the same action as 
+    the OK button.
+
+Keyboard Characters
+    Keyboard characters activate the menu options
+    in a pulldown menu. Menu options are displayed
+    with an underlined letter. Typing the underlined
+    letter activates that menu option. For example,
+    after the File pulldown menu is displayed,
+    typing "e" exits the application.
+ 
+Meta Key
+    The Meta key, used with the underlined letters
+    in the menu label, displays the associated
+    pulldown menu. For example, Meta-f displays the
+    File pulldown menu. 
+
+Tab Key
+    The Tab key moves the cursor from one field to
+    the next in a window.
+
+    The Shift-Tab key moves the cursor to the
+    previous field.
+
+Return Key
+    See Enter key
+
+
+
+
+
+

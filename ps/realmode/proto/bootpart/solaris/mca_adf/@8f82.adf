@@ -1,0 +1,186 @@
+ AdapterID 8F82h
+
+ AdapterName "IBM SCSI-2 Fast/Wide Streaming-RAID Adapter/A"
+
+ Numbytes 4
+
+ Address 32
+
+ Begin Device 02h 02h 03h NoDma
+
+
+ NamedItem
+
+ Prompt "Interrupt Level"
+ choice "Level E"  pos[0]=00XXXXXXb int 0eh
+ choice "Level A"  pos[0]=11XXXXXXb int 0ah
+ choice "Level B"  pos[0]=10XXXXXXb int 0bh
+
+ Help
+
+"This choice allows you to set the interrupt level for the adapter.
+If you are in the 'Change Configuration' window, you can change
+the setting.  Use F5 and F6 to scroll through the choices.
+If a setting conflicts with another, an asterisk (*) appears next to
+the conflicts.  You must fix conflicts before you use the adapter.
+Use the Up and Down arrow keys to move from field to field.
+(If you are not in the 'Change Configuration' window and you need
+to change the setting, return to the 'Set Configuration' window then
+select 'Change configuration'.)"
+
+
+ NamedItem
+
+ Prompt "BIOS Base Address"
+
+ choice "C0000-0C1FFF" pos[0]=XX00000Xb mem 0c0000h-0c1fffh
+ choice "C2000-0C3FFF" pos[0]=XX00010Xb mem 0c2000h-0c3fffh
+ choice "C4000-0C5FFF" pos[0]=XX00100Xb mem 0c4000h-0c5fffh
+ choice "C6000-0C7FFF" pos[0]=XX00110Xb mem 0c6000h-0c7fffh
+ choice "C8000-0C9FFF" pos[0]=XX01000Xb mem 0c8000h-0c9fffh
+ choice "CA000-0CBFFF" pos[0]=XX01010Xb mem 0ca000h-0cbfffh
+ choice "CC000-0CDFFF" pos[0]=XX01100Xb mem 0cc000h-0cdfffh
+ choice "CE000-0CFFFF" pos[0]=XX01110Xb mem 0ce000h-0cffffh
+ choice "D0000-0D1FFF" pos[0]=XX10000Xb mem 0d0000h-0d1fffh
+ choice "D2000-0D3FFF" pos[0]=XX10010Xb mem 0d2000h-0d3fffh
+ choice "D4000-0D5FFF" pos[0]=XX10100Xb mem 0d4000h-0d5fffh
+ choice "D6000-0D7FFF" pos[0]=XX10110Xb mem 0d6000h-0d7fffh
+ choice "D8000-0D9FFF" pos[0]=XX11000Xb mem 0d8000h-0d9fffh
+ choice "DA000-0DBFFF" pos[0]=XX11010Xb mem 0da000h-0dbfffh
+ choice "DC000-0DDFFF" pos[0]=XX11100Xb mem 0dc000h-0ddfffh
+ choice "DE000-0DFFFF" pos[0]=XX11110Xb mem 0de000h-0dffffh
+
+ Help
+
+"This choice allows you to choose the BIOS base address for the
+adapter. Each adapter must have a unique address range.  Under
+normal circumstances, this address range does not need to be
+changed.  If you are in the 'Change Configuration' window, you can
+change the setting.  Use F5 and F6 to scroll through the choices.
+If a setting conflicts with another, an asterisk (*) appears next to
+the conflicts.  You must fix conflicts before you use the adapter.
+Use the Up and Down arrow keys to move from field to field.
+(If you are not in the 'Change Configuration' window and you need
+to change the setting, return to the 'Set Configuration' window then
+select 'Change configuration'.)"
+
+ NamedItem
+
+ Prompt "I/O Address"
+
+ choice "1C00-1C1F" pos[3]=XX000XXXb io 01c00h-01c1fh
+ choice "3C00-3C1F" pos[3]=XX001XXXb io 03c00h-03c1fh
+ choice "5C00-5C1F" pos[3]=XX010XXXb io 05c00h-05c1fh
+ choice "7C00-7C1F" pos[3]=XX011XXXb io 07c00h-07c1fh
+ choice "9C00-9C1F" pos[3]=XX100XXXb io 09c00h-09c1fh
+ choice "BC00-BC1F" pos[3]=XX101XXXb io 0bc00h-0bc1fh
+ choice "DC00-DC1F" pos[3]=XX110XXXb io 0dc00h-0dc1fh
+ choice "FC00-FC1F" pos[3]=XX111XXXb io 0fc00h-0fc1fh
+
+Help
+"This choice allows you to set the I/O address for the adapter.
+Each adapter must have a unique address range.  Under normal
+circumstances, this address range does not need to be changed.
+If you are in the 'Change Configuration' window, you can change
+the setting.  Use F5 and F6 to scroll through the choices.
+If a setting conflicts with another, an asterisk (*) appears next to
+the conflicts.  You must fix conflicts before you use the adapter.
+Use the Up and Down arrow keys to move from field to field.
+(If you are not in the 'Change Configuration' window and you need
+to change the setting, return to the 'Set Configuration' window then
+select 'Change configuration'.)"
+
+ NamedItem
+
+ Prompt "DMA Arbitration Level"
+
+ choice "Level 8"  pos[1]=X0X11000b arb  8
+ choice "Level 9"  pos[1]=X0X11001b arb  9
+ choice "Level A"  pos[1]=X0X11010b arb  10
+ choice "Level B"  pos[1]=X0X11011b arb  11
+ choice "Level C"  pos[1]=X0X11100b arb  12
+ choice "Level D"  pos[1]=X0X11101b arb  13
+ choice "Level E"  pos[1]=X0X11110b arb  14
+ choice "Level 1"  pos[1]=X0X10001b arb  1
+ choice "Level 3"  pos[1]=X0X10011b arb  3
+ choice "Level 5"  pos[1]=X0X10101b arb  5
+ choice "Level 6"  pos[1]=X0X10110b arb  6
+ choice "Level 7"  pos[1]=X0X10111b arb  7
+
+ Help
+"This choice allows you to select the DMA channel the adapter will
+use to transfer data. Under normal circumstances, select <Level 8>.
+If you are in the 'Change Configuration' window, you can change
+the setting.  Use F5 and F6 to scroll through the choices.
+If a setting conflicts with another, an asterisk (*) appears next to
+the conflicts.  You must fix conflicts before you use the adapter.
+Use the Up and Down arrow keys to move from field to field.
+(If you are not in the 'Change Configuration' window and you need
+to change the setting, return to the 'Set Configuration' window then
+select 'Change configuration'.)"
+
+NamedItem
+
+Prompt "Tower Configuration"
+
+choice "2 Towers" pos[2]=X1XXXXXXb
+choice "1 Tower"  pos[2]=X0XXXXXXb
+
+Help
+"This choice allows you to select between how many towers of seven
+drives will be presented to the user. Any messages regarding drive
+status are always presented in terms of bays in the tower. When
+each channel of the Streaming-RAID Adapter/A is connected to a
+different tower select the '2 Towers' Configuration and when both
+channels are connected to one single tower select the '1 Tower'
+Configuration."
+
+ NamedItem
+
+ Prompt "Data Parity Exception Handling Support"
+
+if ((submodel eq 28h) or (submodel eq 42h) or (submodel eq 46h)
+ or (submodel eq 29h) or (submodel eq 43h) or (submodel eq 45h)
+                      or (submodel eq 44h) or (submodel eq 47h) ) {
+ choice "Enabled "  pos[1]=XX1XXXXXb
+ }
+ choice "Disabled"  pos[1]=XX0XXXXXb
+
+ Help
+"This choice allows you to enable or disable the Micro Channel data
+parity generation capability of this adapter for systems which support.
+The default condition is <Enabled> for systems which support the protocol."
+
+ NamedItem
+
+ Prompt "Micro Channel Streaming"
+
+ choice "Enabled "  pos[1]=1XXXXXXXb
+ choice "Disabled"  pos[1]=0XXXXXXXb
+
+ Help
+"This choice allows you to enable or disable the Microchannel
+streaming capability of this adapter. The default condition
+is set to <Enabled>."
+
+NamedItem
+
+Prompt "INT 13 Support"
+
+if ((submodel eq 0B4h) or (submodel eq 42h) or (submodel eq 46h)
+                       or (submodel eq 43h) or (submodel eq 45h)
+                       or (submodel eq 44h) or (submodel eq 47h) ) {
+ choice "Enabled "  pos[2]=1XXXXXXXb
+ choice "Disabled"  pos[2]=0XXXXXXXb
+ }
+else {
+ choice "Disabled"  pos[2]=0XXXXXXXb
+ choice "Enabled "  pos[2]=1XXXXXXXb
+ }
+
+Help
+"Enable / disable INT13 support. This provides limited support for
+BIOS INT 13 function calls and is required if boot devices are
+connected to Streaming-RAID Adapter/A."
+END
+

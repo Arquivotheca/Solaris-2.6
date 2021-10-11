@@ -1,0 +1,13 @@
+#ident "@(#)bootenv.rc 1.12 96/07/16 SMI"
+#
+#	bootenv.rc -- boot "environment variables"
+#
+setprop auto-boot? true
+setprop auto-boot-cfg-num -1
+setprop auto-boot-timeout 5
+setprop boottimeout 0
+setprop confflags "-M"
+setprop bshfirst false
+setprop output-device screen
+setprop input-device keyboard
+setprop boot-file kernel/unix

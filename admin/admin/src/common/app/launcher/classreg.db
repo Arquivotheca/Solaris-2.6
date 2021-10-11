@@ -1,0 +1,7 @@
+Domain DomainManager ROOT /opt/SUNWadm/admintool/2.1/etc/database.icon xbm database.icon xbm
+Table  DatabaseManager Domain  /opt/SUNWadm/admintool/2.1/etc/database.icon xbm database.icon xbm
+Host HostManager Domain /opt/SUNWadm/admintool/2.1/etc/host.icon xbm host.icon xbm
+SerialPort SerialPortManager Host /opt/SUNWadm/admintool/2.1/etc/serial.icon xbm serial.icon xbm
+Printer PrinterManager Host /opt/SUNWadm/admintool/2.1/etc/printmgr.icon xbm printmgr.icon xbm
+User UserManager Domain /opt/SUNWadm/admintool/2.1/etc/user.icon xbm user.icon xbm
+Group GroupManager Domain /opt/SUNWadm/admintool/2.1/etc/groupmgr.icon xbm group.icon xbm

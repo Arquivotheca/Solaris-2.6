@@ -1,0 +1,74 @@
+#
+# postremove script for SUNWos86r package.
+#
+# Copyright (c) 1995, 1996 by Sun Microsystems, Inc.
+# All Rights Reserved.
+#
+#ident "@(#)postremove 1.44 96/10/09"
+#
+
+# 
+# Unload and remove nolonger present drivers
+#
+
+# Common to both platforms
+rem_drv -b "${BASEDIR}" xsvc
+
+# Platform-specific drivers
+case "${ARCH}" in
+i386)
+	# removes kdmconfig from the list of applications 
+	# run out of sysidconfig
+	#
+	
+	if [ -x /usr/sbin/sysidconfig ]; then
+	        /usr/sbin/sysidconfig -b "${BASEDIR}" -r /sbin/kdmconfig              #
+	else
+		ed ${BASEDIR}/etc/.sysidconfig.apps <<-STOP
+	/\/sbin\/kdmconfig/d
+	w
+	q
+	STOP
+	fi
+	
+	rem_drv -b "${BASEDIR}" blogic
+	rem_drv -b "${BASEDIR}" smce
+	rem_drv -b "${BASEDIR}" smceu
+	rem_drv -b "${BASEDIR}" smcf
+	rem_drv -b "${BASEDIR}" pe
+	rem_drv -b "${BASEDIR}" csa
+	rem_drv -b "${BASEDIR}" dnet
+	rem_drv -b "${BASEDIR}" dsa
+	rem_drv -b "${BASEDIR}" iee
+	rem_drv -b "${BASEDIR}" elink
+	rem_drv -b "${BASEDIR}" ieef
+	rem_drv -b "${BASEDIR}" aic
+	rem_drv -b "${BASEDIR}" adp
+	rem_drv -b "${BASEDIR}" eepro
+	rem_drv -b "${BASEDIR}" nee
+	rem_drv -b "${BASEDIR}" nei
+	rem_drv -b "${BASEDIR}" nfe
+	rem_drv -b "${BASEDIR}" pcn
+	rem_drv -b "${BASEDIR}" corvette
+	rem_drv -b "${BASEDIR}" esa
+	rem_drv -b "${BASEDIR}" iss
+	rem_drv -b "${BASEDIR}" ncrs
+	rem_drv -b "${BASEDIR}" pcscsi
+	rem_drv -b "${BASEDIR}" riles
+	rem_drv -b "${BASEDIR}" trantor
+	rem_drv -b "${BASEDIR}" p9000 > /dev/null 2>&1
+	rem_drv -b "${BASEDIR}" p9100 > /dev/null 2>&1
+	rem_drv -b "${BASEDIR}" sxp
+	rem_drv -b "${BASEDIR}" rns_smt
+#
+# Comment out iprb temporarily.
+#
+#	rem_drv -b "${BASEDIR}" iprb
+	rem_drv -b "${BASEDIR}" chs
+	;;
+ppc)
+	rem_drv -b "${BASEDIR}" dnet
+	rem_drv -b "${BASEDIR}" ncrs
+	rem_drv -b "${BASEDIR}" pcn
+	;;
+esac

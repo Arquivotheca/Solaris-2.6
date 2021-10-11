@@ -1,0 +1,15 @@
+---- Host Manager --------------------------------------------
+ 
+Host Manager enables system administrators to manage
+network client information. Host Manager is primarily used
+on a local server manage support for diskless and dataless
+clients that need remote file resources and disk storage
+space.
+
+Host Manager provides a convenient way to setup diskless and
+dataless client information without having to manually edit and
+create the necessary files.
+
+Host Manager can be used to manage network client information
+on the local system or the NIS or NIS+ database with the
+appropriate access privileges.

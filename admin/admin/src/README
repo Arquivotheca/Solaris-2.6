@@ -1,0 +1,82 @@
+#
+#ident  "@(#)README 1.9     94/07/29 SMI"
+#
+# Copyright (c) 1992 by Sun Microsystems, Inc.
+#
+
+Build instructions for SNAG Source 
+(fill in the <items> with the appropriate information)
+-----------------------------------------------------------------------
+Build Dependencies:
+
+OS: S494 CBE (Common Build Environment)
+
+CC: SUNWspro 2.0.1 
+
+ENV: 
+setenv ROOT /<path_to_installation_area>
+setenv SRC /<path_to_source>/src
+setenv PROTO "/opt/xenv"
+setenv CBE_PATH "/opt/cbe/bin"
+setenv OPENWINHOME /usr/openwin
+setenv MOTIFHOME /usr/dt
+setenv LD_LIBRARY_PATH ${ROOT}/usr/lib:${ROOT}/usr/snadm/classes/lib
+setenv PATH "$CBE_PATH:/usr/ccs/bin:/usr/bin:/usr/sbin:/sbin:$PATH"
+setenv CH ""
+setenv RELEASE_BUILD ""
+setenv VERSION "5.5"
+setenv TMPDIR /tmp
+setenv LM_LICENSE_FILE /<license_server>/export/dist/local/config/sparcworks/license.dat
+
+***********************************************************************
+Currently, you need about 134 meg for a build environment, and about 21 megs for
+the ROOT target area.
+That 21 megs includes room for the spooled pkgs, which is created under
+$ROOT as part of the install process.
+
+The build environment is set with the ENV variables listed above by
+sourcing $SRC/ENV file from this directory; the ROOT and SRC variables 
+MUST be set before starting the build.
+
+The root directories (/usr/bin, /usr/lib, ...) which are not owned by
+SNAG, but which need to be there under $ROOT in order for you to
+install your stuff are created automatically by $SRC/Makefile.  These
+root directories are defined in the file $SRC/Targetdirs.
+
+Now you're ready to start the build
+For a release:
+# cd $SRC
+# sh ./build.proto &
+
+For development:
+# cd $SRC
+# source ENV
+# make install
+
+
+For a release build the build.proto script exports a few shell variables,
+and does a "make -e install" starting with the Mother-of-all-Makefiles,
+$SRC/Makefile.  Everything is done via Makefiles.
+A build log can be found in the file $SRC/Make.out.  Use 
+"tail -f $SRC/Make.out" to follow build progress.
+
+The order of major events for a full build:
+
+	- make root directories under $ROOT.
+
+	- create symbolic links:  $ROOT/usr/include/* -> /usr/include/*
+		`Cause your header file search path is $ROOT/usr/include.
+
+	- install headers from the libraries into $ROOT/usr/include/admin.
+	- make & install libraries
+	- make & install cmds
+	- make & install classes (classes really should go first, but some 
+		classes depend on having cmd/wsh built before they are).
+
+	- make spooled packages (Conditionally made based on CH variable)
+		Note that the pkgs are automatically spooled to
+		$ROOT/package.  You can override this by setting the
+		environment variable SPOOLDEV to an appropriate path.
+		The contents of the packages are defined by a find filter
+		in the Makefile for each package.  See comments there for
+		further details.

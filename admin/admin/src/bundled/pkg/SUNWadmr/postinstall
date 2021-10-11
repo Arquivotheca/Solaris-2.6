@@ -1,0 +1,32 @@
+#! /bin/sh
+#
+#ident	"@(#)postinstall	1.2	94/06/07 SMI"
+#
+# Copyright (c) 1991 by Sun Microsystems, Inc.
+#
+# post-installation script for admin apps.
+
+write_sed_script() {
+cat > /tmp/sed.scr.$$ << EOF
+/root password/a\\
+1	# locale and term prompted for?
+EOF
+}
+
+# Need to create the file which controls running sysIDtool at next boot.
+
+touch ${BASEDIR}/etc/.UNCONFIGURED
+
+if [ -f ${BASEDIR}/etc/.sysIDtool.state ] ; then
+	grep 'locale and term prompted for' ${BASEDIR}/etc/.sysIDtool.state \
+	    >/dev/null 2>&1
+	if [ $? != 0 ] ; then
+		write_sed_script
+		sed -f /tmp/sed.scr.$$ ${BASEDIR}/etc/.sysIDtool.state > \
+		    /tmp/sed.tmp.$$
+		mv /tmp/sed.tmp.$$ ${BASEDIR}/etc/.sysIDtool.state
+		rm -f /tmp/sed.scr.$$
+	fi
+fi
+
+exit 0

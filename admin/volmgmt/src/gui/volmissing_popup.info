@@ -1,0 +1,43 @@
+#------------------------------------------------- 
+#
+# sccsid[]="@(#)volmissing_popup.info  1.3  95/02/01 Sunsoft";
+#
+# Copyright (c) 1995 by Sunsoft.
+#
+#------------------------------------------------- 
+:panel
+This window allows you to clean up your
+missing media problem.  An i/o operation
+was attempted on the specified volume
+which is no longer available. Most likely
+this happened when you manually removed 
+the media.
+
+In the future, use the filemgr's "Eject Disk"
+button or use the "eject" command to remove 
+the media. Proper ejection of managed media 
+allows volume management to clean up after
+itself and avoid missing media problems.
+#
+
+:ok
+Click the "OK" button once you have inserted
+the missing media into a system drive. This
+will cause the "volcheck" command to be run
+and complete the pending i/o transaction. Then
+volume management will be returned to an error
+free state.
+#
+
+:cancel
+Clicking the "Cancel" button causes the 
+"volcancel" command to run which terminates the 
+pending i/o transaction.
+
+Once this is done it is a good idea for you to 
+return the missing media to a drive and run the
+"volcheck" command. "volcheck" can be run from
+the command line or by selecting the
+"Check For Floppy" command from the filemgr's
+FILE menu. 
+#

@@ -1,0 +1,35 @@
+---- Add Yourself to Group 14 ----------------------
+
+NOTE:  You must become root and then start Admintool
+       to complete this procedure.
+
+1. Select Groups from the Browse menu.
+
+2. Determine what to do next based on whether or not
+   group 14 (the sysadmin group) already exists.
+
+   If group 14...	Then...
+   --------------	----------------------------
+   Exists		Go to step 3.	
+
+   Does not exist	See the "How To" help titled
+			"Add a Group." Name the new
+			group "sysadmin" and assign
+			it group ID 14.
+
+3. Click on group ID 14.
+
+   That line is highlighted.
+
+4. Select Modify from the Edit menu on the
+   Admintool:Groups main window.
+
+   The Modify Group window is displayed.
+
+5. Add your user name to the Members List.
+
+6. Click on OK.
+
+Verify that the user name is in the Members column
+by locating it in the Admintool:Groups main window.
+

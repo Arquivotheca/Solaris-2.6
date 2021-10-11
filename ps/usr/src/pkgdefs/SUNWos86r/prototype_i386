@@ -1,0 +1,234 @@
+#	Copyright (c) 1996 Sun Microsystems, Inc.
+#		All Rights Reserved
+#
+#	@(#)prototype_i386	1.73	96/10/15 (c) Sun Microsystems, Inc.
+#
+# This required package information file contains a list of package contents.
+# The 'pkgmk' command uses this file to identify the contents of a package
+# and their location on the development machine when building the package.
+# Can be created via a text editor or through use of the 'pkgproto' command.
+
+#!search <pathname pathname ...>	# where to find pkg objects
+#!include <filename>			# include another 'prototype' file
+#!default <mode> <owner> <group>	# default used if not specified on entry
+#!<param>=<value>			# puts parameter in pkg environment
+
+# packaging files
+i i.bootenvrc
+i i.rOWconfig
+i i.p9000conf
+i i.p9100conf
+i i.preserve
+i preinstall
+#
+# Include ISA independent files (prototype_com)
+#
+!include prototype_com
+#
+#
+#
+#
+# List files which are I386 specific here
+#
+# source locations relative to the prototype file
+#
+#
+# SUNWos86r
+#
+d none etc 0755 root sys
+f none etc/bootrc=etc/bootrc.install 755 root sys
+e preserve etc/defaultkb 644 root sys
+e preserve etc/defaultfont 644 root sys
+d none kernel 755 root sys
+d none kernel/drv 755 root sys
+f none kernel/drv/adp=i86pc/kernel/drv/adp 755 root sys
+f none kernel/drv/adp.conf=i86pc/kernel/drv/adp.conf 644 root sys
+f none kernel/drv/aic=i86pc/kernel/drv/aic 755 root sys
+f none kernel/drv/aic.conf=i86pc/kernel/drv/aic.conf 644 root sys
+f none kernel/drv/blogic=i86pc/kernel/drv/blogic 755 root sys
+f none kernel/drv/blogic.conf=i86pc/kernel/drv/blogic.conf 644 root sys
+f none kernel/drv/corvette=i86pc/kernel/drv/corvette 755 root sys
+f none kernel/drv/corvette.conf=i86pc/kernel/drv/corvette.conf 644 root sys
+f none kernel/drv/csa=i86pc/kernel/drv/csa 755 root sys
+f none kernel/drv/csa.conf=i86pc/kernel/drv/csa.conf 644 root sys
+f none kernel/drv/dnet=i86pc/kernel/drv/dnet 755 root sys
+f none kernel/drv/dnet.conf=i86pc/kernel/drv/dnet.conf 644 root sys
+f none kernel/drv/dsa=i86pc/kernel/drv/dsa 755 root sys
+f none kernel/drv/dsa.conf=i86pc/kernel/drv/dsa.conf 644 root sys
+f none kernel/drv/eepro=i86pc/kernel/drv/eepro 755 root sys
+f none kernel/drv/eepro.conf=i86pc/kernel/drv/eepro.conf 644 root sys
+f none kernel/drv/elink=i86pc/kernel/drv/elink 755 root sys
+f none kernel/drv/elink.conf=i86pc/kernel/drv/elink.conf 644 root sys
+f none kernel/drv/esa=i86pc/kernel/drv/esa 755 root sys
+f none kernel/drv/esa.conf=i86pc/kernel/drv/esa.conf 644 root sys
+f none kernel/drv/iee=i86pc/kernel/drv/iee 755 root sys
+f none kernel/drv/iee.conf=i86pc/kernel/drv/iee.conf 644 root sys
+f none kernel/drv/ieef=i86pc/kernel/drv/ieef 755 root sys
+f none kernel/drv/ieef.conf=i86pc/kernel/drv/ieef.conf 644 root sys
+# f none kernel/drv/iprb=i86pc/kernel/drv/iprb 755 root sys
+# f none kernel/drv/iprb.conf=i86pc/kernel/drv/iprb.conf 644 root sys
+f none kernel/drv/chs=i86pc/kernel/drv/chs 755 root sys
+f none kernel/drv/chs.conf=i86pc/kernel/drv/chs.conf 644 root sys
+f none kernel/drv/iss=i86pc/kernel/drv/iss 755 root sys
+f none kernel/drv/iss.conf=i86pc/kernel/drv/iss.conf 644 root sys
+# f none kernel/drv/mtok=i86pc/kernel/drv/mtok 755 root sys
+# f none kernel/drv/mtok.conf=i86pc/kernel/drv/mtok.conf 644 root sys
+f none kernel/drv/ncrs=i86pc/kernel/drv/ncrs 755 root sys
+f none kernel/drv/ncrs.conf=i86pc/kernel/drv/ncrs.conf 644 root sys
+f none kernel/drv/nee=i86pc/kernel/drv/nee 755 root sys
+f none kernel/drv/nee.conf=i86pc/kernel/drv/nee.conf 644 root sys
+f none kernel/drv/nei=i86pc/kernel/drv/nei 755 root sys
+f none kernel/drv/nei.conf=i86pc/kernel/drv/nei.conf 644 root sys
+f none kernel/drv/nfe=i86pc/kernel/drv/nfe 755 root sys
+f none kernel/drv/nfe.conf=i86pc/kernel/drv/nfe.conf 644 root sys
+f none kernel/drv/pcn=i86pc/kernel/drv/pcn 755 root sys
+f none kernel/drv/pcn.conf=i86pc/kernel/drv/pcn.conf 644 root sys
+f none kernel/drv/pcscsi=i86pc/kernel/drv/pcscsi 755 root sys
+f none kernel/drv/pcscsi.conf=i86pc/kernel/drv/pcscsi.conf 644 root sys
+f none kernel/drv/pe=i86pc/kernel/drv/pe 755 root sys
+f none kernel/drv/pe.conf=i86pc/kernel/drv/pe.conf 644 root sys
+f none kernel/drv/riles=i86pc/kernel/drv/riles 755 root sys
+f none kernel/drv/riles.conf=i86pc/kernel/drv/riles.conf 644 root sys
+f none kernel/drv/rns_smt=i86pc/kernel/drv/rns_smt 755 root sys
+f none kernel/drv/rns_smt.conf=i86pc/kernel/drv/rns_smt.conf 644 root sys
+f none kernel/drv/smce=i86pc/kernel/drv/smce 755 root sys
+f none kernel/drv/smce.conf=i86pc/kernel/drv/smce.conf 644 root sys
+f none kernel/drv/smceu=i86pc/kernel/drv/smceu 755 root sys
+f none kernel/drv/smceu.conf=i86pc/kernel/drv/smceu.conf 644 root sys
+f none kernel/drv/smcf=i86pc/kernel/drv/smcf 755 root sys
+f none kernel/drv/smcf.conf=i86pc/kernel/drv/smcf.conf 644 root sys
+f none kernel/drv/sxp=i86pc/kernel/drv/sxp 755 root sys
+f none kernel/drv/sxp.conf=i86pc/kernel/drv/sxp.conf 644 root sys
+f none kernel/drv/sys_core=i86pc/kernel/drv/sys_core 755 root sys
+f none kernel/drv/trantor=i86pc/kernel/drv/trantor 755 root sys
+f none kernel/drv/trantor.conf=i86pc/kernel/drv/trantor.conf 644 root sys
+#f none kernel/drv/tmf=i86pc/kernel/drv/tmf 755 root sys
+#f none kernel/drv/tmf.conf=i86pc/kernel/drv/tmf.conf 644 root sys
+f none kernel/drv/p9000=i86pc/kernel/drv/p9000 755 root sys
+f none kernel/drv/p9000.conf=i86pc/kernel/drv/p9000.conf 644 root sys
+f none kernel/drv/p9100=i86pc/kernel/drv/p9100 755 root sys
+f none kernel/drv/p9100.conf=i86pc/kernel/drv/p9100.conf 644 root sys
+f none kernel/drv/xsvc=i86pc/kernel/drv/xsvc 755 root sys
+f none kernel/drv/xsvc.conf=i86pc/kernel/drv/xsvc.conf 644 root sys
+d none kernel/mach 755 root sys
+f none kernel/mach/wysemp=i86pc/kernel/mach/wysemp 755 root sys
+f none kernel/mach/ast=i86pc/kernel/mach/ast 755 root sys
+f none kernel/mach/syspro=i86pc/kernel/mach/syspro 755 root sys
+f none kernel/mach/pcplusmp=i86pc/kernel/mach/pcplusmp 755 root sys
+f none kernel/mach/corollary=i86pc/kernel/mach/corollary 755 root sys
+f none kernel/mach/compaq=i86pc/kernel/mach/compaq 755 root sys
+f none kernel/mach/tpf=i86pc/kernel/mach/tpf 755 root sys
+d none kernel/misc 755 root sys
+f none etc/mach 644 root sys
+e rOWconfig etc/openwin/server/etc/OWconfig 666 root bin
+d none etc/init.d 775 root sys
+f none etc/init.d/initboot 744 root sys
+d none etc/rcS.d 775 root sys
+l none etc/rcS.d/S45initboot=../../etc/init.d/initboot
+d none platform 755 root sys
+d none platform/i86pc 755 root sys
+d none platform/i86pc/boot 755 root sys
+d none platform/i86pc/boot/solaris 755 root sys
+f none platform/i86pc/boot/solaris/boot.rc 644 root sys
+f none platform/i86pc/boot/solaris/bootargs.rc 644 root sys
+f none platform/i86pc/boot/solaris/bootconf.exe 644 root sys
+f none platform/i86pc/boot/solaris/bootconf.txt 644 root sys
+e bootenvrc platform/i86pc/boot/solaris/bootenv.rc 644 root sys
+f none platform/i86pc/boot/solaris/strap.rc 644 root sys
+d none platform/i86pc/boot/solaris/devicedb 755 root sys
+f none platform/i86pc/boot/solaris/devicedb/master 644 root sys
+f none platform/i86pc/boot/solaris/devicedb/config.db 644 root sys
+d none platform/i86pc/boot/solaris/drivers 755 root sys
+d none platform/i86pc/boot/solaris/drivers/isa.025 755 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.025/ata.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.025/com.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.025/fdc.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.025/joyst.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.025/key.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.025/logi.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.025/lpt.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.025/msm.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.025/ps2ms.bef 644 root sys
+d none platform/i86pc/boot/solaris/drivers/isa.125 755 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.125/aha1540.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.125/aic.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.125/blogic.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.125/dpt.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.125/eepro.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.125/el.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.125/elink.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.125/elx.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.125/pe3.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.125/smc.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.125/trantor.bef 644 root sys
+d none platform/i86pc/boot/solaris/drivers/isa.150 755 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.150/esa.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.150/iee.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.150/nei.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.150/pcn.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.150/tr.bef 644 root sys
+d none platform/i86pc/boot/solaris/drivers/isa.175 755 root sys
+f none platform/i86pc/boot/solaris/drivers/isa.175/sbpro.bef 644 root sys
+d none platform/i86pc/boot/solaris/drivers/notisa.010 755 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.010/adp.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.010/aha1740.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.010/iss.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.010/mlx.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.010/ncrs.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.010/pcscsi.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.010/dnet.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.010/ieef.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.010/nee.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.010/smce.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.010/smcf.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.010/smceu.bef 644 root sys
+d none platform/i86pc/boot/solaris/drivers/notisa.020 755 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.020/nfe.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.020/riles.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.020/corvette.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.020/mcis.bef 644 root sys
+# f none platform/i86pc/boot/solaris/drivers/notisa.020/iprb.bef 644 root sys
+f none platform/i86pc/boot/solaris/drivers/notisa.020/chs.bef 644 root sys
+d none platform/i86pc/boot/solaris/machines 755 root sys
+d none platform/i86pc/boot/solaris/mca_adf 755 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@0708.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@6042.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@61c8.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@61c9.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@627c.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@627d.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@6e6c.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@6fc0.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@6fc1.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@6fc2.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@80ec.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@8efc.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@8efe.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@8eff.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@8f82.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@8fbb.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@8fda.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@8fdb.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@90ee.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@917b.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@deff.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@e001.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@eee7.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@eeff.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@efef.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@effd.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/pdefe.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/pdffe.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/pe0fe.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/pe1fe.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/pe4fe.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/pff6f.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/pff9f.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@60e9.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@6127.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@8fa2.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@8fa8.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/@8fd6.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/pfe80.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/pfebe.adf 644 root sys
+f none platform/i86pc/boot/solaris/mca_adf/pfee7.adf 644 root sys

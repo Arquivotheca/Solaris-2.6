@@ -1,0 +1,75 @@
+#
+#ident	"@(#)Makefile.targ	1.14	95/11/01 SMI"
+#
+# Copyright (c) 1991 by Sun Microsystems, Inc.
+#
+# included to define local library targets
+#
+
+# install rules
+
+$(ROOTBIN)/%: %
+	$(INS.file)
+
+$(ROOTLIB)/%: %
+	$(INS.file)
+
+$(ROOTSBIN)/%: %
+	$(INS.file)
+
+$(ROOTUSRSBIN)/%: %
+	$(INS.file)
+
+$(ROOTETC)/%: %
+	$(INS.file)
+
+$(ROOTADMINLIB):
+	$(INS.dir)
+
+$(ROOTADMINLIB)/%: $$(PNAME)/$(ARCH)/%
+	$(INS.file)
+
+$(ROOTADMINLIB)/libp/%: libp/%
+	$(INS.file)
+
+$(ROOTADMINLIB)/$(PLIB): $(ROOTADMINLIB)/libp
+
+$(ROOTADMINLIB)/libp:
+	$(INS.dir)
+
+$(ROOTOPTADMINLIB)/%: $$(PNAME)/$(ARCH)/%
+	$(INS.file)
+
+$(ROOTINCADMIN)/%: %
+	$(INS.file)
+
+$(ROOTUSRLIBMSGS):
+	$(INS.dir)
+
+objs profs pics libp:
+	-@mkdir $@ 2>/dev/null ; $(CHMOD) 777 $@
+	-@mkdir $@/$(ARCH) 2>/dev/null ; $(CHMOD) 777 $@/$(ARCH)
+
+objs/$(ARCH)/$(LIBRARY): objs .WAIT $(OBJS) .WAIT
+	$(BUILD.AR)
+
+$(DYNLIB): pics .WAIT $(PICS) .WAIT
+	$(LD) -G -z text $(SOFLAGS) -o $@ $(PICS)
+		
+$(DYNLIBLINK) $(ROOTADMINLIBDYNLIBLINK) $(ROOTOPTADMINLIBDYNLIBLINK):
+	$(RM) $@; $(SYMLINK) ./$(BASEDYNLIB) $@
+
+$(ROOTUSRLIBMSGS)/%: %
+	$(INS.file)
+
+$(PLIB): profs libp $(PROFS)
+	$(BUILD.AR)
+
+$(LINTLIB): $(SRCS)
+	$(LINT.c) -o $(LIBRARY:lib%.a=%) $(SRCS) > $(LINTOUT) 2>&1
+
+clobber: clean
+	$(RM) -rf $(LIBS) $(PLIB) $(CLOBBERFILES) objs pics
+
+clean:
+	$(RM) $(OBJS) $(PROFS) $(PICS) $(CLEANFILES)

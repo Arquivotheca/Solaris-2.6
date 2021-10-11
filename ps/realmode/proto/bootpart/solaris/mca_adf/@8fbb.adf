@@ -1,0 +1,125 @@
+ AdapterID 8FBBh
+
+ AdapterName "IBM RAID Controller"
+
+ Numbytes 4
+
+ Address 32
+
+ Begin Device 02h 02h 03h NoDma
+
+
+ NamedItem
+
+ Prompt "Interrupt Level"
+ choice "Level E"  pos[0]=00XXXXXXb int 0eh
+ choice "Level B"  pos[0]=10XXXXXXb int 0bh
+ choice "Level A"  pos[0]=11XXXXXXb int 0ah
+
+ Help
+
+"This choice allows you to set the interrupt level for the adapter.
+If you are in the 'Change Configuration' window, you can change
+the setting.  Use F5 and F6 to scroll through the choices.
+If a setting conflicts with another, an asterisk (*) appears next to
+the conflicts.  You must fix conflicts before you use the adapter.
+Use the Up and Down arrow keys to move from field to field.
+(If you are not in the 'Change Configuration' window and you need
+to change the setting, return to the 'Set Configuration' window then
+select 'Change configuration'.)"
+
+
+ NamedItem
+
+ Prompt "BIOS Base Address"
+
+ choice "C0000-0C1FFF" pos[0]=XX00000Xb mem 0c0000h-0c1fffh
+ choice "C2000-0C3FFF" pos[0]=XX00010Xb mem 0c2000h-0c3fffh
+ choice "C4000-0C5FFF" pos[0]=XX00100Xb mem 0c4000h-0c5fffh
+ choice "C6000-0C7FFF" pos[0]=XX00110Xb mem 0c6000h-0c7fffh
+ choice "C8000-0C9FFF" pos[0]=XX01000Xb mem 0c8000h-0c9fffh
+ choice "CA000-0CBFFF" pos[0]=XX01010Xb mem 0ca000h-0cbfffh
+ choice "CC000-0CDFFF" pos[0]=XX01100Xb mem 0cc000h-0cdfffh
+ choice "CE000-0CFFFF" pos[0]=XX01110Xb mem 0ce000h-0cffffh
+ choice "D0000-0D1FFF" pos[0]=XX10000Xb mem 0d0000h-0d1fffh
+ choice "D2000-0D3FFF" pos[0]=XX10010Xb mem 0d2000h-0d3fffh
+ choice "D4000-0D5FFF" pos[0]=XX10100Xb mem 0d4000h-0d5fffh
+ choice "D6000-0D7FFF" pos[0]=XX10110Xb mem 0d6000h-0d7fffh
+ choice "D8000-0D9FFF" pos[0]=XX11000Xb mem 0d8000h-0d9fffh
+ choice "DA000-0DBFFF" pos[0]=XX11010Xb mem 0da000h-0dbfffh
+ choice "DC000-0DDFFF" pos[0]=XX11100Xb mem 0dc000h-0ddfffh
+ choice "DE000-0DFFFF" pos[0]=XX11110Xb mem 0de000h-0dffffh
+
+ Help
+
+         "This choice allows you to choose the BIOS base address for the
+         adapter. Each adapter must have a unique address range.  Under
+         normal circumstances, this address range does not need to be
+         changed.  If you are in the 'Change Configuration' window, you can
+         change the setting.  Use F5 and F6 to scroll through the choices.
+         If a setting conflicts with another, an asterisk (*) appears next to
+         the conflicts.  You must fix conflicts before you use the adapter.
+         Use the Up and Down arrow keys to move from field to field.
+         (If you are not in the 'Change Configuration' window and you need
+         to change the setting, return to the 'Set Configuration' window then
+         select 'Change configuration'.)"
+
+ NamedItem
+
+ Prompt "I/O Address"
+
+ choice "1C00-1C1F" pos[3]=XX000XXXb io 01c00h-01c1fh
+ choice "3C00-3C1F" pos[3]=XX001XXXb io 03c00h-03c1fh
+ choice "5C00-5C1F" pos[3]=XX010XXXb io 05c00h-05c1fh
+ choice "7C00-7C1F" pos[3]=XX011XXXb io 07c00h-07c1fh
+ choice "9C00-9C1F" pos[3]=XX100XXXb io 09c00h-09c1fh
+ choice "BC00-BC1F" pos[3]=XX101XXXb io 0bc00h-0bc1fh
+ choice "DC00-DC1F" pos[3]=XX110XXXb io 0dc00h-0dc1fh
+ choice "FC00-FC1F" pos[3]=XX111XXXb io 0fc00h-0fc1fh
+
+        Help
+         "This choice allows you to set the I/O address for the adapter.
+         Each adapter must have a unique address range.  Under normal
+         circumstances, this address range does not need to be changed.
+         If you are in the 'Change Configuration' window, you can change
+         the setting.  Use F5 and F6 to scroll through the choices.
+         If a setting conflicts with another, an asterisk (*) appears next to
+         the conflicts.  You must fix conflicts before you use the adapter.
+         Use the Up and Down arrow keys to move from field to field.
+         (If you are not in the 'Change Configuration' window and you need
+         to change the setting, return to the 'Set Configuration' window then
+         select 'Change configuration'.)"
+
+ NamedItem
+
+ Prompt "DMA Arbitration Level"
+
+ choice "Level 8"  pos[1]=10111000b arb  8
+ choice "Level 9"  pos[1]=10111001b arb  9
+ choice "Level A"  pos[1]=10111010b arb  10
+ choice "Level B"  pos[1]=10111011b arb  11
+ choice "Level C"  pos[1]=10111100b arb  12
+ choice "Level D"  pos[1]=10111101b arb  13
+ choice "Level E"  pos[1]=10111110b arb  14
+ choice "Level 1"  pos[1]=10110001b arb  1
+ choice "Level 3"  pos[1]=10110011b arb  3
+ choice "Level 5"  pos[1]=10110101b arb  5
+ choice "Level 6"  pos[1]=10110110b arb  6
+ choice "Level 7"  pos[1]=10110111b arb  7
+
+
+        Help
+        "This choice allows you to select the DMA channel the adapter will
+         use to transfer data. Under normal circumstances, select <Level 8>.
+         If you are in the 'Change Configuration' window, you can change
+         the setting.  Use F5 and F6 to scroll through the choices.
+         If a setting conflicts with another, an asterisk (*) appears next to
+         the conflicts.  You must fix conflicts before you use the adapter.
+         Use the Up and Down arrow keys to move from field to field.
+         (If you are not in the 'Change Configuration' window and you need
+         to change the setting, return to the 'Set Configuration' window then
+         select 'Change configuration'.)"
+
+
+END
+

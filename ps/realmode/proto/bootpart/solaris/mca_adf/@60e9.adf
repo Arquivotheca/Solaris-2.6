@@ -1,0 +1,67 @@
+;Future Domain Corporation
+;IBM Coropration
+;ADF File for MCS-700 board/IBM MC SCSI-2 adapter (18C50 VLSI)
+;Version 1.2
+;01/10/94 6620429 SBB remove inturrupt 12, move int14 to end of list.
+;
+AdapterID 060E9h
+
+AdapterName  "IBM Personal System/2 SCSI-2 Adapter/A"
+
+NumBytes 2
+
+FixedResources
+        pos[1]=0000xxxxb
+
+nameditem
+  Prompt  "Adapter ROM BIOS Address"
+    Choice "Segment DE00" pos[0]=11xxxxxxb pos[1]=xxxxxx00b mem 0de000h-0dffffh
+    Choice "Segment CA00" pos[0]=01xxxxxxb pos[1]=xxxxxx00b mem 0ca000h-0cbfffh
+    Choice "Segment CE00" pos[0]=10xxxxxxb pos[1]=xxxxxx00b mem 0ce000h-0cffffh
+    Choice "Segment C800" pos[0]=00xxxxxxb pos[1]=xxxxxx00b mem 0c8000h-0c9fffh
+    Choice "Disabled"     pos[1]=xxxxxx11b
+  Help
+"To configure this adapter you must choose the memory address the
+adapter will use for it's ROM BIOS.  There are four memory addresses
+that may be selected from.  Under normal circumstances, select
+<Segment CA00>. If a conflict occurs, choose another memory address.
+In general, the BIOS must be enabled to support fixed or removable SCSI disk
+drives.  If you are using the PowerSCSI software, and if the only SCSI devices
+attached to this controller are tapes, CD-ROM drives or non-direct access
+devices, the BIOS may be disabled to speed system startup."
+
+nameditem
+        Prompt  "Adapter I/O Port Address"
+          Choice "0140h" pos[0]=xx00xxxxb io 0140h-014fh
+          Choice "0150h" pos[0]=xx01xxxxb io 0150h-015fh
+          Choice "0160h" pos[0]=xx10xxxxb io 0160h-016fh
+          Choice "0170h" pos[0]=xx11xxxxb io 0170h-017fh
+        Help
+"Choose the I/O port addresses the adapter will use.  There are four I/O
+port addresses that may be selected from.  Under normal circumstances,
+select <0140h>."
+
+
+
+nameditem
+       Prompt "SCSI Adapter Address (ID)"
+         Choice "7"  pos[1]=xxxxxxxxb
+       Help
+"This is the SCSI ID of the adapter.  This value is fixed and cannot be
+changed."
+
+
+
+nameditem
+        Prompt  "Select Interrupt Line"
+          Choice  "IRQ 5"       pos[0]=xxxx001xb int 5
+          Choice  "IRQ 10"      pos[0]=xxxx010xb int 10
+          Choice  "IRQ 11"      pos[0]=xxxx011xb int 11
+          Choice  "IRQ 15"      pos[0]=xxxx110xb int 15
+          Choice  "IRQ 3"       pos[0]=xxxx000xb int 3
+          Choice  "IRQ 14"      pos[0]=xxxx101xb int 14
+          Choice  "Disabled"    pos[0]=xxxx111xb
+        Help
+"Select the interrupt to be used by the SCSI controller.
+Under normal circumstances, select <IRQ 5>."
+

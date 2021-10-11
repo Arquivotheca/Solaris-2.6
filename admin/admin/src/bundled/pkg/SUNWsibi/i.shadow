@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Copyright Notice
+#
+
+(echo "/root:";echo "c";echo "root:NP:6445::::::";echo ".";echo "w";echo "q") |\
+        ed -s $PKG_INSTALL_ROOT/etc/shadow >/dev/null

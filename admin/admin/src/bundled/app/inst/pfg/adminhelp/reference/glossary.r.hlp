@@ -1,0 +1,207 @@
+---- Glossary ------------------------------------
+
+/ (root) - the file system at the top of the 
+hierarchical file tree. The root directory 
+contains the directories and files critical for
+system operation, such as the kernel, device
+drivers, and the programs used to start (boot)
+the system. It also contains the mount point
+directories where local and remote file system 
+can be attached to the file tree.
+
+/etc - a directory that contains critical system 
+configuration files and maintenance commands.
+
+/etc/vfstab - the virtual file system table on
+a system that contains a list of file systems
+that are automatically mounted when the system
+is booted. The upgrade option uses this file
+to determine which file systems to upgrade.
+
+/export - a file system on an OS server that is 
+shared with other systems on a network. For 
+example, the /export file system can contain the 
+root file system and swap for diskless clients, 
+and the home directories for users on the network.
+Diskless clients rely on the /export file system 
+on an OS server to boot and run.
+
+/opt - a file system that contains the mount 
+points for optional, third-party software.
+
+/usr - a file system that contains many of the 
+standard UNIX programs. Sharing the large /usr 
+file system with a server rather than maintaining 
+a local copy minimizes the overall disk space 
+required to install and run the Solaris software 
+on a system.
+
+/var - a file system that contains system files 
+and directories that are likely to change or grow 
+over the life of the local system. These include 
+system logs, vi files, mail files, and uucp files.
+
+AutoClient (TM) - a system type that caches all of
+its needed system software from an OS server. 
+Because it contains no permanent data, an 
+AutoClient is a field replaceable unit (FRU). It 
+requires a small local disk for swapping and 
+caching its individual root (/) and /usr file 
+systems from an OS server.
+
+auto-layout - a feature of the Solaris 
+installation program that takes the file systems 
+you've requested and allocates all available disk 
+space to them. See manual layout.
+
+client - a system connected to a network. It gets 
+all or part of the resources necessary for its 
+operation from an OS server.
+
+cluster - a logical grouping of software packages. 
+The Solaris software is divided into four main 
+software groups, which are each composed of 
+clusters and packages.
+
+Core - a software group that contains the minimum 
+software required to boot and run Solaris software
+on a system. It includes some networking software 
+and the drivers required to run the OpenWindows 
+environment; it does not include the OpenWindows 
+software.
+
+cylinder - the aggregate of all tracks that 
+reside in the same location on every disk surface. 
+dependencies - see software dependencies.
+
+Developer System Support - a software group that 
+contains End User System Support software plus 
+libraries, include files, man pages, and 
+programming tools for developing software. 
+Compilers and debuggers are not included with 
+Solaris.
+
+diskless client - a networked system that does 
+not have its own disk, so it relies completely on 
+an OS server for software and file storage. 
+Diskless clients do not have to use the Solaris 
+installation program because they use the software
+that is already installed on an OS server.
+
+End User System Support - a software group that 
+contains the Core software group plus the 
+recommended software for an end user, including 
+OpenWindows and DeskSet software.
+
+Entire Distribution - a software group that 
+contains the entire Solaris release.
+
+Entire Distribution Plus OEM - a software group 
+that contains the entire Solaris release, plus 
+additional hardware support for OEMs. This 
+software is recommended when installing Solaris 
+software on servers.
+
+fdisk partition - a logical partition of a disk 
+drive dedicated to a particular operating system 
+on x86 systems. During the Solaris installation 
+program, you must set up at least one fdisk 
+partition on an x86 system. x86 systems are 
+designed to support up to four different operating
+systems on each drive; each operating system must 
+reside on a unique fdisk partition.
+
+file system - a collection of files and 
+directories that, when set into a logical 
+hierarchy, compose an organized, structured set 
+of information. File systems can be mounted from 
+your local system or a remote system.
+
+initial option - an option presented during 
+Solaris installation program that overwrites the 
+disk(s) with the new version of Solaris.
+
+IP address - a unique number that identifies a 
+networked system so it can communicate via 
+Internet protocols. IP addresses are logically 
+divided into two parts: the network (similar to a 
+telephone area code), and the system on the 
+network (similar to a phone number).
+
+manual layout - the process of manually specifying
+the slices and disks for laying out file systems. 
+See auto-layout.
+
+mount point - a directory on a system where you 
+can mount a file system that exists on the local 
+or remote system.
+
+mount - the process of making a remote or local 
+system accessible by executing the mount command. 
+To mount a file system, you need to a mount point 
+on the local system and the name of the file 
+system to be mounted (for example, /usr).
+
+overlapping slices - taking physical slices on the
+disk and combining them to form logical slices. 
+For example, you could combine physical slices 0 
+and 1 and call it slice 3.
+
+OS server - a server that provides the Solaris 
+installation image for other systems on a network 
+to boot and install from. The Solaris installation
+image can reside on the OS server's CD-ROM or hard
+disk. To serve diskless clients, an OS server must
+have disk space set aside for each diskless 
+client's root file system and swap space 
+(/export/ root, /export/swap). 
+
+package - a functional grouping of files and 
+directories that form a software application. 
+The Solaris software is divided into software 
+groups, which are each composed of clusters and 
+packages.
+
+partition - see slice.
+
+platform - the instruction set that a system uses
+to run the Solaris software, for example, i86pc,
+SUNW,SUN_4_60, IBM_PPS_Model_6040. 
+
+profile - a text file that defines how the Solaris
+software will be installed on a system.
+
+slice - an area of the disk composed of a single 
+range of contiguous blocks. A slice is a physical 
+subset of a disk (except slice 2, which by 
+convention represents the entire disk). A disk can
+be divided into eight slices.
+
+Solaris installation program - a menu-driven, 
+interactive program that enables you to set up a 
+system and install Solaris software on it.
+
+software group - a logical grouping of software 
+(clusters and packages). During a Solaris 
+installation, you can install one of software 
+groups, for example: Core, End User System 
+Support, Developer System Support, and Entire 
+Distribution.
+
+software dependencies - packages that require 
+other packages to function.
+
+swap space - disk space used for virtual memory 
+storage when the system does not have enough 
+system memory to handle current processes. In 
+Solaris terminology, this is known as the /swap 
+or swap file system.
+
+upgrade option - an option presented during the 
+Solaris installation program if at least one of 
+the disks on your system has a Solaris 2.x root 
+file system on slice 0. The upgrade option merges 
+the new version of Solaris with existing files on 
+your disk(s), and saves as many local 
+modifications as possible since the last time 
+Solaris software was installed.

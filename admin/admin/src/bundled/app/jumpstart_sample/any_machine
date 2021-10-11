@@ -1,0 +1,8 @@
+install_type	initial_install
+system_type	standalone
+partitioning	default
+cluster		SUNWCuser
+cluster		SUNWCxgl delete
+package		SUNWaudmo add
+filesys		any 40 swap
+filesys		any 50 /opt

@@ -1,0 +1,20 @@
+---- Using Administration Tool on other hosts ------------------
+ 
+-       Modify the sysadmin group entry in the /etc/group file
+        on the other systems to add your user name.
+
+-       Identify the other host name on the Load window of the
+        application using these steps:
+        1. Select None from the Naming Service option menu.
+        2. Type the host name in the Host: text box.
+        3. Click on OK.
+
+-       Or, if the application does not have a Load window
+         (Printer Manager and Serial Port Manager), use these
+         steps:
+         1. Start the application by clicking on the icon
+            in the launcher.
+         2. Select the Host option from the View menu on the
+            main window.
+            Type the host name in the Selection text box.
+         3. Click on OK.

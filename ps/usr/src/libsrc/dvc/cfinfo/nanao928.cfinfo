@@ -1,0 +1,29 @@
+# @(#)om60.cfinfo	1.0 - 94/10/09 Nanao Corporation
+
+class="win" name="NANAO928"
+	__wclass__="XSCREEN"
+	ddxHandler="ddxNANAO928.so.1" ddxInitFunc="NANAO928Init"
+	;
+class="win" name="NANAO928"
+	__wclass__="XSCREENCONFIG"
+	__category__="display"
+	__title__="Prototype om60 entry"
+
+	size="var,__size__"
+	__size__="string,15-inch,17-inch,19-inch"
+	__dimx__="string,12,13.5,15"
+	__dimy__="string,9.5,11,12"
+
+	res="var,__resolution__"
+	__resolution__="string,1600x1200,1280x1024,1024x768"
+
+	position="var,__position__"
+	__position__="string,left,right,top,bottom"
+
+	device="NANAO928"
+	pmifile="/usr/openwin/share/etc/devdata/svpmi/NANAO928/om60.pmi"
+        __pmimap__="string,om60"
+
+	dpix="string,106"
+	dpiy="string,113"
+	;

@@ -1,0 +1,130 @@
+AdapterId 0627Dh
+
+AdapterName "3Com 3C529-TP Network Adapter"
+
+NumBytes 4
+
+NamedItem
+
+Prompt  "Enable/Disable Adapter"
+
+Choice  " adapter enabled "   pos[0]=XXXXXXX1b
+Choice  " adapter disabled "  pos[0]=XXXXXXX0b
+
+Help
+"This controls whether the adapter is enabled or not.
+Use the 'enabled' setting for normal use.  Use the
+'disabled' setting if you are not using the adapter
+and enabling it causes a conflict with another device."
+
+
+NamedItem
+
+Prompt  "I/O Address Range"
+
+choice  " 200h to 20Fh "    pos[2]=000000XXb  io 0200h-020Fh
+choice  " 600h to 60Fh "    pos[2]=000001XXb  io 0600h-060Fh
+choice  " A00h to A0Fh "    pos[2]=000010XXb  io 0A00h-0A0Fh
+choice  " E00h to E0Fh "    pos[2]=000011XXb  io 0E00h-0E0Fh
+choice  " 1200h to 120Fh "  pos[2]=000100XXb  io 1200h-120Fh
+choice  " 1600h to 160Fh "  pos[2]=000101XXb  io 1600h-160Fh
+choice  " 1A00h to 1A0Fh "  pos[2]=000110XXb  io 1A00h-1A0Fh
+choice  " 1E00h to 1E0Fh "  pos[2]=000111XXb  io 1E00h-1E0Fh
+choice  " 2200h to 220Fh "  pos[2]=001000XXb  io 2200h-220Fh
+choice  " 2600h to 260Fh "  pos[2]=001001XXb  io 2600h-260Fh
+choice  " 2A00h to 2A0Fh "  pos[2]=001010XXb  io 2A00h-2A0Fh
+choice  " 2E00h to 2E0Fh "  pos[2]=001011XXb  io 2E00h-2E0Fh
+choice  " 3200h to 320Fh "  pos[2]=001100XXb  io 3200h-320Fh
+choice  " 3600h to 360Fh "  pos[2]=001101XXb  io 3600h-360Fh
+choice  " 3A00h to 3A0Fh "  pos[2]=001110XXb  io 3A00h-3A0Fh
+choice  " 3E00h to 3E0Fh "  pos[2]=001111XXb  io 3E00h-3E0Fh
+choice  " 4200h to 420Fh "  pos[2]=010000XXb  io 4200h-420Fh
+choice  " 4600h to 460Fh "  pos[2]=010001XXb  io 4600h-460Fh
+choice  " 4A00h to 4A0Fh "  pos[2]=010010XXb  io 4A00h-4A0Fh
+choice  " 4E00h to 4E0Fh "  pos[2]=010011XXb  io 4E00h-4E0Fh
+
+Help
+"Determines the range of I/O addresses used by the
+adapter.  The addresses in this range cannot be used
+by another installed device."
+
+NamedItem
+
+Prompt  "Interrupt Request Level"
+
+choice  " level 3 "   pos[3]=XXXX0011b  int 3
+choice  " level 5 "   pos[3]=XXXX0101b  int 5
+choice  " level 7 "   pos[3]=XXXX0111b  int 7
+choice  " level 9 "   pos[3]=XXXX1001b  int 9
+choice  " level 10 "  pos[3]=XXXX1010b  int 10
+choice  " level 11 "  pos[3]=XXXX1011b  int 11
+choice  " level 12 "  pos[3]=XXXX1100b  int 12
+choice  " level 15 "  pos[3]=XXXX1111b  int 15
+
+Help
+"Determines the interrupt request level used by the
+adapter.  This adapter's interrupt level can be shared
+with another installed device.  You may be able to
+improve performance by selecting a level that is not
+used by any other installed device."
+
+NamedItem
+
+Prompt  "Boot ROM Address Range"
+
+choice  " disabled "                pos[1]=000000XXb
+choice  " C2000h to C3FFFh (8K) "   pos[1]=000001XXb  mem 0C2000h-0C3FFFh
+choice  " C4000h to C5FFFh (8K) "   pos[1]=000010XXb  mem 0C4000h-0C5FFFh
+choice  " C6000h to C7FFFh (8K) "   pos[1]=000011XXb  mem 0C6000h-0C7FFFh
+choice  " C8000h to C9FFFh (8K) "   pos[1]=000100XXb  mem 0C8000h-0C9FFFh
+choice  " CA000h to CBFFFh (8K) "   pos[1]=000101XXb  mem 0CA000h-0CBFFFh
+choice  " CC000h to CDFFFh (8K) "   pos[1]=000110XXb  mem 0CC000h-0CDFFFh
+choice  " CE000h to CFFFFh (8K) "   pos[1]=000111XXb  mem 0CE000h-0CFFFFh
+choice  " D0000h to D1FFFh (8K) "   pos[1]=001000XXb  mem 0D0000h-0D1FFFh
+choice  " D2000h to D3FFFh (8K) "   pos[1]=001001XXb  mem 0D2000h-0D3FFFh
+choice  " D4000h to D5FFFh (8K) "   pos[1]=001010XXb  mem 0D4000h-0D5FFFh
+choice  " D6000h to D7FFFh (8K) "   pos[1]=001011XXb  mem 0D6000h-0D7FFFh
+choice  " D8000h to D9FFFh (8K) "   pos[1]=001100XXb  mem 0D8000h-0D9FFFh
+choice  " DA000h to DBFFFh (8K) "   pos[1]=001101XXb  mem 0DA000h-0DBFFFh
+choice  " DC000h to DDFFFh (8K) "   pos[1]=001110XXb  mem 0DC000h-0DDFFFh
+choice  " DE000h to DFFFFh (8K) "   pos[1]=001111XXb  mem 0DE000h-0DFFFFh
+choice  " C0000h to C3FFFh (16K) "  pos[1]=010001XXb  mem 0C0000h-0C3FFFh
+choice  " C4000h to C7FFFh (16K) "  pos[1]=010010XXb  mem 0C4000h-0C7FFFh
+choice  " C8000h to CBFFFh (16K) "  pos[1]=010100XXb  mem 0C8000h-0CBFFFh
+choice  " CC000h to CFFFFh (16K) "  pos[1]=010110XXb  mem 0CC000h-0CFFFFh
+choice  " D0000h to D3FFFh (16K) "  pos[1]=011000XXb  mem 0D0000h-0D3FFFh
+choice  " D4000h to D7FFFh (16K) "  pos[1]=011010XXb  mem 0D4000h-0D7FFFh
+choice  " D8000h to DBFFFh (16K) "  pos[1]=011100XXb  mem 0D8000h-0DBFFFh
+choice  " DC000h to DFFFFh (16K) "  pos[1]=011110XXb  mem 0DC000h-0DFFFFh
+choice  " C0000h to C7FFFh (32K) "  pos[1]=100001XXb  mem 0C0000h-0C7FFFh
+choice  " C8000h to CFFFFh (32K) "  pos[1]=100100XXb  mem 0C0000h-0C7FFFh
+choice  " D0000h to D7FFFh (32K) "  pos[1]=101000XXb  mem 0D0000h-0D7FFFh
+choice  " D8000h to DFFFFh (32K) "  pos[1]=101100XXb  mem 0D0000h-0D7FFFh
+
+
+Help
+"Determines the range of addresses used by the boot
+PROM installed on the adapter.  The addresses in this
+range cannot be used by any other installed device
+or software.  The size of the address range must
+correspond with the size of the boot ROM.  Select
+'disabled' if no boot ROM is installed."
+
+
+NamedItem
+
+Prompt  "Transceiver Type"
+
+choice	" on-board (RJ45) "  pos[2]=XXXXXX00b
+choice	" external (AUI) "   pos[2]=XXXXXX01b
+
+Help
+"Determines the type of transceiver used by the
+adapter.  If you wish to connect to the adapter's
+8-pin RJ-45 connector, select 'on-board'.  If you
+wish to attach a drop cable from an external
+transceiver to the adapter's 15-pin AUI connector,
+select 'external'."
+
+
+; %VER 3C529-TP MCA Configuration File v1.0a

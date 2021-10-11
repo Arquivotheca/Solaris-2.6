@@ -1,0 +1,5 @@
+install_type    upgrade
+
+cluster         SUNWCprog
+package         SUNWdiag        add
+package SUNWabe         delete

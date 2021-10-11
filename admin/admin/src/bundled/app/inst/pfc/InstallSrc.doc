@@ -1,0 +1,149 @@
+
+#pragma ident "@(#)InstallSrc.doc   1.2     92/10/26 SMI"
+
+/*
+ * Copyright (c) 1992 Sun Microsystems, Inc.  All Rights Reserved. Sun
+ * considers its source code as an unpublished, proprietary trade secret, and
+ * it is available only under strict license provisions.  This copyright
+ * notice is placed here only to protect Sun in the event the source is
+ * deemed a published work.  Dissassembly, decompilation, or other means of
+ * reducing the object code to human readable form is prohibited by the
+ * license agreement under which this code is provided to the user or company
+ * in possession of this copy.
+ * 
+ * RESTRICTED RIGHTS LEGEND: Use, duplication, or disclosure by the Government
+ * is subject to restrictions as set forth in subparagraph (c)(1)(ii) of the
+ * Rights in Technical Data and Computer Software clause at DFARS 52.227-7013
+ * and in similar clauses in the FAR and NASA FAR Supplement.
+ */
+
+Source Organization:
+
+    inst/apps/libsrc --
+	    libraries that may be of use to more than one of the install
+	    programs live in here, for example inst/apps/ibe has been
+	    moved to inst/apps/libsrc/ibe.  The disk library has also
+	    been moved here, and tinst_ui.a has been removed from the
+	    ttinstall directory and put in libsrc/tinst_ui.
+    
+    inst/apps/prog --
+	    the program sources live here.  pf, swm, swmtool, and ttinstall
+	    have been moved from apps to apps/prog.  ttinstall has been
+	    gutted, with most of the code moved to libsrc/tinst_ui as
+	    mentioned above.
+    
+    inst/apps/lib --
+	    A destination directory for builds of the libraries in libsrc.
+	    The default Makefile targets in the libsrc/* directories compile
+	    the library and "install" the .a file into this lib directory.
+	    The tinst_ui.a, disk.a, and tinst_si.a libraries have had "lib"
+	    prepended to them, so they are now named libtinst_ui.a, etc.
+	    The result of this is that programs in the prog directories
+	    should not have to look in several directories for common
+	    libraries anymore, they may now add -L ../../lib to their
+	    link line, and reference needed libraries with -ldisk -ltinst_si,
+	    etc.
+    
+    inst/apps/include --
+	    A destination directory for interface files for libraries in
+	    the libsrc directory.  For the same reason as the lib directory,
+	    programs may now point at a single include directory (usually
+	    something like -I../../include, depending on the program's
+	    internal directory structure) and get interface files containing
+	    typedefs, function prototypes, etc. for the libraries found in
+	    lib.
+-------------------------------------------------------------------------------
+
+The initial install program is spread across several directories ( more on
+how & why in a moment.)  
+
+the ttinstall executable gets built in inst/apps/prog/init_install/cui_install,
+	this directory contains all of the UI code for the initial
+	install program.
+
+ttinstall depends on several libraries:
+    
+    libsw.a: 
+	- the `software' library, bits and pieces for dealing with OS
+	  distribution media, parsing product descriptions from the media, 
+	  building up more complex software organizations from raw packages.
+	  Code for figuring out `sizes' of packages & `clusters' and
+	  `products'
+
+	  srcs live in inst/apps/libsrc/sw/...
+	  
+    libdisk.a: 
+    	- the `disk' library, bits and pieces for interfacing with disks,
+    	  labelling them, reading their vtocs, ...
+
+    	  srcs live in inst/apps/libsrc/disk/...
+    	  
+    libtinst_si.a: 
+    	- the `suninstall' library, bits and pieces for dealing with pkgadd, 
+    	  admin files, installing multiple package instances for servers and 
+    	  diskless clients, etc.
+    	  
+    	  srcs live in inst/apps/libsrc/ibe/...
+    	  
+    libview.a: 
+    	- the 'view' layer, srcs live in inst/apps/prog/init_install/libsrc/view
+
+    libcui.a: 
+	- the CUI library, srcs live in inst/apps/libsrc/cui/...
+	
+Application layering:
+
+    In the past, the user interface code has been tightly coupled
+    to the application making it difficult to change either the UI
+    or the functionality.  We wish to separate the two layers of
+    code and make the install application code independent of the
+    UI.  This will make the future development of a GUI for initial
+    install easier.
+
+    To accomplish this, we borrow the MVC paradigm & terminology from
+    the world of window system toolkits and use it to define the
+    layering we want to use for our applications.
+
+	model -      describes an application's data structure(s) the formal
+		     representation of the application's objects
+		     
+	view -       describes how the data structure is abstracted and
+	             conceptualized: the operations on it. 
+
+	controller - describes how the user interacts with the
+		     application
+
+    The application specific code lives mostly in the view/controller 
+    layers.
+
+    The controller provides the applications visual appearance and decides 
+    how the user interacts with the abstractions.
+    
+    The view provides the user-level abstractions and the functionality for
+    diddling the the underlying model layer structures.
+
+    The `view' layer thus provides a certain level of separation
+    between the UI and the underlying code.  We want to make the layers
+    as independent as possible (by providing rich enough interfaces to
+    prevent skipping layers) so that a layer may be easily replaced.
+    For example, substituting a GUI for a CUI.
+	
+	
+    Example layering of code:
+    
+         --------------------------
+ Control |  Disk Config User I/F  |   `edit disk 1': select disk 1, 
+         |                        |   load it's current config into edit
+         |                        |   popup widgets, 
+         --------------------------
+  View   |        v_disk.c        |   v_set_current_disk(1);
+         |                        |   v_get_size(s0),v_get_mnt_pt(s0), ...
+         |                        |   v_set_size(s0, size), v_set_mnt_pt(s0, mnt)
+         --------------------------
+  Model  |         disk.a         |   init_disk(struct disk *)
+         |                        |   size(struct disk*, slice0)
+         |                        |   mount_pt(struct disk*, slice0)
+         --------------------------
+
+
+

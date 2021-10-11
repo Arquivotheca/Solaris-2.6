@@ -1,0 +1,17 @@
+---- Netmask ---------------------------------------
+
+     Specifies your system's netmask.
+
+     The netmask is a series of four numbers
+     separated by periods, specifying which portion
+     of an IP address is the network part and which
+     is the host part.  If you do not know your
+     netmask, do not guess; check with your system
+     or network administrator.
+
+
+---- See also --------------------------------------
+
+     Internet Protocol (IP) address
+     netmask
+     subnets

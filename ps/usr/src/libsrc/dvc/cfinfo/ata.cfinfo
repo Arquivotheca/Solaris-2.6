@@ -1,0 +1,8 @@
+name="ata"
+	__title__="ATA IDE controller"
+	__category__="scsi"
+
+	class="sysbus"
+
+	__auto__="string,true"
+	;

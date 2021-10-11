@@ -1,0 +1,14 @@
+
+---- Description -----------------------------------------------------
+
+     Specifies the relative position of your screen.
+
+     The relative position of a secondary display is described by
+     referencing where it sits with respect to the primary display.
+
+     For example, if the secondary display is to the left of the
+     primary, then "Left" is its position. With more than two displays,
+     the primary should be near the "center", so that you cannot have
+     two displays to the "left" of center, for example.
+
+     The relative position is not applicable to the primary display.

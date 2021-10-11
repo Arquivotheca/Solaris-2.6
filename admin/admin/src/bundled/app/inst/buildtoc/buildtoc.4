@@ -1,0 +1,77 @@
+.\" @(#)buildtoc.4 1.2 96/02/09
+.\" @(#)buildtoc.4 1.2 92/04/28
+'\"macro stdmacro
+.\" Copyright (c) 1992 SunSoft, Inc. - All Rights Reserved
+'\"macro stdmacro
+.nr X
+.TH buildtoc 4 "22 Jun 1992"
+.SH NAME
+buildtoc \- utility to create .packagetoc and .order files
+.SH SYNOPSIS
+.B buildtoc
+[
+.BI \-d " directory"
+] [
+.BI \-t " tfile"
+] [
+.BI \-o " ofile"
+] [ 
+.BI \-e " "
+] [
+.BI \-x " xfile"
+]
+.br
+.SH DESCRIPTION
+.IX "buildtoc " "" "\fLbuildtoc\fP \(em utility to create .packagetoc and .order files"
+.IX "packagetoc generation utility" "buildtoc" "" "\(em \fLbuildtoc\fP"
+The \f4buildtoc\fP utility scans all packages in a directory and creates two output files suitable for use as input data files for the Solaris Initial Install software (ttinstall).
+.PP
+\f4buildtoc\fP scans each package's pkgmap, pkginfo and depend files in turn.  
+The appropriate package table of contents information is written to a file 
+(by default, \f2./packagetoc.out\fP) that is suitable for use as a \f4.packagetoc\fP 
+file.  
+.PP
+The dependency information is collated and used to derive an ordering that can be used during package installation which avoids dependency conflicts.  This ordering is written to a file (by default, \f4order.out\fP) that is suitable 
+for use as a \f4.order\fP file.
+.PP
+See the man pages for \f4.packagetoc\fP and \f4.order\fP for further discussion on the associated file layout and contents.
+.SH OPTIONS
+.TP 15
+.BI \-d " directory"
+Uses all packages in \f2directory\f1 to construct the package table of contents and order information.  By default, the current working directory is scanned.
+.TP 15
+.BI \-t " tfile"
+Creates the package table of contents file with the name \f2tfile\f1.
+The default file name is \f2packagetoc.out\f1.
+.TP 15
+.BI \-o " ofile"
+Creates the ordering file with the name \f2ofile\f1.
+The default file name is \f2order.out\f1.
+.TP 15
+.BI \-e
+Use the existing packagetoc and order files for the media when loading the
+product information. By default, existing packagetoc and order
+files are ignored.
+.TP 15
+.BI \-x " xfile"
+Allows you to specify a file with the name \f2xfile\f1, which includes a list
+of packages that may be found in the package directory, but will not be included
+in the ordering file, \f2ofile\f1, or package table of contents
+file, \f2tfile\f1. In this file, you must specify one package
+name per line. Lines for which the first non-white character is a # are
+treated as comments and are ignored.
+.\".TP 15
+.\".BI \-d " "
+.\"Specifies the top-level product directory.  This is useful when using
+.\"buildtoc to re-scan packages that are part of an existing Solaris
+.\"distribution.  Solaris distributions include a top-level product index
+.\"(.cdtoc) which contains information on the location of each product's
+.\"packages.
+.\".SH NOTES
+.SH SEE ALSO
+.B cdtoc(4),
+.B clustertoc(4),
+.B packagetoc(4),
+.B pkginfo(4),
+.B depend(4)
+.\".Ee

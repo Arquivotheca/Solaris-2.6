@@ -1,0 +1,21 @@
+---- Admintool:Package Administration: Installation
+Dependencies Not Met -------------------------------
+
+Installation Dependencies Not Met
+     Controls how packages are installed if other
+     packages depend on the package to be
+     installed. Options are:
+
+     Ask	Installer will be prompted for
+		instructions when installation
+		dependencies are not met.
+
+     Ignore	Do not check package dependencies.
+
+     Abort	Abort installation if package
+		dependencies are not met.
+
+See the "Topics" help for more information about
+using Admintool:Package Administration to set
+preferences during installation.
+

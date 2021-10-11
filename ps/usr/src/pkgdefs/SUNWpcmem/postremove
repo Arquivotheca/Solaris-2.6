@@ -1,0 +1,71 @@
+#! /bin/sh
+
+# ident "@(#)postremove	1.9	96/05/03 SMI"
+# SUNWpcmem postremove script
+
+PATH="/bin:/usr/bin:/usr/sbin:${PATH}"
+export PATH
+
+REMDRV=/usr/sbin/rem_drv
+
+trap "rm -f /tmp/$$.*;exit" 0 1 2 3 13 15
+TMP=/tmp/$$.pcmemvold
+
+#
+# manipulate the vold.conf and rmmount.conf configuration file
+#
+
+remove_token()
+{
+
+    cp $1 $TMP
+
+    (	echo "g/$2/s///g"
+	echo 'g/ $/s///g'
+	echo 'w'
+	echo 'q'
+    ) | ed -s $TMP >/dev/null
+
+    mv $TMP $1
+}
+
+#
+# vold.conf processing
+#
+FILE="$BASEDIR/etc/vold.conf"
+
+if test -f $FILE ; then
+
+    #
+    # clear out any old pcmem lines in vold.conf
+    #
+    fgrep -v "use pcmem" $FILE >$TMP
+    mv $TMP $FILE
+
+    #
+    # clear out any old pcmem entries in vold.conf
+    #
+    remove_token "$FILE" 'pcmem'
+
+fi
+
+#
+# rmmount.conf processing
+#
+FILE="$BASEDIR/etc/rmmount.conf"
+
+if test -f $FILE ; then
+
+    #
+    # clear out any old pcmem entries in rmmount.conf
+    #
+    remove_token "$FILE" 'pcmem'
+
+fi
+
+${REMDRV} -b ${BASEDIR} pcmem
+${REMDRV} -b ${BASEDIR} pcram
+
+touch ${BASEDIR}/reconfigure
+
+exit 0

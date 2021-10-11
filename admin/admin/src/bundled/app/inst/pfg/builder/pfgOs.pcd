@@ -1,0 +1,155 @@
+Module: pfgOs
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.2 / Solaris 2.4";
+      lastWritten = "Sun May  5 13:36:31 1996";
+      copy = false;
+      inCreateMenu = true;
+      nodesUsed = "os_dialog,\nosSliceForm";
+        {
+          os_dialog = formWindow : pfgGUITemplates;
+          Group: Widget
+            initialFocus = continueButton;
+          Group: Control
+            vip_x = 40;
+            vip_y = 30;
+              {
+                panelhelpText = XmText;
+              }
+              {
+                osForm : form = XmForm;
+                Group: Widget
+                  fractionBase = 6;
+                  rubberPositioning = False;
+                  resizePolicy = resize_any;
+                    {
+                      osLabelForm = XmForm;
+                      Group: Widget
+                        rubberPositioning = False;
+                        resizePolicy = resize_any;
+                        fractionBase = 2;
+                      Group: Constraint
+                        leftAttachment = attach_position;
+                        rightAttachment = attach_position;
+                        topAttachment = attach_none;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                        leftPosition = 1;
+                        rightPosition = 5;
+                          {
+                            osVersionLabel = XmLabel;
+                            Group: Widget
+                              alignment = alignment_beginning;
+                            Group: Constraint
+                              leftAttachment = attach_form;
+                              rightAttachment = attach_position;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_form;
+                              resizable = true;
+                              rightPosition = 1;
+                          }
+                          {
+                            osSliceLabel = XmLabel;
+                            Group: Widget
+                              alignment = alignment_beginning;
+                            Group: Constraint
+                              leftAttachment = attach_position;
+                              rightAttachment = attach_form;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_none;
+                              resizable = true;
+                              topOffset = 0;
+                              leftOffset = 0;
+                              leftPosition = 1;
+                          }
+                    }
+                    {
+                      osScrolledWindow = XmScrolledWindow;
+                      Group: Widget
+                        scrollBarDisplayPolicy = as_needed;
+                        scrollingPolicy = automatic;
+                      Group: Constraint
+                        leftAttachment = attach_position;
+                        leftPosition = 1;
+                        rightAttachment = attach_position;
+                        topAttachment = attach_widget;
+                        topWidget = osLabelForm;
+                        bottomAttachment = attach_form;
+                        resizable = true;
+                        rightPosition = 5;
+                          {
+                            osSlicesForm = XmForm;
+                            Group: Widget
+                              rubberPositioning = False;
+                              resizePolicy = resize_any;
+                              fractionBase = 2;
+                          }
+                    }
+              }
+              {
+                messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = continueButton;
+                    {
+                      continueButton : button1 = XmPushButton;
+                    }
+                    {
+                      gobackButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: osGobackCB";
+                    }
+                    {
+                      exitButton : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgExit";
+                    }
+                    {
+                      helpButton : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"version.r\")";
+                    }
+                    {
+                      button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+        {
+          osSliceForm = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+            fractionBase = 2;
+          Group: Control
+            vipComment = "XmForm is a container widget with no input semantics. Constraints are placed on its children to define attachments for each of the child's four sides. These attachments can be to the XmForm, to another child, to a relative position or to the initial position of the child. The attachments determine the layout behavior of XmForm when resizing occurs.";
+            vip_x = 120;
+            vip_y = 30;
+              {
+                osSliceToggle = XmToggleButton;
+                Group: Widget
+                  alignment = alignment_beginning;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                osSliceNameLabel = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                  marginHeight = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                  leftOffset = 55;
+                  leftWidget = osSliceToggle;
+              }
+        }
+}
+

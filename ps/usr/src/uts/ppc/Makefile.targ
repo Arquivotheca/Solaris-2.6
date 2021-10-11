@@ -1,0 +1,21 @@
+#
+# uts/ppc/Makefile.targ
+# Copyright (c) 1991 by Sun Microsystems, Inc.
+#
+#ident "@(#)Makefile.targ	1.1	95/05/22 SMI"
+#
+#	This Makefile defines the set of all required, target containing
+# included Makefiles for the ppc "implementation architecture".
+#
+
+#
+#	Targets for all implementations:
+#
+include $(UTSBASE)/Makefile.targ
+
+#
+#	Target set for ppc (order is not important, as it is with the
+# isomorphic Makefile.files set).
+#
+include $(UTSBASE)/ppc/Makefile.rules
+include $(UTSBASE)/common/Makefile.rules

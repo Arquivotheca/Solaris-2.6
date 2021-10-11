@@ -1,0 +1,13 @@
+#
+#ident "@(#)postremove 1.2 95/07/27"
+#
+# postremove script for SUNWcdx86 package.
+#
+# script removes rootprop driver from kernel configuration
+#
+
+case "${ARCH}" in
+i386)
+	rem_drv rootprop >/dev/null 2>&1
+	;;
+esac

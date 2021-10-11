@@ -1,0 +1,15 @@
+
+
+---- Description -----------------------------------------------------
+
+     Specifies the monitor type your system uses.  Note, you will 
+     only be asked for the monitor type if the display card you
+     select is supported by the Xinside server.  
+
+     There are generic Multi-Frequency monitor selections for 
+     various refresh rates, if your monitor isn't listed in the 
+     selection list or you are not sure what type of monitor you have.
+
+     For information about refresh rates, see the documentation
+     for your monitor.
+

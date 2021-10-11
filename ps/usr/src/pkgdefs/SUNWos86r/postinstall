@@ -1,0 +1,280 @@
+#
+# Copyright (c) 1995, 1996 Sun Microsystems, Inc.
+# All Rights Reserved.
+
+#
+# postinstall script for SUNWos86r package.
+#
+#ident "@(#)postinstall 1.64 96/10/31"
+#
+#
+	
+# This function will check if the module has an entry in etc/name_to_major
+# If not simply calls add_drv with the arguments given. If there is
+# such an entry in name_to_major file, it adds entries in driver_aliases
+# driver_classes and minor_perm if necessary.
+# The syntax of this function is the same as add_drv. 
+
+
+check_add_drv()
+{
+	basedir=/  
+	alias=""
+	class=""
+	ADD_ALIAS=0
+	ADD_CLASS=0
+	ADD_MINOR=0
+	OPTIND=1
+	IS_NET_DRIVER=0
+
+	cmd="add_drv"
+
+	while getopts i:b:m:c:n  opt
+	do
+		case $opt in
+			i )	ADD_ALIAS=1	
+				alias=$OPTARG
+				cmd=$cmd" -i '$alias'"
+				;;
+			m )	ADD_MINOR=1
+				minor=$OPTARG
+				cmd=$cmd" -m '$minor'"
+				;;
+			c)	ADD_CLASS=1
+				class=$OPTARG
+				cmd=$cmd" -c $class"
+				;;
+			b)	basedir=$OPTARG
+				cmd=$cmd" -b $basedir"
+				;;
+			n)	IS_NET_DRIVER=1
+				;;
+			\?) 	echo "check_add_drv can not handle this option"
+				return
+				;;
+			esac
+	done 
+	shift `/usr/bin/expr $OPTIND - 1`
+	
+	drvname=$1
+
+	cmd=$cmd" "$drvname
+
+	drvname=`echo $drvname | /usr/bin/sed 's;.*/;;g'`
+
+	/usr/bin/grep "^$drvname[ 	]" $basedir/etc/name_to_major >  /dev/null 2>&1
+
+	if [ $? -ne 0 ] 
+	then
+		eval $cmd
+	else	
+		# entry already in name_to_major, add alias, class, minorperm
+		# if necessary
+		if [ $ADD_ALIAS = 1 ]	
+		then
+			for i in $alias
+			do
+				/usr/bin/egrep "^$drvname[ 	]+$i" $basedir/etc/driver_aliases>/dev/null 2>&1
+				if [ $? -ne 0 ]
+				then
+					echo "$drvname $i" >> $basedir/etc/driver_aliases	
+				fi
+			done
+		fi
+
+		if [ $ADD_CLASS = 1 ]
+		then
+			/usr/bin/egrep "^$drvname[ 	]+$class( |	|$)" $basedir/etc/driver_classes > /dev/null 2>&1
+			if [ $? -ne 0 ]
+			then 
+				echo "$drvname\t$class" >> $basedir/etc/driver_classes
+			fi
+		fi
+
+		if [ $ADD_MINOR = 1 ]
+		then
+			/usr/bin/grep "^$drvname:" $basedir/etc/minor_perm > /dev/null 2>&1
+			if [ $? -ne 0 ]
+			then 
+				minorentry=$drvname:`echo $minor | sed 's/"//g'`
+				echo $minorentry >> $basedir/etc/minor_perm
+			fi
+		fi
+
+	fi
+
+	# The following clone device/dev is needed for Custom Jumpstart
+
+	if [ $IS_NET_DRIVER -eq 1 ]
+	then
+		CLONE_DEVICE=devices/pseudo/clone@0:$drvname
+		set `/usr/bin/grep "^clone[ 	]" $basedir/etc/name_to_major`
+		CLONE_MAJ=$2
+		set `/usr/bin/grep "^$drvname[ 	]" $basedir/etc/name_to_major`
+		DRIVER_MAJ=$2
+		mknod $basedir/$CLONE_DEVICE c $CLONE_MAJ $DRIVER_MAJ
+		chmod 600 $basedir/$CLONE_DEVICE
+		chgrp sys $basedir/$CLONE_DEVICE
+		chown root $basedir/$CLONE_DEVICE
+		ln -s ../$CLONE_DEVICE $basedir/dev/$drvname
+	fi
+	
+}
+
+devconf_updates()
+{
+	#
+	# Probe always BEFs were re-arranged.  This eliminated the
+	# previously existing drivers/isa.{050,075,088}. It also
+	# cause pe3.bef and trantor.bef to be moved out of isa.025
+	#
+	MVDBEF1=/platform/i86pc/boot/solaris/drivers/isa.025/pe3.bef
+	MVDBEF2=/platform/i86pc/boot/solaris/drivers/isa.025/trantor.bef
+
+	DELDIR1=/platform/i86pc/boot/solaris/drivers/isa.050
+	DELDIR2=/platform/i86pc/boot/solaris/drivers/isa.075
+	DELDIR3=/platform/i86pc/boot/solaris/drivers/isa.088
+
+	if [ -f ${BASEDIR}/${MVDBEF1} ]
+	then
+		rm -f ${BASEDIR}/${MVDBEF1}
+	fi 
+
+	if [ -f ${BASEDIR}/${MVDBEF2} ]
+	then
+		rm -f ${BASEDIR}/${MVDBEF2}
+	fi 
+
+	if [ -d ${BASEDIR}/${DELDIR1} ]
+	then
+		rm -rf ${BASEDIR}/${DELDIR1}
+	fi
+
+	if [ -d ${BASEDIR}/${DELDIR2} ]
+	then
+		rm -rf ${BASEDIR}/${DELDIR2}
+	fi
+
+	if [ -d ${BASEDIR}/${DELDIR3} ]
+	then
+		rm -rf ${BASEDIR}/${DELDIR3}
+	fi
+
+}
+
+
+#
+# Add new device drivers to system 
+#
+
+# Common to both platforms
+echo "type=ddi_pseudo;name=xsvc\t\\M0" >> ${BASEDIR}/etc/devlink.tab
+check_add_drv -b "${BASEDIR}" xsvc
+
+# Platform-specific drivers
+case "${ARCH}" in
+i386)
+	devconf_updates
+	check_add_drv -b "${BASEDIR}" -c scsi -i \
+'"pci9004,7078" "pci9004,7178" "pci9004,7278" "pci9004,7478" "pci9004,7578" "pci9004,8078" "pci9004,8178" "pci9004,8278" "pci9004,8478" "pci9004,8578" "pci9004,5078" "pci9004,5578" "pci9004,6078" "pci9004,6075" "pci9004,6178" "pci9004,6278"' \
+		adp
+	check_add_drv -b "${BASEDIR}" -c scsi -i '"pci104b,1040"' blogic
+	check_add_drv -b "${BASEDIR}" -c scsi corvette
+	check_add_drv -b "${BASEDIR}" -c scsi csa
+	check_add_drv -b "${BASEDIR}" -i '"pci1011,2" "pci1011,9" "pci1011,14" "pci1109,1400" "pci1109,2400" "pci10b8,2001" "pci2646,1"' dnet
+	check_add_drv -b "${BASEDIR}" -i '"pci1011,21" "pci1014,22"' pci_pci
+	check_add_drv -b "${BASEDIR}" nee
+	check_add_drv -b "${BASEDIR}" nei
+	check_add_drv -b "${BASEDIR}" nfe
+	check_add_drv -b "${BASEDIR}" -i '"pci1022,2000"' pcn
+	check_add_drv -b "${BASEDIR}" -c scsi -i '"pci1022,2020"' pcscsi
+	check_add_drv -b "${BASEDIR}" riles
+	check_add_drv -b "${BASEDIR}" eepro
+	check_add_drv -b "${BASEDIR}" smce
+	check_add_drv -b "${BASEDIR}" smceu
+	check_add_drv -b "${BASEDIR}" smcf
+	check_add_drv -b "${BASEDIR}" pe
+	check_add_drv -b "${BASEDIR}" dsa
+	check_add_drv -b "${BASEDIR}" iee
+	check_add_drv -b "${BASEDIR}" elink
+	check_add_drv -b "${BASEDIR}" -i '"pci8086,1227"' ieef
+	check_add_drv -b "${BASEDIR}" -i '"pci100e,9001"' p9000 > /dev/null 2>&1
+	check_add_drv -b "${BASEDIR}" -i '"pci100e,9100"' p9100 > /dev/null 2>&1
+	check_add_drv -b "${BASEDIR}" -c scsi trantor
+	check_add_drv -b "${BASEDIR}" -c scsi aic
+	check_add_drv -b "${BASEDIR}" -c scsi esa
+	check_add_drv -b "${BASEDIR}" -c scsi -i '"pci1014,2e"' chs
+	check_add_drv -b "${BASEDIR}" -c scsi iss
+	check_add_drv -b "${BASEDIR}" -c scsi \
+		-i '"pci1000,1" "pci1000,2" "pci1000,3" "pci1000,4"' \
+		ncrs
+	check_add_drv -b "${BASEDIR}" -i '"pci1112,2200"' sxp
+	check_add_drv -b "${BASEDIR}" rns_smt
+#
+# Comment out iprb temporarily.
+#
+#	check_add_drv -b "${BASEDIR}" -i '"pci8086,1229"' iprb
+	
+	# Add dsa to /etc/driver_classes with ed rather than the -c switch to add_drv,
+	# because it must appear before aha or install doesn't work correctly
+	# (one installs onto aha, so c0, but boots from dsa, which is c1..)  If
+	# dsa appears before aha in /etc/driver_classes, dsa will be c0, and one
+	# installs onto c1, then boots from c0, which is the desired effect.
+	
+	if grep -s dsa ${BASEDIR}/etc/driver_classes >/dev/null 2>&1
+	then
+		:
+	else
+		cp ${BASEDIR}/etc/driver_classes /tmp/classes.$$
+		sed -e "/^aha/i\\
+	dsa	scsi" /tmp/classes.$$ >${BASEDIR}/etc/driver_classes
+		rm -f /tmp/classes.$$
+	fi
+
+
+	# Call the rcs9.sh script to update necessary files in case of upgrade
+	# for the PCI physical device pathname change from 2.4.
+	#
+	# Also used to preserve escd.rf (devconf configuration information)
+	# saved on floppy during an install boot.
+	#
+
+	if [ -s /tmp/diskette_rc.d/rcs9.sh ] 
+	then
+		/sbin/sh /tmp/diskette_rc.d/rcs9.sh "post"
+	fi
+	
+	#
+	# If there is no data in OWconfig, remove it.
+	#
+	OWC=/etc/openwin/server/etc/OWconfig
+	removef $PKGINST $OWC |\
+	while read pathname
+	do
+		if [ ! -s $pathname ]; then 
+			echo Removing empty `basename $pathname`
+			rm -f $pathname
+		fi
+	done	
+	removef -f $PKGINST
+	;;
+ppc)
+	check_add_drv -b "${BASEDIR}" -n -i '"pci1011,2"' dnet > /dev/null 2>&1
+	check_add_drv -b "${BASEDIR}" -c scsi \
+		-i '"pci1000,1" "pci1000,2" "pci1000,3" "pci1000,4"' \
+		ncrs
+	check_add_drv -b "${BASEDIR}" -n -i '"pci1022,2000"' pcn
+
+	# Call the rcs9.sh script, which allows for arbitrary tweaking.
+	# The case that seems necessary is to install the openfirmware.x41
+	# in its proper place.
+
+	if [ -s /tmp/diskette_rc.d/rcs9.sh ] 
+	then
+		/sbin/sh /tmp/diskette_rc.d/rcs9.sh "post"
+	fi
+	
+	;;
+esac
+
+exit 0

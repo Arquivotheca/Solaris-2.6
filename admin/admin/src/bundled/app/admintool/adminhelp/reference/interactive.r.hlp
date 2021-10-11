@@ -1,0 +1,19 @@
+---- Admintool:Package Administration:
+Install/Remove Interactively -----------------------
+
+Install/Remove Interactively
+    Installer will be prompted for instructions when
+    one of the Package Administration conditions are
+    met. Options are:
+
+    Yes	Installer will be prompted during
+	installation.
+
+    No	If any of the installation criteria are set
+	to "Ask," installation will be aborted when
+	input is needed. 
+
+See the "Topics" help for more information about
+using Admintool:Package Administration to set
+preferences during installation.
+

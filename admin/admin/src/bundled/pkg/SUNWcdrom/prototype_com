@@ -1,0 +1,68 @@
+#
+#	@(#)prototype_com 1.14 95/05/31
+#
+# Copyright (c) 1992-1996 Sun Microsystems, Inc.  All Rights Reserved. Sun
+# considers its source code as an unpublished, proprietary trade secret, and
+# it is available only under strict license provisions.  This copyright
+# notice is placed here only to protect Sun in the event the source is
+# deemed a published work.  Dissassembly, decompilation, or other means of
+# reducing the object code to human readable form is prohibited by the
+# license agreement under which this code is provided to the user or company
+# in possession of this copy.
+#
+# RESTRICTED RIGHTS LEGEND: Use, duplication, or disclosure by the Government
+# is subject to restrictions as set forth in subparagraph (c)(1)(ii) of the
+# Rights in Technical Data and Computer Software clause at DFARS 52.227-7013
+# and in similar clauses in the FAR and NASA FAR Supplement.
+
+#
+#
+# This required package information file contains a list of package contents.
+# The 'pkgmk' command uses this file to identify the contents of a package
+# and their location on the development machine when building the package.
+# Can be created via a text editor or through use of the 'pkgproto' command.
+
+#
+#  SUNWcdrom platform independent packages
+#
+
+#!search
+#!default 0711 root bin
+
+# packaging files
+i pkginfo
+i copyright
+
+#
+# source locations relative to the prototype file
+#
+d none ./Docs 0755 root bin
+d none ./Patches 0755 root bin
+d none ./Misc 0755 root bin
+d none ./Misc/jumpstart_sample 0755 root bin
+d none ./Misc/jumpstart_sample/x86-begin.conf 0755 root bin
+d none ./Product 0755 root bin
+d none ./Tools 0755 root bin
+
+#
+# Scripts and Data Files
+#
+f none ./Misc/jumpstart_sample/any_machine 0644 root bin
+f none ./Misc/jumpstart_sample/check 0755 root bin
+f none ./Misc/jumpstart_sample/host_class 0644 root bin
+f none ./Misc/jumpstart_sample/net924_sun4c 0644 root bin
+f none ./Misc/jumpstart_sample/rules 0644 root bin
+f none ./Misc/jumpstart_sample/set_root_pw 0755 root bin
+f none ./Misc/jumpstart_sample/upgrade 0644 root bin
+f none ./Misc/jumpstart_sample/x86-begin 0644 root bin
+f none ./Misc/jumpstart_sample/x86-class 0644 root bin
+f none ./Misc/jumpstart_sample/x86-begin.conf/OWconfig 0644 root bin
+f none ./Misc/jumpstart_sample/x86-begin.conf/msm.conf 0644 root bin
+f none ./Tools/add_install_client 0755 root bin
+f none ./Tools/dial 0755 root sys
+f none ./Tools/rm_install_client 0755 root bin
+f none ./Tools/setup_install_server 0755 root bin
+
+#
+# Programs
+#

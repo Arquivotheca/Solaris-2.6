@@ -1,0 +1,90 @@
+---- How to Change Solstice Launcher Properties -----
+
+1. Select Properties from the Launcher menu.
+   The Properties window is displayed.
+
+2. Use the Hide/Show buttons to disable or
+   enable the display of applications in the
+   launcher window.
+
+   A. Select an application from the Show list
+      and click on the Hide button to hide an
+      application.
+      The application is moved to the Hide list.
+
+   B. Select an application from the Hide list
+      and click on the Show button to show an
+      application.
+      The application is moved to the Show list.
+
+   C. Click on OK when you are finished moving
+      applications to and from the Show and
+      Hide lists.
+
+3. Use the Remove button to remove an 
+   application from a local registry file.
+   See "Registering Applications in the Solstice
+   Launcher" for more information about
+   registering applications.
+
+4. Click on the Add Application button to add an
+   application to the launcher window.
+   The Add Application window is displayed. This
+   window is equivalent to the Add Application
+   command from the Launcher menu.
+
+   Provide the following application information:
+
+   A. Identify the application name in the Name
+      text box.
+
+   B. Identify the application path name in the
+      Application Path text box.
+
+   C. Identify any arguments for the application
+      in the Arguments text box.
+
+   D. Identify the application icon path name in
+      the Icon Path text box.
+
+   E. Click on Register.
+
+5. If you select an application from the Hide or
+   Show lists and click on the Application
+   Properties button, the Application Properties
+   window is displayed. The window enables you to
+   modify the following application properties:
+
+   A. The application name in the Name text box.
+      The application name must be changed in order
+      for any application properties changes to be
+      successful.
+
+   B. The application path name in the Application
+      Path text box.
+
+   C. Any arguments to the application in the
+      Arguments text box.
+
+   D. The icon path name in the Icon Path text box. 
+ 
+   E. Click on Register.
+
+6. Change how the tool icons are displayed in the 
+   launcher window.
+
+   A. Select an application in the Show list and
+      click on the Up or Down arrow under Icon
+      Order to change the location of an icon.
+    
+   B. Use the up/down arrows under Launcher Width 
+      to indicate the number of columns that will
+      display in the launcher window.
+
+   C. Use the scrollbar at the bottom of the
+      launcher to view any icons that moved off
+      the window if you increase the number of
+      icons to be wider than the width of the
+      launcher window.
+
+   D. Click on OK.

@@ -1,0 +1,51 @@
+---- More Space Needed for the Upgrade -------------
+
+File systems sometimes need more space for the 
+upgrade because:
+
+ - New software has been added to the 
+   Solaris-defined software groups. Because the
+   system was initially installed based on a 
+   software group, any new software for the software
+   group is automatically selected for the upgrade.
+
+ - The size of the existing software on the system 
+   has increased in the new release.
+
+---- Correcting the Space Problem ------------------
+
+There are two ways to correct the space problem for 
+an upgrade:
+
+- Deselect software
+
+  Because the space problem is based on the selected
+  software, you can go back to the Customize 
+  Software screen and deselect any packages or 
+  clusters that install into the file systems 
+  needing more space until the selected software can
+  fit. You should first try to delete any new 
+  software that you don't need or want.
+
+    NOTE: On the Customize Software screen, look at 
+    the Software Description window to see what file
+    systems a package or cluster installs into.
+
+- Let auto-layout reallocate space
+
+  If you can't delete enough software to fix the 
+  space problem, you must use auto-layout to
+  reallocate space on the system to accommodate the
+  new file system size requirements. On a first 
+  pass, auto-layout tries to reallocate space based 
+  on a set of default constraints (things it can and
+  cannot do to the file systems on the system). If 
+  it isn't successful, you'll need to provide it 
+  with different constraints.
+
+    NOTE: Auto-layout does not have the ability to 
+    grow file systems. Auto-layout reallocates
+    space by backing up the file systems that need
+    to change, repartitioning the disks based on the
+    file system changes, and restoring the file 
+    systems before the upgrade happens.

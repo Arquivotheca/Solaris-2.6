@@ -1,0 +1,15 @@
+ap::sysinit:/sbin/autopush -f /etc/iu.ap
+fs::sysinit:/sbin/rcS		>>/dev/console 2>&1 </dev/console
+is:2:initdefault:
+p3:s1234:powerfail:/sbin/shutdown -y -i0 -g0 >/dev/console 2>&1
+s0:0:wait:/sbin/rc0 off			>>/dev/console 2>&1 </dev/console
+s1:1:wait:/sbin/shutdown -y -iS -g0	>>/dev/console 2>&1 </dev/console
+s2:23:wait:/sbin/rc2			>>/dev/console 2>&1 </dev/console
+s3:3:wait:/sbin/rc3			>>/dev/console 2>&1 </dev/console
+s5:5:wait:/sbin/rc5 ask			>>/dev/console 2>&1 </dev/console
+s6:6:wait:/sbin/rc6 reboot		>>/dev/console 2>&1 </dev/console
+of:0:wait:/sbin/uadmin 2 0		>>/dev/console 2>&1 </dev/console
+fw:5:wait:/sbin/uadmin 2 2		>/dev/console 2>&1 </dev/console
+RB:6:wait:/sbin/sh -c 'echo "\nThe system is being restarted."' >>/dev/console 2>&1
+rb:6:wait:/sbin/uadmin 2 1		>>/dev/console 2>&1 </dev/console
+co:234:respawn:/sbin/startup >>/dev/console 2>&1 </dev/console

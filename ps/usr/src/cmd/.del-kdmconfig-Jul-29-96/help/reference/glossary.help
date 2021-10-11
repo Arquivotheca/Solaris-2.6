@@ -1,0 +1,47 @@
+
+bus mouse
+
+        A mouse that plugs into a printed circuit board that is
+        inserted into the computer's bus. A bus mouse takes up
+        one expansion slot, whereas a serial mouse takes up one
+        serial port.
+
+graphics card    
+
+        A card in your computer that provides the interface between
+        the computer and its monitor. Also called a frame buffer, 
+        graphics adaptor, and video display adapter.
+
+interrupt number (IRQ)
+
+        A hardware interrupt from a peripheral device that signals
+        the processor for attention. Used by the central processor
+        to differentiate between various cards in your system. Each 
+        card should be configured to use a different IRQ. See the 
+        documentation supplied by your hardware manufacturer 
+        for information about how to change this value.
+
+pointing device
+		
+        A generic term for devices such as mice that enable you 
+        to point to different items on your screen.  Other types
+        of pointing devices include track balls and light pens.
+
+serial mouse
+
+        A mouse that connects to a computer's serial port.
+	Currently all serial mice will be configured to
+	be on port /dev/tty00 (COM1).
+
+serial port
+		
+        A communication port designed to be connected to serial 
+        devices, such as modems and serial mice. Under DOS, serial 
+        devices are referred to as COM1, COM2, COM3, and COM4.  
+        Under Solaris, these same devices are named:
+
+        /dev/tty00  (COM1)
+        /dev/tty01  (COM2)
+        /dev/tty02  (COM3)
+        /dev/tty03  (COM4)
+

@@ -1,0 +1,55 @@
+---- Description -----------------------------------
+
+     Specifies a default time zone for your system.
+
+     You can set a default time zone by:
+
+     - Selecting a geographic region
+     - Selecting an offset from GMT
+     - Select time zone file
+     
+
+---- Geographic Region -----------------------------
+           
+     You must select both a region and a time zone. 
+       
+      
+---- Offset from GMT -------------------------------
+
+     Another name for Greenwich Mean Time is
+     Coordinated Universal Time. 
+    
+     
+---- Time Zone File --------------------------------
+
+     If you choose Select from the Time Zone File
+     screen, a subscreen is displayed that lists
+     zoneinfo directories and files. The default
+     directory is /usr/share/lib/zoneinfo with all
+     files showing in the Files column. You can
+     choose a file from the Files column, or choose
+     a more specific region in the Directories
+     column.
+
+     > To expand a directory in the Directories
+       column, double-click on it
+
+     > To collapse a directory in the Directories
+       column, choose the /.. entry and double-
+       click on it
+
+     > To select a file in the Files column, click
+       it once; your selection will be entered in
+       the Selection field
+
+
+     About the Filter button ...
+
+     This button is used with the Filter field to
+     search for files anywhere in the name service.
+     Use an asterisk (*) as a wildcard for
+     searching.
+
+     > To search for a file, enter the search
+       string in the Filter field and press Return
+       or click on the Filter button

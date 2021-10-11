@@ -1,0 +1,41 @@
+---- Add a New User Account ------------------------
+
+1. Select Users from the Browse menu.
+
+2. Select Add from the Edit menu on the
+   Admintool:Users main window.
+
+   The Add User window is displayed.
+
+3. Fill in the USER IDENTITY portion of the form:
+
+   A. Type a user name in the User Name text box.
+
+   B. Type a user ID in the User ID text box.
+
+   C. Type the Primary and, if you want, the
+      Secondary Groups that this user will belong
+      to. Either group names or group IDs are
+      acceptable entries.
+
+   D. Select the user's default login shell.
+
+4. Fill in the ACCOUNT SECURITY portion of the form:
+
+   Select the method you want to use for the user to
+   establish a password. In most cases, choose
+   either "Cleared until first login" or
+   "Normal Password." 
+
+   See "Password Security" in the "Topics" help for
+   more information about the password options
+   available to you. 
+
+5. If you want Admintool to create a home directory
+   for the user, fill in the HOME DIRECTORY portion
+   of the form.
+
+6. Click on OK.
+
+See "Add/Modify Users Window" in the "Reference"
+help for more information on filling in the form.

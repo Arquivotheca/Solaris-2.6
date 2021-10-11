@@ -1,0 +1,443 @@
+
+AdapterId 0E1FEh
+
+AdapterName "Built In Features"
+
+NumBytes 27
+
+FixedResources
+        vpd(1)
+        pos[0]=XXXX1111b
+        pos[2]=XX000010b
+        pos[3]=1111XXXXb
+        pos[4]=11XXX0XXb
+        pos[6]=1XXX1100b
+        pos[8]=XXXXXXX1b
+        pos[9]=0XXXXX00b
+        pos[10]=00000010b
+        pos[11]=1100XXXXb
+        pos[14]=XXXXXX11b
+        pos[16]=XXXXXX01b
+        pos[26]=XXXX0111b io 03b4h-03b5h 03bah-03bah 03c0h-03cah 03cch-03cch 03ceh-03cfh 03d4h-03d5h 03dah-03dah 03f0h-03f7h 1dc0h-1ddfh 3540h-3547h
+                          int 6 arb 2
+                          mem 0ff0000h - 0ffffffh
+
+sysmem 1024 24
+
+address 24
+
+Begin Device 6 0 0ah DynArbAlloc
+   NamedItem Prompt "First Serial Port"
+      choice "SERIAL 1, IRQ 4"  pos[4]=XXX1XXX1b  pos[5]=XXXX0000b
+         io 03f8h-03ffh 83f8h-83ffh 4620h-4620h int 4
+      choice "SERIAL 2, IRQ 3"  pos[4]=XXX1XXX0b  pos[5]=XXXX0001b
+         io 02f8h-02ffh 82f8h-82ffh 4621h-4621h int 3
+      choice "SERIAL 3, IRQ 3"  pos[4]=XXX1XXX0b  pos[5]=XXXX0010b
+         io 3220h-3227h 0b220h-0b227h 4622h-4622h int 3
+      choice "SERIAL 4, IRQ 3"  pos[4]=XXX1XXX0b  pos[5]=XXXX0011b
+         io 3228h-322fh 0b228h-0b22fh 4623h-4623h int 3
+      choice "SERIAL 5, IRQ 3"  pos[4]=XXX1XXX0b  pos[5]=XXXX0100b
+         io 4220h-4227h 0c220h-0c227h 4624h-4624h int 3
+      choice "SERIAL 6, IRQ 3"  pos[4]=XXX1XXX0b  pos[5]=XXXX0101b
+         io 4228h-422fh 0c228h-0c22fh 4625h-4625h int 3
+      choice "SERIAL 7, IRQ 3"  pos[4]=XXX1XXX0b  pos[5]=XXXX0110b
+         io 5220h-5227h 0d220h-0d227h 4626h-4626h int 3
+      choice "SERIAL 8, IRQ 3"  pos[4]=XXX1XXX0b  pos[5]=XXXX0111b
+         io 5228h-522fh 0d228h-0d22fh 4627h-4627h int 3
+      choice "SERIAL 9, IRQ 3"  pos[4]=XXX1XXX0b  pos[5]=XXXX1000b
+         io 3a20h-3a27h 0ba20h-0ba27h 4628h-4628h int 3
+      choice "SERIAL 10, IRQ 3"  pos[4]=XXX1XXX0b  pos[5]=XXXX1001b
+         io 3a28h-3a2fh 0ba28h-0ba2fh 4629h-4629h int 3
+      choice "SERIAL 11, IRQ 3"  pos[4]=XXX1XXX0b  pos[5]=XXXX1010b
+         io 3a30h-3a37h 0ba30h-0ba37h 462ah-462ah int 3
+      choice "SERIAL 12, IRQ 3"  pos[4]=XXX1XXX0b  pos[5]=XXXX1011b
+         io 3a38h-3a3fh 0ba38h-0ba3fh 462bh-462bh int 3
+      choice "SERIAL 13, IRQ 3"  pos[4]=XXX1XXX0b  pos[5]=XXXX1100b
+         io 3a80h-3a87h 0ba80h-0ba87h 462ch-462ch int 3
+      choice "SERIAL 14, IRQ 3"  pos[4]=XXX1XXX0b  pos[5]=XXXX1101b
+         io 3a88h-3a8fh 0ba88h-0ba8fh 462dh-462dh int 3
+      choice "SERIAL 15, IRQ 3"  pos[4]=XXX1XXX0b  pos[5]=XXXX1110b
+         io 3a90h-3a97h 0ba90h-0ba97h 462eh-462eh int 3
+      choice "SERIAL 16, IRQ 3"  pos[4]=XXX1XXX0b  pos[5]=XXXX1111b
+         io 3a98h-3a9fh 0ba98h-0ba9fh 462fh-462fh int 3
+      choice "SERIAL 4, IRQ 4, CUSTOM"  pos[4]=XXX1XXX1b  pos[5]=XXXX0011b
+         io 3228h-322fh 0b228h-0b22fh 4623h-4623h int 4
+      choice "SERIAL 5, IRQ 4, CUSTOM"  pos[4]=XXX1XXX1b  pos[5]=XXXX0100b
+         io 4220h-4227h 0c220h-0c227h 4624h-4624h int 4
+      choice "SERIAL 6, IRQ 4, CUSTOM"  pos[4]=XXX1XXX1b  pos[5]=XXXX0101b
+         io 4228h-422fh 0c228h-0c22fh 4625h-4625h int 4
+      choice "SERIAL 7, IRQ 4, CUSTOM"  pos[4]=XXX1XXX1b  pos[5]=XXXX0110b
+         io 5220h-5227h 0d220h-0d227h 4626h-4626h int 4
+      choice "SERIAL 8, IRQ 4, CUSTOM"  pos[4]=XXX1XXX1b  pos[5]=XXXX0111b
+         io 5228h-522fh 0d228h-0d22fh 4627h-4627h int 4
+      choice "SERIAL 9, IRQ 4, CUSTOM"  pos[4]=XXX1XXX1b  pos[5]=XXXX1000b
+         io 3a20h-3a27h 0ba20h-0ba27h 4628h-4628h int 4
+      choice "SERIAL 10, IRQ 4, CUSTOM"  pos[4]=XXX1XXX1b  pos[5]=XXXX1001b
+         io 3a28h-3a2fh 0ba28h-0ba2fh 4629h-4629h int 4
+      choice "SERIAL 11, IRQ 4, CUSTOM"  pos[4]=XXX1XXX1b  pos[5]=XXXX1010b
+         io 3a30h-3a37h 0ba30h-0ba37h 462ah-462ah int 4
+      choice "SERIAL 12, IRQ 4, CUSTOM"  pos[4]=XXX1XXX1b  pos[5]=XXXX1011b
+         io 3a38h-3a3fh 0ba38h-0ba3fh 462bh-462bh int 4
+      choice "SERIAL 13, IRQ 4, CUSTOM"  pos[4]=XXX1XXX1b  pos[5]=XXXX1100b
+         io 3a80h-3a87h 0ba80h-0ba87h 462ch-462ch int 4
+      choice "SERIAL 14, IRQ 4, CUSTOM"  pos[4]=XXX1XXX1b  pos[5]=XXXX1101b
+         io 3a88h-3a8fh 0ba88h-0ba8fh 462dh-462dh int 4
+      choice "SERIAL 15, IRQ 4, CUSTOM"  pos[4]=XXX1XXX1b  pos[5]=XXXX1110b
+         io 3a90h-3a97h 0ba90h-0ba97h 462eh-462eh int 4
+      choice "SERIAL 16, IRQ 4, CUSTOM"  pos[4]=XXX1XXX1b  pos[5]=XXXX1111b
+         io 3a98h-3a9fh 0ba98h-0ba9fh 462fh-462fh int 4
+      choice "Disabled"  pos[4]=XXX0XXXXb
+
+      Help
+      "The first built-in serial port connector can be assigned as
+      Serial 1 through Serial 16, or disabled.  Standard usage of
+      interrupt levels are IRQ 4 for serial 1 and IRQ 3 for any
+      other serial level. If you are in the 'Change Configuration'
+      window, you can change the setting.  Use F5 and F6 to scroll
+      through the choices, the Up and Down arrow keys to move from
+      field to field. If a setting conflicts with another, an asterisk
+      (*) appears next to the conflicts.  You must fix conflicts before
+      you use the device. (If you are not in the 'Change Configuration'
+      window and you need to change the setting, return to the 'Set
+      Configuration' window then select 'Change configuration'.)"
+
+End
+
+Begin Device 6 0 0ah DynArbAlloc
+   NamedItem Prompt "Second Serial Port"
+      choice "SERIAL 2, IRQ 3"  pos[4]=XX1XXX0Xb  pos[5]=0001XXXXb
+         io 02f8h-02ffh 82f8h-82ffh 4621h-4621h int 3
+      choice "SERIAL 3, IRQ 3"  pos[4]=XX1XXX0Xb  pos[5]=0010XXXXb
+         io 3220h-3227h 0b220h-0b227h 4622h-4622h int 3
+      choice "SERIAL 4, IRQ 3"  pos[4]=XX1XXX0Xb  pos[5]=0011XXXXb
+         io 3228h-322fh 0b228h-0b22fh 4623h-4623h int 3
+      choice "SERIAL 5, IRQ 3"  pos[4]=XX1XXX0Xb  pos[5]=0100XXXXb
+         io 4220h-4227h 0c220h-0c227h 4624h-4624h int 3
+      choice "SERIAL 6, IRQ 3"  pos[4]=XX1XXX0Xb  pos[5]=0101XXXXb
+         io 4228h-422fh 0c228h-0c22fh 4625h-4625h int 3
+      choice "SERIAL 7, IRQ 3"  pos[4]=XX1XXX0Xb  pos[5]=0110XXXXb
+         io 5220h-5227h 0d220h-0d227h 4626h-4626h int 3
+      choice "SERIAL 8, IRQ 3"  pos[4]=XX1XXX0Xb  pos[5]=0111XXXXb
+         io 5228h-522fh 0d228h-0d22fh 4627h-4627h int 3
+      choice "SERIAL 9, IRQ 3"  pos[4]=XX1XXX0Xb  pos[5]=1000XXXXb
+         io 3a20h-3a27h 0ba20h-0ba27h 4628h-4628h int 3
+      choice "SERIAL 10, IRQ 3"  pos[4]=XX1XXX0Xb  pos[5]=1001XXXXb
+         io 3a28h-3a2fh 0ba28h-0ba2fh 4629h-4629h int 3
+      choice "SERIAL 11, IRQ 3"  pos[4]=XX1XXX0Xb  pos[5]=1010XXXXb
+         io 3a30h-3a37h 0ba30h-0ba37h 462ah-462ah int 3
+      choice "SERIAL 12, IRQ 3"  pos[4]=XX1XXX0Xb  pos[5]=1011XXXXb
+         io 3a38h-3a3fh 0ba38h-0ba3fh 462bh-462bh int 3
+      choice "SERIAL 13, IRQ 3"  pos[4]=XX1XXX0Xb  pos[5]=1100XXXXb
+         io 3a80h-3a87h 0ba80h-0ba87h 462ch-462ch int 3
+      choice "SERIAL 14, IRQ 3"  pos[4]=XX1XXX0Xb  pos[5]=1101XXXXb
+         io 3a88h-3a8fh 0ba88h-0ba8fh 462dh-462dh int 3
+      choice "SERIAL 15, IRQ 3"  pos[4]=XX1XXX0Xb  pos[5]=1110XXXXb
+         io 3a90h-3a97h 0ba90h-0ba97h 462eh-462eh int 3
+      choice "SERIAL 16, IRQ 3"  pos[4]=XX1XXX0Xb  pos[5]=1111XXXXb
+         io 3a98h-3a9fh 0ba98h-0ba9fh 462fh-462fh int 3
+      choice "SERIAL 4, IRQ 4, CUSTOM"  pos[4]=XX1XXX1Xb  pos[5]=0011XXXXb
+         io 3228h-322fh 0b228h-0b22fh 4623h-4623h int 4
+      choice "SERIAL 5, IRQ 4, CUSTOM"  pos[4]=XX1XXX1Xb  pos[5]=0100XXXXb
+         io 4220h-4227h 0c220h-0c227h 4624h-4624h int 4
+      choice "SERIAL 6, IRQ 4, CUSTOM"  pos[4]=XX1XXX1Xb  pos[5]=0101XXXXb
+         io 4228h-422fh 0c228h-0c22fh 4625h-4625h int 4
+      choice "SERIAL 7, IRQ 4, CUSTOM"  pos[4]=XX1XXX1Xb  pos[5]=0110XXXXb
+         io 5220h-5227h 0d220h-0d227h 4626h-4626h int 4
+      choice "SERIAL 8, IRQ 4, CUSTOM"  pos[4]=XX1XXX1Xb  pos[5]=0111XXXXb
+         io 5228h-522fh 0d228h-0d22fh 4627h-4627h int 4
+      choice "SERIAL 9, IRQ 4, CUSTOM"  pos[4]=XX1XXX1Xb  pos[5]=1000XXXXb
+         io 3a20h-3a27h 0ba20h-0ba27h 4628h-4628h int 4
+      choice "SERIAL 10, IRQ 4, CUSTOM"  pos[4]=XX1XXX1Xb  pos[5]=1001XXXXb
+         io 3a28h-3a2fh 0ba28h-0ba2fh 4629h-4629h int 4
+      choice "SERIAL 11, IRQ 4, CUSTOM"  pos[4]=XX1XXX1Xb  pos[5]=1010XXXXb
+         io 3a30h-3a37h 0ba30h-0ba37h 462ah-462ah int 4
+      choice "SERIAL 12, IRQ 4, CUSTOM"  pos[4]=XX1XXX1Xb  pos[5]=1011XXXXb
+         io 3a38h-3a3fh 0ba38h-0ba3fh 462bh-462bh int 4
+      choice "SERIAL 13, IRQ 4, CUSTOM"  pos[4]=XX1XXX1Xb  pos[5]=1100XXXXb
+         io 3a80h-3a87h 0ba80h-0ba87h 462ch-462ch int 4
+      choice "SERIAL 14, IRQ 4, CUSTOM"  pos[4]=XX1XXX1Xb  pos[5]=1101XXXXb
+         io 3a88h-3a8fh 0ba88h-0ba8fh 462dh-462dh int 4
+      choice "SERIAL 15, IRQ 4, CUSTOM"  pos[4]=XX1XXX1Xb  pos[5]=1110XXXXb
+         io 3a90h-3a97h 0ba90h-0ba97h 462eh-462eh int 4
+      choice "SERIAL 16, IRQ 4, CUSTOM"  pos[4]=XX1XXX1Xb  pos[5]=1111XXXXb
+         io 3a98h-3a9fh 0ba98h-0ba9fh 462fh-462fh int 4
+      choice "Disabled"  pos[4]=XX0XXXXXb
+      choice "SERIAL 1, IRQ 4"  pos[4]=XXX1XX1Xb  pos[5]=0000XXXXb
+         io 03f8h-03ffh 83f8h-83ffh 4620h-4620h int 4
+
+      Help
+      "The second built-in serial port connector can be assigned as
+      Serial 1 through Serial 16, or disabled.  Standard usage of
+      interrupt levels are IRQ 4 for serial 1 and IRQ 3 for any
+      other serial level. If you are in the 'Change Configuration'
+      window, you can change the setting.  Use F5 and F6 to scroll
+      through the choices, the Up and Down arrow keys to move from
+      field to field. If a setting conflicts with another, an asterisk
+      (*) appears next to the conflicts.  You must fix conflicts before
+      you use the device. (If you are not in the 'Change Configuration'
+      window and you need to change the setting, return to the 'Set
+      Configuration' window then select 'Change configuration'.)"
+
+End
+
+Begin Device 5 0 02
+   NamedItem Prompt "Parallel Port"
+      choice "PARALLEL 1"  pos[0]=X001XXXXb  io 03bch-03bfh 1278h-127bh int 7
+      choice "PARALLEL 2"  pos[0]=X011XXXXb  io 0378h-037bh int 7
+      choice "PARALLEL 3"  pos[0]=X101XXXXb  io 0278h-027bh int 7
+      choice "PARALLEL 4"  pos[0]=X111XXXXb  io 1378h-137bh int 7
+      choice "Disabled"    pos[0]=XXX0XXXXb
+
+      Help
+      "The built-in parallel port connector can be set as Parallel 1
+      through 4 or the port can be disabled.
+      If you are in the 'Change Configuration' window, you can change
+      the setting.  Use F5 and F6 to scroll through the choices, the Up
+      and Down arrow keys to move from field to field.
+      If a setting conflicts with another, an asterisk (*) appears next to
+      the conflicts.  You must fix conflicts before you use the device.
+      Use the Up and Down arrow keys to move from field to field.
+      (If you are not in the 'Change Configuration' window and you need
+      to change the setting, return to the 'Set Configuration' window then
+      select 'Change configuration'.)"
+
+   NamedItem Prompt "Parallel Port DMA Arbitration Level"
+      choice "Shared level 7"
+         pos[3]=XXXX0111b pos[0]=0XXXXXXXb
+         arb SharedArb 7
+      choice "Shared level 6"
+         pos[3]=XXXX0110b pos[0]=0XXXXXXXb
+         arb SharedArb 6
+      choice "Shared level 5"
+         pos[3]=XXXX0101b pos[0]=0XXXXXXXb
+         arb SharedArb 5
+      choice "Shared level 4"
+         pos[3]=XXXX0100b pos[0]=0XXXXXXXb
+         arb SharedArb 4
+      choice "Shared level 3"
+         pos[3]=XXXX0011b pos[0]=0XXXXXXXb
+         arb SharedArb 3
+      choice "Shared level 1"
+         pos[3]=XXXX0001b pos[0]=0XXXXXXXb
+         arb SharedArb 1
+      choice "Shared level 0"
+         pos[3]=XXXX0000b pos[0]=0XXXXXXXb
+         arb SharedArb 0
+      choice "Level 7"
+         pos[3]=XXXX0111b pos[0]=0XXXXXXXb
+         arb 7
+      choice "Level 6"
+         pos[3]=XXXX0110b pos[0]=0XXXXXXXb
+         arb 6
+      choice "Level 5"
+         pos[3]=XXXX0101b pos[0]=0XXXXXXXb
+         arb 5
+      choice "Level 4"
+         pos[3]=XXXX0100b pos[0]=0XXXXXXXb
+         arb 4
+      choice "Level 3"
+         pos[3]=XXXX0011b pos[0]=0XXXXXXXb
+         arb 3
+      choice "Level 1"
+         pos[3]=XXXX0001b pos[0]=0XXXXXXXb
+         arb 1
+      choice "Level 0"
+         pos[3]=XXXX0000b pos[0]=0XXXXXXXb
+         arb 0
+      choice "Disabled"
+         pos[3]=XXXX1111b pos[0]=1XXXXXXXb
+
+      Help
+      "The built-in parallel port connector can be set to any one of the
+      available DMA arbitration levels.  If the level selected is shared then
+      other devices can be set at the same level.  If the level selected is
+      dedicated then only this device can be set to that level.  Select
+      <Disabled> to use the port in compatibility mode.
+      If you are in the 'Change Configuration' window, you can change
+      the setting.  Use F5 and F6 to scroll through the choices, the Up
+      and Down arrow keys to move from field to field.
+      If a setting conflicts with another, an asterisk (*) appears next to
+      the conflicts.  You must fix conflicts before you use the device.
+      (If you are not in the 'Change Configuration' window and you need
+      to change the setting, return to the 'Set Configuration' window then
+      select 'Change configuration'.)"
+
+End
+
+Begin Device 3 2 1 NoDMA
+
+NamedItem Prompt "Video I/O Address"
+      choice "Instance 6: 2160h - 216Fh"
+              pos[8]=XXXX110Xb io 02160h-0216fh
+      choice "Instance 1: 2110h - 211Fh"
+              pos[8]=XXXX001Xb io 02110h-0211fh
+      choice "Instance 2: 2120h - 212Fh"
+              pos[8]=XXXX010Xb io 02120h-0212fh
+      choice "Instance 3: 2130h - 213Fh"
+              pos[8]=XXXX011Xb io 02130h-0213fh
+      choice "Instance 4: 2140h - 214Fh"
+              pos[8]=XXXX100Xb io 02140h-0214fh
+      choice "Instance 5: 2150h - 215Fh"
+              pos[8]=XXXX101Xb io 02150h-0215fh
+      choice "Instance 7: 2170h - 217Fh"
+              pos[8]=XXXX111Xb io 02170h-0217fh
+      choice "Instance 0: 2100h - 210Fh"
+              pos[8]=XXXX000Xb io 02100h-0210fh
+
+      Help
+       "This field shows the I/O (Input/Output) address range for the display
+       controller registers.  This field also affects the location of the
+       video coprocessor registers in the video ROM address space.
+       If you are in the 'Change Configuration' window, you can change
+       the setting.  Use F5 and F6 to scroll through the choices, the Up
+       and Down arrow keys to move from field to field.
+       If a setting conflicts with another, an asterisk (*) appears next to
+       the conflicts.  You must fix conflicts before you use the device."
+
+NamedItem Prompt "Video ROM Address Space"
+        choice "C0000 - C1FFF" pos[8]=0000XXXXb mem 0c0000h-0c1fffh
+        choice "C2000 - C3FFF" pos[8]=0001XXXXb mem 0c2000h-0c3fffh
+        choice "C4000 - C5FFF" pos[8]=0010XXXXb mem 0c4000h-0c5fffh
+        choice "C6000 - C7FFF" pos[8]=0011XXXXb mem 0c6000h-0c7fffh
+        choice "C8000 - C9FFF" pos[8]=0100XXXXb mem 0c8000h-0c9fffh
+        choice "CA000 - CBFFF" pos[8]=0101XXXXb mem 0ca000h-0cbfffh
+        choice "CC000 - CDFFF" pos[8]=0110XXXXb mem 0cc000h-0cdfffh
+        choice "CE000 - CFFFF" pos[8]=0111XXXXb mem 0ce000h-0cffffh
+        choice "D0000 - D1FFF" pos[8]=1000XXXXb mem 0d0000h-0d1fffh
+        choice "D2000 - D3FFF" pos[8]=1001XXXXb mem 0d2000h-0d3fffh
+        choice "D4000 - D5FFF" pos[8]=1010XXXXb mem 0d4000h-0d5fffh
+        choice "D6000 - D7FFF" pos[8]=1011XXXXb mem 0d6000h-0d7fffh
+        choice "D8000 - D9FFF" pos[8]=1100XXXXb mem 0d8000h-0d9fffh
+        choice "DA000 - DBFFF" pos[8]=1101XXXXb mem 0da000h-0dbfffh
+        choice "DC000 - DDFFF" pos[8]=1110XXXXb mem 0dc000h-0ddfffh
+        choice "DE000 - DFFFF" pos[8]=1111XXXXb mem 0de000h-0dffffh
+
+        Help
+        "This field shows the memory address range used for the system
+         video ROM.  This field also affects the location of the
+         video coprocessor registers.
+         If you are in the 'Change Configuration' window, you can change
+         the setting.  Use F5 and F6 to scroll through the choices, the Up
+         and Down arrow keys to move from field to field.
+         If a setting conflicts with another, an asterisk (*) appears next to
+         the conflicts.  You must fix conflicts before you use the device."
+
+NamedItem Prompt "1 MB VRAM Aperture Base Address"
+      choice "E00000h (at 14 MB)"
+              pos[11]=XXXX1110b mem 0E00000h-0Efffffh
+      choice "D00000h (at 13 MB)"
+              pos[11]=XXXX1101b mem 0D00000h-0Dfffffh
+      choice "C00000h (at 12 MB)"
+              pos[11]=XXXX1100b mem 0C00000h-0Cfffffh
+      choice "B00000h (at 11 MB)"
+              pos[11]=XXXX1011b mem 0B00000h-0Bfffffh
+      choice "A00000h (at 10 MB)"
+              pos[11]=XXXX1010b mem 0A00000h-0Afffffh
+      choice "900000h (at 9 MB)"
+              pos[11]=XXXX1001b mem 900000h-9fffffh
+      choice "800000h (at 8 MB)"
+              pos[11]=XXXX1000b mem 800000h-8fffffh
+      choice "Disabled"
+              pos[11]=XXXX0000b
+
+      Help
+      "This field shows the location of the 1 MB aperture from the system
+       memory space for the video memory.  If the aperture has been
+       disabled, it is because there wasn't enough available memory address
+       space for system memory and the aperture.  If the aperture must be
+       re-enabled, and if you are in the 'Change Configuration' window, use
+       F5 and F6 key to select a choice.  If this method is not successful,
+       then remove the device that is competing for memory such as a system
+       Micro Channel adapter or system memory.  Removal of system memory may
+       degrade the system performance.  If the aperture has been allocated
+       an address range and it results in a reduction of usable system
+       memory (with Micro Channel memory adapter) then the aperture can be
+       disabled.  If a setting conflicts with another, an asterisk (*)
+       appears next to the conflicts.  You must fix conflicts before you use
+       the device."
+
+NamedItem Prompt "Video Arbitration Level"
+      choice "Level 13" pos[9]=X1101XXXb arb 0dh
+      choice "Level 12" pos[9]=X1100XXXb arb 0ch
+      choice "Level 11" pos[9]=X1011XXXb arb 0bh
+      choice "Level 10" pos[9]=X1010XXXb arb 0ah
+      choice "Level  9" pos[9]=X1001XXXb arb 9
+      choice "Level  8" pos[9]=X1000XXXb arb 8
+      choice "Level 14" pos[9]=X1110XXXb arb 0eh
+      choice "Level  7" pos[9]=X0111XXXb arb 7
+
+      Help
+      "This field is used to select the arbitration level the adapter uses
+       to transfer data.
+       If you are in the 'Change Configuration' window, you can change
+       the setting.  Use F5 and F6 to scroll through the choices, the Up
+       and Down arrow keys to move from field to field.
+       If a setting conflicts with another, an asterisk (*) appears next to
+       the conflicts.  You must fix conflicts before you use the device."
+
+NamedItem Prompt "Video Fairness"
+      choice "On"  pos[9]=XXXXX1XXb
+      choice "Off" pos[9]=XXXXX0XXb
+
+      Help
+      "Bus Arbitration Fairness controls whether the video controller will
+       release control of the bus when it has been using it exclusively.
+       Normally, the field should be set to <On>.  If you are in the 'Change
+       Configuration' window, you can change the setting.  Use F5 and F6 to
+       scroll through the choices, the Up and Down arrow keys to move from
+       field to field."
+End
+
+Begin Device 17 0 00 NoDMA
+
+  NamedItem Prompt "SCSI Address (ID)"
+      choice "7" pos[17]=111XXXXXb
+      choice "6" pos[17]=110XXXXXb
+      choice "5" pos[17]=101XXXXXb
+      choice "4" pos[17]=100XXXXXb
+      choice "3" pos[17]=011XXXXXb
+      choice "2" pos[17]=010XXXXXb
+      choice "1" pos[17]=001XXXXXb
+      choice "0" pos[17]=000XXXXXb
+
+      Help
+      "This allows you to change the ID of the built-in SCSI controller.
+      Under normal circumstances, select <7>.
+      If you are in the 'Change Configuration' window, you can change
+      the setting.  Use F5 and F6 to scroll through the choices, the Up
+      and Down arrow keys to move from field to field.
+      If a setting conflicts with another, an asterisk (*) appears next to
+      the conflicts.  You must fix conflicts before you use the device.
+      (If you are not in the 'Change Configuration' window and you need
+      to change the setting, return to the 'Set Configuration' window then
+      select 'Change configuration'.)"
+
+   NamedItem Prompt "SCSI DMA Arbitration Level"
+      choice "Level 8" pos[14]=1000XXXXb arb 08h
+      choice "Level 9" pos[14]=1001XXXXb arb 09h
+      choice "Level A" pos[14]=1010XXXXb arb 0ah
+      choice "Level B" pos[14]=1011XXXXb arb 0bh
+      choice "Level C" pos[14]=1100XXXXb arb 0ch
+      choice "Level D" pos[14]=1101XXXXb arb 0dh
+      choice "Level E" pos[14]=1110XXXXb arb 0eh
+      choice "Level 1" pos[14]=0001XXXXb arb 01h
+      choice "Level 3" pos[14]=0011XXXXb arb 03h
+      choice "Level 5" pos[14]=0101XXXXb arb 05h
+      choice "Level 6" pos[14]=0110XXXXb arb 06h
+      choice "Level 7" pos[14]=0111XXXXb arb 07h
+
+      Help
+      "The built-in SCSI controller can be assigned any one of the
+      available arbitration levels. Selecting an arbitration
+      level allows only this device to use the value.
+      If you are in the 'Change Configuration' window, you can change
+      the setting.  Use F5 and F6 to scroll through the choices, the Up
+      and Down arrow keys to move from field to field.
+      If a setting conflicts with another, an asterisk (*) appears next to
+      the conflicts.  You must fix conflicts before you use the device.
+      (If you are not in the 'Change Configuration' window and you need
+      to change the setting, return to the 'Set Configuration' window then
+      select 'Change configuration'.)"
+
+End
+

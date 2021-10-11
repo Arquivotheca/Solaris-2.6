@@ -1,0 +1,205 @@
+!
+! Copyright (c) 1994-1996 by Sun MicroSystems, Inc.
+! All rights reserved.
+!
+
+! installtool resource file for high resolution monitors
+! the class name that must be used is "Installtool"
+
+! Window background color
+Installtool*background: gray
+Installtool*foreground: black
+
+! General Window Fonts
+Installtool*fontList: helvetica14
+Installtool*XmPushButton*fontList: helvetica-bold14
+Installtool*XmPushButtonGadget*fontList: helvetica-bold14
+Installtool*XmTextField*fontList: lucidasans-typewriter12
+Installtool*XmList*fontList: lucidasans-typewriter14
+Installtool*XmLabel*fontList: helvetica-bold14
+Installtool*XmLabelGadget*fontList: helvetica-bold14
+
+! Specific Window Fonts
+Installtool*metaForm*XmToggleButton*fontList: lucidasans-typewriter12
+Installtool*preserveScrolledWindow*fontList: lucidasans-typewriter12
+Installtool*osScrolledWindow*fontList: helvetica14
+
+! i18n, Do Not Change the following font specification, the items in this list
+! are file system names, sizes, and mount point options
+Installtool*filesysScrolledWindow*fontList: lucidasans-typewriter14
+
+! i18n, Do Not Change the following font specification, the items in this list
+! are file system names and sizes
+Installtool*spaceScrolledWindow*fontList: lucidasans-typewriter14
+
+! i18n, Do Not Change the following font specifications, the items in this list
+! are file system names and sizes, etc.
+Installtool*dsr_space_req_dialog*spacereqScrolledWindow*fontList: lucidasans-typewriter14
+Installtool*dsr_fssumm_dialog*fsSummScrolledWindow*fontList: lucidasans-typewriter14
+Installtool*dsr_fsredist_dialog*slicesScrolledWindow*fontList: lucidasans-typewriter14
+Installtool*dsr_fsredist_collapse_dialog*scrolledWindow*fontList: lucidasans-typewriter14
+
+Installtool*softwareDependenciesScrolledList*fontList: lucidasans-typewriter12
+Installtool*packagesScrolledWindow*fontList: lucidasans-typewriter12
+Installtool*softwareInfoScrolledWindow*fontList: lucidasans-typewriter12
+Installtool*helpform*pane*fontList: lucidasans-typewriter14
+Installtool*summaryLabel*fontList: lucidasans-typewriter14
+
+! Window and Widget Sizes
+! To change the width of the built-in text on all windows, except those
+! explicitly defined, change the number of columns defined by this resource
+Installtool*panelhelpText*columns: 60
+Installtool*messageDialog*columns: 60
+
+! To change the width of the built-in text on the locale selection window,
+! change the number of columns defined by this resource
+Installtool*locale_dialog*panelhelpText*columns: 80
+
+! To change the width of the built-in text in the disk selection window,
+! change the number of columns defined by this resource
+Installtool*usedisks_dialog*panelhelpText*columns: 80
+
+! To change the width of the built-in text in the disk selection window,
+! change the number of columns defined by this resource
+Installtool*bootdisk_dialog*panelhelpText*columns: 40
+
+! To change the width of the built-in text on the summary/profile window,
+! change the number of columns defined by this resource
+!Installtool*summary_dialog*panelhelpText*columns: 40
+
+! The following resources set the width of the text fields used on the disk
+! editor window
+Installtool*recommendedValue.width: 42
+Installtool*minimumValue.width: 42
+
+! The following resources define the height and width for the XmScrolledWindow
+! region on the Preserve Data window
+Installtool*preserveScrolledWindow.height: 130
+Installtool*preserveScrolledWindow.width: 536
+
+! The following resources define the height and width for the XmScrolledWindow
+! region on the Boot Device Selection window
+Installtool*bootdiskScrolledWindow.height: 130
+Installtool*bootdiskScrolledWindow.width: 336
+
+! The following resources define the height and width for the XmScrolledWindow
+! region on the profile/summary window
+Installtool*summary_dialog*summaryScrolledWindow.height: 350
+Installtool*summary_dialog*summaryScrolledWindow.width: 375
+
+! The following resource sets the width of the XmForm used to display the
+! software metacluster selections and their recommended sizes
+Installtool*metaForm.height: 175
+
+! The following resources set the number of items to be shown in the
+! available and selected lists for both the locale and disk selection windows
+Installtool*availableScrolledList.visibleItemCount: 10
+Installtool*selectedScrolledList.visibleItemCount: 10
+
+! The following resources are defined for the remote mount points window
+Installtool*remote_dialog.width: 750
+Installtool*remote_dialog.height: 410
+Installtool*remote_dialog*XmTextField.width: 200
+Installtool*remote_dialog*remoteList.width: 195
+Installtool*remote_dialog*summaryList.width: 250
+
+! The following resources set the height and width of the scrolled regions
+! on the software customization window
+Installtool*packagesScrolledWindow.height: 300
+Installtool*legendForm.width: 535
+Installtool*softwareInfoScrolledWindow.height: 230
+Installtool*softwareInfoScrolledWindow.width: 400
+
+!
+! DSR - General resources
+!
+
+! this controls the distance inbetween columns in the various
+! DSR scrolled Windows
+Installtool.dsrSpaceReqColumnSpace: 40
+Installtool.dsrFSSummColumnSpace: 20
+Installtool.dsrFSRedistColumnSpace: 20
+Installtool.dsrFSCollapseColumnSpace: 30
+
+!
+! DSR - Analyze System screen
+!
+Installtool*dsr_analyze_dialog*panelhelpText*columns: 60
+
+!
+! DSR - Change Auto-layout Constraints screen
+!
+
+!
+! i18n:
+! panelHelpText columns is what essentially controls the overall
+! width of this window.  It is important that the width here is set 
+! wide enough such that the list of slices in the scrolled window
+! NEVER invokes a scrollbar (since the labels on the top of the
+! scrollbar do not scroll with the entries...)
+! You'll have to work this width along with coming with column 
+! labels that are as short as possible to make this work...
+!
+Installtool*dsr_fsredist_dialog*panelhelpText*columns: 83
+Installtool*dsr_fsredist_dialog*slicesScrolledWindow.height: 200
+Installtool*dsr_fsredist_dialog*finalSizeTextField.columns: 5
+Installtool*dsr_fsredist_dialog*activeReqSizeTextField.columns: 5
+Installtool*dsr_fsredist_dialog*activeCurrSizeTextField.columns: 5
+Installtool*dsr_fsredist_dialog*activeSliceTextField.columns: 8
+
+! So buttons take preferred size - don't change this unless all buttons
+! the same size is ok (not very likely if any are very wide).
+Installtool*dsr_fsredist_dialog*messageBox.minimizeButtons: True
+
+!
+! DSR - Change Auto-layout Constraints: Collapse dialog
+!
+Installtool*dsr_fsredist_collapse_dialog*scrolledWindow.height: 120
+
+!
+! DSR - File System Summary screen
+!
+Installtool*dsr_fssumm_dialog*panelhelpText*columns: 80
+Installtool*dsr_fssumm_dialog*fsSummScrolledWindow.height: 120
+
+!
+! DSR - Media screen
+!
+! i18n: These 2 columns numbers should be the same
+Installtool*dsr_media_dialog*panelhelpText*columns: 60
+Installtool*dsr_media_dialog*infoText*columns: 60
+
+!
+! DSR - Space Required screen
+!
+Installtool*dsr_space_req_dialog*panelhelpText*columns: 80
+Installtool*dsr_space_req_dialog*spacereqScrolledWindow.height: 120
+
+! Help System
+Installtool*helpform*helptext.rows: 15
+Installtool*helpform*helptext.columns:	52
+Installtool*helpform*helpsubjs.visibleItemCount: 4
+
+! Disk Editor Text Field Translations
+Installtool*mainText*translations: #override \n\
+	! <Key>Up:		PrimitivePrevTabGroup() \n\
+	! <Key>Down:		PrimitiveNextTabGroup()
+
+Installtool*sizeText*translations: #override \n\
+	! <Key>osfLeft:		cellChanged(size,left) \n\
+	! <Key>osfRight:	cellChanged(size,right) \n\
+	! <Key>osfUp:		cellChanged(size,up) \n\
+	! <Key>osfDown:		cellChanged(size,down)
+
+Installtool*mountText*translations: #override \n\
+	! <Key>osfLeft:		cellChanged(mount,left) \n\
+	! <Key>osfRight:	cellChanged(mount,right) \n\
+	! <Key>osfUp:		cellChanged(mount,up) \n\
+	! <Key>osfDown:		cellChanged(mount,down)
+
+Installtool*startText*translations: #override \n\
+	! <Key>osfLeft:		cellChanged(start,left) \n\
+	! <Key>osfRight:	cellChanged(start,right) \n\
+	! <Key>osfUp:		cellChanged(start,up) \n\
+	! <Key>osfDown:		cellChanged(start,down)
+

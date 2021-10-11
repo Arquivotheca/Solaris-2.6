@@ -1,0 +1,139 @@
+#
+#ident	"@(#)msg_master	1.17	95/06/15 SMI"
+#
+# Copyright (c) 1992 by Sun Microsystems, Inc.
+#
+
+CFILE		ADMLDB_MSGS
+PREFIX		DB_ERR
+BASE		0	ERRMSGS
+
+NOERR		0	"Success"
+
+REQ_PAR		0 "%1$s:: Missing parameter '%2$s'"
+
+OPT_PAR		0 "%1$s:: Requires one or more of the parameters %2$s"
+
+IN_LIB		0 "%1$s:: %2$s: %3$s"
+
+BAD_HOSTNAME	0 "%1$s:: '%2$s' is not a valid hostname"
+
+BAD_NAMESERVICE 0 "%1$s:: '%2$s' is not a valid nameservice"
+
+NO_ENTRY	0 "%1$s:: The entry '%2$s' was not found in the %3$s table"
+
+BAD_ETHER_ADDR	0 "%1$s:: %2$s is not a valid Ethernet address"
+
+BAD_IP_ADDR	0 "%1$s:: %2$s is not a valid host IP address"
+
+BAD_IP_NETMASK	0 "%1$s:: %2$s is not a valid IP subnet mask"
+
+BAD_IP_NETNUM	0 "%1$s:: %2$s is not a valid IP network number"
+
+BAD_TIMEZONE	0 "%1$s:: '%2$s' is not a valid timezone name"
+
+BAD_POLICY	0 "%1$s:: '%2$s' is not a valid policy name"
+
+IN_MTHD		0 "%1$s->%2$s: %3$s"
+
+IN_FMWK		0 "%1$s:: Error %2$d returned by administration framework: %3$s"
+
+NO_MEMORY	0 "%1$s:: Unable to allocate memory"
+
+BAD_VAL		0 "%1$s:: '%2$s' is not a valid value for parameter '%3$s'"
+
+ENTRY_EXISTS	0 "%1$s:: The entry '%2$s' already exists in the %3$s table"
+
+DB_BUSY		0 "%1$s:: The %2$s table is busy"
+
+MAL_ENT		0 "%1$s:: The following malformed entry was found in the %2$s table: %3$s"
+
+NO_TABLE	0 "%1$s:: Table %2$s does not exist"
+
+TOO_BIG		0 "%1$s:: Entry was too large for internal buffer"
+
+STRUCT_MISMATCH	0 "%1$s:: Internal error; table & translation structures are misaligned"
+
+NISPLUS		0 ":: NIS+ error while executing %1$s for %2$s: %3$s"
+
+READ_ERROR	0 "%1$s:: Error reading from file %2$s"
+
+WRITE_ERROR	0 "%1$s:: Error writing to file %2$s"
+
+MATCH_CRITERIA	0 "%1$s:: Required match criteria were not specified"
+
+WRITING_NIS	0 "%1$s:: Updating NIS maps is not supported"
+
+NO_SHADOW	0 "Listing of /etc/shadow is not supported by the administration software on %1$s"
+
+NO_SORT		0 "Sorted listings cannot be provided by the administration software on %1$s"
+
+NO_MODIFY	0 "%1$s:: The administration software on %2$s does not support direct modification of '%3$s'.  Use a remove followed by an add to make this modification."
+
+BAD_USERNAME	0 "%1$s:: '%2$s' is not a valid username"
+
+BAD_PATH	0 "%1$s:: '%2$s' is not a valid pathname"
+
+BAD_GROUPNAME	0 "%1$s:: '%2$s' is not a valid group name"
+
+BAD_GID		0 "%1$s:: '%2$s' is not a valid group id"
+
+BAD_GCOS	0 "%1$s:: '%2$s' is not a valid comment for the passwd table"
+
+BAD_SHELL	0 "%1$s:: '%2$s' is not a valid user shell"
+
+NOT_INTEGER	0 "%1$s:: '%2$s' is not an integer"
+
+BAD_PROTO_NAME	0 "%1$s:: '%2$s' is not a valid protocol name"
+
+BAD_PROTO_NUM	0 "%1$s:: '%2$s' is not a valid protocol number"
+
+BAD_RPC_NAME	0 "%1$s:: '%2$s' is not a valid RPC service name"
+
+BAD_RPC_NUM	0 "%1$s:: '%2$s' is not a valid RPC service number"
+
+BAD_SERV_NAME	0 "%1$s:: '%2$s' is not a valid service name"
+
+BAD_PORT_NUM	0 "%1$s:: '%2$s' is not a valid port number"
+
+BAD_UID		0 "%1$s:: '%2$s' is not a valid user id"
+
+NO_GROUP	0 "%1$s:: User '%2$s' could not be added to the following groups because they do not exist: %3$s"
+
+BAD_MEMBERS	0 "%1$s:: '%2$s' is not a valid list of group members"
+
+BAD_MAIL_ALIAS	0 "%1$s:: '%2$s' is not a valid mail alias name"
+
+BAD_NETNAME	0 "%1$s:: '%2$s' is not a valid network name"
+
+BAD_PASSWD	0 "%1$s:: '%2$s' is not a valid password value"
+
+BAD_NIS_ALIASES	0 "Unable to determine map location from ALIASES entry in /var/yp/Makefile on server"
+
+BAD_NIS_DIR	0 "Unable to determine map location from DIR entry in /var/yp/Makefile on server"
+
+BAD_NIS_TEMP	0 "Unable to create local temporary file '%s'."
+
+NIS_EDIT_DEL	0 "Edit of NIS map '%1$s' aborted.  Unable to identify entry in map based on key value (%2$s).  Has this entry been deleted since the map was last made?"
+
+NIS_EDIT_UNIQ	0 "Edit of NIS map '%1$s' aborted. Unable to uniquely identify entry in map based on key value (%2$s)."
+
+NIS_EDIT_DUP	0 "Edit of NIS map '%1$s' aborted.  Key value (%2$s) already exists in map.  Has this entry been added since the map was last made?"
+
+NIS_INTERNAL	0 "Internal Error"
+
+NIS_BAD_FUNC	0 "Unknown value passed to function"
+
+NIS_EDIT_FAILED	0 "Edit of NIS map '%1$s' failed.  Could not %2$s key value (%3$s)"
+
+NIS_MAKE_FAILED	0 "Make of map on server failed"
+
+NIS_RSH_FAILED	0 "Unable to rsh as user 'root' to NIS server '%s'.  Does your login have an entry in root's .rhosts file on this server"
+
+NIS_LOCKED	0 "The table %1$s is busy.  Lock dir %2$s.%3$s exists on server"
+
+NIS_POLICY_ACC	0 "Unable to access default policy table template: %s"
+
+NIS_POLICY_CRE	0 "Policy table creation failed"
+
+NIS_POLICY_MAKE	0 "Unable to access policy table Makefile target template: %s"

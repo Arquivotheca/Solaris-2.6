@@ -1,0 +1,218 @@
+#
+#ident	"@(#)Makefile.master	1.45	95/07/31 SMI"
+#
+# Copyright (c) 1991 by Sun Microsystems, Inc.
+#
+# Makefile.master, global definitions for system source
+#
+LD=			CC
+RM=			/usr/bin/rm -f
+INS=			/usr/sbin/install
+SYMLINK=		/usr/bin/ln -s
+LN=			/usr/bin/ln
+CP=			/usr/bin/cp
+MV=			/usr/bin/mv -f
+SH=			/usr/bin/sh
+CHMOD=			/usr/bin/chmod
+CHOWN=			/usr/bin/chown
+CHGRP=			/usr/bin/chgrp
+MKDIR=			/usr/bin/mkdir
+TOUCH=			/usr/bin/touch
+MKDIR=			/usr/bin/mkdir
+MKMSGS=			$(ROOT)/usr/snadm/bin/adm_mkmsgs
+XGETSH=			$(ROOT)/usr/snadm/bin/xgetsh
+GENMSG=			$(ROOT)/usr/snadm/bin/genmsg
+GENCAT=			/usr/bin/gencat
+
+ROOTSBIN=		$(ROOT)/sbin
+ROOTETC=		$(ROOT)/etc
+ROOTUSRLIB=		$(ROOT)/usr/lib
+ROOTUSRSBIN=		$(ROOT)/usr/sbin
+ROOTINC=		$(ROOT)/usr/include
+ROOTINCADMIN=		$(ROOTINC)/admin
+ROOTINCNIHCL=		$(ROOTINC)/nihcl
+ROOTADMIN=		$(ROOT)/usr/snadm
+ROOTOPTADMIN=		$(ROOT)/opt/$(UNB_ADM_DIR)
+ROOTADMINLIB=		$(ROOTADMIN)/lib
+ROOTOPTADMINLIB=	$(ROOTOPTADMIN)/lib
+ROOTOPTADMINLIBMSGDIR=  $(ROOTOPTADMINLIB)/locale/C/LC_MESSAGES
+ROOTADMINETC=		$(ROOTADMIN)/etc
+ROOTOPTADMINETC=	$(ROOTOPTADMIN)/etc
+ROOTOPTADMINBIN=	$(ROOTOPTADMIN)/bin
+ROOTADMINCLASS=		$(ROOTADMIN)/classes
+ROOTOPTADMINCLASS=	$(ROOTOPTADMIN)/classes
+ROOTADMINHELPDIR=	$(ROOTOPTADMINCLASS)/locale/C/help
+ROOTADMINMSGDIR=	$(ROOTOPTADMINCLASS)/locale/C/LC_MESSAGES
+ROOTADMINRESDIR=	$(ROOTOPTADMINCLASS)/locale/C/app-defaults
+ROOTADMINCLASSLIB=	$(ROOTADMINCLASS)/lib
+ADMINCLASSLIB=		$(ROOTADMINCLASSLIB)
+ROOTUSRLIBMSGS=		$(ROOTUSRLIB)/locale/C/LC_MESSAGES
+ROOTCACHEOSDIR=		$(ROOTADMINCLASS)/cacheos
+ROOTCACHEOSLIBDIR=	$(ROOTCACHEOSDIR)/lib
+
+ROOTSBINPROG=		$(PROG:%=$(ROOTSBIN)/%)
+ROOTUSRSBINPROG=	$(PROG:%=$(ROOTUSRSBIN)/%)
+ROOTETCPROGS=		$(PROGS:%=$(ROOTETC)/%)
+ROOTUSRINCLEXP=		$(EXPHDRS:%=$(ROOTINCADMIN)/%)
+ROOTNIHCLINCLEXP=	$(EXPHDRS:%=$(ROOTINCNIHCL)/%)
+INSTMSGS=		$(MSG_DOMAIN:%=$(ROOTUSRLIBMSGS)/%.po)
+ROOTCACHEOSLIBS=	$(LIBS:%=$(ROOTCACHEOSLIBDIR)/%)
+
+FILEMODE=		644
+DIRMODE=		755
+OWNER=			bin
+GROUP=			bin
+
+ARCHSUPPORT=		i386 sparc ppc
+
+# Borrowed from Makefile.master in NSE env SunOSint.
+# CH toggles operations restricted to root.  It is normally set to `#'.  When
+# running as root, it should be set to `' (null) in your environment.
+# RELEASE_BUILD should be cleared for RE builds.  This is completely
+# independent of CH.  NOT_RELEASE_BUILD is exactly what the name implies.
+#
+CH:sh=					/usr/bin/echo \\043
+NOT_RELEASE_BUILD=
+RELEASE_BUILD:sh=			/usr/bin/echo \\043
+$(RELEASE_BUILD)NOT_RELEASE_BUILD:sh=	/usr/bin/echo \\043
+$(RELEASE_BUILD)ROOT=			/proto
+$(NOT_RELEASE_BUILD)ROOT:sh=		/usr/bin/echo ${ROOT}
+
+INS.file=	$(INS) -s -m $(FILEMODE) -f $(@D) $<
+$(CH)INS.file=       $(INS) -m $(FILEMODE) -u $(OWNER) -g $(GROUP) -f $(@D) $<
+INS.dir=	$(INS) -d -m $(DIRMODE) $@
+$(CH)INS.dir=        $(INS) -d -m $(DIRMODE) -u $(OWNER) -g $(GROUP) $@
+INSTALL=	$(INS.file)
+
+MACH=	$(TARGET_MACH:-%=%)
+ARCH=	$(TARGET_ARCH:-%=%)
+
+# Set CFLAGS and CCFLAGS and reset below if release build.
+# Only optimize for release builds
+CFLAGS:sh =if [ "`uname -p`" = "sparc" ]; then \
+		echo "-xcg89 -Wa,-cg92" ; \
+          else  echo ""; \
+          fi
+CCFLAGS:sh =if [ "`uname -p`" = "sparc" ]; then \
+		echo "-cg89 -Qoption fbe -cg92" ; \
+          else  echo ""; \
+          fi
+$(RELEASE_BUILD)CFLAGS:sh =if [ "`uname -p`" = "sparc" ]; then \
+		echo "-O -xcg89 -Wa,-cg92" ; \
+          else  echo "-O"; \
+          fi
+ 
+$(RELEASE_BUILD)CCFLAGS:sh =if [ "`uname -p`" = "sparc" ]; then \
+		echo "-O -cg89 -Qoption fbe -cg92" ; \
+          else  echo "-O"; \
+          fi
+ 
+CPPFLAGS.master= -I$(ROOT)/usr/include 
+CPPFLAGS= $(CPPFLAGS.master)
+# CPPFLAGS.master allows values to be prepended to CPPFLAGS.
+
+# Rules (normally from default.mk) and macros which are used for post
+# processing files. Normally, these do stripping of the comment section
+# automatically.
+#    RELEASE_CM:	Should be edited if std format changes.
+#    POST_PROCESS_O:	Post-processing for `.o' files.
+#    POST_PROCESS_A:	Post-processing for `.a' files (currently null).
+#    POST_PROCESS_SO:	Post-processing for `.so' files.
+#    POST_PROCESS:	Post-processing for executable files (no suffix).
+# Note that these macros are not completely generalized as they are to be
+# used with the file name to be processed following.
+#
+# It is left as an exercise to Release Engineering to embellish the generation
+# of the release comment string.
+#
+#	If this is a development build:
+#		delete the comment section (mcs -d)
+#		add the standard comment (mcs -a $(RELEASE_CM))
+#		add the development specific comment (mcs -a $(DEV_CM))
+#
+#	If this is a release build:
+#		delete the comment section (mcs -d)
+#		add the standard comment (mcs -a $(RELEASE_CM))
+#
+#	Sigh,... The declaration POUND_SIGN is always '#'. This is just needed
+#	to get around the make **bug** that '#' is always a comment delimiter,
+#	even when escaped of quoted.
+#
+
+POUND_SIGN:sh=	/usr/bin/echo \\043
+VERSION=	SNAG Development
+RELEASE=	SunOS
+RELEASE_DATE:sh= date "+%B %Y"
+BUILD_DATE:sh= date "+%D"
+
+RELEASE_CM=	"@($(POUND_SIGN))$(RELEASE) $(VERSION).  $(RELEASE_DATE)"
+DEV_CM=		"@($(POUND_SIGN))SNAG Internal Development: $(LOGNAME) $(BUILD_DATE)"
+
+PROCESS_COMMENT=	@?mcs -d -a $(RELEASE_CM) -a $(DEV_CM)
+$(RELEASE_BUILD)PROCESS_COMMENT=	@?mcs -d -a $(RELEASE_CM)
+
+POST_PROCESS_O=		$(PROCESS_COMMENT) $@
+POST_PROCESS_A=
+POST_PROCESS_SO=	$(PROCESS_COMMENT) $@
+POST_PROCESS=           $(PROCESS_COMMENT) $@
+
+$(RELEASE_BUILD)POST_PROCESS= $(PROCESS_COMMENT) $@ ;\
+				strip $@
+
+#	Default build rules which perform comment section post-processing.
+#
+.c:
+	$(PURIFY) $(LINK.c) -o $@ $< $(LDLIBS)
+	$(POST_PROCESS)
+.c.o:
+	$(PURIFY) $(COMPILE.c) $(OUTPUT_OPTION) $<
+	$(POST_PROCESS_O)
+.c.a:
+	$(PURIFY) $(COMPILE.c) -o $% $<
+	$(PROCESS_COMMENT) $%
+	$(AR) $(ARFLAGS) $@ $%
+	$(RM) $%
+.cc:
+	$(PURIFY) $(LINK.cc) -o $@ $< $(LDLIBS)
+	$(POST_PROCESS)
+.cc.o:
+	$(PURIFY) $(COMPILE.cc) $(OUTPUT_OPTION) $<
+	$(POST_PROCESS_O)
+.cc.a:
+	$(PURIFY) $(COMPILE.cc) -o $% $<
+	$(PROCESS_COMMENT) $%
+	$(AR) $(ARFLAGS) $@ $%
+	$(RM) $%
+
+.s.o:
+	$(COMPILE.s) -o $@ $<
+	$(POST_PROCESS_O)
+.s.a:
+	$(COMPILE.s) -o $% $<
+	$(PROCESS_COMMENT) $%
+	$(AR) $(ARFLAGS) $@ $%
+	$(RM) $%
+.y:
+	$(YACC.y) $<
+	$(LINK.c) -o $@ y.tab.c $(LDLIBS)
+	$(POST_PROCESS)
+	$(RM) y.tab.c
+.y.o:
+	$(YACC.y) $<
+	$(COMPILE.c) -o $@ y.tab.c
+	$(POST_PROCESS_O)
+	$(RM) y.tab.c
+.l:
+	$(RM) $*.c
+	$(LEX.l) $< > $*.c
+	$(LINK.c) -o $@ $*.c -ll $(LDLIBS)
+	$(POST_PROCESS)
+	$(RM) $*.c
+.l.o:
+	$(RM) $*.c
+	$(LEX.l) $< > $*.c
+	$(COMPILE.c) -o $@ $*.c
+	$(POST_PROCESS_O)
+	$(RM) $*.c
+
+FRC:

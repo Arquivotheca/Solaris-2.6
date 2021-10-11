@@ -1,0 +1,232 @@
+/(root) 
+         The file system at the top of the hierarchical file tree. 
+         The root directory contains the directories and files critical 
+         for system operation, such as the kernel, device drivers, and 
+         the programs to start (boot) the system. 
+
+/export 
+         A file system on an OS server that is shared with other
+         systems on a network. For example, the /export file system 
+         can contain the root file system and swap for diskless clients, 
+         and the home directories for users on the network. Diskless 
+         clients rely on the /export file system to boot and run.
+
+/usr
+         A file that contains many of the standard UNIX programs. 
+         Sharing the large /usr file system with a server rather than
+         maintaining a local copy, minimizes the overall disk space 
+         requires to install and run Solaris software on a system.
+
+/opt 
+         Contains the mount points for optional, third-party or
+         unbundled software.
+
+/swap 
+         See swap space.
+
+/var 
+         Contains system files and directories that are likely
+         to change or grow over the life of the local system. These 
+         include system logs, vi files, mail files, and uucp files.
+
+AutoClient (TM)
+	 A system type that caches all of its needed system software
+         from an OS server. Because it contains no permanent data,
+         an AutoClient is a field replaceable unit (FRU). It requires
+         a small local disk for swapping and caching its individual
+         root (/) and /usr file systems from an OS server.
+
+auto-layout
+	 A feature of the Solaris installation program that takes 
+         the file systems you've requested and allocates all 
+         available disk space to them. See manual layout.
+
+cluster 
+         A logical grouping of software packages. The Solaris 
+         software is divided into software groups, which are
+         each composed of clusters and packages. You can remove 
+         clusters if they are not required.
+
+Core 
+         A software group that contains the minimum software
+         required to boot and run Solaris on a system. It includes
+         some networking software, and the drivers required to run
+         the windowing environment; it does not include the OpenWindows 
+         software.
+
+cylinder 
+         The aggregate of all tracks that reside in the same 
+         location on every disk surface.
+ 
+Developer System Support   
+         A software group that contains the End User System 
+         Support software group plus libraries, include files, 
+         man pages, and programming tools for developing software. 
+         Compilers and debuggers are not included with Solaris.
+
+disk partition 
+         A portion of the disk reserved for a specific file 
+         system and function.
+
+diskless client 
+         A network system that does not have its own disk, 
+         so it relies completely on an OS server for software and 
+         file storage. Diskless clients do not have to use the 
+         Solaris installation program because they use the Solaris
+         software that is already installed on an OS server.
+
+domain 
+         A part of the Internet naming hierarchy. It represents
+         a group of systems on a local network that share 
+         administrative files.
+
+domain name 
+         The name of a domain that is required for a naming 
+         service to work properly. An Internet domain name consists
+         of a sequence of component names separated by periods (for 
+         example: tundra.mpk.ca.us). As you read a domain name from 
+         left to right, the component names identify more general 
+         (and usually remote) areas of administrative authority.
+
+End User System Support
+         A software group that contains the Core software group 
+         plus the recommended software for an end user including 
+         OpenWindows and DeskSet software.
+
+Entire Distribution 
+         A software group that contains the entire Solaris release.
+
+
+Entire Distribution Plus OEM Support
+         A software group that contains the entire Solaris release,
+         plus additional hardware support for OEMs. This software
+         is recommended when installing Solaris software on servers.
+
+fdisk partition
+         A logical partition of a disk drive dedicated to a 
+         particular operating system on x86 systems. During the 
+         Solaris installation program, you must set up at least one
+         fdisk on a x86 system for installing Solaris. x86 systems 
+         are designed to support up to four different operating systems
+         on each disk; each operating system must reside on a unique
+         fdisk partition. fdisk partitions are contiguous and do not
+         overlap.
+	
+file server 
+         A server that provides the software and file storage for 
+         systems on a network.
+
+file system 
+         A collection of files and directories that when set into
+         a logical hierarchy, compose an organized, structured set
+         of information.
+
+host name 
+         The name by which a system is known to other systems
+         on a network. This name must be unique among all systems
+         within a domain (usually this means a single organization).
+         A host name can be any combination of letters, numbers, 
+         and minus signs (-), but it cannot begin or end with a 
+         minus sign.
+
+initial option 
+         An option presented during the Solaris installation program
+         for systems being installed the first time. It is also 
+         presented for upgradable systems, but disks will be over-
+         written if you choose the initial option.
+
+IP address 
+         A unique number that identifies a networked system so
+         it can communicate via Internet Protocols. It consists 
+         of four numbers that are separated by periods. Most often, 
+         each part of the IP address is a number between 0 and 225; 
+         however, the first number must be less than 224 and generally 
+         the last number cannot be 0.
+
+manual layout
+         The process of manually specifying the disks and what file
+         systems go on which slices. 
+
+mount point 
+         A directory on a system where you can remotely mount a file 
+         system that exists on the local or remote system.
+
+mounting 
+         The process of making a file system accessible by executing 
+         the mount command. To mount a file system, you need a mount 
+         point on the local system and the name of the file system to 
+         be mounted (for example, /usr).
+
+overlapping slices 
+         Slices on the disk share the same physical cylinders on the
+         disk. In the following example, slice 3 overlaps slices 0 
+         and 1.
+
+         +---------+---------------------------------------+
+         | slice 0 |                                       |
+         +---------+---------+-----------------------------+
+         |         | slice 3 |                             |
+         +---------+---------+-----------------------------+
+         | slice 5           |                             |
+         +-------------------+----------------------------- 
+
+package
+         A functional grouping of files and directories that form a 
+         software application. The Solaris software is divided into
+         software groups, each of which are composed of clusters and
+         packages.     
+
+partition        
+         See slice or fdisk partition.
+
+platform 
+         The instruction set that a system uses to run the Solaris 
+         software, for example, i86pc, SUNW,SUN_4_60, IBM_PPS_Model_6040. 
+
+profile 
+         A text file that defines how to install Solaris software on
+         a system. 
+
+OS server 
+         A system that provides services to systems on a network. For 
+         diskless clients, an OS server must have disk space set aside
+         for each diskless client's root file system and swap space 
+         (/export/root, /export/swap).
+
+software dependencies 
+         Packages that require other packages to function.
+
+software group
+         A logical grouping of the Solaris software that is predefined 
+         and bundled by SunSoft. When installing Solaris, you must 
+         choose to install a software group, for example: Core, End User
+         System Support, Developer System Support, or Entire Distribution.
+         You can then add or remove software from these predefined groups.
+
+swap space         
+         Disk space used for virtual memory storage when the system 
+         does not have enough system memory to handle current processes.
+         Also known as /swap and swap file system.
+
+slice    
+         A physical subset of a disk composed of a single range of 
+         contiguous blocks of disk space. By convention, slice 2 
+         represents the entire disk. A disk can be divided into eight
+         slices. Before you can create a file system on a disk, you must
+         format it into slices.
+
+         On x86 systems, Solaris is installed within a single fdisk
+         partition, which is further subdivided into slices. 
+
+Solaris installation program
+         A menu-driven, interactive program that enables you to set up 
+         a system and install it with Solaris. If installing Solaris from
+         a graphics monitor, a graphical user interface (GUI) is provided;
+         if installing Solaris on a non-graphics monitor, a character user
+         interface (CUI) is provided.
+         
+upgrade option
+         An option presented during the Solaris installation program if 
+         at least one disk attached to your system has a Solaris 2.x root 
+         file system on slice 0. Depending on the software you're installing,
+         the upgrade option, may take as long as initially installing Solaris.

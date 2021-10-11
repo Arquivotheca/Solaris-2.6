@@ -1,0 +1,29 @@
+class="win" name="MSC-S"
+	__wclass__="XINPUT"
+	__category__="pointer"
+	__title__="Mouse Systems Corp. serial mouse"
+
+	ddxHandler="ddxSUNWx86mouse.so.1"
+	ddxInitFunc="ddxSUNWmouseProc"
+
+	buttons="var,__nbuttons__"
+	__nbuttons__="string,2,3"
+	strmod="vuidm4p,vuidm5p"
+
+	dev="string,/dev/tty00"
+	;
+
+class="win" name="MSC-O-S"
+	__wclass__="XINPUT"
+	__category__="pointer"
+	__title__="Mouse Systems Corp. serial mouse optical"
+
+	ddxHandler="ddxSUNWx86mouse.so.1"
+	ddxInitFunc="ddxSUNWmouseProc"
+
+	buttons="var,__nbuttons__"
+	__nbuttons__="string,2,3"
+	strmod="vuidm4p,vuidm5p"
+
+	dev="string,/dev/tty00"
+	;

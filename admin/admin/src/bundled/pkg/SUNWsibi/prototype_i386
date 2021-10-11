@@ -1,0 +1,97 @@
+#
+#	@(#)prototype_i386 1.8 96/07/30
+#
+# Copyright (c) 1992-1996 Sun Microsystems, Inc.  All Rights Reserved. Sun
+# considers its source code as an unpublished, proprietary trade secret, and
+# it is available only under strict license provisions.  This copyright
+# notice is placed here only to protect Sun in the event the source is
+# deemed a published work.  Dissassembly, decompilation, or other means of
+# reducing the object code to human readable form is prohibited by the
+# license agreement under which this code is provided to the user or company
+# in possession of this copy.
+#
+# RESTRICTED RIGHTS LEGEND: Use, duplication, or disclosure by the Government
+# is subject to restrictions as set forth in subparagraph (c)(1)(ii) of the
+# Rights in Technical Data and Computer Software clause at DFARS 52.227-7013
+# and in similar clauses in the FAR and NASA FAR Supplement.
+
+
+#
+#
+# This required package information file contains a list of package contents.
+# The 'pkgmk' command uses this file to identify the contents of a package
+# and their location on the development machine when building the package.
+# Can be created via a text editor or through use of the 'pkgproto' command.
+
+#
+# SUNWsibi I386 specific package contents
+#
+
+#!search <pathname pathname ...>        # where to find pkg objects
+#!include <filename>                    # include another 'prototype' file
+#!default <mode> <owner> <group>        # default used if not specified on entry
+#!<param>=<value>                       # puts parameter in pkg environment
+
+#
+# Include ISA independent files
+#
+!include prototype_com
+
+!default 0755 root sys
+#
+# List files which are i386 specific here
+#
+f none	$installd/rootdev
+
+#
+# New directories
+#
+d none $proto/root/etc/openwin
+d none $proto/root/etc/openwin/server
+d none $proto/root/etc/openwin/server/etc
+d none $proto/root/etc/openwin/etc
+d none $proto/root/etc/openwin/etc/devdata
+d none $proto/root/etc/openwin/etc/devdata/SUNWaccel
+d none $proto/root/etc/openwin/etc/devdata/SUNWaccel/monitors
+d none $proto/root/etc/openwin/etc/devdata/SUNWaccel/monitors/pnp
+d none $proto/root/platform
+d none $proto/root/platform/i86pc
+d none $proto/root/platform/i86pc/kernel
+d none $proto/root/platform/i86pc/kernel/drv
+d none $proto/root/platform/i86pc/boot
+d none $proto/root/platform/i86pc/boot/solaris
+
+d none etc/openwin/etc 0775 root bin
+d none etc/openwin/etc/devdata 0775 root bin
+d none etc/openwin/etc/devdata/SUNWaccel 0775 root bin
+d none etc/openwin/etc/devdata/SUNWaccel/monitors 0775 root bin
+d none etc/openwin/etc/devdata/SUNWaccel/monitors/pnp 0775 root bin
+
+# Existing directories
+#
+d none etc/openwin 0775 root bin
+d none etc/openwin/server 0775 root bin
+d none etc/openwin/server/etc 0775 root bin
+d none kernel 0755 root sys
+d none kernel/drv 0755 root sys
+d none platform 0755 root sys
+d none platform/i86pc 0755 root sys
+d none platform/i86pc/kernel 0755 root sys
+d none platform/i86pc/kernel/drv 0755 root sys
+d none platform/i86pc/boot 0755 root sys
+d none platform/i86pc/boot/solaris 0755 root sys
+
+#
+# Modifications for uninitialized writeable files
+#
+s none	platform/i86pc/kernel/drv/tiqmouse.conf=../../../../tmp/root/platform/i86pc/kernel/drv/tiqmouse.conf
+s none	kernel/drv/sbpro.conf=../../tmp/root/kernel/drv/sbpro.conf
+s none etc/defaultkb=../tmp/root/etc/defaultkb
+s none etc/openwin/server/etc/OWconfig=../../../../tmp/root/etc/openwin/server/etc/OWconfig
+s none etc/rtc_config=../tmp/root/etc/rtc_config
+s none etc/openwin/etc/devdata/SUNWaccel/monitors/pnp/edidgen.vda=../../../../../../../tmp/root/etc/openwin/etc/devdata/SUNWaccel/monitors/pnp/edidgen.vda
+
+#
+# Existing initialized writeable files
+#
+s copy platform/i86pc/boot/solaris/bootenv.rc=../../../../tmp/root/platform/i86pc/boot/solaris/bootenv.rc

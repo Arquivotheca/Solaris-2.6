@@ -1,0 +1,40 @@
+Return-Path: <rherriot@parrot.Eng.Sun.COM>
+Date: Mon, 14 Mar 1994 15:17:12 +0800
+From: rherriot@parrot.Eng.Sun.COM (Robert Herriot)
+To: brian.smithey@Central
+Subject: test program
+Content-Type: X-sun-attachment
+Content-Length: 25444
+
+----------
+X-Sun-Data-Type: text
+X-Sun-Data-Description: text
+X-Sun-Data-Name: text
+X-Sun-Content-Lines: 26
+
+
+Enclosed is a test program doText.c, a makefile and the binary. If you run
+this program with an integer argument n, it will run n iterations of 
+tests on the 3 scripts: jobdone, printer, and forms.  The default (with
+no argument) is 100. The program randomly tries calling one of the three
+scripts with random arguments.  It prints out a summary at the end.
+
+I have had a problem when running this program. After about 50
+iterations, ToolTalk gets out of sync and appears to produce failures.
+I am hoping that the 494 version of ToolTalk doesn't behave this way.
+I know that 1093 has a bug in it thay may cause it. If it misbehaves and
+you are using 494 TookTalk,let me know.
+
+The program misbehaves in the following way. It consists of a loop which
+generates a random message, sends it by calling jobdone, print or form and
+then receives the message. The following is the sequence of messages.
+
+     send A     receive A
+     send B     receive B
+     send C     receive C
+     send D     receive C (problem begins here)
+     send E     receive D
+     send F     receive D
+     ... 
+
+Bob Herriot

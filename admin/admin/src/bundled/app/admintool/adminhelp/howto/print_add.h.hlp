@@ -1,0 +1,39 @@
+---- Add Access to a Local Printer -----------------
+ 
+1. Select Printers from the Browse menu; the 
+   Admintool:Printers main window appears.
+
+2. Select Local Printer from the Add menu on the
+   Edit menu.
+
+3. Fill in the form.
+
+   See "Add/Modify Local Printers" in the
+   "Reference" help for more information on filling
+   in the form.
+
+4. Click on OK.
+
+   The list of printers displayed in the
+   Admintool:Printers main window is updated to
+   included the new printer.
+
+---- Add Access to a Remote Printer ----------------
+ 
+1. Select Printers from the Browse menu.
+
+2. Select Access to Printer from the Add menu on the
+   Admintool:Printers main window.
+
+3. Fill in the form.
+
+   See "Add/Modify Remote Printers" in the
+   "Reference" help for more information on filling
+   in the form.  
+
+4. Click on OK.
+
+   The list of printers displayed in the
+   Admintool:Printers main window is updated to
+   include the new printer.
+

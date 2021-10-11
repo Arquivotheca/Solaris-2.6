@@ -1,0 +1,17 @@
+class="sysbus" name="kdmouse"
+	__wclass__="XINPUT"
+	__wname__="KDMOUSE-B"
+	__category__="pointer"
+	__title__="IBM Or Motorola Built-in Mouse"
+
+	ddxHandler="ddxSUNWx86mouse.so.1"
+	ddxInitFunc="ddxSUNWmouseProc"
+
+	strmod="vuidps2"
+
+	dev="/dev/kdmouse"
+	interrupts="numeric,1","numeric,12"
+
+	__common__="name","class"
+	__driver__="interrupts"
+	;

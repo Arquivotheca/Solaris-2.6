@@ -1,0 +1,34 @@
+Confirm Information
+	confirm.help
+Date and Time
+	date.help
+Domain Name
+	domain.help
+Host Name
+	hostname.help
+IP Address
+	ipaddr.help
+Identifying Your System
+	sysid.help
+Locating Servers
+	location.help
+Name Service
+	name_service.help
+Name Servers
+	nsserver.help
+Navigation
+	navigate.help
+Netmask
+	netmask.help
+Network Connectivity
+	standalone.help
+Offset from GMT
+	timezone.help
+Primary Network Interface
+	netif.help
+Subnets
+	subnet.help
+Time Zone
+	timezone.help
+Time Zone File
+	timezone.help

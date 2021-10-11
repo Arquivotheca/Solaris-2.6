@@ -1,0 +1,95 @@
+
+AdapterId 0DEFFh
+
+AdapterName "IBM Multi-Protocol Communications Adapter"
+
+NumBytes 2
+
+Begin Device 6 0 1
+NamedItem
+	Prompt "Communications Port"
+      choice "SDLC 1, Arb 1"    pos[0]=XXX1000Xb pos[1]=XXXX0001b
+				io 0380h-038fh	int 3 4  arb 1
+      choice "SDLC 1, Arb 7"    pos[0]=XXX1000Xb pos[1]=XXXX0111b
+				io 0380h-038fh	int 3 4  arb 7
+      choice "SDLC 1, Arb 0"    pos[0]=XXX1000Xb pos[1]=XXXX0000b
+				io 0380h-038fh	int 3 4  arb 0
+      choice "SDLC 1, Arb 3"    pos[0]=XXX1000Xb pos[1]=XXXX0011b
+				io 0380h-038fh	int 3 4  arb 3
+      choice "SDLC 1, Arb 4"    pos[0]=XXX1000Xb pos[1]=XXXX0100b
+				io 0380h-038fh	int 3 4  arb 4
+      choice "SDLC 1, Arb 5"    pos[0]=XXX1000Xb pos[1]=XXXX0101b
+				io 0380h-038fh	int 3 4  arb 5
+      choice "SDLC 1, Arb 6"    pos[0]=XXX1000Xb pos[1]=XXXX0110b
+				io 0380h-038fh	int 3 4  arb 6
+      choice "SDLC 1, Arb 8"    pos[0]=XXX1000Xb pos[1]=XXXX1000b
+				io 0380h-038fh	int 3 4  arb 8
+      choice "SDLC 1, Arb 9"    pos[0]=XXX1000Xb pos[1]=XXXX1001b
+				io 0380h-038fh	int 3 4  arb 9
+      choice "SDLC 1, Arb 10"   pos[0]=XXX1000Xb pos[1]=XXXX1010b
+				io 0380h-038fh	int 3 4  arb 10
+      choice "SDLC 1, Arb 11"   pos[0]=XXX1000Xb pos[1]=XXXX1011b
+				io 0380h-038fh	int 3 4  arb 11
+      choice "SDLC 1, Arb 12"   pos[0]=XXX1000Xb pos[1]=XXXX1100b
+				io 0380h-038fh	int 3 4  arb 12
+      choice "SDLC 1, Arb 13"   pos[0]=XXX1000Xb pos[1]=XXXX1101b
+				io 0380h-038fh	int 3 4  arb 13
+      choice "SDLC 1, Arb 14"   pos[0]=XXX1000Xb pos[1]=XXXX1110b
+				io 0380h-038fh	int 3 4  arb 14
+
+      choice "SDLC 2, Arb 1"    pos[0]=XXX1001Xb pos[1]=XXXX0001b
+				io 03a0h-03afh	int 3 4  arb 1
+      choice "SDLC 2, Arb 7"    pos[0]=XXX1001Xb pos[1]=XXXX0111b
+				io 03a0h-03afh	int 3 4  arb 7
+      choice "SDLC 2, Arb 0"    pos[0]=XXX1001Xb pos[1]=XXXX0000b
+				io 03a0h-03afh	int 3 4  arb 0
+      choice "SDLC 2, Arb 3"    pos[0]=XXX1001Xb pos[1]=XXXX0011b
+				io 03a0h-03afh	int 3 4  arb 3
+      choice "SDLC 2, Arb 4"    pos[0]=XXX1001Xb pos[1]=XXXX0100b
+				io 03a0h-03afh	int 3 4  arb 4
+      choice "SDLC 2, Arb 5"    pos[0]=XXX1001Xb pos[1]=XXXX0101b
+				io 03a0h-03afh	int 3 4  arb 5
+      choice "SDLC 2, Arb 6"    pos[0]=XXX1001Xb pos[1]=XXXX0110b
+				io 03a0h-03afh	int 3 4  arb 6
+      choice "SDLC 2, Arb 8"    pos[0]=XXX1001Xb pos[1]=XXXX1000b
+				io 03a0h-03afh	int 3 4  arb 8
+      choice "SDLC 2, Arb 9"    pos[0]=XXX1001Xb pos[1]=XXXX1001b
+				io 03a0h-03afh	int 3 4  arb 9
+      choice "SDLC 2, Arb 10"   pos[0]=XXX1001Xb pos[1]=XXXX1010b
+				io 03a0h-03afh	int 3 4  arb 10
+      choice "SDLC 2, Arb 11"   pos[0]=XXX1001Xb pos[1]=XXXX1011b
+				io 03a0h-03afh	int 3 4  arb 11
+      choice "SDLC 2, Arb 12"   pos[0]=XXX1001Xb pos[1]=XXXX1100b
+				io 03a0h-03afh	int 3 4  arb 12
+      choice "SDLC 2, Arb 13"   pos[0]=XXX1001Xb pos[1]=XXXX1101b
+				io 03a0h-03afh	int 3 4  arb 13
+      choice "SDLC 2, Arb 14"   pos[0]=XXX1001Xb pos[1]=XXXX1110b
+				io 03a0h-03afh	int 3 4  arb 14
+
+      choice "BISYNC 1"  pos[0]=XXX1100Xb  io 03a0h-03abh  int 3 4
+      choice "BISYNC 2"  pos[0]=XXX1101Xb  io 0380h-038bh  int 3 4
+      choice "SERIAL 1"  pos[0]=XXX0000Xb  io 03f8h-03ffh  int 4
+      choice "SERIAL 2"  pos[0]=XXX0001Xb  io 02f8h-02ffh  int 3
+      choice "SERIAL 3"  pos[0]=XXX0010Xb  io 3220h-3227h  int 3
+      choice "SERIAL 4"  pos[0]=XXX0011Xb  io 3228h-322fh  int 3
+      choice "SERIAL 5"  pos[0]=XXX0100Xb  io 4220h-4227h  int 3
+      choice "SERIAL 6"  pos[0]=XXX0101Xb  io 4228h-422fh  int 3
+      choice "SERIAL 7"  pos[0]=XXX0110Xb  io 5220h-5227h  int 3
+      choice "SERIAL 8"  pos[0]=XXX0111Xb  io 5228h-522fh  int 3
+   Help
+"This field is used to set a communications port.  The port can be set
+as either the primary or secondary synchronous (SDLC), or bisynchronous
+(BISYNC) port or it can be set as serial port.	For Primary SDLC, select
+SDLC1.	For Secondary SDLC, select SDLC2.  For Primary BISYNC, select
+BISYNC1.  For Secondary BISYNC, select BISYYNC2.  For serial port, select
+Serial 1 through 8.
+If you are in the 'Change Configuration' window, you can change
+the setting.  Use F5 and F6 to scroll through the choices, the Up
+and Down arrow keys to move from field to field.
+If a setting conflicts with another, an asterisk (*) appears next to
+the conflicts.	You must fix conflicts before you use the adapter.
+(If you are not in the 'Change Configuration' window and you need
+to change the setting, return to the 'Set Configuration' window then
+select 'Change configuration'.)"
+End
+

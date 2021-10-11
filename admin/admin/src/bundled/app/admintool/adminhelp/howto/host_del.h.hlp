@@ -1,0 +1,19 @@
+---- Delete a Host Entry ---------------------------
+
+1. Select Hosts from the Browse menu.
+
+2. Select the host entry to delete from the
+   Admintool:Hosts main window.
+
+3. Select Delete from the Edit menu on the
+   Admintool:Hosts main window.
+
+   A window is displayed asking you to confirm the
+   deletion.
+
+4. Click on Delete.
+
+   The selected host is deleted and the host
+   information displayed in the main window is
+   updated.
+

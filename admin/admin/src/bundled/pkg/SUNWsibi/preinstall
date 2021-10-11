@@ -1,0 +1,154 @@
+#!/bin/sh
+#
+# Copyright notice
+#
+
+# Constants
+#
+# absolute path names
+#
+ROOT=$PKG_INSTALL_ROOT
+PKGMAP=$INST_DATADIR/$PKG/pkgmap
+LOGFILE=/tmp/preinstall.log
+
+# relative path names
+#
+PROTO=proto
+PROTOROOT=proto/root
+TMP=tmp
+TMPROOT=tmp/root
+
+export ROOT PKGMAP LOGFILE PROTO PROTOROOT TMP TMPROOT
+
+# Copy the specified file to the proto root directory
+#
+copy_proto()
+{
+	echo "copy_proto $1" >> $LOGFILE
+	(cd $ROOT; find ./$1 -depth -print | \
+	 cpio -dump $PROTOROOT;) >>$LOGFILE 2>&1
+}
+
+# Copy the specified file to the image /tmp directory
+#
+copy_tmp()
+{
+	echo "copy_tmp $1" >> $LOGFILE
+	(cd $ROOT; find ./$1 -depth -print | \
+	 cpio -dump $TMPROOT;) >>$LOGFILE 2>&1
+}
+
+# Create an empty file in the image /tmp directory
+#
+create_empty()
+{
+	echo "create_empty $1" >> $LOGFILE
+	(cd $ROOT; touch ./$1;)
+}
+
+# Modify the nsswitch.conf file on the image before copying
+#
+modify_nsswitch()
+{
+	echo "modify_nsswitch" >> $LOGFILE
+	(cd $ROOT; cp etc/nsswitch.nis etc/nsswitch.conf;)
+}
+
+# Install a delivered file and them make it writeable on the
+# image
+#
+new_writeable()
+{
+	echo "new_writeable $1" >> $LOGFILE
+	(cd $ROOT; cp $INST_DATADIR/$PKG/reloc/$1 $PROTOROOT/$1;)
+	echo "    - linking $1 to /tmp/root/$1" >> $LOGFILE
+	(cd $ROOT; ln -s ../${TMPROOT}/${1} ./$1;)
+}
+
+
+# Clean-up and relocate /var to ./proto/root; make
+# sure you copy
+#
+modify_var() {
+    echo "modify_var" >> $LOGFILE
+    #
+    # Save /var to /tmp/root/var
+    #
+    echo "    - copying /var to $ROOT/$TMPROOT/var" >> $LOGFILE
+    (cd $ROOT; find var -depth -print | \
+        cpio -dump $TMPROOT;) >>$LOGFILE 2>&1
+
+    # Remove extraneous files
+    #
+    echo "    - removing unneeded files/directories from $ROOT/var" >> $LOGFILE
+    (cd $ROOT; \
+     rm -rf var/cron var/uucp var/mail var/news var/preserve; \
+#     rm -rf var/spool/cron var/spool/uucp var/spool/mqueue; \
+     rm -rf var/spool; \
+     rm -rf var/adm/aculog var/adm/log var/adm/lastlog; \
+     rm -rf var/adm/passwd var/adm/wtmp var/adm/wtmpx; \
+#     rm -rf var/adm/spellhist var/yp/Makefile var/sadm/pkg; \
+     rm -rf var/adm/spellhist var/yp/Makefile var/sadm; \
+     rm -rf var/opt var/saf var/audit; \
+     chmod 644 var/yp/aliases)
+    echo "    - moving var to the proto root directory" >> $LOGFILE
+    (cd $ROOT; mv var $PROTOROOT)
+    echo "    - linking var to tmp/root/var" >> $LOGFILE
+    (cd $ROOT; ln -s ./tmp/root/var var)
+
+}
+ 
+
+
+##########################
+# Main script
+#
+
+umask 022
+
+# Create the prototype root directory (modes will be
+# set by the pkgmap entries
+#
+(cd $ROOT; mkdir -p $PROTOROOT; mkdir -p $TMPROOT;)
+
+# Parse through the pkgmap file and pick up all "special" entries
+#
+nawk '\
+    $3 == "copy" || \
+    $3 == "create" || \
+    $3 == "copy2" || \
+    $3 == "new" || \
+    $3 == "nsswitch" || \
+	$3 == "var"
+	{ equals=match($4, "=") - 1;
+	  file=substr($4, 0, equals);
+	  dest=substr($4, equals + 2);
+	  print $3 " " file " " dest;
+	}
+' < $PKGMAP | while read class source dest; do
+	case "$class" in
+	    "copy")
+		copy_proto $source
+		;;
+	    "create")
+		create_empty $source
+		copy_proto $source
+		;;
+	    "copy2")
+		copy_proto $source
+		copy_tmp $source
+		;;
+	    "new")
+		new_writeable $source
+		;;
+	    "nsswitch")
+		modify_nsswitch
+		copy_proto $source
+		;;
+		"var")
+		modify_var $source
+		;;
+	esac
+done
+
+exit 0

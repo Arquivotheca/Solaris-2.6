@@ -1,0 +1,148 @@
+
+AdapterID 08EFEh
+
+AdapterName  "IBM PS/2 SCSI Adapter"
+
+NumBytes 3
+
+fixedresources
+	pos[2]=1X1000XXb
+	pos[1]=XXXXXXXXb
+	pos[0]=XXXXXXXXb
+	int 0eh exec
+
+
+Begin Device 2 2 1 NoDMA
+
+nameditem
+	Prompt "I/O Address"
+	  Choice  "3540-3547"
+	    pos[0]=XXXX000Xb
+	    io 3540h-3547h
+	  Choice  "3548-354F"
+	    pos[0]=XXXX001Xb
+	    io 3548h-354Fh
+	  Choice  "3550-3557"
+	    pos[0]=XXXX010Xb
+	    io 3550h-3557h
+	  Choice  "3558-355F"
+	    pos[0]=XXXX011Xb
+	    io 3558h-355Fh
+	  Choice  "3560-3567"
+	    pos[0]=XXXX100Xb
+	    io 3560h-3567h
+	  Choice  "3568-356F"
+	    pos[0]=XXXX101Xb
+	    io 3568h-356Fh
+	  Choice  "3570-3577"
+	    pos[0]=XXXX110Xb
+	    io 3570h-3577h
+	  Choice  "3578-357F"
+	    pos[0]=XXXX111Xb
+	    io 3578h-357Fh
+	Help
+	 "This allows you to choose the I/O address for the adapter.
+	 Each adapter must have a unique address range.  Under normal
+	 circumstances, this address range does not need to be
+	 changed.  Use the F5=Previous or the F6=Next keys to change
+	 this assignment in the 'Change configuration' window.
+	 Conflicting assignments are marked with an asterisk and must
+	 be changed to use the adapter."
+
+nameditem
+	Prompt	"DMA Arbitration Level"
+	  Choice  "Level C"
+	    pos[1]=XXXX1100b
+	    arb 0ch
+	  Choice  "Level D"
+	    pos[1]=XXXX1101b
+	    arb 0dh
+	  Choice  "Level E"
+	    pos[1]=XXXX1110b
+	    arb 0eh
+	  Choice  "Level 8"
+	    pos[1]=XXXX1000b
+	    arb 8
+	  Choice  "Level 9"
+	    pos[1]=XXXX1001b
+	    arb 9
+	  Choice  "Level A"
+	    pos[1]=XXXX1010b
+	    arb 0ah
+	  Choice  "Level B"
+	    pos[1]=XXXX1011b
+	    arb 0bh
+	  Choice  "Level 1"
+	    pos[1]=XXXX0001b
+	    arb 1
+	  Choice  "Level 3"
+	    pos[1]=XXXX0011b
+	    arb 3
+	  Choice  "Level 5"
+	    pos[1]=XXXX0101b
+	    arb 5
+	  Choice  "Level 6"
+	    pos[1]=XXXX0110b
+	    arb 6
+	  Choice  "Level 7"
+	    pos[1]=XXXX0111b
+	    arb 7
+	Help
+	"This selects the DMA channel the adapter will use to transfer data.
+	 Under normal circumstances, select <Level C>.	Use the F5=Previous
+	 or the F6=Next keys to change this assignment in the 'Change
+	 configuration' window."
+
+nameditem
+	Prompt	"Fairness On/Off"
+	  Choice  "On"
+	    pos[1]=XXX1XXXXb
+	  Choice  "Off"
+	    pos[1]=XXX0XXXXb
+	Help
+	"Bus Arbitration Fairness.  This controls whether the adapter will
+	 release control of the bus when it has been using it exclusively.
+	 Under normal circumstances, select <On>.  Use the F5=Previous or
+	 the F6=Next keys to change this assignment in the 'Change
+	 configuration' window."
+
+nameditem
+	Prompt	"ROM Wait State Disable"
+	  Choice  "Enable Wait State"
+	    pos[2]=XXXXXXX0b
+	  Choice  "No Wait State"
+	    pos[2]=XXXXXXX1b
+	Help
+	 "This allows you to set whether a wait state is added to
+	 accesses of the ROM on the adapter.  Adapter performance
+	 could be degraded if this is altered from the default.  Under
+	 normal circumstances, select <Enable Wait State>.  Use the
+	 F5=Previous or the F6=Next keys to change this assignment in
+	 the 'Change configuration' window."
+
+nameditem
+	Prompt	"SCSI Adapter Address (ID)"
+	  Choice "7"
+	    pos[1]=111XXXXXb
+	  Choice "6"
+	    pos[1]=110XXXXXb
+	  Choice "5"
+	    pos[1]=101XXXXXb
+	  Choice "4"
+	    pos[1]=100XXXXXb
+	  Choice "3"
+	    pos[1]=011XXXXXb
+	  Choice "2"
+	    pos[1]=010XXXXXb
+	  Choice "1"
+	    pos[1]=001XXXXXb
+	  Choice "0"
+	    pos[1]=000XXXXXb
+	Help
+	"This allows you to change the SCSI ID of the adapter.
+	 Under normal circumstances, select <7>.  Use the F5=Previous
+	 or the F6=Next keys to change this assignment in the 'Change
+	 configuration' window."
+
+End
+

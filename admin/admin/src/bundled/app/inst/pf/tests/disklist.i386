@@ -1,0 +1,43 @@
+* /dev/rdsk/c0t0d0p0 default fdisk table
+* Dimensions:
+*     512 bytes/sector
+*      63 sectors/track
+*      65 tracks/cylinder
+*     516 cylinders
+*
+* systid:
+*   1:  DOSOS12
+*   2:  PCIXOS
+*   4:  DOSOS16
+*   5:  EXTDOS
+*   6:  DOSBIG
+*   86: DOSDATA
+*   98: OTHEROS
+*   99: UNIXOS
+*  130: SUNIXOS
+*
+
+* Id    Act  Bhead  Bsect  Bcyl    Ehead  Esect  Ecyl    Rsect    Numsect
+    6     0   1     1     0        64    63    50       63        208782   
+    5     0   0     1     51       64    63    101      208845    208845   
+* /dev/rdsk/c0t0d0p0 partition map
+*
+* Dimensions:
+*     512 bytes/sector
+*      63 sectors/track
+*      65 tracks/cylinder
+*    4095 sectors/cylinder
+*     414 cylinders
+*     414 accessible cylinders
+*
+* Flags:
+*   1: unmountable
+*  10: read-only
+*
+* Unallocated space:
+*	First     Sector    Last
+*	Sector     Count    Sector 
+*           0      4095      4094
+*
+*                          First     Sector    Last
+* Partition  Tag  Flags    Sector     Count    Sector  Mount Directory

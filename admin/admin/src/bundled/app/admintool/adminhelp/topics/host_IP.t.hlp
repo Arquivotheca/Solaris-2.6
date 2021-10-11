@@ -1,0 +1,23 @@
+---- IP Addresses ----------------------------------
+
+An Internet Protocol (IP) address must be a series
+of four numbers separated by periods: for example,
+129.44.0.3. Generally, each part of the address is a
+number between 0 and 255. The first number must be
+between 1 and 223, and the last number cannot be 0
+or 255. 
+
+IP addresses are logically divided into two parts:
+the network (analogous to a telephone area code) and
+the system on the network (analogous to a phone
+number).
+
+Example: 129.44.0.1
+
+IP addresses are usually assigned by network or
+system administrators according to local and
+Internet policies. Because creating duplicate IP
+addresses can cause network problems, do not guess
+or make up a number; check with your system or
+network administrator for help.
+

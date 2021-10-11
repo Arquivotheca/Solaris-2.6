@@ -1,0 +1,49 @@
+
+Thu May 21 18:33:57 MDT 1992
+
+README for the 4.1.3 double super secret un-stub things that go
+	onto a 5.1* CD.
+
+------------------------------------------
+
+into each karch's install root, go:
+-----------------------------------
+.stub.4x.size		- file of the size of a cpio'd stub
+.stub.4x.cpio		- list of files to cpio onto a system for stub
+.stub.4x.part2		- shell script that does the stub action
+
+Source: 		Result
+------------------------------
+.stub.4x.size		.stub.4x.size
+.stub.4x.cpio		.stub.4x.cpio
+.stub.4x.part2.sh	.stub.4x.part2
+
+
+NOTE: .stub.4x.cpio and .stub.4x.size are data files, so no embedded
+	SCCS/comments are allowed in them.
+
+NOTE: for now, .stub.4x.cpio and .stub.4x.size have dummy contents,
+	but they are required so that the command hidden in 4.1.3
+	can determine it has the right media mounted.
+	(I'll make some effort to fix things, but 4.1.3 is almost
+		out the door)
+
+TODO:
+-----
+(_)	find a nice source home for these files
+	(Makefile fragment below)
+
+(_)	whatever is needed to deliver these files are delivered in SUNWcdrom.
+	(from where they are just pgkadd'd to each karch's install root.
+
+
+
+Makefile fragment
+-----------------
+
+STUB413FILES = .stub.4x.size .stub.4x.cpio .stub.4x.part2
+
+all: $(STUB413FILES)
+
+install: $(STUB413FILES)
+	install -m 744 $(STUB413FILES) $(DESTDIR)

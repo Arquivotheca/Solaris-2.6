@@ -1,0 +1,15 @@
+---- Group Manager ------------------------------------------
+ 
+Group Manager enables system administrators to manage group
+information without having to modify the group file with an
+editor.
+
+Use Group Manager to perform the following tasks:
+
+-	Add and remove UNIX groups
+-	Add and remove user names from UNIX groups
+-	Display and sort group information
+
+Group Manager can be used to manage the group file on the local
+system or the NIS or NIS+ database with the appropriate access
+privileges.

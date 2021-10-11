@@ -1,0 +1,33 @@
+---- Adding users to the sysadmin group
+          in the NIS environment -----------------------------------
+
+1.      Log in as root on the NIS master server.
+2.      Edit the /etc/group file.
+        Modify the sysadmin group entry to add a comma
+        separated list of members (user names).
+3.      Remake the NIS maps by entering the following
+        commands:
+
+        # cd /var/yp
+        # make
+
+        Note: Depending on the size of the NIS maps, it may
+        take several minutes or several hours to update the
+        maps and propagate changes throughout the network.
+
+4.      Create a .rhosts entry in the root (/) directory on
+        the NIS master server for users authorized to modify
+        NIS maps. Use the following format:
+
+        hostname user_name
+
+The requirements for viewing and modifying NIS map
+information are:
+
+-       Membership in the UNIX group, sysadmin (group ID=14), 
+        which allows use of the Administration Tool applications.
+-       An entry for your user name in root's .rhosts file on the
+        NIS master server.
+-       Running ypbind with the -broadcast option, which is the
+        default form, if you want to manage NIS map information
+        in domains other than your own.

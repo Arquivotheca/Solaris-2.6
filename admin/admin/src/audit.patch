@@ -1,0 +1,20 @@
+#! /bin/sh
+#
+#ident	"@(#)audit.patch	1.1	92/12/08 SMI"
+#
+# Copyright (c) 1991 by Sun Microsystems, Inc.
+#
+
+PATH="$PATH:/usr/lang:/usr/ccs/bin"
+CH=
+export  PATH CH
+unset   CFLAGS
+
+OUTFILE=Make.out
+
+cd $SRC
+( echo; echo "==== audit new start at `date` ====" ) >> $OUTFILE
+$PATCHTOOLS/paudit $ROOT/package/[0-9]*[0-9] >> $OUTFILE 2>&1
+RC=$?
+( echo; echo "==== audit stopped at `date` ====" ) >> $OUTFILE
+exit $RC

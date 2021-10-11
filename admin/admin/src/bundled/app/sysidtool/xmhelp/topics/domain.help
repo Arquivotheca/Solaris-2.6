@@ -1,0 +1,18 @@
+---- Description -----------------------------------
+
+     Identifies your system as part of a name
+     service domain.
+
+     If you do not know your domain name, ask your
+     system administrator or use the domainname(1M)
+     command on a previously-installed system.
+
+     Typically, the domain name is a series of two
+     to four short names separated by periods; some
+     may be capitalized.
+
+
+---- See also --------------------------------------
+
+     domain name
+     domain

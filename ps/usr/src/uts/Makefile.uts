@@ -1,0 +1,140 @@
+#
+# uts/Makefile.uts
+#
+#pragma ident  "@(#)Makefile.uts 1.31     95/06/07 SMI"
+#
+# Copyright (c) 1995 by Sun Microsystems, Inc.
+# All rights reserved.
+#
+#	This Makefiles contains the common targets and definitions for
+#	all kernels. It is to be included in the Makefiles for specific
+#	implementation architectures and processor architecture dependent
+#	modules: i.e.: all driving kernel Makefiles.
+#
+#	Include global definitions:
+#
+include $(SRC)/Makefile.master
+
+#
+#	No text domain in the kernel.
+#
+DTEXTDOM =
+
+#
+#	Build rules for linting the kernel.
+#
+#	Note of exceptional make brain death. This used to read:
+#
+# LTAIL = ) | grep -v "warning: pointer cast may result in improper alignment"
+#
+#	Observe the `:'. Observe the quoted `:'. Somehow this poor innocent
+#	little `:' causes make (when run with the appropriate options,
+#	such as for reconcile -n) to report an error:
+#
+#		= missing in := transformation
+#
+#	Oh wow! What a wonderful parser!
+#
+LHEAD =	( $(ECHO) "\n$@";
+
+LTAIL =	) | grep -v "pointer cast may result in improper alignment"
+
+LINT.c =	$(LINT) -cu $(LINTFLAGS) $(LINT_DEFS) $(CPPFLAGS)
+
+LINT.s =	$(LINT.c)
+
+#
+#	Build the compile/assemble lines:
+#
+EXTRA_OPTIONS	 =
+ALWAYS_DEFS	 = -D_KERNEL
+AS_DEFS		 = -D_ASM -D__STDC__=0
+
+#
+#	CPPFLAGS is deliberatly set with a "=" and not a "+=".  For the kernel
+#	the header include path should not look for header files outside of
+#	the kernel code.  This "=" removes the search path built in
+#	Makefile.master inside CPPFLAGS.  Ditto for AS_CPPFLAGS.
+#
+#	Undo these fixes so that this sparse tree can build on headers
+#	that are part of the CBE.
+#
+CPPFLAGS	+= $(ALWAYS_DEFS) $(ALL_DEFS) $(CONFIG_DEFS) \
+		   $(INCLUDE_PATH) $(EXTRA_OPTIONS) 
+ASFLAGS		+= -P
+AS_CPPFLAGS	+= $(ALWAYS_DEFS) $(ALL_DEFS) $(CONFIG_DEFS) $(AS_DEFS) \
+		   $(AS_INC_PATH) $(EXTRA_OPTIONS)
+LINTFLAGS	 = -nsxm
+CFLAGS		+= $(EXTRA_CFLAGS)
+CFLAGS		+= $(XAOPT)
+CFLAGS		+= $(INLINES)
+
+#
+#	Declare that $(OBJECTS) and $(LINTS) can be compiled in parallel.
+#	The DUMMY target is for those instances where OBJECTS and LINTS
+#	are empty (to avoid an unconditional .PARALLEL).
+.PARALLEL:	$(OBJECTS) $(LINTS) DUMMY
+
+#
+#	Default cleanup definition
+#
+CLEANLINTFILES	= $(MOD_LINT_LIB)
+
+#
+#	Installation constants:
+#
+#		FILEMODE is the mode given to the kernel modules
+#		CFILEMODE is the mode given to the '.conf' files
+#
+FILEMODE	 = 755
+DIRMODE		 = 755
+OWNER		 = root
+GROUP		 = sys
+CFILEMODE	 = 644
+
+#
+#	Special Installation Macros for the installation of '.conf' files.
+#
+#	These are unique because they are not installed from the current
+#	working directory.
+#
+CONFFILE	= $(MODULE).conf
+SRC_CONFILE	= $(CONF_SRCDIR)/$(CONFFILE)
+ROOT_CONFFILE	= $(ROOTMODULE).conf
+
+INS.conffile= \
+	$(RM) $@; $(INS) -s -m $(CFILEMODE) -f $(@D) $(SRC_CONFILE)
+$(CH)INS.conffile= \
+    $(INS) -s -m $(CFILEMODE) -u $(OWNER) -g $(GROUP) -f $(@D) $(SRC_CONFILE)
+
+#
+#	Installation directories
+#
+ROOT_MOD_DIR	 = $(BASE_INS_DIR)/kernel
+ROOT_DRV_DIR	 = $(ROOT_MOD_DIR)/drv
+ROOT_STRMOD_DIR	 = $(ROOT_MOD_DIR)/strmod
+ROOT_MISC_DIR	 = $(ROOT_MOD_DIR)/misc
+ROOT_MACH_DIR	 = $(ROOT_MOD_DIR)/mach
+
+ROOT_MOD_DIRS    = $(ROOT_MOD_DIR)
+ROOT_MOD_DIRS   += $(ROOT_DRV_DIR)
+ROOT_MOD_DIRS   += $(ROOT_STRMOD_DIR)
+ROOT_MOD_DIRS   += $(ROOT_MISC_DIR)
+ROOT_MOD_DIRS   += $(ROOT_MACH_DIR)
+
+include $(SRC)/Makefile.psm
+
+#
+INS.slink1= $(RM) $@; $(SYMLINK) $(PLATFORM) $@ $(CHOWNLINK) $(CHGRPLINK)
+INS.slink2= $(RM) $@; $(SYMLINK) ../$(PLATFORM)/$(@F) $@ $(CHOWNLINK) $(CHGRPLINK)
+
+ROOT_PLAT_LINKS		 = $(PLAT_LINKS:%=$(ROOT_PLAT_DIR)/%)
+ROOT_PLAT_LINKS_2	 = $(PLAT_LINKS_2:%=$(ROOT_PLAT_DIR)/%)
+#
+#	Collection of all relevant, delivered kernel modules.
+#
+KMODS    = $(DRV_KMODS)
+KMODS   += $(STRMOD_KMODS)
+KMODS   += $(MISC_KMODS)
+KMODS   += $(MACH_KMODS)
+

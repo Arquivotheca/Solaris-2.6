@@ -1,0 +1,136 @@
+
+AdapterId 0FE80h
+
+AdapterName "Built In Features"
+
+NumBytes 9
+
+FixedResources
+	vpd(1)
+
+	pos[1]=X000X00Xb
+	pos[2]=0000XXXXb
+
+	io 0170h-0177h
+	   01F0h-01F7h
+	   0376h-0377h
+	   03F0h-03F5h
+	   03F6h-03F7h
+	   0680h-0680h
+	   0CF8h-0CFFh
+	   42e8h-42e8h 46e8h-46e8h 4ae8h-4ae8h
+	   82e8h-82e8h 86e8h-86e8h 8ae8h-8ae8h 8ee8h-8ee8h
+	   92e8h-92e8h 96e8h-96e8h 9ae8h-9ae8h 9ee8h-9ee8h
+	   0a2e8h-0a2e8h 0a6e8h-0a6e8h 0aae8h-0aae8h 0aee8h-0aee8h
+	   0b2e8h-0b2e8h 0b6e8h-0b6e8h 0bae8h-0bae8h 0bee8h-0bee8h
+	   0e2e8h-0e2e8h 0e2eah-0e2eah
+
+	int 6
+
+	arb 2
+
+
+	mem 0000C0000h-0000C7FFFh
+	    0FEC00000h-0FEC00FFFh
+	    0FFFE0000h-0FFFFFFFFh
+
+sysmem 1024 32
+
+address 32
+
+   NamedItem Prompt "IDE Drive Controller"
+      choice "Enable "  pos[2]=XXXXXX0Xb
+      choice "Disable"  pos[2]=XXXXXX1Xb
+
+   Help
+"This selection allows you to enable or disable your IDE drive
+controller.  The default selection is enable.  If you disable the
+IDE drive controller, you will be unable to use any of the IDE hard
+disk drives or other IDE devices which are connected to the IDE drive
+controller."
+
+   NamedItem Prompt "Diskette Drive Controller"
+      choice "Enable "  pos[2]=XXXX0XXXb
+      choice "Disable"  pos[2]=XXXX1XXXb
+
+   Help
+"This selection allows you to enable or disable your diskette drive
+controller.  The default selection is enable.  If you disable the
+diskette drive controller, you will be unable to use any of your
+diskette drives, except to start a System Diskette."
+
+   NamedItem Prompt "Display F1 Prompt"
+      choice "Yes"  pos[5]=XXXXXX0Xb
+      choice "No "  pos[5]=XXXXXX1Xb
+
+      Help
+"During startup, your system normally displays a prompt that tells you
+to press F1 for access to the system programs. If you wish to suppress
+this prompt, change the setting to <No>."
+
+   NamedItem Prompt "Hands-off Configuration"
+      choice "Disable"  pos[5]=XXXXX0XXb
+      choice "Enable "  pos[5]=XXXXX1XXb
+
+      Help
+"Normally, when you add or remove adapters, devices, or memory, you provide
+input to reconfigure the system. If you change this setting to <Enable>,
+the system will attempt a hands-off configuration when hardware is added
+or removed.  No user input will be required unless the default values
+cannot be used."
+
+
+
+ADPItem 1 Prompt "Processor"
+   Exec
+   Help
+"This field displays the type of processor CPU used in the system."
+
+ADPItem 2 Prompt "IDE Drive 0"
+   Help
+"This field displays whether or not the first IDE
+(Integrated Drive Electronics) drive is installed."
+
+ADPItem 3 Prompt "IDE Drive 1"
+   Help
+"This field displays whether or not the second IDE
+(Integrated Drive Electronics) drive is installed."
+
+ADPItem 4 Prompt "IDE Drive 2"
+   Help
+"This field displays whether or not the third IDE
+(Integrated Drive Electronics) drive is installed."
+
+ADPItem 5 Prompt "IDE Drive 3"
+   Help
+"This field displays whether or not the fourth IDE
+(Integrated Drive Electronics) drive is installed."
+
+ADPItem 6 Prompt "Usable System-Board Memory"
+   Help
+"This field displays the type of Usable Memory on the
+system board.  The memory type is either parity or
+non-parity."
+
+ADPItem 7 Prompt "VRAM/Aperture Size"
+   Help
+"The size of the video aperture depends upon the size
+of the installed VRAM."
+
+ADPItem 8 Prompt "Num Lock"
+      Help
+"This selection allows you to choose how the Num Lock key will be set
+when the operating system is started.  Please note that your operating
+system environment might change the setting of the Num Lock key.  The
+normal setting of this feature is <Off>."
+
+ADPItem 9 Prompt "Bypass System Programs on Error"
+Help
+"When the power-on self-test (POST) detects an error, POST normally
+starts the system programs.  If you want POST to start the operating
+system instead, choose <Enable>.  Warning:  Setting this to <Enable>
+could result in a partially configured system when an adapter or device
+is added.  A partially configured system may cause some operating systems
+and applications to be inoperable."
+
+

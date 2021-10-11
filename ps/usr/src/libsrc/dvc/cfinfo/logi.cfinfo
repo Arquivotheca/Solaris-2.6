@@ -1,0 +1,22 @@
+class="sysbus" name="logi"
+	__wclass__="XINPUT"
+	__wname__="LOGI-B"
+	__category__="pointer"
+	__title__="Logitech bus mouse"
+
+	ddxHandler="ddxSUNWx86mouse.so.1"
+	ddxInitFunc="ddxSUNWmouseProc"
+
+	buttons="var,__nbuttons__"
+	__nbuttons__="string,3,2"
+	strmod="vuidm5p"
+	dev="/dev/logi"
+
+	ioaddr="numeric,0x23c"
+	interrupts="numeric,1","var,__irq__"
+	__irq__="numeric,3,2,4,5"
+	ignore-hardware-nodes="numeric,1"
+
+	__common__="name","class"
+	__driver__="interrupts","ioaddr","ignore-hardware-nodes"
+	;

@@ -1,0 +1,51 @@
+;Future Domain Corporation
+;ADF File for MCS-600/700 board (TMC-1800 VLSI)
+;Version 1.1
+;
+AdapterID 06127h
+
+AdapterName  "Future Domain SCSI Adapter"
+
+NumBytes 1
+
+nameditem
+	Prompt	"Adapter Memory Location"
+	  Choice "Segment CA00" pos[0]=01xxxxxxb mem 0ca000h-0cbfffh
+	  Choice "Segment CE00" pos[0]=10xxxxxxb mem 0ce000h-0cffffh
+	  Choice "Segment DE00" pos[0]=11xxxxxxb mem 0de000h-0dffffh
+	  Choice "Segment C800" pos[0]=00xxxxxxb mem 0c8000h-0c9fffh
+	Help
+"To configure this adapter you must choose the memory location the
+adapter will use for it's BIOS ROM.  There are four memory locations
+that may be selected from.  Under normal circumstances, select
+(Segment CE00). If a conflict occurs, choose another memory location."
+
+nameditem
+	Prompt	"Adapter I/O Location"
+	  Choice "0140" pos[0]=xx00xxxxb io 0140h-014fh
+	  Choice "0150" pos[0]=xx01xxxxb io 0150h-015fh
+	  Choice "0160" pos[0]=xx10xxxxb io 0160h-016fh
+	  Choice "0170" pos[0]=xx11xxxxb io 0170h-017fh
+	Help
+"Choose the I/O location the adapter will use.  There are four I/O 
+locations that may be selected from.  Under normal circumstances, 
+select (0150). I a conflict occurs, choose another I/O location."
+
+nameditem
+	Prompt	"Select Interrupt Line"
+	  Choice  "Interrupt 5 (Reserved)"         pos[0]=xxxx001xb int 5
+	  Choice  "Interrupt 10 (Reserved)"        pos[0]=xxxx010xb int 10
+	  Choice  "Interrupt 11 (Reserved)"        pos[0]=xxxx011xb int 11
+	  Choice  "Interrupt 12 (Mouse)"           pos[0]=xxxx100xb int 12
+	  Choice  "Interrupt 14 (Fixed Disk)"      pos[0]=xxxx101xb int 14
+	  Choice  "Interrupt 15 (Reserved)"        pos[0]=xxxx110xb int 15
+	  Choice  "Interrupt 3 (Serial Alternate)" pos[0]=xxxx000xb int 3
+	  Choice  "Interrupts Disabled"		   pos[0]=xxxx111xb
+	Help
+"Select the interrupt to be used by the SCSI controller.  The
+system interrupt assignment is given in parentheses to help in a
+selection that will not interfere with other equipment installed in
+your PS2 system.  Under normal circumstances, select (Int 10). If a
+conflict occurs, choose another Interrupt Line."
+
+

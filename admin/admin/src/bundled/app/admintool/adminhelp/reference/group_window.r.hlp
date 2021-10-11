@@ -1,0 +1,29 @@
+---- Admintool:Add/Modify Groups -------------------
+
+Group Name
+    Specifies a name used by the system to identify
+    a user's group. A group name is a text string
+    composed of lowercase alphabetical characters
+    (a-z) and digits (0-9). A group name can be 1 to
+    8 characters long.  
+
+Group ID (GID)
+    Specifies a group identification number used by
+    the system to identify a user's primary
+    group. When creating new user groups, select a
+    number between 100 and 60000. These numbers are 
+    typically available for new group ID numbers.
+
+NOTE:  Group 10 (staff) is a predefined group
+       that is appropriate for most users.
+
+Members List
+    Optional. Specifies users or groups who belong
+    to this group. If there is more than one member
+    in the list, then separate names with a
+    comma. Spaces are not allowed. For example:  
+
+    Members List: ernie,linda,gordon,bert
+
+See the "Topics" and "How To" help for more
+information about adding groups with Admintool.

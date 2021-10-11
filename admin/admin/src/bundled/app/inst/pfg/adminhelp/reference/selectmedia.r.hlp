@@ -1,0 +1,38 @@
+---- About This Screen -----------------------------
+
+The space required for the backup is based on all 
+the file systems that must be changed or moved to 
+reallocate space. You must select one of the 
+following media for the backup, which will occur 
+after you begin the upgrade:
+
+> Local file system - Specifies a local file system
+  on the system being upgraded. You cannot specify 
+  a local file system that is being changed by the 
+  upgrade. The path must be the block device path 
+  for a disk slice or the absolute path to a file 
+  system mounted by the /etc/vfstab file.
+
+> Local tape - Specifies a local tape drive on the 
+  system being upgraded. The path must be the 
+  character (raw) device path for the tape drive.
+
+> Local diskette - Specifies a local diskette drive
+  on the system being upgraded. The path must be the
+  character (raw) device path for the diskette 
+  drive.
+
+> Remote file system (NFS) - Specifies an NFS file 
+  system on a remote system. The path must include 
+  the name or IP address of the remote system (host)
+  and the absolute path to the NFS file system. 
+
+> Remote system (rsh) - Specifies a directory on a 
+  remote system that can be reached by a remote 
+  shell (rsh). The system being upgraded must have 
+  access to the remote system through the remote 
+  system's .rhosts file. The path must include the 
+  name of the remote system (host) and the absolute
+  path to the directory. If a user login (user) is 
+  not specified, the remote shell will be tried as 
+  root.

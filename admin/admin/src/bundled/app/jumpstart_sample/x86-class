@@ -1,0 +1,11 @@
+#
+# Sample profile for an x86 machine. Installation will
+# provide default partitioning on a standalone system
+# with the end-user cluster.
+#
+#	"@(#)x86-class 1.2 94/01/25"
+#
+install_type	initial_install
+system_type	standalone
+partitioning	default
+cluster		SUNWCuser

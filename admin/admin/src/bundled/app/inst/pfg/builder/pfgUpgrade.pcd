@@ -1,0 +1,52 @@
+Module: pfgUpgrade
+{
+      autoCuil = false;
+      copy = false;
+      inCreateMenu = true;
+      nodesUsed = upgrade_dialog;
+      release = "TeleUSE v3.0.2 / Solaris 2.4";
+      lastWritten = "Mon Jun 24 21:09:43 1996";
+        {
+          upgrade_dialog = baseWindow : pfgGUITemplates;
+          Group: Widget
+            initialFocus = initialButton;
+          Group: Control
+            vip_x = 45;
+            vip_y = 30;
+              {
+                panelhelpText = XmText;
+              }
+              {
+                messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = initialButton;
+                    {
+                      upgradeButton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: upgradeCB";
+                    }
+                    {
+                      initialButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: initialCB";
+                    }
+                    {
+                      gobackButton : button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                        activateCallback = "C:upgrade_goback_cb";
+                    }
+                    {
+                      exitButton : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgExit";
+                    }
+                    {
+                      helpButton : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"upgrade.t\")";
+                    }
+              }
+        }
+}
+

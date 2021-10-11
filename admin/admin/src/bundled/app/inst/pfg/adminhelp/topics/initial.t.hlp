@@ -1,0 +1,35 @@
+---- Profiles --------------------------------------
+
+A profile specifies how the Solaris software will be
+installed. It is created as you make selections on 
+each screen in the Solaris installation program. 
+Before you start to install the Solaris software, 
+you can go back and change selections until the 
+profile is exactly the way you want it.
+
+The following is a sample profile screen for a 
+standalone system:
+
+
+  Profile
+  +------------------------------------------
+  |
+  | Installation Option
+  |   Initial
+  |  
+  | System Type
+  |   Standalone
+  |
+  | Software Group
+  |   End User System Support
+  |
+  | File System and Disk Layout
+  |   /             c0t3d0s0     33 MB
+  |   swap          c0t3d0s1     32 MB
+  |   /usr          c0t3d0s6    132 MB
+  |   /export/home  c0t1d0s7    404 MB
+  |   /export/home1 c0t0d0s7    404 MB
+  |
+  | Remote File Systems
+  |   /home/moriarity:/export/home
+  |

@@ -1,0 +1,128 @@
+#
+#ident	"@(#)Makefile.lib	1.10	95/01/13 SMI"
+#
+# Copyright (c) 1991 by Sun Microsystems, Inc.
+# All rights reserved.
+#
+# Definitions common to libraries.
+
+# include global definitions; SRC should be defined in the shell.
+include $(SRC)/Makefile.master
+
+X_CFLAGS        = $(OPENWINHOME)/include
+MOTIF_CFLAGS    = $(MOTIFHOME)/include
+NIHINC          = $(ROOT)/usr/include/nihcl
+ADMININC        = ../../lib/libadmobjs
+SNAGINC         = $(ROOT)/usr/include/admin
+ 
+X_LIBPATH       = $(OPENWINHOME)/lib
+MOTIF_LIBPATH   = $(MOTIFHOME)/lib
+NIHLIB          = $(ROOT)/usr/lib
+ADMLIB          = $(ROOT)/usr/lib
+SNAGLIB         = $(ROOT)/usr/snadm/classes/lib
+
+FILEMODE=	0755
+LIBFILEMODE=	0444
+
+# storing LDLIBS in two macros allows reordering of options
+# LDFLAGS += -s
+
+# general class definitions
+
+# file modes
+TXTMODE   =	0644
+INCLMODE  =	0644
+
+ROOTADMINLIBS=	$(LIBS:objs/$(ARCH)/%=$(ROOTADMINLIB)/%)
+ROOTADMINPLIB=	$(ROOTADMINLIB)/$(PLIB)
+
+ROOTADMINLIBDYNLIB=	$(DYNLIB:pics/$(ARCH)/%=$(ROOTADMINLIB)/%)
+ROOTCACHEOSLIBDYNLIB=	$(COSDYNLIB:pics/$(ARCH)/%=$(ROOTCACHEOSLIBDIR)/%)
+ROOTOPTADMINLIBDYNLIB=	$(DYNLIB:pics/$(ARCH)/%=$(ROOTOPTADMINLIB)/%)
+ 
+ROOTADMINLIBDYNLIBLINK=		$(ROOTADMINLIBDYNLIB:%$(VERS)=%)
+ROOTCACHEOSLIBDYNLIBLINK=	$(ROOTCACHEOSLIBDYNLIB:%$(VERS)=%)
+ROOTOPTADMINLIBDYNLIBLINK=	$(ROOTOPTADMINLIBDYNLIB:%$(VERS)=%)
+
+DYNLIBLINK =	$(DYNLIB:%$(VERS)=%)
+COSDYNLIBLINK =	$(COSDYNLIB:%$(VERS)=%)
+
+$(ROOTUSRINCLEXP):= FILEMODE = $(INCLMODE)
+
+$(ROOTADMINLIBS):=	FILEMODE = 644
+$(ROOTADMINLIBS):=	OWNER = root
+$(ROOTADMINLIBS):=	GROUP = sys
+ 
+$(ROOTADMINLIBDYNLIB):=	FILEMODE = 644
+$(ROOTADMINLIBDYNLIB):=	OWNER = root
+$(ROOTADMINLIBDYNLIB):=	GROUP = sys
+ 
+$(ROOTCACHEOSLIBDYNLIB):=FILEMODE = 644
+$(ROOTCACHEOSLIBDYNLIB):=OWNER = root
+$(ROOTCACHEOSLIBDYNLIB):=GROUP = sys
+ 
+$(ROOTADMINLIBDIR):=	DIRMODE = 0755
+$(ROOTCACHEOSLIBDIR):=	DIRMODE = 0755
+
+LORDER=		lorder
+TSORT=		tsort
+AWK=		awk
+
+LIBS=		$(LIBRARY:%=objs/${ARCH}/%)
+PLIB=		libp/$(LIBRARY)
+DYNLIB=		$(LIBRARY:%.a=pics/$(ARCH)/%.so$(VERS))
+COSDYNLIB=	$(COSLIBRARY:%.a=pics/$(ARCH)/%.so$(VERS))
+BASEDYNLIB=	$(DYNLIB:pics/$(ARCH)/%=%)
+BASECOSDYNLIB=	$(COSDYNLIB:pics/$(ARCH)/%=%)
+MACHPLIB=	$(MACH)/$(PLIB)
+LINTLIB=	llib-l$(LIBRARY:lib%.a=%).ln
+LINTFLAGS=	-uax
+LINTOUT=	/dev/null
+ARFLAGS=	r
+
+# TXTS allows the AT&T makefile to be bootstrapped into the NSE.
+TXTS=	$(LIBRARY:.a=.mk)
+
+OBJS=	$(OBJECTS:%=objs/${ARCH}/%)
+PROFS=	$(OBJECTS:%=profs/${ARCH}/%)
+PICS=	$(OBJECTS:%=pics/${ARCH}/%)
+
+# default value for "portable" source
+SRCS=	$(OBJECTS:.o=.c)
+
+# default build of an archive,
+# overridden locally when extra processing is needed
+BUILD.AR=	$(AR) $(ARFLAGS) $@ $(AROBJS)
+
+SOLIBNAME	= $(DYNLIB:pics/$(ARCH)/%=%)
+COSSOLIBNAME	= $(COSDYNLIB:pics/$(ARCH)/%=%)
+SOFLAGS =       -h $(SOLIBNAME)
+COSSOFLAGS =    -h $(COSSOLIBNAME)
+
+# conditional assignments
+$(PROFS) :=	CFLAGS += -p
+$(DYNLIB)  :=	CFLAGS += -K PIC
+$(DYNLIB)  :=	CCFLAGS += -PIC
+$(DYNLIB)  :=	CPPFLAGS.master +=
+$(COSDYNLIB)  :=	CFLAGS += -K PIC
+$(COSDYNLIB)  :=	CCFLAGS += -PIC
+$(COSDYNLIB)  :=	CPPFLAGS.master +=
+$(LINTLIB):=	LOG = -DLOGGING
+objs/$(ARCH)/$(LIBRARY):=	AROBJS = $(OBJS)
+objs/$(ARCH)/$(PLIB):=	AROBJS = $(PROFS)
+$(LIBRARY):=	DIR = objs
+$(PLIB):=	DIR = profs
+$(DYNLIB):=	DIR = pics
+$(COSDYNLIB):=	DIR = pics
+
+$(ROOTADMINLIBS) := PNAME = objs
+$(ROOTADMINLIBDYNLIB) := PNAME = pics 
+$(ROOTCACHEOSLIBDYNLIB) := PNAME = pics 
+$(ROOTOPTADMINLIBDYNLIB) := PNAME = pics 
+
+# build rule for "portable" source
+objs/${ARCH}/%.o profs/${ARCH}/%.o pics/${ARCH}/%.o: %.c
+	$(PURIFY) $(COMPILE.c) -o $@ $<
+	$(POST_PROCESS_O)
+
+.PRECIOUS: $(LIBS) $(PLIB)

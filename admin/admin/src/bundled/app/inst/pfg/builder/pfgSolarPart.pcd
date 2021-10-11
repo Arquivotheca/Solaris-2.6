@@ -1,0 +1,69 @@
+Module: pfgSolarPart
+{
+      autoCuil = false;
+      nodesUsed = solarpart_dialog;
+      copy = false;
+      inCreateMenu = true;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Wed Dec  7 15:11:51 1994";
+        {
+          solarpart_dialog = formWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 50;
+            vip_y = 30;
+              {
+                :Inherited panelhelpText = XmText;
+              }
+              {
+                :Inherited solarpartForm : form = XmForm;
+                Group: Widget
+                  marginWidth = 20;
+                    {
+                      solarpartRadioBox = XmRadioBox;
+                      Group: Constraint
+                        rightAttachment = attach_form;
+                        leftAttachment = attach_form;
+                        bottomAttachment = attach_form;
+                        topAttachment = attach_form;
+                          {
+                            entireToggle = XmToggleButton;
+                          }
+                          {
+                            remainderToggle = XmToggleButton;
+                          }
+                          {
+                            customToggle = XmToggleButton;
+                          }
+                    }
+              }
+              {
+                :Inherited messageBox = XmMessageBox;
+                Group: Constraint
+                  topWidget = solarpartForm;
+                    {
+                      :Inherited okButton : button1 = XmPushButton;
+                    }
+                    {
+                      :Inherited cancelButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: solarpartCancelCB";
+                    }
+                    {
+                      :Inherited helpButton : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"fdisk.t\")";
+                    }
+                    {
+                      :Inherited button4 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      :Inherited button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+}
+

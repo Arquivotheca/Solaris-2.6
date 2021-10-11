@@ -1,0 +1,46 @@
+Module: pfgLocale
+{
+      autoCuil = false;
+      copy = false;
+      inCreateMenu = true;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Tue Dec  6 09:41:19 1994";
+      nodesUsed = locale_dialog;
+        {
+          locale_dialog = twolistWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 40;
+            vip_y = 30;
+              {
+                :Inherited panelhelpText = XmText;
+              }
+              {
+                :Inherited form = XmForm;
+              }
+              {
+                :Inherited messageBox = XmMessageBox;
+                    {
+                      :Inherited continueButton = XmPushButton;
+                    }
+                    {
+                      :Inherited gobackButton = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: localeGobackCB";
+                    }
+                    {
+                      :Inherited exitButton = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgExit";
+                    }
+                    {
+                      :Inherited helpButton = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"language.t\")";
+                    }
+                    {
+                      :Inherited button5 = XmPushButton;
+                    }
+              }
+        }
+}
+

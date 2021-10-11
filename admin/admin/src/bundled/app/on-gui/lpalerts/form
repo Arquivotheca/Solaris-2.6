@@ -1,0 +1,5 @@
+#! /bin/sh
+#ident	"@(#)form	1.1	94/02/04 SMI"
+# Copyright (c) 1994 by Sun Microsystems, Inc.
+
+/usr/openwin/bin/ttsession -c /etc/lp/alerts/sendMsg "lp_form_alert" "/etc/lp/forms" "$1" "$3" "$2"

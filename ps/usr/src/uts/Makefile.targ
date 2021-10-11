@@ -1,0 +1,153 @@
+#
+# uts/Makefile.targ
+#
+#pragma ident  "@(#)Makefile.targ 1.25     96/04/12 SMI"
+#
+# Copyright (c) 1995 by Sun Microsystems, Inc.
+# All rights reserved.
+#
+#	This Makefiles contains the common targets and definitions for
+#	all kernels. It is to be included in the Makefiles for specific
+#	implementation architectures and processor architecture dependent
+#	modules: i.e.: all driving kernel Makefiles.
+#
+
+#
+#	Default rule for building the lint library directory:
+#
+$(LINT_LIB_DIR):
+	-@mkdir $@ 2> /dev/null
+
+#
+#	All C objects depend on inline files. However, cc(1) doesn't generate
+#	the correct dependency info. Also, these Makefiles don't contain a
+#	separate list of C-derived object files (but it is light weight to
+#	let the assembler files think they depend upon this when they don't).
+#	Fortunately, the inline files won't change very often. So, for now,
+#	all objects depend on the inline files. Remove this when the inliner
+#	is fixed to drop correct dependency information.
+#
+$(OBJECTS): $(INLINES)
+
+#
+#	Partially link .o files to generate the kmod. The fake dependency
+#	on modstubs simplifies things...
+#
+$(MODULE):		$(OBJECTS)
+	$(LD) -r -o $@ $(OBJECTS)
+	$(POST_PROCESS)
+
+#
+#	Module lint library construction targets.
+#
+MOD_LINT_LIB	= $(LINT_LIB_DIR)/llib-l$(MODULE).ln
+
+modlintlib:		$(MOD_LINT_LIB)
+
+$(MOD_LINT_LIB):	$(LINT_LIB_DIR) $(LINTS)
+	@-$(ECHO) "\n$(MODULE): (library construction):"
+	@$(LINT) -o$(MODULE) -u $(LINTFLAGS) $(LINTS)
+	@$(MV) $(@F) $@
+
+$(MODULE).lint:		$(MOD_LINT_LIB) $(LINT_LIB)
+	@-$(ECHO) "\n$(MODULE): global crosschecks:"
+	@$(LINT) $(LINTFLAGS) -u $(MOD_LINT_LIB) $(LINT_LIB)
+
+#
+#	Generate vers.c to contain the current release and version. Specific
+#	dependencies are required for "*/vers.*" since vers.c is a derived
+#	file.
+#
+#		system name:	hardwired to SunOS
+#		node name:	blank
+#		release:	contents of $(RELEASE) (Spaces replaced by '_')
+#		version:	contents of $(VERSION) (Spaces replaced by '_')
+#		machine:	hardwired to sun4c
+#
+#	Build environment information is only contained in the comment section.
+#
+# 	The version string, normally the variable VERSION, is set to display
+#	environmental information temporarily while in development because
+#	it provides a little more useful information.
+#
+VERSION_STRING	= ($(ECHO) $$LOGNAME [\`basename $$CODEMGR_WS\`] \\\c; date +%D)
+$(INTERNAL_RELEASE_BUILD)VERSION_STRING = $(ECHO) $(VERSION)
+
+$(OBJS_DIR)/vers.c:	$(OBJECTS)
+	@-$(ECHO) "rebuilding vers.c"
+	@-( \
+	$(ECHO) "/*" ; \
+	$(ECHO) " * This file is derived from uts/Makefile.targ" ; \
+	$(ECHO) " */\n" ; \
+	$(ECHO) "#pragma\tident\t\"@(#)vers.c\tDERIVED\t96/04/12 SMI\"\n" ; \
+	$(ECHO) "#include <sys/utsname.h>\n" ; \
+	$(ECHO) "struct utsname utsname = {" ; \
+	$(ECHO) "\t\"SunOS\"," ; \
+	$(ECHO) "\t\"\"," ; \
+	$(ECHO)	"\t\"`$(ECHO) $(RELEASE) | sed -e \"s/ /_/g\"`\"," ; \
+	$(ECHO)	"\t\"`$(VERSION_STRING)  | sed -e \"s/ /_/g\"`\"," ; \
+	$(ECHO) "\t\"$(PLATFORM)\"" ; \
+	$(ECHO) "};" ) > $(OBJS_DIR)/vers.c
+
+$(OBJS_DIR)/vers.o:	$(OBJS_DIR)/vers.c
+	$(COMPILE.c) -o $@ $(OBJS_DIR)/vers.c
+	$(POST_PROCESS_O)
+
+$(LINTS_DIR)/vers.ln:	$(OBJS_DIR)/vers.c
+	@($(LHEAD) $(LINT.c) $(OBJS_DIR)/vers.c $(LTAIL))
+
+#
+#	Installation targets and rules:
+#
+$(ROOT_MOD_DIR): $(BASE_INS_DIR)
+
+$(BASE_INS_DIR) $(ROOT_MOD_DIRS):
+	-$(INS.dir)
+
+$(BASE_INS_DIR)/%:	% $(BASE_INS_DIR)
+	$(INS.file)
+
+$(ROOT_MOD_DIR)/%:	% $(ROOT_MOD_DIR)
+	$(INS.file)
+
+$(ROOT_DRV_DIR)/%:	% $(ROOT_MOD_DIR) $(ROOT_DRV_DIR)
+	$(INS.file)
+
+$(ROOT_STRMOD_DIR)/%:   % $(ROOT_MOD_DIR) $(ROOT_STRMOD_DIR)
+	$(INS.file)
+
+$(ROOT_MISC_DIR)/%:	% $(ROOT_MOD_DIR) $(ROOT_MISC_DIR)
+	$(INS.file)
+
+$(ROOT_MACH_DIR)/%:	% $(ROOT_MOD_DIR) $(ROOT_MACH_DIR)
+	$(INS.file)
+
+include $(SRC)/Makefile.psm.targ
+
+#
+#	Targets for '.conf' file installation.
+#
+$(ROOT_CONFFILE):	$(SRC_CONFILE)	$(ROOT_CONFFILE:%/$(CONFFILE)=%)
+	$(INS.conffile)
+
+#
+#	Targets for creating links between common platforms. ROOT_PLAT_LINKS
+#	are are the /platform level while ROOT_PLAT_LINKS_2 are one level
+#       down (/platform/`uname -i`/kernel).
+#
+$(ROOT_PLAT_LINKS):
+	$(INS.slink1)
+
+$(ROOT_PLAT_LINKS_2):
+	$(INS.slink2)
+
+clean.lint:
+	-$(RM) $(LINTS) $(CLEANLINTFILES)
+
+clean:	clean.lint
+	-$(RM) $(OBJECTS) $(CLEANFILES)
+
+clobber:	clean
+	-$(RM) $(CLOBBERFILES)
+
+FRC:

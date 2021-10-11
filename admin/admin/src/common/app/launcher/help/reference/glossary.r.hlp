@@ -1,0 +1,45 @@
+Administration Tool launcher
+        The base window of the interface used to start
+        the other application tools.
+
+default
+        An assumed value, or an action taken
+        automatically unless you specify otherwise.
+
+name service
+        Method by which system information is
+        maintained in the network. There are three
+        types: NIS, NIS+, or None.
+        NIS--Name service shipped with the SunOS 4.1.x
+        operating system. Designated machines, called
+        NIS servers, contain maps that store information
+        about the network, its workstations, and its users.
+        NIS+--Name service shipped with the Solaris 2.x 
+        product. Making use of true databases instead of 
+        two-column maps that simply associate one variable
+        with another), NIS+ stores even more information
+        than does NIS.
+        None--Method for administrators of networks that do not
+        use a network name service; administrators usually
+        select one machine on the network on which to maintain
+        a master copy of the /etc system files.
+
+name service domain
+        A group of systems and the information stored on those
+        systems.
+ 
+OpenWindows
+        A windowing system based on the OPEN LOOK graphical
+        user interface.
+ 
+sysadmin group
+        The UNIX group whose members along with a group ID
+        of 14, can use Administration Tool's applications
+        locally or remotely.
+ 
+system files
+        Files that contain important system administration
+        information such as user accounts, password, and
+        groups. These files are contained on the local
+        system in the /etc directory, or in the NIS or NIS+
+        database on a name server.

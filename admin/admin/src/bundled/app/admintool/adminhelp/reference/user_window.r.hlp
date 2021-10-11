@@ -1,0 +1,104 @@
+---- Admintool:Add/Modify Users --------------------
+
+User Name
+    Specifies the login name the operating system
+    will use to identify this user. The user name
+    must be a unique name composed of uppercase or
+    lowercase alphabetical characters (a-z) or
+    digits (0-9). A user name can be 1 to 8
+    characters long.
+
+User ID (UID)
+    Specifies a number by which the operating system
+    can identify a user. The user's UID is typically
+    a number between 100 and 60000. 
+
+Primary Group
+    Specifies a group number or a group name. The
+    operating system will assign the group number to
+    files created by the user. These files, assuming
+    they have correct permissions set, can then be
+    accessed by users in the same group. 
+
+NOTE:  Group 10 (staff) is a predefined group that
+       is appropriate for most users.
+
+Secondary Group
+    Optional. Specifies other groups this user will
+    belong to.  
+
+Comment
+    Optional. Specifies notes about this user
+    account. 
+
+Login Shell
+    Specifies a login shell (Bourne, Korn, or C
+    shell) for the user.  
+
+Password
+    Specifies the means by which a user sets up a
+    password. The following table describes the
+    password options. 
+
+    Password Option		Description
+    ---------------		-----------
+    Cleared until first login	Account will not
+				have a password. The 
+				user must manually
+				set a password (by
+				using the passwd
+				command) after first
+				logging in.
+
+    Account is locked		Account is locked.
+				The user will not be
+				able to log in until
+				the administrator
+				assigns a password.
+
+    No password--setuid only	Account cannot be
+				logged in to, but
+				account programs are
+				allowed to run.
+
+    Normal Password...		The administrator
+				assigns a password
+				to the account when
+				adding the user.
+Min Change
+    Optional. Specifies the minimum number of days
+    allowed between password changes. 
+
+Max Change
+    Optional. Specifies the maximum number of days
+    the user can go without having to set up a new
+    password. 
+
+Max Inactive
+    Optional. Specifies the maximum number of days
+    the user account can be inactive before the user
+    must set up a new password. 
+
+Expiration Date
+    Optional. Specifies the expiration day, month,
+    and year for a user's password.
+
+Warning
+    Optional. Specifies when users will start
+    receiving warning messages about their password
+    expiring.  
+
+Create Home Dir
+    Specifies whether or not the user's home
+    directory is to be set up automatically. By
+    default, the user's home directory is set up
+    automatically. 
+
+Path
+    Specifies the path for the user's home
+    directory. This path is where Admintool will
+    place the user's initialization files. If Create
+    Home Dir is selected, you must specify a path. 
+
+See the "Topics" and "How To" help for more
+information about adding users with Admintool.

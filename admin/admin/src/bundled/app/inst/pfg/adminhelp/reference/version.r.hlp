@@ -1,0 +1,20 @@
+---- About This Screen -----------------------------
+
+If you've installed multiple versions of Solaris
+software on your system, you must choose which
+version of Solaris you want to upgrade. Each version
+of Solaris has a corresponding disk slice that 
+contains its root file system. When you select a 
+version of Solaris, the file systems mounted by its
+root's /etc/vfstab file are selected to be upgraded.
+
+---- For OS Servers Only ---------------------------
+
+The list of Solaris versions to upgrade do not 
+include the OS services that an OS server provides. 
+When an OS server is upgraded, the OS services for 
+clients of the same platform and platform group as 
+the server are automatically upgraded. To upgrade 
+other clients to the new version of Solaris, you 
+must use the server_upgrade command after the OS 
+server is upgraded.

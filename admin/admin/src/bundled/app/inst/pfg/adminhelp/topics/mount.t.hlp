@@ -1,0 +1,23 @@
+---- Mounting Remote File Systems -------------
+
+In a networked environment, systems often mount 
+(access) file systems from a server. This is called 
+remote mounting. For example, some sites set up a 
+file server to provide OpenWindows to other systems. 
+These systems must therefore mount the OpenWindows 
+software from the server that is exporting it.
+
+---- Where to mount remote file systems -------
+
+The Mount Remote File System screen lets you specify 
+the server and the specific file system to be 
+mounted; it also lets you test the mount, which ver-
+ifies that the server is reachable.
+
+You should add the remote file system to the list on 
+the Remote File System screen, even if the test 
+mount fails. An unsuccessful test mount may only 
+mean the particular server was down when you did the 
+test mount. Adding the remote file system to the 
+list makes it available whenever the system is 
+rebooted.

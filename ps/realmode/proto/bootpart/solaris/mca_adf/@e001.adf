@@ -1,0 +1,323 @@
+; 3Com 3C629 TokenLink III 16/4 16-Bit Micro Channel Network Adapter
+; Adapter Description File
+;
+; Version:      1.02
+;
+; Copyright (C) 1992 3Com Corporation
+; 
+;
+;
+ 
+AdapterID 0E001h
+ 
+AdapterName "3Com 3C629 TokenLink III 16/4 16-Bit Micro Channel Network Adapter"
+ 
+NumBytes 4
+ 
+FixedResources
+     POS[1]=X010XXXXb
+     POS[3]=XXXX0000b
+ 
+NamedItem Prompt "Adapter Ring Speed"
+ 
+  Choice "4 Mbps"
+     POS[1]=XXXXXX0Xb
+ 
+  Choice "16 Mbps"
+     POS[1]=XXXXXX1Xb
+ 
+  Help "ADAPTER RING SPEED:  The 3Com TokenLink III 16/4 16-Bit Micro Channel 
+        Network Adapter can operate at either 4 or 16 Mbps ring speed.  The 
+        adapter ring speed MUST match the Token-Ring Network. The ring speed 
+        can be changed by selecting 'Change Configuration' and then using 
+        the F5=Previous and the F6=Next keys."
+ 
+ 
+NamedItem Prompt "Primary/Alternate adapter"
+ 
+  Choice "Primary"
+     POS[1]=XXXXXXX0b
+     IO  0A20h - 0A23h
+ 
+  Choice "Alternate"
+     POS[1]=XXXXXXX1b
+     IO  0A24h - 0A27h
+ 
+  Help "PRIMARY OR ALTERNATE ADAPTER:  Up to two 3Com TokenLink III 16/4 16-Bit
+        Micro Channel Network Adapters may be installed in a single computer.  
+        When multiple adapters are being installed in a single computer, 
+        one adapter MUST be designated as the Primary adapter, which 
+        is accessed at port addresses 0A20 through 0A23 and second as the 
+        Alternate adapter, which is accessed at port addresses 0A24 through 0A27. 
+        If only one adapter is installed, it should be designated as the Primary 
+        adapter. The Primary/Alternate option can be changed by selecting 
+        'Change Configuration' and then using the F5=Previous and the 
+        F6=Next keys.  Conflicts are identified by an asterisk (*) next 
+        to an option, which indicates another selection must be made. If a system 
+        resource conflict continues, you may have to change the settings of 
+        other adapters or options that are in your computer."
+
+
+NamedItem Prompt "ROM Address Location"
+
+  Choice "CC000-CDFFF"
+     POS[2]=1100110Xb
+     MEM 0CC000h - 0CDFFFh
+
+  Choice "C8000-C9FFF"
+     POS[2]=1100100Xb
+     MEM 0C8000h - 0C9FFFh
+ 
+  Choice "CA000-CBFFF"
+     POS[2]=1100101Xb
+     MEM 0CA000h - 0CBFFFh
+ 
+  Choice "CE000-CFFFF"
+     POS[2]=1100111Xb
+     MEM 0CE000h - 0CFFFFh
+ 
+  Choice "D0000-D1FFF"
+     POS[2]=1101000Xb
+     MEM 0D0000h - 0D1FFFh
+ 
+  Choice "D2000-D3FFF"
+     POS[2]=1101001Xb
+     MEM 0D2000h - 0D3FFFh
+ 
+  Choice "D4000-D5FFF"
+     POS[2]=1101010Xb
+     MEM 0D4000h - 0D5FFFh
+ 
+  Choice "D6000-D7FFF"
+     POS[2]=1101011Xb
+     MEM 0D6000h - 0D7FFFh
+ 
+  Choice "D8000-D9FFF"
+     POS[2]=1101100Xb
+     MEM 0D8000h - 0D9FFFh
+ 
+  Choice "DA000-DBFFF"
+     POS[2]=1101101Xb
+     MEM 0DA000h - 0DBFFFh
+ 
+  Choice "DC000-DDFFF"
+     POS[2]=1101110Xb
+     MEM 0DC000h - 0DDFFFh
+ 
+  Choice "DE000-DFFFF"
+     POS[2]=1101111Xb
+     MEM 0DE000h - 0DFFFFh
+ 
+  Help "ROM ADDRESS LOCATION:  There are 12 possible 8K blocks of PC memory
+        that can be assigned for accessing the ROM area of the 3Com 
+        TokenLink III 16/4 16-Bit Micro Channel Network Adapter.  The 
+        factory default ROM address for the adapter is CC000-CDFFF.  
+        The option for this ROM address can be changed by selecting 
+        'Change Configuration'and then using the F5=Previous and the 
+        F6=Next keys. The ROM address selected must not be assigned 
+        for use by any  other adapter or option and cannot be the same 
+        as the RAM address for this adapter. Conflicts are identified 
+        by an asterisk (*) next to an option, which indicates another 
+        selection must be made. If a system resource conflict continues, 
+        you may have to change the settings of other adapters or options 
+        that are in your computer."
+ 
+NamedItem Prompt "RAM Size and Address Range"
+
+  Choice "16 KB / D8000-DBFFF"
+     POS[0]=1101100Xb
+     POS[1]=XXXX01XXb
+     MEM 0D8000h - 0DBFFFh
+ 
+  Choice "8 KB / C0000-C1FFF"
+     POS[0]=1100000Xb
+     POS[1]=XXXX00XXb
+     MEM 0C0000h - 0C1FFFh
+ 
+  Choice "8 KB / C2000-C3FFF"
+     POS[0]=1100001Xb
+     POS[1]=XXXX00XXb
+     MEM 0C2000h - 0C3FFFh
+ 
+  Choice "8 KB / C4000-C5FFF"
+     POS[0]=1100010Xb
+     POS[1]=XXXX00XXb
+     MEM 0C4000h - 0C5FFFh
+ 
+  Choice "8 KB / C6000-C7FFF"
+     POS[0]=1100011Xb
+     POS[1]=XXXX00XXb
+     MEM 0C6000h - 0C7FFFh
+ 
+  Choice "8 KB / C8000-C9FFF"
+     POS[0]=1100100Xb
+     POS[1]=XXXX00XXb
+     MEM 0C8000h - 0C9FFFh
+ 
+  Choice "8 KB / CA000-CBFFF"
+     POS[0]=1100101Xb
+     POS[1]=XXXX00XXb
+     MEM 0CA000h - 0CBFFFh
+ 
+  Choice "8 KB / CC000-CDFFF"
+     POS[0]=1100110Xb
+     POS[1]=XXXX00XXb
+     MEM 0CC000h - 0CDFFFh
+ 
+  Choice "8 KB / CE000-CFFFF"
+     POS[0]=1100111Xb
+     POS[1]=XXXX00XXb
+     MEM 0CE000h - 0CFFFFh
+ 
+  Choice "8 KB / D0000-D1FFF"
+     POS[0]=1101000Xb
+     POS[1]=XXXX00XXb
+     MEM 0D0000h - 0D1FFFh
+ 
+  Choice "8 KB / D2000-D3FFF"
+     POS[0]=1101001Xb
+     POS[1]=XXXX00XXb
+     MEM 0D2000h - 0D3FFFh
+ 
+  Choice "8 KB / D4000-D5FFF"
+     POS[0]=1101010Xb
+     POS[1]=XXXX00XXb
+     MEM 0D4000h - 0D5FFFh
+ 
+  Choice "8 KB / D6000-D7FFF"
+     POS[0]=1101011Xb
+     POS[1]=XXXX00XXb
+     MEM 0D6000h - 0D7FFFh
+ 
+  Choice "8 KB / D8000-D9FFF"
+     POS[0]=1101100Xb
+     POS[1]=XXXX00XXb
+     MEM 0D8000h - 0D9FFFh
+ 
+  Choice "8 KB / DA000-DBFFF"
+     POS[0]=1101101Xb
+     POS[1]=XXXX00XXb
+     MEM 0DA000h - 0DBFFFh
+ 
+  Choice "8 KB / DC000-DDFFF"
+     POS[0]=1101110Xb
+     POS[1]=XXXX00XXb
+     MEM 0DC000h - 0DDFFFh
+ 
+  Choice "8 KB / DE000-DFFFF"
+     POS[0]=1101111Xb
+     POS[1]=XXXX00XXb
+     MEM 0DE000h - 0DFFFFh
+ 
+  Choice "16 KB / C0000-C3FFF"
+     POS[0]=1100000Xb
+     POS[1]=XXXX01XXb
+     MEM 0C0000h - 0C3FFFh
+ 
+  Choice "16 KB / C4000-C7FFF"
+     POS[0]=1100010Xb
+     POS[1]=XXXX01XXb
+     MEM 0C4000h - 0C7FFFh
+ 
+  Choice "16 KB / C8000-CBFFF"
+     POS[0]=1100100Xb
+     POS[1]=XXXX01XXb
+     MEM 0C8000h - 0CBFFFh
+ 
+  Choice "16 KB / CC000-CFFFF"
+     POS[0]=1100110Xb
+     POS[1]=XXXX01XXb
+     MEM 0CC000h - 0CFFFFh
+ 
+  Choice "16 KB / D0000-D3FFF"
+     POS[0]=1101000Xb
+     POS[1]=XXXX01XXb
+     MEM 0D0000h - 0D3FFFh
+ 
+  Choice "16 KB / D4000-D7FFF"
+     POS[0]=1101010Xb
+     POS[1]=XXXX01XXb
+     MEM 0D4000h - 0D7FFFh
+
+  Choice "16 KB / DC000-DFFFF"
+     POS[0]=1101110Xb
+     POS[1]=XXXX01XXb
+     MEM 0DC000h - 0DFFFFh
+ 
+  Choice "32 KB / C0000-C7FFF"
+     POS[0]=1100000Xb
+     POS[1]=XXXX10XXb
+     MEM 0C0000h - 0C7FFFh
+ 
+  Choice "32 KB / C8000-CFFFF"
+     POS[0]=1100100Xb
+     POS[1]=XXXX10XXb
+     MEM 0C8000h - 0CFFFFh
+ 
+  Choice "32 KB / D0000-D7FFF"
+     POS[0]=1101000Xb
+     POS[1]=XXXX10XXb
+     MEM 0D0000h - 0D7FFFh
+ 
+  Choice "32 KB / D8000-DFFFF"
+     POS[0]=1101100Xb
+     POS[1]=XXXX10XXb
+     MEM 0D8000h - 0DFFFFh
+ 
+  Choice "64 KB / C0000-CFFFF"
+     POS[0]=1100000Xb
+     POS[1]=XXXX11XXb
+     MEM 0C0000h - 0CFFFFh
+ 
+  Choice "64 KB / D0000-DFFFF"
+     POS[0]=1101000Xb
+     POS[1]=XXXX11XXb
+     MEM 0D0000h - 0DFFFFh
+ 
+  Help "RAM SIZE AND ADDRESS LOCATION:  There are 30 possible blocks of
+        memory that can be assigned for accessing the RAM located on the
+        3Com TokenLink III 16/4 16-Bit Micro Channel Network Adapter.  
+        The factory default RAM size and address location for the adapter, 
+        which support RAM paging is 16KB/D8000-DBFFF. RAM paging allows the 
+        software to access all 64KB of RAM on the adpater one page (16KB)
+        at a time, while using only 16KB of computer memory space.
+        The RAM size and address location can be changed 
+        by selecting 'Change Configuration' and then using the F5=Previous 
+        and the F6=Next keys. Conflicts are identified by an asterisk (*) 
+        next to an option, which indicates another selection must be made. 
+        If a conflict continues, you may have to change the settings of other 
+        adapters or options that are in your computer."
+ 
+NamedItem Prompt "Interrupt Level"
+ 
+  Choice "Interrupt 2"
+     POS[1]=0XXXXXXXb
+     POS[2]=XXXXXXX0b
+     INT 2d
+ 
+  Choice "Interrupt 3"
+     POS[1]=1XXXXXXXb
+     POS[2]=XXXXXXX0b
+     INT 3d
+ 
+  Choice "Interrupt 10"
+     POS[1]=0XXXXXXXb
+     POS[2]=XXXXXXX1b
+     INT 10d
+ 
+  Choice "Interrupt 11"
+     POS[1]=1XXXXXXXb
+     POS[2]=XXXXXXX1b
+     INT 11d
+ 
+  Help "INTERRUPT LEVEL:  The 3Com TokenLink III 16/4 16-Bit Micro Channel 
+        Network Adapter can operate on one of four interrupt levels: 2, 3, 
+        10, or 11. The preferred interrupt level is 2, but the adapter can 
+        operate on any of the four levels if necessary. The interrupt level 
+        
+        can be changed by selecting 'Change Configuration' 
+        and then using the F5=Previous and the F6=Next keys. Conflicts are
+        identified by an asterisk (*) next to an option, and an alternate 
+        selection must be made. If a conflict continues, you may have to 
+        change the setting of other adapters or options that are in your 
+        computer."

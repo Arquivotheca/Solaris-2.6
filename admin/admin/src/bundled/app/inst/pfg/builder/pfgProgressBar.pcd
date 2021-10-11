@@ -1,0 +1,102 @@
+Module: pfgProgressBar
+{
+      autoCuil = false;
+      copy = false;
+      inCreateMenu = true;
+      release = "TeleUSE v3.0.2 / Solaris 2.4";
+      lastWritten = "Wed Jun 12 17:16:05 1996";
+      nodesUsed = progressbar_dialog;
+        {
+          progressbar_dialog = formWindow : pfgGUITemplates;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+          Group: Control
+            vip_x = 75;
+            vip_y = 30;
+              {
+                panelhelpText = XmText;
+              }
+              {
+                progressForm : form = XmForm;
+                Group: Widget
+                  marginWidth = 20;
+                  rubberPositioning = False;
+                  resizePolicy = resize_any;
+                Group: Constraint
+                  bottomAttachment = attach_widget;
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_widget;
+                  topWidget = panelhelpText;
+                  bottomWidget = messageBox;
+                  resizable = true;
+                    {
+                      mainLabel = XmLabel;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        topAttachment = attach_form;
+                        rightAttachment = attach_none;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                    }
+                    {
+                      detailLabel = XmLabel;
+                      Group: Constraint
+                        topAttachment = attach_form;
+                        leftAttachment = attach_widget;
+                        leftWidget = mainLabel;
+                        leftOffset = 10;
+                        rightAttachment = attach_none;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                    }
+                    {
+                      progressScale = XmScale;
+                      Group: Widget
+                        orientation = horizontal;
+                        traversalOn = False;
+                        scaleHeight = 32;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        bottomAttachment = attach_none;
+                        rightAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = mainLabel;
+                        resizable = true;
+                        topOffset = 15;
+                    }
+              }
+              {
+                messageBox = XmMessageBox;
+                Group: Widget
+                  managed = True;
+                    {
+                      button1 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      button2 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      button3 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      button4 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+}
+

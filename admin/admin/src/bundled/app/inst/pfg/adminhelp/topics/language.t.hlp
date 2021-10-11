@@ -1,0 +1,14 @@
+---- Adding languages -------------------------
+
+Selecting a language not only provides translation
+of text after the Solaris operating environment is
+installed, but also provides adaptations to cultural
+conventions such as dates and times.
+
+While you can select one or more languages to
+install, not all of the Solaris software bundled
+with this release provide translations for the 
+languages listed.
+
+    NOTE: Adding languages automatically adds to the
+    Recommended Size shown on the Software screen.

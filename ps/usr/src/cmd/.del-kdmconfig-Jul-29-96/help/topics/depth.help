@@ -1,0 +1,8 @@
+---- Description -----------------------------------------------------
+
+     Specifies the number of bits used in the color plane.
+ 
+     Currently Xinside devices support 8 and 24 bit color bit
+     planes.
+
+

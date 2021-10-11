@@ -1,0 +1,203 @@
+.\" @(#)cdtoc.4 1.2 93/02/24
+'\"macro stdmacro
+.\" Copyright (c) 1992 SunSoft, Inc. - All Rights Reserved
+'\"macro stdmacro
+.nr X
+.TH cdtoc 4 "24 Feb 1993"
+.SH NAME
+cdtoc \- CD-ROM table of contents file
+.SH DESCRIPTION
+.IX "CD-ROM table of contents file" "cdtoc" "CD-ROM directory" "" "\(em \fLcdtoc\fP"
+The table of contents file, \f4.cdtoc\fP,
+is an
+.SM ASCII
+file that describes the contents
+of a compact disk or other piece of software distribution media.
+It resides in the top-level
+directory of the file system on a slice of a compact disk.
+It is independent of file system format, i.e., the
+file system on the slice can be either
+.I ufs
+or
+.I hsfs.
+.PP
+Each entry in the \f4.cdtoc\fP
+file is a line that establishes the value of
+a parameter in the following form:
+.PP
+.RS 16
+\f2PARAM\f4=\f2value\f1
+.RE
+.PP
+Blank lines and comments
+(lines preceded by a pound-sign, ``#'')
+are also allowed in the file.
+Parameters are grouped by product, with the beginning of a
+product defined by a line of the form: 
+.PP
+.RS 16
+\f2PRODNAME\f4=\f2value\f1
+.RE
+.PP
+Each product is expected to consist of one or more software
+packages that are stored together in a subdirectory on the
+distribution media.
+There can be any number of products described within the file.
+There is no required order in which the parameters
+must be specified,
+except that the parameters must be grouped by
+product and the \f2PRODNAME\fP parameter
+must appear first in the list of parameters for each product specified.
+Each parameter is described below.
+All of the parameters are required for each product.
+.TP 16
+\f2PRODNAME\fP
+The full name of the product.
+This must be unique within the \f4.cdtoc\fP
+file and is preferably unique across all possible products.
+This value may contain white space.
+The length of this value is limited to 256
+.SM ASCII
+characters; other restrictions may apply (see below).
+.TP 16
+\f2PRODVERS\fP
+The version of the product.  The value can contain any combination
+of letters, numbers, or other characters.
+This value may contain white space.
+The length of this value is limited to 256
+.SM ASCII
+characters; other restrictions may apply (see below).
+.TP 16
+\f2PRODDIR\fP
+The name of the top-level directory containing the product.
+This name should be relative to the top-level directory
+of the distribution media, e.g.,
+.IR Solaris_2.0 .
+The number of path components in the name is limited
+only by the system's maximum path name length, which is
+1024
+.SM ASCII
+characters.
+Any single component is limited to 256
+.SM ASCII
+characters.
+This value cannot contain white space.
+.br
+.ne 12
+.LP
+The lengths of the values of
+\f2PRODNAME\fP and \f2PRODVERS\fP are further
+constrained by the fact that the initial install programs
+and
+.BR swmtool (1M)
+concatenate these values to produce the full product name.
+.BR swmtool 
+concatenates the two values
+(inserting a space)
+to produce the name displayed
+in its software selection menu,
+e.g., ``Solaris 2.0''.
+For unbundled products
+the combined length of the values of
+\f2PRODNAME\fP and \f2PRODVERS\fP
+must not exceed 256
+.SM ASCII
+characters.
+.LP
+During installation of the bundled OS release,
+directories for diskless and dataless client
+.IR usr
+and
+.IR kvm
+file systems are created by constructing names derived from a concatenation
+of the values of \f2PRODNAME\fP, \f2PRODVERS\fP,
+and client architecture, e.g.,
+.IR /export/exec/kvm/Solaris_2.0_sparc.sun4c/usr/kvm .
+The length of the component containing
+the product name and version must not exceed 256
+.SM ASCII
+characters.
+Thus, for products corresponding to bundled OS releases
+(e.g., Solaris 2.0), the values of
+\f2PRODNAME\fP and \f2PRODVERS\fP
+are effectively restricted to lengths much less than 256.
+.LP
+The initial installation programs,
+.BR swm
+and
+.BR swmtool
+use the value of the \f2PRODDIR\fP
+macro in the \f4.cdtoc\f1 file to indicate where packages can be found.
+.SH EXAMPLES
+.LP
+Here is a sample \f4.cdtoc\fP file:
+.LP
+.RS
+.ft 4
+.nf
+#
+# .cdtoc file -- Online product family CD
+#
+PRODNAME=Online DiskSuite
+PRODVERS=2.0
+PRODDIR=Online_DiskSuite_2.0
+#
+PRODNAME=Online Backup
+PRODVERS=2.0
+PRODDIR=Online_Backup_2.0
+.fi
+.ft 1
+.RE
+.LP
+This example corresponds to the following
+directory layout on a CD-ROM partition:
+.LP
+.RS
+.ft 4
+.nf
+/.cdtoc
+/Online_DiskSuite_2.0
+	./SUNWmddr.c
+	./SUNWmddr.m
+	./SUNWmddu
+/Online_Backup_2.0
+	./SUNWhsm
+.fi
+.ft 1
+.RE
+.LP
+The bundled release of Solaris 2.2 includes the
+following \f4.cdtoc\fP file:
+.LP
+.RS
+.ft 4
+.nf
+PRODNAME=Solaris
+PRODVERS=2.2
+PRODDIR=Solaris_2.2
+.fi
+.ft 1
+.RE
+.LP
+This file corresponds to the following directory layout
+on slice 0 of the Solaris 2.0 product CD:
+.LP
+.RS
+.ft 4
+.nf
+/.cdtoc
+/Solaris_2.2
+	./SUNWaccr
+	./SUNWaccu
+	./SUNWadmap
+	.
+	.
+	.
+	./SUNWutool
+.fi
+.ft 1
+.RE
+.SH SEE ALSO
+.BR clustertoc (4),
+.BR packagetoc (4),
+.BR pkginfo (4)

@@ -1,0 +1,34 @@
+---- To Resolve an Unresolved Dependency -----------
+
+If you add or delete packages, you may get a warning
+about unresolved dependencies. This means you are
+missing software that other software depends on.
+ 
+You can either select the dependent package, or
+deselect the package that requires the dependent
+package. For example, if you had the following
+discrepancy,
+ 
+Selected package             Depends on package
+===============================================
+System & Network Admin Appl  Install Software
+ 
+you can either select the Install Software package,
+or deselect the System & Network Admin Appl package.
+
+---- Should You Ignore Unresolved Dependencies? ----
+
+Ignore dependencies only if you know you will 
+remotely mount the software somewhere else on the 
+network, or if you are sure you do not want the 
+functionality. It is common practice to remotely 
+mount software from a file server on a network. In 
+this case, the software does not need to be locally 
+installed. For example, many sites install 
+OpenWindows on a file server and share it using 
+remote mounting.
+ 
+If you ignore unresolved dependencies, the Solaris
+installation program may still successfully install
+Solaris, but there is no guarantee that the optional
+software installed will be fully functional.

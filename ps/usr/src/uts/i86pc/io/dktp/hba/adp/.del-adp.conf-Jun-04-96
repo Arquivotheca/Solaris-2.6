@@ -1,0 +1,19 @@
+#
+#pragma ident	"@(#).del-adp.conf-Jun-04-96	1.5	96/04/09 SMI"
+#
+# Copyright (c) 1995 by Sun Microsystems, Inc.
+#
+
+#
+# adp.conf for x86 2.5
+#
+
+# config info for AIC-x940 PCI HBA's
+
+#global definitions
+
+device_ids=0x7078,0x7178,0x5078,0x7278;
+flow_control="dmult" queue="qsort" disk="scdk" tape="sctp";
+
+# this driver is not ready to see real hardware nodes yet
+ignore-hardware-nodes=1;

@@ -1,0 +1,134 @@
+Module: pfgClients
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Wed Mar  1 15:10:40 1995";
+      copy = false;
+      inCreateMenu = true;
+      nodesUsed = diskless_dialog;
+        {
+          diskless_dialog = formWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 50;
+            vip_y = 30;
+              {
+                :Inherited panelhelpText = XmText;
+              }
+              {
+                :Inherited diskless_form : form = XmForm;
+                Group: Widget
+                  fractionBase = 5;
+                    {
+                      clientNumberLabelText = labelText : pfgGUITemplates;
+                      Group: Widget
+                        managed = False;
+                      Group: Constraint
+                        rightAttachment = attach_position;
+                        rightPosition = 4;
+                        topAttachment = attach_form;
+                      Group: Control
+                        vipComment = "This field has been moved to file pfgInstallClients.pcd, it has been unmanaged on this screen.";
+                          {
+                            :Inherited clientNumberLabel : label = XmLabel;
+                            Group: Constraint
+                              rightWidget = clientNumberText;
+                              bottomWidget = clientNumberText;
+                              topWidget = clientNumberText;
+                          }
+                          {
+                            :Inherited clientNumberText : textField = XmTextField;
+                            Group: Widget
+                              columns = 3;
+                              maxLength = 3;
+                              activateCallback = "C: setNumClientsCB";
+                              losingFocusCallback = "C: setNumClientsCB";
+                              modifyVerifyCallback = "C: sizeVerifyCB";
+                          }
+                    }
+                    {
+                      clientSwapLabelText = labelText : pfgGUITemplates;
+                      Group: Widget
+                        managed = False;
+                      Group: Constraint
+                        topAttachment = attach_widget;
+                        topWidget = clientNumberLabelText;
+                        rightAttachment = attach_opposite_widget;
+                        rightWidget = clientNumberLabelText;
+                      Group: Control
+                        vipComment = "This field has been moved to pfgInstallClients.pcd, it has\nbeen unmanaged on this screen.";
+                          {
+                            :Inherited clientSwapLabel : label = XmLabel;
+                            Group: Constraint
+                              rightWidget = clientSwapText;
+                              bottomWidget = clientSwapText;
+                              topWidget = clientSwapText;
+                          }
+                          {
+                            :Inherited clientSwapText : textField = XmTextField;
+                            Group: Widget
+                              maxLength = 3;
+                              columns = 3;
+                              modifyVerifyCallback = "C: sizeVerifyCB";
+                              losingFocusCallback = "C: setSwapCB";
+                              activateCallback = "C: setSwapCB";
+                          }
+                    }
+                    {
+                      architectureLabel = XmLabel;
+                      Group: Constraint
+                        leftAttachment = attach_position;
+                        leftPosition = 1;
+                        topAttachment = attach_form;
+                        topOffset = 5;
+                        rightAttachment = attach_none;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                    }
+                    {
+                      architectureScrolledWindow = XmScrolledWindow;
+                      Group: Widget
+                        scrollingPolicy = automatic;
+                      Group: Constraint
+                        topAttachment = attach_widget;
+                        topWidget = architectureLabel;
+                        bottomAttachment = attach_form;
+                        leftAttachment = attach_position;
+                        leftPosition = 1;
+                        rightAttachment = attach_position;
+                        rightPosition = 4;
+                          {
+                            architectureRowColumn = XmRowColumn;
+                          }
+                    }
+              }
+              {
+                :Inherited messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = continueButton;
+                    {
+                      :Inherited continueButton : button1 = XmPushButton;
+                    }
+                    {
+                      :Inherited gobackButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: disklessGobackCB";
+                    }
+                    {
+                      :Inherited exitButton : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgExit";
+                    }
+                    {
+                      :Inherited helpButton : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"platform.h\")";
+                    }
+                    {
+                      :Inherited button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+}
+

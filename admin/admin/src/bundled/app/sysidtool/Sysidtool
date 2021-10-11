@@ -1,0 +1,39 @@
+! Copyright (c) 1995, by Sun Microsystems, Inc.
+! All rights reserved.
+!
+! sysidtool resource file
+
+! Colors
+Sysidtool*background: gray
+Sysidtool*foreground: black
+
+! Layout
+Sysidtool*dialogForm.horizontalSpacing: 18
+Sysidtool*dialogText.topOffset: 18
+Sysidtool*dialogData.topOffset: 27
+Sysidtool*dialogData.bottomOffset: 18
+
+! No ja/ko/zh/zh_TW character input is needed.
+Sysidtool*inputMethod: None
+
+! Fonts
+Sysidtool*fontList: helvetica14
+Sysidtool*dialogText.fontList: helvetica14
+Sysidtool*errorDialog.XmLabelGadget.fontList: helvetica14
+Sysidtool*XmPushButton.fontList: helvetica-bold14
+Sysidtool*XmPushButtonGadget.fontList: helvetica-bold14
+Sysidtool*XmLabelGadget.fontList: helvetica-bold14
+Sysidtool*XmTextWidget.fontList: helvetica-bold14
+Sysidtool*XmList.fontList: helvetica14
+
+! on-line help
+*Help*background: gray
+*Help*foreground: black
+*Help*fontList: helvetica14
+*Help*rowcolumn*fontList: helvetica-bold14
+*Help*rowcol*fontList: helvetica-bold14
+*Help*helptext.fontList: helvetica14
+*Help*helpsubjs.fontList: helvetica14
+*Help*helptext.rows: 15
+*Help*helptext.columns: 52
+*Help*helpsubjs.visibleItemCount: 4

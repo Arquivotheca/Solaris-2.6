@@ -1,0 +1,19 @@
+---- Modify Access to Remote Hosts -----------------
+
+1. Choose Hosts from the Browse menu.
+
+2. Select the host entry to modify from the
+   Admintool:Hosts window.
+
+3. Choose Modify from the Edit menu.
+
+   The Modify window contains the selected host
+   entry. 
+
+4. Make the needed changes to the host name or the
+   IP address.
+
+5. Click on OK.
+
+   The host information displayed in the main window
+   is updated.

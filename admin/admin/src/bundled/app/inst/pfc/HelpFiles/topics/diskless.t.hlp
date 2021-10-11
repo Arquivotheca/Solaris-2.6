@@ -1,0 +1,34 @@
+---- Serving diskless clients ------------------------------
+
+To support diskless clients, an /export/root file
+system is automatically created when Solaris is
+installed on a server. However, you must set aside
+disk space for each client's (/) root file system
+and swap files.
+
+---- Set up for diskless clients --------------------------
+
+Solstice Host Manager should be used to set up diskless
+client (/) root and swap before installing Solaris on the
+server. When the server installs Solaris, the client's root
+file system gets installed under /export/root, and the
+client's swap gets installed under /export/swap.
+
+---- Server file systems and directories ------------------
+  
+  /export - a file system on a server that is
+            shared with other systems on a
+            network. Diskless clients rely on
+            /export on a file server to boot
+            and run.
+
+  /export/root - a directory for client root
+                 directories
+
+  /export/swap - a directory for client swap
+                 files
+
+  /export/exec - a directory to store complete
+                 /usr file systems for clients
+                 whose architectures are different
+                 from the server's

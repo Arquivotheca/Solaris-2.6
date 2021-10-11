@@ -1,0 +1,31 @@
+---- Add Access to Remotes Hosts -------------------
+
+1. Select Hosts from the Browse menu.
+
+2. Select Add from the Edit menu on the
+   Admintool:Hosts main window.
+
+   The Add Host window is displayed.
+
+3. Fill in the form:
+
+   A. Type the new host name in the Host Name text
+      box.
+
+      See "Add/Modify Hosts" in the "Reference" help
+      for more information about selecting host
+      names. 
+
+   B. Type the new host name's IP address in the IP
+      address box.
+
+      See "IP addresses" in the "Topics" help for
+      more information about choosing an IP address.
+
+4. Click on OK.
+
+   The list of hosts displayed in the Admintool:Hosts
+   main window is updated to included the new host.
+
+
+

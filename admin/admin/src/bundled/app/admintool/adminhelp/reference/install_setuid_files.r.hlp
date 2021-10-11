@@ -1,0 +1,26 @@
+---- Admintool:Package Administration:Install 
+setuid /setgid Files -------------------------------
+
+Install setuid/setgid Files
+    Checks for executables that will have setuid or 
+    setgid bits enabled after installation. Options 
+    are:
+
+    Ask		Installer will be prompted for
+		instructions if setuid/setgid files
+		are available for installation.  
+
+    Yes		Do not check for setuid executables.
+
+    No		Override installation of setuid
+		processes; processes will be
+		installed without setuid bits
+		enabled.
+
+    Abort	Abort installation if setuid
+		processes are detected.
+
+See the "Topics" help for more information about
+using Admintool:Package Administration to set
+preferences during installation.
+

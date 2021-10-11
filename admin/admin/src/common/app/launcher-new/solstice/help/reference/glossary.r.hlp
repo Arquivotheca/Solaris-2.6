@@ -1,0 +1,49 @@
+Solstice launcher
+    The base window of the user interface used
+    to display the other application tools.
+
+Database Manager
+    The Solstice management application used to
+    manage network-related system files.
+
+default
+    An assumed value, or an action taken
+    automatically unless you specify otherwise.
+
+global application registration
+    Applications registered globablly are
+    available to all users of the Solstice
+    launcher. Applications may only be
+    registered globally using the command
+    line interface. See the Solstice System
+    Management Guide for information about
+    registering applications globally.
+
+Group Manager
+    The Solstice management application used to
+    manage UNIX group information.
+
+Host Manager
+    The Solstice management application used to
+    manage system information and provide
+    support for client systems such as diskless
+    and dataless systems.
+
+local application registration
+    Applications registered using the Solstice
+    launcher add application feature are
+    considered local and are only available
+    to the user who registers them.
+
+Serial Port Manager
+    The Solstice management application used to
+    manage modems and terminals.
+
+sysadmin group
+    The UNIX group whose members along with a
+    group ID of 14, can use the Solstice Management
+    applications locally or remotely.
+
+User Account Manager
+    The Solstice management application used to
+    manage user account information.

@@ -1,0 +1,15 @@
+---- Group 14 --------------------------------------
+
+UNIX group 14 is a special group ID number. Users
+who are in group 14 (called the sysadmin group) have
+permissions to edit and modify system files. You
+must add yourself to group 14 before using
+Admintool. Otherwise, Admintool will not be able to 
+update and modify system files necessary to complete
+its operations.
+
+NOTE:  If you see a "security exception..."
+       message, ensure you are using Admintool as a
+       user in group 14 (the sysadmin group). For
+       more information, see "Add Yourself to Group
+       14" from the list of available "How To" help.

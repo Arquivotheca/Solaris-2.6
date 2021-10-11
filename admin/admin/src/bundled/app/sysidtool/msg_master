@@ -1,0 +1,459 @@
+
+#
+#ident	"@(#)msg_master	1.46	93/02/18 SMI"
+#
+# Copyright (c) 1991 by Sun Microsystems, Inc.
+#
+
+# This is the master message file for sysIDtool.  Any time you create a new
+# message or edit the text for an existing message, you must do it here.
+# see the file `mkmsgs.c' for details on the format for this file.
+# Running the tool on this file will generate 3 files:
+#	sysid_msgs.h
+#	sysid_msgs.c
+#	sysid_message.po
+
+# We don't export any of these codes to the world, so ordering is not important
+# here, and we can let the tool automatically generate the msg codes simply by
+# specifying msg codes of zero.
+
+# Don't worry about format in this file.  All text retrieved from gettext() is
+# automatically formatted for the specific terminal's column width, although
+# you can insert \n & \t whereever you like to override the formatter.
+
+CFILE	SYSID_MSGS
+
+PREFIX	SYSID
+BASE	0	SYSID
+
+# L10N selection 
+# keep these two as the first msgs
+ 
+PICK_THIS_LANG		0	"%d) Enter %d for English\n"
+
+LANG_IN_ENGLISH		0	"English"
+
+# Terminal type
+
+SELECT_TERMINAL_TYPE	0	"What type of terminal are you using?\n"
+TELEVIDEO_925		0	"Televideo 925"
+TELEVIDEO_910		0	"Televideo 910"
+WYSE_50			0	"Wyse Model 50"
+SUN_WORKSTATION		0	"Sun Workstation"
+SUN_CMDTOOL		0	"Sun Command Tool"
+SUN_PC			0	"PC Console"
+ADM31			0	"Lear Siegler ADM31"
+H19			0	"Heathkit 19"
+VT100			0	"DEC VT100"
+VT52			0	"DEC VT52"
+ANSI			0	"ANSI Standard CRT"
+OTHER_TERMINAL		0	"Other\n"
+
+TERMINAL_TYPE_NOT_FOUND	0	"\nThe specified terminal type is not found "
+"in /usr/share/lib/terminfo.\n\n"
+
+TYPE_TERM_NUMBER	0	"Type the number of your choice and press Return: "
+
+NOT_A_DIGIT		0	"The value you entered contains characters that "
+"aren't digits.\n\n"
+
+NOTHING_SELECTED	0	"You did not enter a selection.\n\n"
+NO_TTY_ENTERED		0	"You did not enter a terminal type.\n\n"
+
+INVALID_NUMBER		0	"Invalid selection.\n\n"
+ENTER_TERMINAL_TYPE	0	"\nYou must enter a valid terminal type as "
+"defined in the terminfo database.  Consult your documentation for a list "
+"of the valid types, then enter one of these values exactly as shown in the "
+"list, including capitalization and punctuation.\n\n"
+"Terminal type:"
+
+# Network interface initialization
+
+IS_THE_SYSTEM_STANDALONE  0	"Will this system be connected to a network?"
+
+SYSTEM_IS_STANDALONE	0	"No"
+SYSTEM_IS_NETWORKED	0	"Yes"
+
+PLEASE_ENTER_HOSTNAME	0	"What is the hostname for your workstation?\n\n"
+"Hostnames must be at least two characters in length, and may contain "
+"letters, digits, and minus (-) signs.  A hostname may not begin or end "
+"with a minus (-) sign."
+
+NETWORKED		0	"Connected to network:"
+HOST_NAME		0	"Hostname:"
+PRIMARY_NET_IF		0	"Primary network interface:"
+IP_ADDRESS		0	"IP address:"
+
+SELECT_NET_IF		0	"What is your primary network interface?"
+
+PLEASE_ENTER_IP_ADDRESS	0	"What is your Internet Protocol (IP) address?\n\n"
+"The format is four decimal numbers separated by periods (example "
+"129.200.9.1).  Use the address that was assigned by local or internet "
+"management.\n\n"
+"If you have questions consult your Networking documentation."
+
+GOODBYE_NETINIT		0	"Just a moment..."
+
+PLEASE_ENTER_NAMING_SERVICE	0	"Do you want to configure this system "
+"as a client of a name service?  If so, which name service do you want to "
+"use?  If you do not want to use a name service select `none' and consult "
+"your Install documentation."
+
+NAME_SERVICE		0	"Name service:"
+
+NIS_VERSION_3		0	"NIS+ Client"
+NIS_VERSION_2		0	"NIS (formerly yp) Client"
+NO_NAMING_SERVICE	0	"None - use /etc files"
+NIS_NONE		0	"none"
+
+PLEASE_ENTER_LOCATION_PREFERENCE 0	"Do you want your name server "
+"to be located automatically?  Or do you want to specify the server's "
+"hostname?  If you choose to have your name server located automatically, "
+"then a server must exist on your local sub-network."
+
+LOC_METHOD		0	"Server location method:"
+BROADCAST		0	"Locate server automatically"
+BROADCAST_S		0	"Automatic"
+SPECNAME		0	"Specify hostname of server"
+SPECNAME_S		0	"Specify Hostname"
+
+PLEASE_ENTER_DOMAIN_NAME  0	"What is the name for the (existing) name "
+"service domain?\n\n"
+"Make sure you enter the name exactly as it is defined, including "
+"capitalization and punctuation."
+
+DOMAIN_NAME		0	"Domain name:"
+
+PLEASE_ENTER_NIS_SERVERS	0	"What is the hostname and IP address "
+"for your name server?\n\n"
+"Hostnames must be at least two characters in length, and may contain "
+"letters, digits, and minus (-) signs.  A hostname may not begin or end "
+"with a minus (-) sign.\n\n"
+"IP address format is four decimal numbers separated by periods (example "
+"129.200.9.1)."
+
+SERVERNAME		0	"Server's hostname:"
+SERVER_ADDR		0	"Server's IP address:"
+
+GOODBYE_NISINIT		0	"Just a moment..."
+
+IS_THE_NETWORK_SUBNETTED  0	"Does this workstation's network have "
+"sub-networks?"
+
+SUBNETTED		0	"Network is sub-netted:"
+
+YES_THERE_ARE_SUBNETS	0	"Yes"
+NO_THERE_ARE_NO_SUBNETS	0	"No"
+
+PLEASE_ENTER_THE_SUBNET_MASK  0	"This is your default netmask value.  You "
+"may change it if necessary, but the format must remain as four numbers "
+"separated by periods."
+
+NETMASK			0	"Netmask:"
+
+PASSWORD_INSTRUCTION	0	"What is your root password?\n\n"
+"A root password may contain any number of characters, but only the first "
+"eight characters in the password are significant.  For example, if you "
+"enter `a1b2c3d4e5f6' as your root password, then `a1b2c3d4' could also be "
+"used to gain root access.  If you do not want a root password, press "
+"RETURN.\n\n"
+"You will be asked to type the root password twice.  (It will not appear on the "
+"screen as you type it.)\n\n"
+"If you have questions consult your Install documentation.\n\n"
+
+PASSWORD_PROMPT		0	"Root password: "
+PW_REENTER		0	"Please re-enter your root password."
+PW_TOO_LONG		0	"The password you have entered is too long.  "
+"Please enter a shorter password.  Remember that only the first eight "
+"characters in your password are significant."
+PW_MISMATCH		0	"Your password entries do not match.  "
+"Please try again."
+KY_REENTER		0	"Please re-enter your password."
+
+CANT_DO_PASSWORD	0	"Due to an internal error, this process cannot "
+"set the superuser password at this time.  After the system is booted, you "
+"should immediately log in as root and set the password by running the program "
+"`/bin/passwd'.\n\nThe error that occurred was: %s"
+
+CANT_DO_PASSWORD_PLUS	0	"Due to an internal error, this process cannot "
+"set the superuser password at this time.  After the system is booted, you "
+"should immediately log in as root and set the password by running the program "
+"`/bin/passwd'.  You should also set up an encryption key for this host by "
+"running the program `/usr/bin/chkey'.\n\nThe error that occurred was: %s"
+
+CANT_DO_CHKEY		0	"Due to an internal error, this process cannot "
+"communicate with the program `/usr/bin/chkey'.  Therefore, you will not be "
+"able to create an encryption key for this host at this time.  After the system "
+"is booted, you should immediately log in as root and create an encryption "
+"key by running the program `/usr/bin/chkey'."
+
+CANT_UNCONFIG		0	"Due to an internal error, the file %s could "
+"not be removed.  After the system is booted, you should immediately log in "
+"as root and remove this file.\n\nThe error that occurred was: %s"
+
+CONTINUE_KEY		0	"Press any key to continue."
+
+SAVE_PARAMS_TO_NIS	0	"Do you want to save this system's "
+"configuration information in the name service databases?"
+
+SAVE_TO_NIS		0	"Save information in name service databases:"
+
+YES_SAVE_PARAMS_TO_NIS		0	"Yes"
+NO_DONT_SAVE_PARAMS_TO_NIS	0	"No"
+
+MENU_INTERACTION	0	"Use the arrow keys to select an item. "
+"(CTRL-n next, CTRL-p previous)\n\n"
+"Press Return to continue."
+
+SINGLE_FIELD_INTERACTION  0	"Press Return to continue."
+
+MULTI_FIELD_INTERACTION	0	"Use the Tab key to move between fields.\n\n"
+"Press Return to continue."
+
+PLEASE_SELECT_REGION	0	"What is your geographic region?"
+
+TIMEZONE		0	"Time zone:"
+
+PLEASE_SELECT_TIMEZONE	0	"What is your time zone?"
+
+PLEASE_ENTER_GMT_OFFSET	0	"Please enter gmt offset"
+AFRICA			0	"Africa"
+WESTERN_ASIA		0	"Western Asia"
+EASTERN_ASIA		0	"Eastern Asia"
+AUSTRALIA_NEWZEALAND	0	"Australia / New Zealand"
+CANADA			0	"Canada"
+EUROPE			0	"Europe"
+CENTRAL_AMERICA		0	"Central America"
+SOUTH_AMERICA		0	"South America"
+UNITED_STATES		0	"United States"
+GMT_OFFSET		0	"other - offset from GMT"
+TZ_FILE_NAME		0	"other - specify rules file"
+EGYPT			0	"Egypt"
+LIBYA			0	"Libya"
+TURKEY			0	"Turkey"
+WESTERN_USSR		0	"Western Soviet Union"
+IRAN			0	"Iran"
+ISRAEL			0	"Israel"
+SAUDI_ARABIA		0	"Saudi Arabia"
+CHINA			0	"People's Republic of China"
+TAIWAN			0	"Republic of China / Taiwan"
+HONGKONG		0	"Hong Kong"
+JAPAN			0	"Japan"
+KOREA			0	"Republic of Korea"
+SINGAPORE		0	"Singapore"
+TASMANIA		0	"Tasmania"
+QUEENSLAND		0	"Queensland"
+NORTH			0	"North"
+SOUTH			0	"South"
+WEST			0	"West"
+VICTORIA		0	"Victoria"
+NEW_SOUTH_WALES		0	"New South Wales"
+BROKEN_HILL		0	"Broken Hill"
+STURT			0	"Sturt"
+YANCOWINNA		0	"Yancowinna"
+LHI			0	"LHI"
+NEW_ZEALAND		0	"New Zealand"
+NEWFOUNDLAND		0	"Newfoundland"
+ATLANTIC		0	"Atlantic"
+EASTERN			0	"Eastern"
+CENTRAL			0	"Central"
+EAST_SASKATCHEWAN	0	"East Saskatchewan"
+MOUNTAIN		0	"Mountain"
+PACIFIC			0	"Pacific"
+YUKON			0	"Yukon"
+BRITAIN_AND_EIRE	0	"Great Britain and Eire"
+ICELAND			0	"Iceland"
+POLAND			0	"Poland"
+WESTERN_EUROPE		0	"Western Europe"
+MIDDLE_EUROPE		0	"Middle Europe"
+EASTERN_EUROPE		0	"Eastern Europe"
+MEXICO_BAJA_NORTE	0	"Mexico / Baja Norte"
+MEXICO_BAJA_SUR		0	"Mexico / Baja Sur"
+MEXICO_GENERAL		0	"Mexico / General"
+CUBA			0	"Cuba"
+BRAZIL_EAST		0	"Brazil East"
+BRAZIL_WEST		0	"Brazil West"
+BRAZIL_ACRE		0	"Brazil Acre"
+BRAZIL_DE_NORONHA	0	"Brazil De Noronha"
+CHILE_CONTINENTAL	0	"Chile Continental"
+CHILE_EASTER_ISLAND	0	"Chile Easter Island"
+USA_EASTERN		0	"Eastern"
+USA_CENTRAL		0	"Central"
+USA_MOUNTAIN		0	"Mountain"
+USA_PACIFIC		0	"Pacific"
+USA_YUKON		0	"Yukon"
+USA_EAST_INDIANA	0	"East-Indiana"
+USA_ARIZONA		0	"Arizona"
+USA_MICHIGAN		0	"Michigan"
+USA_SAMOA		0	"Samoa"
+USA_ALEUTIAN		0	"Aleutian"
+USA_HAWAII		0	"Hawaii"
+RETURN_TO_REGIONS_MENU	0	"none of these - return to regions menu"
+
+PLEASE_ENTER_THE_GMT_OFFSET  0	"Please specify the number of hours of "
+"difference between Coordinated "
+"Universal Time (GMT) and your own time zone.  If you are east of Greenwich, "
+"England, specify a positive number;  if you are west of Greenwich, specify "
+"a negative number:"
+
+HOURS_OFFSET		0	"Hours offset (-12..13) :"
+
+PLEASE_ENTER_RULES_FILE_NAME 0	"Please specify the name of the time zone "
+"rules file you would like to use.  The file name should be specified "
+"relative to the 'zoneinfo' directory (example: 'US/Pacific').\n\n"
+"If you do not enter a name, you will be returned to the previous menu."
+
+TZ_FILE			0	"Rules file name:"
+
+DATE_AND_TIME		0	"Date and time:"
+
+CONFIRM			0	"Is the following information correct?\n\n"
+
+YES_THE_INPUT_IS_CORRECT  0	"Yes, continue"
+NO_THE_INPUT_IS_INCORRECT 0	"No, re-enter information"
+
+FOUR_PART_IP_ADDR	0	"An IP address must contain four "
+"decimal numbers separated by periods (example 129.200.9.1)."
+
+MAX_IP_PART		0	"Each component of an IP address "
+"must be between 0 and 254."
+
+IP_NOT_IN_RANGE		0	"The IP address is out of the range "
+"of valid addresses."
+
+HOST_LENGTH		0	"A hostname must be between %d "
+"and %d characters in length."
+
+HOST_CHARS		0	"A hostname may only contain "
+"letters, digits, and minus (-) signs."
+
+HOST_MINUS		0	"A hostname may not begin or "
+"end with a minus (-) sign."
+
+FOUR_PART_NETMASK	0	"A netmask must contain four "
+"decimal numbers separated by periods (example 255.255.255.0)."
+
+MAX_NETMASK_PART	0	"Each component of a netmask "
+"must be between 0 and 255."
+
+DOMAIN_LENGTH		0	"A domain name must be between %d "
+"and %d characters in length."
+
+BAD_IP_ADDR		0	"An error occurred while trying "
+"to set the IP address %s on the %s network interface."
+
+BAD_UP_FLAG		0	"The following error occurred while trying "
+"to set the '%s' flag on the %s network interface: %s."
+
+BAD_HOSTNAME		0	"The following error occurred while trying "
+"to set the hostname to %s on the network interface %s: %s."
+
+BAD_NODENAME		0	"The following error occurred while trying "
+"to set the hostname to %s: %s."
+
+BAD_LOOPBACK		0	"The following error occurred while trying "
+"to set the loopback name-to-address mapping for %s: %s."
+
+BAD_HOSTS_ENT		0	"The following error occurred while trying "
+"to set the hostname %s in the hosts file: %s."
+
+BAD_DOMAIN		0	"The following error occurred while trying "
+"to set the domain name to %s: %s."
+
+STORE_NETMASK		0	"The following error occurred while trying "
+"to set the netmask %s for network number %s in /etc/netmasks: %s"
+
+BAD_NETMASK		0	"The following error occurred while trying "
+"to set the netmask %s on the network interface %s: %s."
+
+BAD_TIMEZONE		0	"The following error occurred while trying "
+"to set the timezone to %s: %s."
+
+BAD_DATE		0	"The following error occurred while trying "
+"to set the date to %s: %s."
+
+GET_ETHER		0	"The following error occurred while trying "
+"to get the Ethernet address for the network interface %s: %s."
+
+BAD_ETHER		0	"The following error occurred while trying "
+"to update the ethers database with Ethernet address %s for hostname %s: %s."
+
+BAD_BOOTP		0	"The following error occurred while trying "
+"to update the bootparams database for hostname %s: %s."
+
+BAD_NETMASK_ENT		0	"The following error occurred while trying "
+"to update the netmasks database for netmask %s: %s."
+
+BAD_TIMEZONE_ENT	0	"The following error occurred while trying "
+"to update the timezone database for timezone %s: %s."
+
+BAD_NISSERVER_ENT	0	"The following error occurred while trying "
+"to set the name service server name %s and IP address %s in the hosts file: %s."
+
+BAD_YP_ALIASES		0	"The following error occurred while trying "
+"to initialize the NIS aliases file for domain %s: %s.\n\n"
+"You can correct the problem by running 'ypinit -c' when the system has "
+"booted, in order to initialize this system as an NIS client.  You will "
+"need to reboot the machine after doing this."
+
+BAD_YP_BINDINGS1	0	"The following error occurred while trying "
+"to set up the NIS binding directory for domain %s in order to facilitate "
+"automatic server location: %s."
+
+BAD_YP_BINDINGS2	0	"The following error occurred while trying "
+"to initialize this system as an NIS client for domain %s: %s.\n\n"
+"You can correct the problem by running 'ypinit -c' when the system has "
+"booted (you will need to reboot the machine after doing this), or you can "
+"manually enter new name service information."
+
+CONTINUE		0	"Continue"
+
+REPROMPT		0	"Select Name Service"
+
+BAD_NIS_SERVER1		0	"The following error occurred while trying "
+"to locate an NIS+ server for domain %s: %s\n"
+"The NIS+ server that responded is: %s\n\n"
+"You can correct the problem by running 'nisinit -c -B' when the system has "
+"booted, or you can manually enter new name service information."
+
+BAD_NIS_SERVER2		0	"The following error occurred while trying "
+"to initialize this system as an NIS+ client of server %s for domain %s: %s\n\n"
+"You can correct the problem by running 'nisinit -c -H %s' when the system has "
+"booted, or you can manually enter new name service information."
+
+NSSWITCH_FAIL1		0	"The following error occurred while trying "
+"to configure the name service switch file: %s.\n\n"
+"You can correct the problem by running '/usr/bin/cp %s %s' when the "
+"system has booted.  You will need to reboot the machine after doing this."
+
+NSSWITCH_FAIL2		0	"The following error occurred while trying "
+"to configure the name service switch file: %s.\n\n"
+
+PLEASE_ENTER_DATE_AND_TIME  0	"What is the current date and time?\n\n"
+"Use digits in all fields.\n\n"
+
+YEAR		0	"Year   (4 digits) :"
+MONTH		0	"Month  (1-12)     :"
+DAY		0	"Day    (1-31)     :"
+HOUR		0	"Hour   (0-23)     :"
+MINUTE		0	"Minute (0-59)     :"
+
+NO_IPADDR		0	"The IP address which was previously set on the "
+"network interface %s no longer appears to be available.  The system state "
+"is corrupted.  System configuration can no longer continue."
+
+NO_NETMASK		0	"The netmask which was previously set on this "
+"system (network number %s) no longer appears to be available.  The system "
+"state is corrupted.  System configuration can no longer continue."
+
+BAD_TZ_FILE_NAME	0	"The time zone rules file name you "
+"selected (%s) does not exist on this system.  Please select a different "
+"rules file name, or select one of the time zones listed under your "
+"geographic region."
+
+GOODBYE_SYSINIT		0	"The system configuration is complete."
+
+YES		0	"Yes"
+NO		0	"No"
+
+PLEASE_WAIT		0	"Configuring parameters, %d seconds left to complete."

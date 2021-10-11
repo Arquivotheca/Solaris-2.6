@@ -1,0 +1,56 @@
+
+README file - Install GUI Project source directory 
+
+
+This directory, pfg, contains the following Install GUI files:
+	executable (bin/pftool)
+	launch shell (ig.sh)
+	X Resource file (Resources)
+	Solaris CD data (test/cd)
+	Disk sample data (test/?disk)
+	header files (include/*.h)
+	
+
+REVISION HISTORY, Install
+10/92	inst/apps/libsrc/disk,sw,ibe created
+ 4/93	inst/apps/prog/init_install/tt and 
+	inst/apps/prog/pf created
+10/93	tt cleaned
+ 4/94	inst/apps/prog/pfg created (target)	
+
+
+REVISION HISTORY, InstallGUI
+
+5/15/93		coding begins
+6/1	proto1	first article, main window and disk screen, 
+			data loaded from comline, non-interactive
+6/4	proto2	no third party widgets, still non-interactive
+6/9	proto3	interactive disk screen
+6/17	proto4	disk screen navigation, -t (tutorial) option
+6/18    proto5  auto->manual->auto gross functionality
+6/30    proto6  static binding and gross disk subscreen 
+
+
+INCLUDE FILES
+
+The following file(s) need to be moved in the inst/apps avocet tree
+
+	cp inst/apps/libsrc/disk/disk_def.h  inst/apps/include
+
+	(necessary for compiling pfinstall, which currently look
+		in libsrc dirs)
+
+
+
+DIFFS
+
+Some functionality of pfinstall was changed or dropped from pfgui
+
+1.  "-d" comline arg changed to "-v" since the former conflicts with
+	the Xt argv parser.   It sees -d as -display.
+
+2.  rootdisk dropped as comline arg.  judgement call, it's really 
+	not too useful, only there for debugging, right?
+
+3.  the disk lib sets a trap for SEGV in the load_disk() routine, but
+	does not return to the old sig handler when done.  Fix?

@@ -1,0 +1,54 @@
+#!/sbin/sh
+#
+#       @(#)Xinitrc 1.16 96/03/20 SMI
+#
+# Copyright (c) 1992-1996 Sun Microsystems, Inc.  All Rights Reserved.
+#
+
+xrdb -load -nocpp ${HOME}/.Xdefaults		# Load Default X11 resource database
+props -init				# Effect props resources
+
+# Set the default font name
+#
+FONTNAME=lucidasans-typewriter14
+
+# See if there is an override for the default font
+#
+if [ -x ${HOME}/.openwin-defaultfont ]; then
+	# check for font override for wide character locales
+	. ${HOME}/.openwin-defaultfont
+else
+	# see if screen width should reduce font size
+	eval `xwininfo -root | \
+		sed -n -e 's/Height: /SCREENHEIGHT=/p' \
+			-e 's/Width: /SCREENWIDTH=/p'`
+	if [ -n "${SCREENWIDTH}" ]; then
+		if [ "${SCREENWIDTH}" -le 640 ]; then
+			FONTNAME=lucidasans-typewriter10
+		elif [ "${SCREENWIDTH}" -le 800 ]; then
+			FONTNAME=lucidasans-typewriter12
+		fi
+	fi
+fi
+
+# Set the default fonts
+#
+xrdb -merge -nocpp - <<-EOF
+Font.Name:              ${FONTNAME}
+OpenWindows.ButtonFont: ${FONTNAME}
+OpenWindows.IconFont:   ${FONTNAME}
+OpenWindows.TitleFont:  ${FONTNAME}
+OpenWindows.TextFont:   ${FONTNAME}
+EOF
+
+# Disable the screen saver
+#
+xset s off
+
+sleep 15 & pid=$!			# OpenLook Window Manager
+olwm -syncpid $pid & wmpid=$!
+wait $pid				# Pause until olwm inits
+
+${HOME}/.openwin-init			# Custom OpenWindows tools
+
+wait $wmpid				# Wait for wm (key client) to exit

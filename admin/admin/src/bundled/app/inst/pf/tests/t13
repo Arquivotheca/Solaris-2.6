@@ -1,0 +1,9 @@
+install_type  initial_install
+system_type server
+cluster SUNWCuser
+num_clients 3
+client_swap 3
+num_coc 3
+client_arch sun4c
+partitioning default
+filesys c0t3d0s0 auto /

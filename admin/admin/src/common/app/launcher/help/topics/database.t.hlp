@@ -1,0 +1,23 @@
+---- Database Manager ----------------------------------------
+ 
+Database Manager is primarily used to manage the network-
+related system files since other tools are used to manage
+user accounts, client systems, serial ports, and printer
+information.
+
+The network-related system files managed by Database
+Manager are:
+
+-       aliases
+-       locale
+-       netgroup
+-       netmasks
+-       networks
+-       protocols
+-       rpc
+-       services
+-       timezone
+
+Database Manager can be used to manage system files on the
+local system or the NIS or NIS+ database with the appropriate
+access privileges.

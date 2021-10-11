@@ -1,0 +1,79 @@
+#
+#ident	"@(#)Makefile	1.5	94/10/19 SMI"
+#
+# Copyright (c) 1993 by Sun Microsystems, Inc.
+#
+# lpalerts/Makefile
+#
+
+PROG=			sendMsg
+SHFILES=		form jobdone
+SUIDSHFILES=		printer
+
+OBJECTS=		sendMsg.o
+CLEANFILES=		$(OBJECTS)
+
+include ../Makefile.on-gui
+
+OPENWINHOME_RUNTIME=	/usr/openwin
+WSINCDIR=		$(OPENWINHOME)/include
+WSLIBDIR=		$(OPENWINHOME)/lib
+
+# where to find the header files
+CPPFLAGS=		$(CPPFLAGS.master) $(WSINCDIR:%=-I%)
+
+CFLAGS +=       	$(DEBUG_CFLAGS)
+CCFLAGS +=		$(DEBUG_CCFLAGS)
+
+# where to find the libraries
+LIBWS=			-ltt
+
+LDLIBS=			-L$(WSLIBDIR) -R$(OPENWINHOME_RUNTIME)/lib $(LIBWS)
+
+# Target definitions
+
+ROOTLP=			$(ROOTETC)/lp
+ROOTLPALERTS=		$(ROOTLP)/alerts
+ROOTLPALERTSPROG=	$(PROG:%=$(ROOTLPALERTS)/%)
+ROOTLPALERTSSHFILES=	$(SHFILES:%=$(ROOTLPALERTS)/%)
+ROOTLPALERTSSUIDSHFILES=	$(SUIDSHFILES:%=$(ROOTLPALERTS)/%)
+
+#$(ROOTLPALERTS) :=	DIRMODE=	0775
+#$(ROOTLPALERTS) :=	OWNER=		lp
+#$(ROOTLPALERTS) :=	GROUP=		lp
+#
+#$(ROOTLPALERTSPROG) :=	FILEMODE=	0555
+#$(ROOTLPALERTSPROG) :=	OWNER=		lp
+#$(ROOTLPALERTSPROG) :=	GROUP=		lp
+#
+#$(ROOTLPALERTSSHFILES) :=	FILEMODE=	0555
+#$(ROOTLPALERTSSHFILES) :=	OWNER=		lp
+#$(ROOTLPALERTSSHFILES) :=	GROUP=		lp
+#
+#$(ROOTLPALERTSSUIDSHFILES) :=	FILEMODE=	4555
+#$(ROOTLPALERTSSUIDSHFILES) :=	OWNER=		lp
+#$(ROOTLPALERTSSUIDSHFILES) :=	GROUP=		lp
+
+.KEEP_STATE:
+
+all:		$(PROG) $(SHFILES)
+
+$(PROG):	$(OBJECTS)
+		$(PURIFY) $(LINK.c) -o $@ $(OBJECTS) $(LDLIBS)
+		$(POST_PROCESS)
+
+install:	all $(ROOTLPALERTS) $(ROOTLPALERTSPROG) \
+		$(ROOTLPALERTSSHFILES) $(ROOTLPALERTSSUIDSHFILES)
+
+lint:		lint_PROG
+
+clean:
+		$(RM) $(OBJECTS)
+
+$(ROOTLPALERTS):
+		$(INS.dir)
+
+$(ROOTLPALERTS)/%: %
+		$(INS.file)
+
+include ../Makefile.targ

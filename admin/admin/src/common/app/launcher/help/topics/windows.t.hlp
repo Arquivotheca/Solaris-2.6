@@ -1,0 +1,69 @@
+---- Load windows -----------------------------------------------
+
+Each application tool (except Printer and Serial Port Manager)
+has a load window that contains the following items:
+
+-	Name Service option menu, used to select the name
+	service. It contains the following options:
+	NIS
+	NIS+
+	none
+-	Domain name text box, used to supply the domain
+	name if a name service is selected. Otherwise, the
+	Host: text box is provided if none is selected.
+-	Filter option menu, used to filter entries if you
+	do not want to see all of the system file entries.
+	The Filter commands are:
+	All, used to display all file entries. This is the default
+	setting.
+	Specify, used to specify a text string to display the file
+	entries that match the text string. Using wildcards is
+	acceptable. This option is helpful if you want to focus
+	on a small number of entries.
+	None, used to turn off entry display. This is helpful
+	if you only want to add new entries and have no
+	interest in viewing existing entries.
+
+After you have selected a name service and a method for
+filtering entries, click on OK. The tool's main window is
+displayed.
+
+---- Main windows -----------------------------------------------
+
+Each application tool has a main (or base) window that is
+comprised of two areas: menu bar and display area.
+
+-	Menu bar, which usually contains four menus:
+	File
+	Edit
+	View
+	Help
+-	Display area, which displays the contains of the
+	selected system file
+
+---- Task windows -----------------------------------------------
+
+The application windows that are used to perform a specific
+task such as adding a group or user usually contain three items:
+text boxes, buttons, and option menus.
+
+-	Text boxes, which are used to type text such as a
+	user or group name.
+	Note: Do not press Return when finished typing in a
+	text box. Pressing Return is the same as clicking on
+	OK and may result in an incomplete entry. Use the
+	mouse pointer or the Tab key to select a new text
+	box.
+-	Buttons, which include the following:
+	OK, used to complete a task so that it can be
+	processed. The window is closed after the task is
+	completed.
+	Apply, used to complete a task but leave the window
+	open. (Not available on all windows.)
+	Reset, used to erase any text entered in the window
+	and position the insertion pointer in the first field
+	of the window.
+	Cancel, used to cancel the task and close the window.
+	Help, used to provide online help information.
+-	Option menus, used to select an option from a list of
+	options.

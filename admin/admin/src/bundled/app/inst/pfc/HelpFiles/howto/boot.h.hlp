@@ -1,0 +1,17 @@
+---- Definition: boot disk -------------------------------
+
+The boot disk is the disk where the / (root) file 
+system is installed. The boot drive for the system 
+you are installing is indicated on the Disks screen.
+
+---- Boot disk on x86 systems ----------------------------
+
+On x86 systems, you can make any disk the boot disk
+by changing the / (root) file system. Typically, the boot
+disk is c0t0d0; on PS/2 systems it is c0t6d0. However, if 
+you change the default boot disk, you must use the Solaris
+boot diskette to boot the disk. 
+
+---- Boot disk on SPARC systems --------------------------
+
+On SPARC systems, the boot disk can be any disk.

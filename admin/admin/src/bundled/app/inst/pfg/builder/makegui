@@ -1,0 +1,113 @@
+#
+#ident @(#)makegui   1.35     96/08/01
+#
+# Copyright (c) 1995 by Sun Microsystems, Inc.
+#
+# pfg/builder/makegui
+#
+# This makefile takes output from TeleUSE and generates
+# .c files against which the pfg executable is run.
+#
+# Since the .pcd to .c converter is only available on
+# SPARC, this makefile cannot be run on Intel systems
+
+TeleUSE =	/net/rmtc/usr/rmtc/misc/TeleUSE
+
+CUIL	=	$(TeleUSE)/bin/cuil
+
+PCD_TEMPLATES	= pfgGUITemplates.pcd
+C_OBJECTS	= \
+		pfgAllocateSvcQuery.c \
+		pfgAutolayout.c \
+		pfgAutoquery.c \
+		pfgBootDiskSelect.c \
+		pfgClients.c \
+		pfgCyl.c \
+		pfgDisks.c \
+		pfgDSRFSRedist.pcd \
+		pfgDSRFSSummary.pcd \
+		pfgDSRMedia.pcd \
+		pfgDSRSpaceReq.pcd \
+		pfgFilesys.c \
+		pfgInstallClients.c \
+		pfgIntro.c \
+		pfgLocale.c \
+		pfgMeta.c \
+		pfgOs.c \
+		pfgPrequery.c \
+		pfgPreserve.c \
+		pfgProgress.c \
+		pfgProgressBar.c \
+		pfgRemote.c \
+		pfgRemquery.c \
+		pfgSoftware.c \
+		pfgSolarCust.c \
+		pfgSolarPart.c \
+		pfgSummary.c \
+		pfgSwQuery.c \
+		pfgUpgrade.c \
+		pfgUseDisks.c
+
+C_SRCS    = $(C_OBJECTS:.c=.pcd)
+
+.KEEP_STATE:
+
+all:		c
+
+install:	all
+
+derived:
+
+sgs:
+
+lint:
+	@echo "There is no lint for .pcd files."
+
+clean:
+
+clobber:
+
+c:		$(C_OBJECTS)
+
+# Build rules for UIL files
+
+#
+# One of the things we do below is remove the "Creator" comment 
+# line from the TeleUSE generated .c and *_ui.h files.  We don't really want
+# developers names in the actual files, and it causes problems when
+# various developers are working on the same files and Avocet thinks 
+# they're out of sync with each other when all that is different is 
+# the Creator...
+#
+TMPFILE =  _install_tmp
+%.c:	%.pcd $(PCD_TEMPLATES)
+	@echo "Converting $*.pcd to ../$*.c"
+	@if test ! -w ../$*.c; \
+		then \
+		cd ..; \
+		echo "sccs edit" $*.c; \
+		sccs edit $*.c; \
+		cd builder; \
+		fi
+	@if test ! -w ../$*_ui.h; \
+		then \
+		cd ..; \
+		echo "sccs edit" $*_ui.h; \
+		sccs edit $*_ui.h; \
+		cd builder; \
+		fi
+#	@$(CUIL) -force -no_xres -mode pure-c -cstyle ansi \
+#		-c_out $@ -directcall -genhfiles -verbose \
+#		-pcd pfgGUITemplates.pcd -pcd $<
+	@$(CUIL) -no_xres -mode pure-c -cstyle ansi \
+		-c_out $@ -directcall -genhfiles -verbose \
+		-pcd pfgGUITemplates.pcd -pcd $<
+	@rm -f ${TMPFILE}
+	@mv $*.c ${TMPFILE}
+	@sed -e '/^ \* Creator/d' ${TMPFILE} > $*.c
+	@rm -f ${TMPFILE}
+	@mv $*_ui.h ${TMPFILE}
+	@sed -e '/^ \* Creator/d' ${TMPFILE} > $*_ui.h
+	@rm -f ${TMPFILE}
+	@cp $*.c ./..
+	@cp $*_ui.h ./..

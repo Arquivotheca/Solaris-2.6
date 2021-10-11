@@ -1,0 +1,17 @@
+
+---- Description ---------------------------------------------------
+
+     Specifies how to find your system's name server.
+
+     If you choose Find one, the software tries to find 
+     a name server.  To find a name server, it must reside on 
+     your local subnet.
+
+     If you choose Specify one, a subscreen will be displayed
+     where you must supply the name server's host name and IP address.
+
+
+---- See also ------------------------------------------------------
+
+     name service
+     subnet

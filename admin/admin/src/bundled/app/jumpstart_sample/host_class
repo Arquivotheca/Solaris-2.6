@@ -1,0 +1,9 @@
+install_type	initial_install
+system_type	standalone
+partitioning	default
+cluster		SUNWCuser
+cluster		SUNWCown delete
+cluster		SUNWCtltk delete
+cluster		SUNWCxgl delete
+cluster		SUNWCxil delete
+filesys		srvr:/usr/openwin - /usr/openwin ro,intr

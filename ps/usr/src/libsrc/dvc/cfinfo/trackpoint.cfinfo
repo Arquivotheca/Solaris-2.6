@@ -1,0 +1,12 @@
+class="win" name="KDMOUSE-B"
+	__wclass__="XINPUT"
+	__category__="pointer"
+	__title__="IBM ThinkPad Trackpoint Mouse"
+
+	ddxHandler="ddxSUNWx86mouse.so.1"
+	ddxInitFunc="ddxSUNWmouseProc"
+ 
+	strmod="vuidps2"
+
+	dev="/dev/kdmouse"
+	;

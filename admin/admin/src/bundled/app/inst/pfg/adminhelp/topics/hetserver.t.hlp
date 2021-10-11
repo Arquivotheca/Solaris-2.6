@@ -1,0 +1,13 @@
+---- Heterogeneous servers ---------------------------
+
+Heterogeneous servers are servers that support 
+clients of different platforms (for example,
+SUNW,Sun_4_60, i86pc, prep). During the Solaris 
+installation program, you can allocate space for 
+file systems on the disk, but the clients are not 
+completely set up until you use Solstice Host 
+Manager after you install Solaris software. 
+
+If the client is an X86 system, platform support 
+must be set up using Software Manager tool after 
+Solaris software is installed.

@@ -1,0 +1,16 @@
+#
+#ident	"@(#)Makefile.targ 1.1 94/02/04 SMI"
+#
+# Copyright (c) 1992 by Sun Microsystems, Inc.
+#
+
+clobber: clean
+	$(RM) $(PROG) $(CLOBBERFILES)
+
+lint_PROG:
+	$(LINT.c) $(PROG).c
+
+lint_SRCS:
+	$(LINT.c) $(SRCS)
+
+FRC:

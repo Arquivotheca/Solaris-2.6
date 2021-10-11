@@ -1,0 +1,61 @@
+---- About this screen ------------------------
+
+This screen lets you specify remote file systems to
+mount from a server, and test the mount to verify
+that the server can be reached.
+
+  > To add a remote file system, enter the server,
+    IP address, remote file system, and local mount
+    point and choose Add.
+
+  > To remove a remote file system, select it from
+    the Remote File Systems and choose Remove.
+
+---- Server -----------------------------------
+
+This is the host name of the server that is 
+providing the file system. For example: sholto
+
+---- IP address -------------------------------
+
+This is the IP address of the server. An IP
+address has four sets of numbers separated by
+periods. For example: 129.221.2.1
+
+---- Remote file system -----------------------
+
+If the server name you entered in the Server field
+has exportable file systems, use the scrollbar to
+view the choices in the list. 
+
+> To select a remote file system from the list,
+  double click on the file system name.
+
+If the server is down, no exportable file systems
+will be displayed in the list.
+
+---- Local mount point ------------------------
+
+This is the mount point where the remote file 
+system will be mounted. The default shown assumes
+the mount point is in the same path as the remote
+file system; this may or may not be true for the
+server you've selected.
+For example: /export/dist
+
+---- Remote File Systems ----------------------
+
+This list contains any remote file system you've
+added, whether it passed or failed the test mount.
+Each time you reboot the system, the Solaris 
+installation program will try to mount the file 
+systems in this list.
+
+---- The Test button --------------------------
+
+Before adding the remote file system to the Remote
+Mount File System list, you should test the
+mount to verify that the server can be reached. 
+If the mount is unsuccessful, the remote file 
+systems you've selected will not be available after
+the system is rebooted.

@@ -1,0 +1,427 @@
+			@(#)l10n.guide 1.4 95/08/11 SMI
+
+		 Admin Consolidation Localization Guide 
+
+
+     This is a brief guide for localizers of the Admin Consolidation.  This
+guide should cover all components that need to be delivered in order to
+localize Admin, but does not cover in any detail how to produce each
+component itself.
+
+The following areas are covered:
+
+	1. Message Files
+	2. Package and Cluster names
+	3. Help Files
+	4. Resource Files
+	5. Fonts
+	6. Workspace Menus
+	7. Wide-Character Default Font Override
+        A. Appendix: List of Each of the Components
+	B. Appendix: Sample openwin-defaultfont File
+
+Section 3, 4 and appendix A document components for both the system
+installation and the admintool components of the admin consolidation.  All
+other sections apply only to the  system installation component in the admin
+consolidation.
+	
+
+1.  Message Files
+
+	Message files should be installed in:
+
+       /usr/lib/locale/<locale>/LC_MESSAGES/<textdomain.mo>
+       /usr/lib/locale/<locale>/LC_MESSAGES/<textdomain.cat>
+
+   <locale>
+	Current	display	language category of locale.
+
+   <textdomain.mo>
+	Text domain name plus ".mo" for message files with the ".po"
+	suffix.  The actual names of the  text domains for the Admin 
+	deliverable is listed in the Appendix.
+
+   <textdomain.cat>
+	Text domain name plus ".cat" for message files with the ".msg"
+	suffix.  The actual names of the  text domains for the Admin 
+	deliverable is listed in the Appendix.
+
+	There are three unusual cases in the Admin message files.  These
+   relate to the fact that one part of the Admin software is actually
+   used to present a menu of locales to the user.  Each entry in this
+   menu should be localized in a different language.  This is done
+   by having the message file contain something other than a direct
+   translation of a message.  The translation comments in the
+   SUNW_INSTALL_SYSID.po explain this.  The three special cases from this
+   message file are reproduced here:
+
+#
+# i18n: Do not translate this message.  Instead, in place of the word
+# i18n: English, use the english name of the language you are translating
+# i18n: to.  For example, if you are translating to French, the msgstr field
+# i18n: should contain the english word French.
+#
+msgid  "English"
+msgstr "English"
+
+#
+# i18n: Translate this message so it prompts for the language you are
+# i18n: translating to.  For example, if you are translating to French, treat
+# i18n: the message as if it read:
+# i18n: %2d) Enter %d for French
+#
+msgid  "%2d) Enter %d for English"
+msgstr "%2d) Enter %d for English"
+
+#
+# i18n: Translate this message so it prompts for the language you are
+# i18n: translating to.  For example, if you are translating to French, treat
+# i18n: the message as if it read:
+# i18n: Select this item for French (%s)
+#
+msgid  "Select this item for English (%s)"
+msgstr "Select this item for English (%s)"
+
+
+
+2. Package and Cluster names
+
+	In the past, the install software did not support a localized string
+    for the package and cluster names and descriptions.  In this
+    release, these strings are now being wrapped in a gettext call.  
+
+	Because these strings are not known by the admin consolidation's
+    software, it is not possible for the admin consolidation to deliver these
+    strings in our .po files.  However, install does perform a gettext on the
+    string it reads from the packagetoc and clustertoc files.  The strings
+    it checks are the values for the NAME, DESC, VENDOR, and PRODNAME keys
+    in the .clustertoc and .packagetoc files.  Thus, the localization
+    centers can append these strings to the SUNW_INSTALL_SWLIB.po file so
+    that they can be presented in the proper language.
+
+	The strings can be obtained from the packagetoc and clustertoc files
+    on the CD.  In Solaris 2.5, these files are located on the CD in:
+
+	Solaris_2.5/.packagetoc
+	Solaris_2.5/.clustertoc
+
+    You can grep out all of the descriptions and names.  For example:
+
+	grep "^NAME=" .packagetoc .clustertoc
+	grep "^DESC=" .packagetoc .clustertoc
+	grep "^VENDOR=" .packagetoc .clustertoc
+	grep "^PRODNAME=" .packagetoc .clustertoc
+
+    You could then create the proper entries in the SUNW_INSTALL_LIB.po
+    file before having it translated.
+
+	For example, the .clustertoc contains these two entries for the
+    End-User cluster:
+
+	NAME=End User System Support
+	DESC=A pre-defined software configuration consisting of the typical software required by end-users running the OpenWindows DeskTop and using applications developed for Solaris 1.0 (previously known as SunOS 4.X).
+
+    For this cluster you would append the following lines to the
+    SUNW_INSTALL_LIB.po file before having it translated:
+
+	msgid "End User System Support"
+	msgstr ""
+	msgid "A pre-defined software configuration consisting of the typical software required by end-users running the OpenWindows DeskTop and using applications developed for Solaris 1.0 (previously known as SunOS 4.X)."
+	msgstr ""
+
+    As a result, the name and description would be presented to the user
+    in the proper langauge.
+
+	A better internal process for getting these strings into the .po file
+    may be put into place in a future release.  For the 2.5 release, the
+    4 Metacluster names are delivered in the SUNW_INSTALL_SWLIB.po file.
+   
+
+
+3.  Help Files
+
+	Help files are used to provide on-line help for the Admin
+   applications.  Admin uses an on-line help mechanism developed at
+   RMTC.  This system is intended to eventually transition to CDE
+   on-line help.
+
+	The structure of this help system is based on the following
+   three directories:
+
+	.../<application>.help/howto
+	.../<application>.help/reference
+	.../<application>.help/topics
+
+   Within each of these directories is an index file and a set of
+   help text files.
+
+	howto:
+		Howto		(index)
+		*.h.hlp		(text files)
+
+	reference:
+		Reference	(index)
+		*.r.hlp		(text files)
+
+	topics:
+		Topics		(index)
+		*.t.hlp		(text files)
+
+	The index files share a common specification.  The format is a help
+   topic followed by a tab-indented file name.  The topic should be localized,
+   the file name is not.  An example entry in this file is:
+
+   Auto-layout
+   	autolayout.t.hlp
+
+   In this example, "Auto-layout" should be localized.
+
+	The text files are plain text and should be completely localized.
+   Within the text files, sections are delimited by by a header surrounded
+   by dashes (-).  For example,
+
+   ---- Solaris fdisk partition -------------------------------------------
+
+   To use a disk ....
+
+   ---- fdisk partition types ---------------------------------------------
+
+   - PRI DOS ...
+
+   (end example)
+
+   These dashes are used by the help system and must be in the file.  Each
+   header must be preceeded by 4 dashes.  By convention, each header must
+   have one blank line before and after it.  A long header can wrap to the
+   next line.  For example,
+
+   ---- Adding users to the sysadmin group
+	in the NIS environment -------------------------------------------
+
+
+	The help file directories are listed in appendix A.
+
+	Refer to the Adminhelp Manual for further information on this
+   help system.
+
+
+4.  Resource Files
+
+	Two X resource files are provided for the install GUI.  These
+    files are:
+
+	/usr/openwin/lib/locale/C/app-defaults/Installtool
+	/usr/openwin/lib/locale/C/app-defaults/Installtool_lowres
+
+	An X resource file is provided for the sysidtool GUI.  This file
+    is:
+
+	/usr/openwin/lib/locale/C/app-defaults/Sysidtool
+
+	An X resource file is provided for the Admintool application.  
+    This file is:
+
+	/usr/openwin/lib/locale/C/app-defaults/Admin
+
+    In all of the resource files, only those values that need to be changed
+    should be changed.  The other values specified in these files should
+    be left as they are delivered.
+
+
+
+5. Fonts
+
+	The install and sysidtool portions of the Admin consolidation
+   are run in both the regular system environment and in the CD boot
+   environment.  Any fonts used by the localized installtool or sysidtool
+   must be available on the CD image if these applications are to use them
+   during initial install.
+
+
+6.  Workspace Menus
+
+	Admin provides a custom openwindows menu that is used when the
+   window system is running during initial install.  This file must be
+   localized.
+ 
+        The localized menu file is:
+ 
+	/usr/lib/locale/<locale>/LC_MESSAGES/install-openwin-menu.gui
+
+   <locale>
+	Current	display	language category of locale.
+
+7.  Wide-Character Default Font Override File
+
+    This section only applies to those L10N centers which use multi-byte fonts.
+
+    The default font used for all major install font resources is
+    LucidaSansTypewriter14. However, this font does not support multi-byte
+    characters.  To support a console with wide-character display
+    capabilities (e.g. Japanese), the following file should be
+    created on the CD image:
+
+	/usr/lib/locale/<locale>/LC_MESSAGES/openwin-defaultfont
+
+    The openwin-defaultfont file should exist for any multi-byte locale.
+
+    This file is a Bourne shell script that should perform the proper
+    steps to enable the window system and console to support the specified
+    multi-byte font.  At a minimum, this script should contain the following
+    lines:
+
+	#!/sbin/sh
+	FONTNAME=<non-aliased name of font>
+	LANG=<locale>; export LANG
+
+    If the font is not located in the standard, non-localized, font search
+    path, then the file should also include necessary "xset fp+ <fontpath>"
+    and "xset fp rehash" lines. It is assumed that all wide-character font
+    releases have one and only one openwin-default font file defined on the
+    Solaris CD image.
+
+    Multi-byte fonts use much more memory than the other fonts.  Because
+    install runs in a memory-only environment with no swap space configured,
+    there may not be enough memory to use the multi-byte fonts on the
+    minimum memory configurations.  The install process has a memory
+    threshold that is used to determine if the system has enough memory to
+    run a multi-byte localized install.  This threshold should also be specified
+    in the openwin-defaultfont file if a particular localization needs to
+    override the default value.  Normally, the localization centers will not
+    have to specify this threshold, since the default threshold should be
+    correct in most cases.  However, if there is a need for a localization to
+    change the threshold, then the environment variable MEM_THRESHOLD
+    can be specified with a value in Kbytes.  For example,
+
+	MEM_THRESHOLD=5250; export MEM_THRESHOLD
+
+    will set the memory threshold to 5.25 Megabytes.  If a system's available
+    memory after the window system has been started is lower then the
+    threshold, then a multi-byte install will not be offered as an option,
+    because the system will not have enough memory to support the multi-byte
+    font in the window system.  The default threshold is set to 4750.
+
+    Most multi-byte fonts on the install CD are reduced in size so that
+    they consume less memory.  However, in some cases it may not be possible
+    to even run the window system with the multi-byte font, since it will
+    use so much memory that the install program will not be able to run
+    properly, even in English.  In these cases, the L10N center should
+    check the available memory and only execute the commands in this script if
+    there is enough memory.  The MEM_THRESHOLD variable will not suffice in
+    this case, since it is used after the window system has been started to
+    check if there is enough memory to run localized install programs.
+
+    To check the available memory, use the following approach in the script:
+
+	if [ `/sbin/mem` -gt 9000 ]; then
+		FONTNAME=...
+		LANG=...
+		MEM_THRESHOLD=6000; export MEM_THRESHOLD
+	else
+		MEM_THRESHOLD=9000; export MEM_THRESHOLD
+	fi
+
+    Note that if there is not enough memory, the MEM_THRESHOLD is set to
+    a high value to ensure that the install programs do not attempt to run
+    with this locale set.  The MEM_THRESHOLD is also being set in this
+    example even when there is enough memory to start the window system with
+    this font loaded, since there may still not be enough after the
+    window system is running.
+
+    The /sbin/mem program returns the available memory in KB.
+
+    As mentioned earlier, most locales will not need to use this approach
+    since they already support the reduce size fonts.  However, this
+    flexability is available for those locales that need it.
+
+    See Appendix B for sample files.
+
+
+Appendix A: List of each of the components
+
+      A.1	Messages file(s)
+
+	/usr/lib/locale/C/LC_MESSAGES/SUNW_INSTALL_INSTALL.po
+	/usr/lib/locale/C/LC_MESSAGES/SUNW_INSTALL_LIB.po
+	/usr/lib/locale/C/LC_MESSAGES/SUNW_INSTALL_PFINSTALL.po
+	/usr/lib/locale/C/LC_MESSAGES/SUNW_INSTALL_SCRIPTS.po
+	/usr/lib/locale/C/LC_MESSAGES/SUNW_INSTALL_SWLIB.po
+	/usr/lib/locale/C/LC_MESSAGES/SUNW_INSTALL_SYSID.po
+	/usr/lib/locale/C/LC_MESSAGES/SUNW_INSTALL_TTINSTALL.po
+	/usr/lib/locale/C/LC_MESSAGES/SUNW_INSTALL_UPGRADE.po
+	/usr/lib/locale/C/LC_MESSAGES/SUNW_ADM_FW.po
+	/usr/lib/locale/C/LC_MESSAGES/SUNW_ADM_LIBLDB.po
+	/usr/lib/locale/C/LC_MESSAGES/SUNW_ADM_APM.po
+	/usr/lib/locale/C/LC_MESSAGES/admintool.msg
+	/usr/lib/locale/C/LC_MESSAGES/solstice.msg
+	/usr/lib/locale/C/LC_MESSAGES/libadmapp.msg
+
+      A.2	Help file(s)
+
+	The list of help files varies over time.  This list shows
+    the directories in which the help files reside.  Each file in these
+    directories should be localized as described above.
+
+    	/usr/openwin/lib/locale/C/help/install.help/howto
+    	/usr/openwin/lib/locale/C/help/install.help/reference
+    	/usr/openwin/lib/locale/C/help/install.help/topics
+    	/usr/openwin/lib/locale/C/help/installtool.help/howto
+    	/usr/openwin/lib/locale/C/help/installtool.help/reference
+    	/usr/openwin/lib/locale/C/help/installtool.help/topics
+    	/usr/snadm/classes/locale/C/help/sysidtty.help/howto
+    	/usr/snadm/classes/locale/C/help/sysidtty.help/reference
+    	/usr/snadm/classes/locale/C/help/sysidtty.help/topics
+    	/usr/snadm/classes/locale/C/help/sysidxm.help/howto
+    	/usr/snadm/classes/locale/C/help/sysidxm.help/reference
+    	/usr/snadm/classes/locale/C/help/sysidxm.help/topics
+    	/usr/snadm/classes/locale/C/help/admintool/howto
+    	/usr/snadm/classes/locale/C/help/admintool/reference
+    	/usr/snadm/classes/locale/C/help/admintool/topics
+
+      A.3	Menus
+
+	/usr/lib/locale/C/LC_MESSAGES/install-openwin-menu.gui
+
+      A.4	Wide Character Default Font File
+
+	/usr/lib/locale/<locale>/LC_MESSAGES/openwin-defaultfont
+
+
+Appendix B: Sample openwin-defaultfont File
+
+	The following is an example of an openwin-defaultfont file for
+	the Japanese install CD.  This simple format should suffice for
+	most multi-byte locales.
+
+	#!/sbin/sh
+	# wide-character localized releases must update the default font for the
+	# console window and all other applications which may run before sysid
+	#
+	# Japanese .openwin-defaultfont file
+	#
+	FONTNAME=-sun-gothic-medium-r-normal--14-120-75-75-c-60-jisx0201.1976-0
+	LANG=ja; export LANG
+
+
+	The following is an example for Japanese, but with a memory
+	threshold set to prevent the install programs from running if there
+	is not enough memory.
+
+	#!/sbin/sh
+	FONTNAME=-sun-gothic-medium-r-normal--14-120-75-75-c-60-jisx0201.1976-0
+	LANG=ja; export LANG
+	MEM_THRESHOLD=5000; export MEM_THRESHOLD
+
+
+	The following is an example for Japanese, but with a test to see
+	if there is enough memory to load the font into the window system
+	when it starts.
+
+	#!/sbin/sh
+	if [ `/sbin/mem` -gt 9500 ]; then
+		FONTNAME=-sun-gothic-medium-r-normal--14-120-75-75-c-60-jisx0201.1976-0
+		LANG=ja; export LANG
+		MEM_THRESHOLD=6000; export MEM_THRESHOLD
+	else
+		MEM_THRESHOLD=9500; export MEM_THRESHOLD
+	fi

@@ -1,0 +1,11 @@
+install_type	initial_install
+system_type	server
+partitioning	default
+cluster		SUNWCall
+num_clients	7
+client_swap	32
+client_arch	sun4c
+client_arch	sun4m
+filesys		c0t3d0s0 20 /
+filesys		c0t3d0s1 40 swap
+filesys		c0t3d0s5 80 /opt

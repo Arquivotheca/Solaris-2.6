@@ -1,0 +1,51 @@
+#
+# Makefile.psm.targ
+#
+#pragma ident  "@(#)Makefile.psm.targ 1.1     95/02/28 SMI"
+#
+# Copyright (c) 1995 by Sun Microsystems, Inc.
+# All rights reserved.
+#
+# Makefile.psm.targ, global targets for platform specific modules
+#
+
+#
+#	Installation targets and rules:
+#
+$(ROOT_PLAT_DIR):
+	-$(INS.dir.root.sys)
+
+$(ROOT_PSM_DIR):		$(ROOT_PLAT_DIR)
+	-$(INS.dir.root.sys)
+
+$(ROOT_PSM_MOD_DIR):		$(ROOT_PSM_DIR)
+	-$(INS.dir.root.sys)
+
+$(ROOT_PSM_MOD_DIRS):		$(ROOT_PSM_MOD_DIR)
+	-$(INS.dir.root.sys)
+
+$(ROOT_PSM_DIR)/%:		% $(ROOT_PSM_DIR)
+	$(INS.file)
+
+$(ROOT_PSM_MOD_DIR)/%:		% $(ROOT_PSM_MOD_DIR)
+	$(INS.file)
+
+$(ROOT_PSM_DRV_DIR)/%:          % $(ROOT_PSM_DRV_DIR)
+	$(INS.file)
+
+$(ROOT_PSM_STRMOD_DIR)/%:	% $(ROOT_PSM_STRMOD_DIR)
+	$(INS.file)
+
+$(ROOT_PSM_MISC_DIR)/%:		% $(ROOT_PSM_MISC_DIR)
+	$(INS.file)
+
+#
+#       Set ownership on links.
+#
+CHOWNLINK=
+$(CH)CHOWNLINK= ; $(CHOWN) $(OWNER) $@
+CHGRPLINK=
+$(CH)CHGRPLINK= ; $(CHGRP) $(GROUP) $@
+
+$(ROOT_PSM_PROG_LINKS):
+	$(RM) $@; $(SYMLINK) ../$(PLATFORM)/$(PROG) $@ $(CHOWNLINK) $(CHGRPLINK)

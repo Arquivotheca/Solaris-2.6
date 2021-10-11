@@ -1,0 +1,35 @@
+#ident  "@(#)README	1.6	96/11/21 SMI"
+
+To build the PS consolidation workspace, execute the following steps:
+
+1) Copy the sample wsenv script and tailor it to the environment.  If
+   the SunPro compiler that you plan to use is installed in the standard
+   place (/opt/SUNWspro), the only environment variable that might need to 
+   be changed is the REALMODE_ROOT variable and this variable only needs to 
+   be set if building the PS consolidation on an x86 platform.  So, if 
+   you're building the consolidation on an x86 machine and the PS 
+   consolidation realmode source tree is located in ../realmode-crank, 
+   simply uncomment REALMODE_ROOT, otherwise uncomment it and assign it the 
+   path name of the directory beneath which you have installed the realmode 
+   source tree.  
+
+	cp wsenv.template wsenv
+	vi wsenv
+
+2) Dot the wsenv script to set the environment variables.
+
+	. ./wsenv
+
+3) Change directories to usr/src and build the system.
+
+	cd <source_tree_root>/usr/src
+	make -e clobber install > ../../build.log.<arch> 2>&1 &
+	cd <source_tree_root>
+
+	where <arch> is x86, sparc, or ppc, as appropriate.
+
+4) Compare the build log generated with the sample provided.
+
+	diff build.log.<arch> <source_tree_root>/build.log.<arch>.sample
+
+	where <arch> is x86, sparc, or ppc, as appropriate.

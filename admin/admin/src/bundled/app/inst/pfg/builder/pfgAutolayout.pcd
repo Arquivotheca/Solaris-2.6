@@ -1,0 +1,68 @@
+Module: pfgAutolayout
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Wed Mar  1 15:10:16 1995";
+      copy = false;
+      inCreateMenu = true;
+      nodesUsed = autolayout_dialog;
+        {
+          autolayout_dialog = formWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 55;
+            vip_y = 30;
+              {
+                :Inherited panelhelpText = XmText;
+              }
+              {
+                :Inherited autolayoutForm : form = XmForm;
+                Group: Widget
+                  fractionBase = 9;
+                    {
+                      createLabel = XmLabel;
+                      Group: Widget
+                        alignment = alignment_end;
+                      Group: Constraint
+                        rightAttachment = attach_position;
+                        rightPosition = 4;
+                        topAttachment = attach_form;
+                        topOffset = 5;
+                    }
+                    {
+                      autolayoutCheckBox = XmRowColumn;
+                      Group: Constraint
+                        leftAttachment = attach_position;
+                        leftPosition = 4;
+                        bottomAttachment = attach_form;
+                        topAttachment = attach_form;
+                    }
+              }
+              {
+                :Inherited messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = continueButton;
+                    {
+                      :Inherited continueButton : button1 = XmPushButton;
+                    }
+                    {
+                      :Inherited cancelButton : button2 = XmPushButton;
+                    }
+                    {
+                      :Inherited helpButton : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"autolayout.t\")";
+                    }
+                    {
+                      :Inherited button4 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      :Inherited button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+}
+

@@ -1,0 +1,46 @@
+---- About This Screen -----------------------------
+
+The list of file systems provides the following 
+information:
+
+> Slice - Where the file system will be located 
+  after the upgrade.
+
+> Size - What the size of the file system will be 
+  after the upgrade.
+
+> Modification - What auto-layout will do to the 
+  file system when it reallocates space.
+
+> Existing Slice - Where the file system will be 
+  changed or moved from.
+
+> Existing Size - What size the file system is be 
+  changed from.
+
+---- Values for Modification -----------------------
+
+> None - Nothing will happen to the file system. 
+
+> Changed - The file system's slice location and/or
+  size will be changed.
+
+> Deleted - The file system will be deleted.
+
+> Created - The file system will be created. 
+
+> Unused - There will be unused space left on the 
+  specified disk. 
+
+> Collapsed - The file system will be moved
+  (collapsed) into its parent file system.
+
+---- Unused Disk Space -----------------------------
+
+When auto-layout reallocates space, there may be 
+some disk space left over. If so, auto-layout tries
+to distribute the extra space across the file 
+systems or puts the extra space into /export/home 
+file systems. Any extra disk space that auto-layout
+can't distribute is left on the disk and is marked 
+as Unused.

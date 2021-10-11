@@ -1,0 +1,133 @@
+
+AdapterId 0EFEFh
+
+AdapterName  "PC Network Adapter "
+
+NumBytes 1
+
+NamedItem
+
+        Prompt "Type, Memory Location, Interrupt Level"
+
+        choice "Primary, Mem 1, Int 2"
+
+                pos[0] = 1X00010Xb
+                io 0620h - 0627h
+                int 2
+                mem 0C8000h - 0CFFFFh
+
+        choice "Primary, Mem 2, Int 2"
+
+                pos[0] = 1X00001Xb
+                io 0620h - 0627h
+                int 2
+                mem 0D0000h - 0D7FFFh
+
+        choice "Primary, Mem 3, Int 2"
+
+                pos[0] = 1X00011Xb
+                io 0620h - 0627h
+                int 2
+                mem 0D8000h - 0DFFFFh
+
+        choice "Primary, Mem 1, Int 3"
+
+                pos[0] = 1X01010Xb
+                io 0620h - 0627h
+                int 3
+                mem 0C8000h - 0CFFFFh
+
+        choice "Primary, Mem 2, Int 3"
+
+                pos[0] = 1X01001Xb
+                io 0620h - 0627h
+                int 3
+                mem 0D0000h - 0D7FFFh
+
+        choice "Primary, Mem 3, Int 3"
+
+                pos[0] = 1X01011Xb
+                io 0620h - 0627h
+                int 3
+                mem 0D8000h - 0DFFFFh
+
+        choice "Alternate, Mem 1, Int 3"
+
+                pos[0] = 0X01110Xb
+                io 0628h - 062Fh
+                int 3
+                mem 0CE000h - 0CFFFFh
+
+        choice "Alternate, Mem 2, Int 3"
+
+                pos[0] = 0X01101Xb
+                io 0628h - 062Fh
+                int 3
+                mem 0D6000h - 0D7FFFh
+
+        choice "Alternate, Mem 3, Int 3"
+
+                pos[0] = 0X01111Xb
+                io 0628h - 062Fh
+                int 3
+                mem 0DE000h - 0DFFFFh
+
+        choice "RPL, Mem 1, Int 2"
+
+                pos[0] = 1X10010Xb
+                io 0620h - 0627h
+                int 2
+                mem 0C8000h - 0CFFFFh
+
+        choice "RPL, Mem 2, Int 2"
+
+                pos[0] = 1X10001Xb
+                io 0620h - 0627h
+                int 2
+                mem 0D0000h - 0D7FFFh
+
+        choice "RPL, Mem 3, Int 2"
+
+                pos[0] = 1X10011Xb
+                io 0620h - 0627h
+                int 2
+                mem 0D8000h - 0DFFFFh
+
+        choice "RPL, Mem 1, Int 3"
+
+                pos[0] = 1X11010Xb
+                io 0620h - 0627h
+                int 3
+                mem 0C8000h - 0CFFFFh
+
+        choice "RPL, Mem 2, Int 3"
+
+                pos[0] = 1X11001Xb
+                io 0620h - 0627h
+                int 3
+                mem 0D0000h - 0D7FFFh
+
+        choice "RPL, Mem 3, Int 3"
+
+                pos[0] = 1X11011Xb
+                io 0620h - 0627h
+                int 3
+                mem 0D8000h - 0DFFFFh
+
+  Help
+
+"Use this field to configure this adapter.  You choose the adapter
+type, memory location, and interrupt level.  The three adapter types
+are: primary, alternate and Remote Program Load (RPL).  The three memory
+locations are MEM 1, MEM 2, or MEM 3.  When you specify the interrupt levels
+for the adapter, if it is primary or RPL, use INT 2 or INT 3.  If it is
+alternate, use INT 3.
+If you are in the 'Change Configuration' window, you can change
+the setting.  Use F5 and F6 to scroll through the choices, the Up
+and Down arrow keys to move from field to field.
+If a setting conflicts with another, an asterisk (*) appears next to
+the conflicts.  You must fix conflicts before you use the adapter.
+(If you are not in the 'Change Configuration' window and you need
+to change the setting, return to the 'Set Configuration' window then
+select 'Change configuration'.)"
+

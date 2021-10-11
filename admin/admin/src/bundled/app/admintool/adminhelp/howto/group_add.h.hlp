@@ -1,0 +1,25 @@
+---- Add a Group -----------------------------------
+
+1. Select Groups from the Browse menu.
+
+2. Select Add from the Edit menu on the
+   Admintool:Groups main window.
+  
+   The Add Group window is displayed.
+
+3. Fill in the form:
+
+   A. Type the new group name in the Group Name text
+      box. 
+
+   B. Type the group ID for the new group in the
+      Group ID text box.
+
+   C. Type the user names to be included in this
+      group. 
+
+4. Click on OK.
+
+   The list of groups displayed in the
+   Admintool:Groups main window is updated to
+   include the new group. 

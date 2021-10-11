@@ -1,0 +1,25 @@
+class="win" name="ATKBD"
+	__wclass__="XINPUT"
+	__category__="keyboard"
+	__title__="AT keyboard"
+
+	layout="var,__layout__"
+	__layout__="string,1,1001,34,35,36,37,38,39,40,42,43,44,45,46,47,48,49,50"
+
+	__mapdir__="string,8859,8859,japan,8859,8859,8859,8859,8859,8859,8859,\
+8859,8859,8859,8859,korean,tchinese,japan,8859"
+	__mapfile__="string,en_US,en_US,j3100,fr_FR,da_DK,de_DE,it_IT,nl_NL,\
+no_NO,es_ES,sv_SE,fr_CH,de_CH,en_UK,ko_KR,zh_TW,ja_JP,fr_CA"
+
+	__locale__="string,US-English,US-English (Microsoft Natural keyboard),Japanese(J3100),French,Danish,German,\
+Italian,Dutch,Norwegian,Spanish,Swedish,Swiss-French,Swiss-German,\
+UK-English,Korean,Taiwanese,Japanese(106),French-Canadian"
+
+        type="string,101,101,101,101,101,101,101,101,101,101,101,101,101,\
+101,103,101,106,101"
+
+        ddxHandler="ddxSUNWatkbd.so.1"
+        ddxInitFunc="ATKbdProc"
+
+        dev="/dev/vt00"
+	;

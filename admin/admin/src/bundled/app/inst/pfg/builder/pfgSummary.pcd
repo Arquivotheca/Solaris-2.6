@@ -1,0 +1,193 @@
+Module: pfgSummary
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.2 / Solaris 2.4";
+      lastWritten = "Sun Jun 30 16:33:48 1996";
+      nodesUsed = "summary_dialog,\nscrolled_error_window";
+      copy = false;
+      inCreateMenu = true;
+        {
+          summary_dialog = baseWindow : pfgGUITemplates;
+          Group: Widget
+            initialFocus = continueButton;
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+            defaultButton = continueButton;
+          Group: Control
+            vip_x = 70;
+            vip_y = 85;
+              {
+                panelhelpText = XmText;
+                Group: Constraint
+                  topAttachment = attach_form;
+                  leftAttachment = attach_form;
+                  bottomAttachment = attach_none;
+                  rightAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                summaryForm = XmForm;
+                Group: Widget
+                  resizePolicy = resize_any;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  topAttachment = attach_widget;
+                  bottomAttachment = attach_widget;
+                  rightAttachment = attach_opposite_widget;
+                  resizable = true;
+                  topWidget = panelhelpText;
+                  bottomWidget = messageBox;
+                  leftOffset = 10;
+                  rightOffset = 10;
+                  rightWidget = panelhelpText;
+                    {
+                      profileLabel = XmLabel;
+                      Group: Widget
+                        alignment = alignment_beginning;
+                      Group: Constraint
+                        topAttachment = attach_form;
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                    }
+                    {
+                      summaryScrolledWindow = XmScrolledWindow;
+                      Group: Widget
+                        scrollingPolicy = automatic;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = profileLabel;
+                        bottomAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        resizable = true;
+                          {
+                            summaryLabel = XmLabel;
+                            Group: Widget
+                              alignment = alignment_beginning;
+                          }
+                    }
+              }
+              {
+                messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = continueButton;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_none;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                    {
+                      continueButton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: summaryContinueCB";
+                    }
+                    {
+                      changeButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: summaryChangeCB";
+                    }
+                    {
+                      exitButton : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgExit";
+                    }
+                    {
+                      helpButton : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"initial.t\")";
+                    }
+                    {
+                      button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+        {
+          scrolled_error_window = XmFormDialog;
+          Group: Widget
+            defaultButton = errorCancelbutton;
+            noResize = True;
+            initialFocus = messageBox;
+            kbdFocus = messageBox;
+            dialogStyle = dialog_primary_application_modal;
+          Group: Control
+            vipComment = "";
+            vip_x = 70;
+            vip_y = 30;
+            vip_show_name = true;
+              {
+                panelhelpText = panelhelpText;
+                Group: Widget
+                  nodeAccess = access_any;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_none;
+                  resizable = true;
+              }
+              {
+                scrolledText = XmScrolledText;
+                Group: Widget
+                  scrollHorizontal = False;
+                  height = 175;
+                  width = 500;
+                  editable = False;
+                  scrolledWindowMarginWidth = 18;
+                  cursorPositionVisible = False;
+                  wordWrap = True;
+                  editMode = multi_line_edit;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_widget;
+                  topWidget = panelhelpText;
+                  bottomAttachment = attach_none;
+                  resizable = False;
+              }
+              {
+                messageBox = messageBox : pfgGUITemplates;
+                Group: Widget
+                  defaultButton = errorCancelbutton;
+                  initialFocus = errorCancelbutton;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_widget;
+                  topWidget = scrolledText;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                    {
+                      errorOkbutton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:diskcheckerrorOkCB";
+                    }
+                    {
+                      errorCancelbutton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:diskcheckerrorCancelCB";
+                        showAsDefault = 1;
+                    }
+                    {
+                      button3 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      button4 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+}
+

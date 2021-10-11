@@ -1,0 +1,1396 @@
+	md proto
+	md proto\bootpart
+	md proto\bootpart\solaris
+	md proto\bootpart\solaris\drivers
+	md proto\bootpart\solaris\mca_adf
+	md proto\bootpart\solaris\devicedb
+exe2bin.c
+Object Modules [.obj]: /nologo exe2bin.obj 
+Run File [exe2bin.exe]: "exe2bin.exe" /noi
+List File [nul.map]: NUL
+Libraries [.lib]: 
+Definitions File [nul.def]: ;
+	makesub.bat lib all
+	cd tinyobj
+	NMAKE                all
+ Assembling: ..\src\ask_disk.s
+ Assembling: ..\src\ask_time.s
+ Assembling: ..\src\ask_page.s
+ Assembling: ..\src\clrscr_c.s
+ Assembling: ..\src\clrscrn.s
+ Assembling: ..\src\farbcopy.s
+ Assembling: ..\src\ll_shift.s
+ Assembling: ..\src\ls_shift.s
+ Assembling: ..\src\flush_kb.s
+ Assembling: ..\src\nwrd_key.s
+ Assembling: ..\src\pause_ms.s
+ Assembling: ..\src\putchar.s
+ Assembling: ..\src\rd_cursr.s
+ Assembling: ..\src\prtstr_p.s
+ Assembling: ..\src\readkey.s
+ Assembling: ..\src\rd_disk.s
+ Assembling: ..\src\prtstr_a.s
+ Assembling: ..\src\rs_shift.s
+ Assembling: ..\src\set_page.s
+ Assembling: ..\src\rsetdisk.s
+ Assembling: ..\src\st_cursr.s
+ Assembling: ..\src\rl_shift.s
+ Assembling: ..\src\ul_mul.s
+ Assembling: ..\src\us_div.s
+ Assembling: ..\src\waitkey.s
+ Assembling: ..\src\us_mod.s
+..\src\_ctype.c
+..\src\atoi.c
+..\src\atox.c
+..\src\bcopy.c
+..\src\itoa.c
+..\src\farbzero.c
+..\src\memset.c
+..\src\printf.c
+..\src\putstr.c
+..\src\strcspn.c
+..\src\strcpy.c
+..\src\strcmp.c
+..\src\strcat.c
+..\src\strlen.c
+..\src\strncmp.c
+..\src\strncat.c
+..\src\testpt.c
+..\src\strncpy.c
+..\src\xtoa.c
+	del tiny.lib
+	lib @tinylib.rsp
+
+Microsoft (R) Library Manager  Version 3.40
+Copyright (C) Microsoft Corp 1983-1993.  All rights reserved.
+
+Library name: tiny.lib +ask_page +ask_time +pause_ms +clrscrn +clrscr_c +farbcopy &
+Operations: 	+putchar +putstr +prtstr_p +prtstr_a +printf &
+Operations: 	+rd_cursr +set_page +st_cursr +bcopy &
+Operations: 	+rd_disk +rsetdisk +readkey +waitkey +nwrd_key +flush_kb & 
+Operations: 	+strcmp +strlen +strncpy +strcat +strncat +strncmp +strcspn +strcpy &
+Operations: 	+itoa +xtoa +memset +_ctype +atoi +atox &
+Operations: 	+rs_shift +rl_shift +ls_shift +ll_shift +us_div +us_mod +ul_mul &
+Operations: 	+testpt, tiny.lst
+
+	cd ..
+	cd smallobj
+	NMAKE                all
+ Assembling: ..\src\ask_disk.s
+ Assembling: ..\src\ask_time.s
+ Assembling: ..\src\ask_page.s
+ Assembling: ..\src\clrscr_c.s
+ Assembling: ..\src\clrscrn.s
+ Assembling: ..\src\farbcopy.s
+ Assembling: ..\src\ll_shift.s
+ Assembling: ..\src\ls_shift.s
+ Assembling: ..\src\flush_kb.s
+ Assembling: ..\src\nwrd_key.s
+ Assembling: ..\src\pause_ms.s
+ Assembling: ..\src\putchar.s
+ Assembling: ..\src\rd_cursr.s
+ Assembling: ..\src\prtstr_p.s
+ Assembling: ..\src\readkey.s
+ Assembling: ..\src\rd_disk.s
+ Assembling: ..\src\prtstr_a.s
+ Assembling: ..\src\rs_shift.s
+ Assembling: ..\src\set_page.s
+ Assembling: ..\src\rsetdisk.s
+ Assembling: ..\src\st_cursr.s
+ Assembling: ..\src\rl_shift.s
+ Assembling: ..\src\ul_mul.s
+ Assembling: ..\src\us_div.s
+ Assembling: ..\src\waitkey.s
+ Assembling: ..\src\us_mod.s
+..\src\_ctype.c
+..\src\atoi.c
+..\src\atox.c
+..\src\bcopy.c
+..\src\itoa.c
+..\src\farbzero.c
+..\src\memset.c
+..\src\printf.c
+..\src\putstr.c
+..\src\strcspn.c
+..\src\strcpy.c
+..\src\strcmp.c
+..\src\strcat.c
+..\src\strlen.c
+..\src\strncmp.c
+..\src\strncat.c
+..\src\testpt.c
+..\src\strncpy.c
+..\src\xtoa.c
+	del small.lib
+	lib @smalllib.rsp
+
+Microsoft (R) Library Manager  Version 3.40
+Copyright (C) Microsoft Corp 1983-1993.  All rights reserved.
+
+Library name: small.lib +ask_page +ask_time +pause_ms +clrscrn +clrscr_c +farbcopy &
+Operations: 	+putchar +putstr +prtstr_p +prtstr_a +printf &
+Operations: 	+rd_cursr +set_page +st_cursr +bcopy &
+Operations: 	+rd_disk +rsetdisk +readkey +waitkey +nwrd_key +flush_kb & 
+Operations: 	+strcmp +strlen +strncpy +strcat +strncat +strncmp +strcspn +strcpy &
+Operations: 	+itoa +xtoa +memset +_ctype +atoi +atox &
+Operations: 	+rs_shift +rl_shift +ls_shift +ll_shift +us_div +us_mod +ul_mul &
+Operations: 	+testpt, small.lst
+
+	cd ..
+	makesub.bat hd all
+	cd bootblk
+	NMAKE                all
+ Assembling: callboot.s
+bootblk.c
+reboot.c
+ix_alts.c
+devio.c
+ufs.c
+Object Modules [.obj]: /nologo /M /NOE callboot bootblk reboot ix_alts devio ufs 
+Run File [callboot.exe]: bootblk.exe
+List File [d:bootblk.map]: bootblk.map
+Libraries [.lib]: ..\..\lib\smallobj\small.lib slibce.lib;
+LINK : warning L4021: no stack segment
+	cd ..
+	cd mboot
+	NMAKE                all
+	ml /DFARDATA=1 /c /Cp /Cx /Fl /Sa /Zf /Zp1 /Sg /Tamboot.s
+ Assembling: mboot.s
+	link /M /NOD /nog /NOE /PACKC mboot, mboot.exe, mboot.map,,;
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+LINK : warning L4021: no stack segment
+	..\..\exe2bin -strip_to_entry mboot.exe mboot
+	cd ..
+	cd pboot
+	NMAKE                all
+	ml /DFARDATA= /c /Cp /Cx /Fl /Sa /Zf /Zd /Zi /Sg /Tapboot.s
+ Assembling: pboot.s
+	link /nologo /M /NOD /NOE /PACKC pboot, pboot.exe, pboot.map,,;
+LINK : warning L4021: no stack segment
+	..\..\exe2bin -strip_to_entry pboot.exe pboot
+	cd ..
+	makesub.bat fd all
+	cd mdboot
+	NMAKE                all
+	masm callmdb.s
+Microsoft (R) MASM Compatibility Driver
+Copyright (C) Microsoft Corp 1993.  All rights reserved.
+
+ Invoking: ML.EXE /I. /Zm /c /Ta callmdb.s 
+
+ Assembling: callmdb.s
+	cl /AT /Osgcel /c /X  /Gs /G2 /Fc /I..\..\inc /I..\..\inc\common /I..\..\inc\i86 mdboot.c
+mdboot.c
+mdboot.c(52) : warning C4103: '../../inc\bpb.h' : used #pragma pack to change alignment
+	ml /c /Cp /Cx /Fl /Sa  /Tamath.s
+ Assembling: math.s
+	link  /M /NOD /NOE /PACKC callmdb mdboot math, mdboot.exe, mdboot.map, ..\..\lib\tinyobj\tiny.lib,;
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+LINK : warning L4021: no stack segment
+	..\..\exe2bin -strip_to_entry mdboot.exe ..\..\proto\mdboot
+	cd ..
+	makesub.bat net all
+	cd loader
+	NMAKE                all
+	ml /c /nologo loader.s
+ Assembling: loader.s
+	link /nologo loader;
+LINK : warning L4021: no stack segment
+	cd ..
+	cd gluecode
+	NMAKE                all
+	cl /nologo /Fm /Fc /c /AS /Gs /G2 /X /DMSC60 gluecode.c
+gluecode.c
+	ml /c /nologo startup.s
+ Assembling: startup.s
+	link /nologo /M gluecode.obj+startup.obj,gluecode.exe;
+	cd ..
+	makesub.bat strap all
+	cl exe2bin.c
+exe2bin.c
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: exe2bin.obj 
+Run File [exe2bin.exe]: "exe2bin.exe" /noi
+List File [nul.map]: NUL
+Libraries [.lib]: 
+Definitions File [nul.def]: ;
+	cd lib
+	NMAKE all
+	ml /nologo /c /Cp /Cx /Fl /Sa /Sn /Zf /Zd /Zi /Sg ul_mul.s
+ Assembling: ul_mul.s
+	ml /nologo /c /Cp /Cx /Fl /Sa /Sn /Zf /Zd /Zi /Sg us_div.s
+ Assembling: us_div.s
+	ml /nologo /c /Cp /Cx /Fl /Sa /Sn /Zf /Zd /Zi /Sg us_mod.s
+ Assembling: us_mod.s
+	ml /nologo /c /Cp /Cx /Fl /Sa /Sn /Zf /Zd /Zi /Sg ll_shift.s
+ Assembling: ll_shift.s
+	ml /nologo /c /Cp /Cx /Fl /Sa /Sn /Zf /Zd /Zi /Sg int.s
+ Assembling: int.s
+	ml /nologo /c /Cp /Cx /Fl /Sa /Sn /Zf /Zd /Zi /Sg rl_shift.s
+ Assembling: rl_shift.s
+	del tinylib.lib
+	lib tinylib.lib +ul_mul.obj +us_div.obj +us_mod.obj +ll_shift.obj +rl_shift.obj +int.obj, tinylib.lst
+
+Microsoft (R) Library Manager  Version 3.40
+Copyright (C) Microsoft Corp 1983-1993.  All rights reserved.
+
+	cd ..
+	ml /nologo /c /Cp /Cx /Fl /Sa /Zf /Zd /Zi /Sg asm.s
+ Assembling: asm.s
+	cl /nologo /c /Zi /Od /AT /X /Fc /Gs /G2 /DNEW_CHARIO /DDEBUG /c strap.c
+strap.c
+	cl /nologo /c /Zi /Od /AT /X /Fc /Gs /G2 /DNEW_CHARIO /DDEBUG /c fat.c
+fat.c
+	cl /nologo /c /Zi /Od /AT /X /Fc /Gs /G2 /DNEW_CHARIO /DDEBUG /c bios.c
+bios.c
+	cl /nologo /c /Zi /Od /AT /X /Fc /Gs /G2 /DNEW_CHARIO /DDEBUG /c dos.c
+dos.c
+	cl /nologo /c /Zi /Od /AT /X /Fc /Gs /G2 /DNEW_CHARIO /DDEBUG /c util.c
+util.c
+	cl /nologo /c /Zi /Od /AT /X /Fc /Gs /G2 /DNEW_CHARIO /DDEBUG /c chario.c
+chario.c
+	link /NOLOGO /CO /M /NOI /NOD /PACKC @strap.lst
+Object Modules [.obj]: /NOLOGO /CO /M /NOI /NOD /PACKC asm strap bios fat dos util chario 
+Run File [asm.exe]: strap.exe
+List File [d:strap.map]: strap.map
+Libraries [.lib]: lib\tinylib.lib ;
+LINK : warning L4021: no stack segment
+	exe2bin -strip_to_entry strap
+	makesub.bat bootconf all
+	cl /nologo /AL -o makedeps.exe makedeps.c dir.c
+makedeps.c
+dir.c
+Object Modules [.obj]: /nologo makedeps.obj +
+Object Modules [.obj]: "dir.obj" 
+Run File [makedeps.exe]: "makedeps.exe" /noi
+List File [nul.map]: NUL
+Libraries [.lib]: 
+Definitions File [nul.def]: ;
+	del dir.obj
+	makedeps *.c
+	NMAKE -nologo -f makefile.do2 all
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c adv.c
+adv.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c befext.c
+befext.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c befinst.c
+befinst.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c bios.c
+bios.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c boards.c
+boards.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c boot.c
+boot.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c bop.c
+bop.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c bus.c
+bus.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c cfname.c
+cfname.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c config.c
+config.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c debug.c
+debug.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG -c devdb.c
+devdb.c
+	del ..\proto\bootpart\solaris\devicedb\config.db
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c eisa.c
+eisa.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c enum.c
+enum.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c eprintf.c
+eprintf.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c err.c
+err.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c escd.c
+escd.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c fprintf.c
+fprintf.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c gettext.c
+gettext.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c help.c
+help.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c isa1275.c
+isa1275.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c kbd.c
+kbd.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c main.c
+main.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c mca.c
+mca.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c menu.c
+menu.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c mount.c
+mount.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c names.c
+names.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c open.c
+open.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c parser.c
+parser.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c pci.c
+pci.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c pci1275.c
+pci1275.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c pciutil.c
+pciutil.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c pnp.c
+pnp.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c pnp1275.c
+pnp1275.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c pnpbios.c
+pnpbios.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c printf.c
+printf.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c probe.c
+probe.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c prop.c
+prop.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c resmgmt.c
+resmgmt.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c sprintf.c
+sprintf.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c tree.c
+tree.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c tty_in.c
+tty_in.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c tty_out.c
+tty_out.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c ur.c
+ur.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c version.c
+version.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c vfprintf.c
+vfprintf.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c vprintf.c
+vprintf.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c vsprintf.c
+vsprintf.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c biosprim.c
+biosprim.c
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c dir.c
+dir.c
+	ml /nologo /Zm /Cp /c pcibios.s
+ Assembling: pcibios.s
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG /c vgaprobe.c
+vgaprobe.c
+	set LINK=/seg:200
+	cl /nologo /AL /F 3000 /Fm /Gt0 /G2 /I..\common\include /DDEBUG -o bootconf.exe  adv.obj befext.obj befinst.obj bios.obj boards.obj boot.obj bop.obj bus.obj cfname.obj config.obj debug.obj devdb.obj eisa.obj enum.obj eprintf.obj err.obj escd.obj fprintf.obj gettext.obj help.obj isa1275.obj kbd.obj main.obj mca.obj menu.obj mount.obj names.obj open.obj parser.obj pci.obj pci1275.obj pciutil.obj pnp.obj pnp1275.obj pnpbios.obj printf.obj probe.obj prop.obj resmgmt.obj sprintf.obj tree.obj tty_in.obj tty_out.obj ur.obj version.obj vfprintf.obj vprintf.obj vsprintf.obj  biosprim.obj dir.obj pcibios.obj vgaprobe.obj 
+Object Modules [.obj]: /nologo adv.obj +
+Object Modules [.obj]: "befext.obj" +
+Object Modules [.obj]: "befinst.obj" +
+Object Modules [.obj]: "bios.obj" +
+Object Modules [.obj]: "boards.obj" +
+Object Modules [.obj]: "boot.obj" +
+Object Modules [.obj]: "bop.obj" +
+Object Modules [.obj]: "bus.obj" +
+Object Modules [.obj]: "cfname.obj" +
+Object Modules [.obj]: "config.obj" +
+Object Modules [.obj]: "debug.obj" +
+Object Modules [.obj]: "devdb.obj" +
+Object Modules [.obj]: "eisa.obj" +
+Object Modules [.obj]: "enum.obj" +
+Object Modules [.obj]: "eprintf.obj" +
+Object Modules [.obj]: "err.obj" +
+Object Modules [.obj]: "escd.obj" +
+Object Modules [.obj]: "fprintf.obj" +
+Object Modules [.obj]: "gettext.obj" +
+Object Modules [.obj]: "help.obj" +
+Object Modules [.obj]: "isa1275.obj" +
+Object Modules [.obj]: "kbd.obj" +
+Object Modules [.obj]: "main.obj" +
+Object Modules [.obj]: "mca.obj" +
+Object Modules [.obj]: "menu.obj" +
+Object Modules [.obj]: "mount.obj" +
+Object Modules [.obj]: "names.obj" +
+Object Modules [.obj]: "open.obj" +
+Object Modules [.obj]: "parser.obj" +
+Object Modules [.obj]: "pci.obj" +
+Object Modules [.obj]: "pci1275.obj" +
+Object Modules [.obj]: "pciutil.obj" +
+Object Modules [.obj]: "pnp.obj" +
+Object Modules [.obj]: "pnp1275.obj" +
+Object Modules [.obj]: "pnpbios.obj" +
+Object Modules [.obj]: "printf.obj" +
+Object Modules [.obj]: "probe.obj" +
+Object Modules [.obj]: "prop.obj" +
+Object Modules [.obj]: "resmgmt.obj" +
+Object Modules [.obj]: "sprintf.obj" +
+Object Modules [.obj]: "tree.obj" +
+Object Modules [.obj]: "tty_in.obj" +
+Object Modules [.obj]: "tty_out.obj" +
+Object Modules [.obj]: "ur.obj" +
+Object Modules [.obj]: "version.obj" +
+Object Modules [.obj]: "vfprintf.obj" +
+Object Modules [.obj]: "vprintf.obj" +
+Object Modules [.obj]: "vsprintf.obj" +
+Object Modules [.obj]: "biosprim.obj" +
+Object Modules [.obj]: "dir.obj" +
+Object Modules [.obj]: "pcibios.obj" +
+Object Modules [.obj]: "vgaprobe.obj" 
+Run File [adv.exe]: "bootconf.exe" /noi /STACK:0x3000
+List File [nul.map]: "bootconf.map" /m
+Libraries [.lib]: 
+Definitions File [nul.def]: ;
+
+DOSXNT : warning DX4020: out of file handles. Increase value of FILES=
+         statement in CONFIG.SYS
+
+DOSXNT : warning DX4020: out of file handles. Increase value of FILES=
+         statement in CONFIG.SYS
+
+DOSXNT : warning DX4020: out of file handles. Increase value of FILES=
+         statement in CONFIG.SYS
+
+DOSXNT : warning DX4020: out of file handles. Increase value of FILES=
+         statement in CONFIG.SYS
+
+DOSXNT : warning DX4020: out of file handles. Increase value of FILES=
+         statement in CONFIG.SYS
+
+DOSXNT : warning DX4020: out of file handles. Increase value of FILES=
+         statement in CONFIG.SYS
+
+DOSXNT : warning DX4020: out of file handles. Increase value of FILES=
+         statement in CONFIG.SYS
+
+DOSXNT : warning DX4020: out of file handles. Increase value of FILES=
+         statement in CONFIG.SYS
+
+DOSXNT : warning DX4020: out of file handles. Increase value of FILES=
+         statement in CONFIG.SYS
+
+DOSXNT : warning DX4020: out of file handles. Increase value of FILES=
+         statement in CONFIG.SYS
+
+DOSXNT : warning DX4020: out of file handles. Increase value of FILES=
+         statement in CONFIG.SYS
+
+DOSXNT : warning DX4020: out of file handles. Increase value of FILES=
+         statement in CONFIG.SYS
+
+DOSXNT : warning DX4020: out of file handles. Increase value of FILES=
+         statement in CONFIG.SYS
+	del escd.rf
+	makesub.bat extbios all
+	cd common
+	NMAKE                all
+	ml /Cp /Cx /nologo /c /Fl /Sa /Talow.s
+ Assembling: low.s
+	ml /Cp /Cx /nologo /c /Fl /Sa /Tautil.s
+ Assembling: util.s
+	ml /Cp /Cx /nologo /c /Fl /Sa /Takbchar.s
+ Assembling: kbchar.s
+	ml /Cp /Cx /nologo /c /Fl /Sa /Tasetup.s
+ Assembling: setup.s
+	ml /Cp /Cx /nologo /c /Fl /Sa /Ta__ntohs.s
+ Assembling: __ntohs.s
+	ml /Cp /Cx /nologo /c /Fl /Sa /DFARCODE=0 /Dmodel=SMALL /Taget_conf.s
+ Assembling: get_conf.s
+	ml /Cp /Cx /nologo /c /Fl /Sa /DFARCODE=0 /Dmodel=SMALL /Tapciconf.s
+ Assembling: pciconf.s
+	cl /Fc /nologo /c /AS /Gs /G2 /X /I..\cassist\common\include /I..\..\common\include iutil.c
+iutil.c
+	cl /Fc /nologo /c /AS /Gs /G2 /X /I..\cassist\common\include /I..\..\common\include is_eisa.c
+is_eisa.c
+	cl /Fc /nologo /c /AS /Gs /G2 /X /I..\cassist\common\include /I..\..\common\include is_mc.c
+is_mc.c
+	cl /Fc /nologo /c /AS /Gs /G2 /X /I..\cassist\common\include /I..\..\common\include putnum.c
+putnum.c
+	cl /Fc /nologo /c /AS /Gs /G2 /X /I..\cassist\common\include /I..\..\common\include setvect.c
+setvect.c
+	cd ..
+	cd cassist
+	NMAKE                all
+	cd .\common\lib
+	NMAKE /NOLOGO
+	ml /c /nologo /Sn /Zm crt0.s
+ Assembling: crt0.s
+	erase oldnames.lib
+	LIB /NOLOGO @nul oldnames.lib crt0, nul
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include fprintf.c
+fprintf.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include fsprintf.c
+fsprintf.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include ldiv.c
+ldiv.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include memcmp.c
+memcmp.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include memcpy.c
+memcpy.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include memset.c
+memset.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include printf.c
+printf.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include putc.c
+putc.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include qsort.c
+qsort.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include rand.c
+rand.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include strchr.c
+strchr.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include strcmp.c
+strcmp.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include strcpy.c
+strcpy.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include strlen.c
+strlen.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include strncpy.c
+strncpy.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include vfprintf.c
+vfprintf.c
+	ml /c /nologo /Sn /Zm ll_shift.s
+ Assembling: ll_shift.s
+	ml /c /nologo /Sn /Zm us_div.s
+ Assembling: us_div.s
+	ml /c /nologo /Sn /Zm us_mod.s
+ Assembling: us_mod.s
+	ml /c /nologo /Sn /Zm ul_mul.s
+ Assembling: ul_mul.s
+	ml /c /nologo /Sn /Zm int86.s
+ Assembling: int86.s
+	erase slibce.lib
+	LIB /NOLOGO @clib.rsp
+
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include callback.c
+callback.c
+	ml /c /nologo /Sn /Zm ..\..\..\..\common\lib\biostype.s
+ Assembling: ..\..\..\..\common\lib\biostype.s
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include delay.c
+delay.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include ..\..\..\..\common\lib\names.c
+..\..\..\..\common\lib\names.c
+	cl /c /O /Gs /nologo -I..\include -I..\..\..\..\common\include peek.c
+peek.c
+	erase common.lib
+	LIB /NOLOGO @nul common.lib callback+biostype+delay+names+peek, nul
+	cd ..\..\.
+	cl /c /O /Gs /G2 /nologo -I.\common\include -I..\..\common\include -Ic:\c700\include com.c
+com.c
+	link /NOLOGO /M /PACKC /NOD /NOE @link.dat
+Object Modules [.obj]: /NOLOGO /M /PACKC /NOD /NOE   .\common\lib\crt0.obj com.obj,
+Run File [crt0.exe]: 		com.bef,
+List File [d:com.map]: 		com.map,
+Libraries [.lib]: 		.\common\lib\common + .\common\lib\slibce + .\common\lib\oldnames
+Definitions File [nul.def]: 
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	cl /c /O /Gs /G2 /nologo -I.\common\include -I..\..\common\include -Ic:\c700\include fdc.c
+fdc.c
+	link /NOLOGO /M /PACKC /NOD /NOE @link.dat
+Object Modules [.obj]: /NOLOGO /M /PACKC /NOD /NOE   .\common\lib\crt0.obj fdc.obj,
+Run File [crt0.exe]: 		fdc.bef,
+List File [d:fdc.map]: 		fdc.map,
+Libraries [.lib]: 		.\common\lib\common + .\common\lib\slibce + .\common\lib\oldnames
+Definitions File [nul.def]: 
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	cl /c /O /Gs /G2 /nologo -I.\common\include -I..\..\common\include -Ic:\c700\include key.c
+key.c
+	link /NOLOGO /M /PACKC /NOD /NOE @link.dat
+Object Modules [.obj]: /NOLOGO /M /PACKC /NOD /NOE   .\common\lib\crt0.obj key.obj,
+Run File [crt0.exe]: 		key.bef,
+List File [d:key.map]: 		key.map,
+Libraries [.lib]: 		.\common\lib\common + .\common\lib\slibce + .\common\lib\oldnames
+Definitions File [nul.def]: 
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	cl /c /O /Gs /G2 /nologo -I.\common\include -I..\..\common\include -Ic:\c700\include logi.c
+logi.c
+	link /NOLOGO /M /PACKC /NOD /NOE @link.dat
+Object Modules [.obj]: /NOLOGO /M /PACKC /NOD /NOE   .\common\lib\crt0.obj logi.obj,
+Run File [crt0.exe]: 		logi.bef,
+List File [d:logi.map]: 		logi.map,
+Libraries [.lib]: 		.\common\lib\common + .\common\lib\slibce + .\common\lib\oldnames
+Definitions File [nul.def]: 
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	cl /c /O /Gs /G2 /nologo -I.\common\include -I..\..\common\include -Ic:\c700\include lpt.c
+lpt.c
+	link /NOLOGO /M /PACKC /NOD /NOE @link.dat
+Object Modules [.obj]: /NOLOGO /M /PACKC /NOD /NOE   .\common\lib\crt0.obj lpt.obj,
+Run File [crt0.exe]: 		lpt.bef,
+List File [d:lpt.map]: 		lpt.map,
+Libraries [.lib]: 		.\common\lib\common + .\common\lib\slibce + .\common\lib\oldnames
+Definitions File [nul.def]: 
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	cl /c /O /Gs /G2 /nologo -I.\common\include -I..\..\common\include -Ic:\c700\include msm.c
+msm.c
+	link /NOLOGO /M /PACKC /NOD /NOE @link.dat
+Object Modules [.obj]: /NOLOGO /M /PACKC /NOD /NOE   .\common\lib\crt0.obj msm.obj,
+Run File [crt0.exe]: 		msm.bef,
+List File [d:msm.map]: 		msm.map,
+Libraries [.lib]: 		.\common\lib\common + .\common\lib\slibce + .\common\lib\oldnames
+Definitions File [nul.def]: 
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	cl /c /O /Gs /G2 /nologo -I.\common\include -I..\..\common\include -Ic:\c700\include nop.c
+nop.c
+	link /NOLOGO /M /PACKC /NOD /NOE @link.dat
+Object Modules [.obj]: /NOLOGO /M /PACKC /NOD /NOE   .\common\lib\crt0.obj nop.obj,
+Run File [crt0.exe]: 		nop.bef,
+List File [d:nop.map]: 		nop.map,
+Libraries [.lib]: 		.\common\lib\common + .\common\lib\slibce + .\common\lib\oldnames
+Definitions File [nul.def]: 
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	cl /c /O /Gs /G2 /nologo -I.\common\include -I..\..\common\include -Ic:\c700\include ps2ms.c
+ps2ms.c
+	link /NOLOGO /M /PACKC /NOD /NOE @link.dat
+Object Modules [.obj]: /NOLOGO /M /PACKC /NOD /NOE   .\common\lib\crt0.obj ps2ms.obj,
+Run File [crt0.exe]: 		ps2ms.bef,
+List File [d:ps2ms.map]: 		ps2ms.map,
+Libraries [.lib]: 		.\common\lib\common + .\common\lib\slibce + .\common\lib\oldnames
+Definitions File [nul.def]: 
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	cl /c /O /Gs /G2 /nologo -I.\common\include -I..\..\common\include -Ic:\c700\include sbpro.c
+sbpro.c
+	link /NOLOGO /M /PACKC /NOD /NOE @link.dat
+Object Modules [.obj]: /NOLOGO /M /PACKC /NOD /NOE   .\common\lib\crt0.obj sbpro.obj,
+Run File [crt0.exe]: 		sbpro.bef,
+List File [d:sbpro.map]: 		sbpro.map,
+Libraries [.lib]: 		.\common\lib\common + .\common\lib\slibce + .\common\lib\oldnames
+Definitions File [nul.def]: 
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	cl /c /O /Gs /G2 /nologo -I.\common\include -I..\..\common\include -Ic:\c700\include joyst.c
+joyst.c
+	link /NOLOGO /M /PACKC /NOD /NOE @link.dat
+Object Modules [.obj]: /NOLOGO /M /PACKC /NOD /NOE   .\common\lib\crt0.obj joyst.obj,
+Run File [crt0.exe]: 		joyst.bef,
+List File [d:joyst.map]: 		joyst.map,
+Libraries [.lib]: 		.\common\lib\common + .\common\lib\slibce + .\common\lib\oldnames
+Definitions File [nul.def]: 
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	cd ..
+	cd network
+	NMAKE                all
+	masm dssubs.s
+Microsoft (R) MASM Compatibility Driver
+Copyright (C) Microsoft Corp 1993.  All rights reserved.
+
+ Invoking: ML.EXE /I. /Zm /c /Ta dssubs.s 
+
+ Assembling: dssubs.s
+	cl /Fm /Fc /c /AS /Gs /G2 /X /I..\common /I..\..\inc /I..\..\common\include /I..\cassist\common\include network.c
+network.c
+	cd ..
+	cd onepiece
+	NMAKE                all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60  /I..\..\inc\i86  /I..\..\inc  /I..\common  /I..\..\common\include  /I..\cassist\common\include rplagent.c
+rplagent.c
+../common\types.h(22) : warning C4142: benign redefinition of type
+	makesub.bat el all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /Oi /DMSC60 /DBEF /I..\..\..\common\include /I..\..\common /I..\..\..\inc el.c
+el.c
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\kbchar.obj  ..\..\common\putnum.obj  ..\rplagent.obj   ..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\..\common\iutil.obj  el.obj  ..\..\common\__ntohs.obj  ..\..\common\setvect.obj  ..\..\network\network.obj
+Run File [crt0.exe]: el.bef,
+List File [d:el.map]: el.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat elx all
+	masm eisa_slo.s
+Microsoft (R) MASM Compatibility Driver
+Copyright (C) Microsoft Corp 1993.  All rights reserved.
+
+ Invoking: ML.EXE /I. /Zm /c /Ta eisa_slo.s 
+
+ Assembling: eisa_slo.s
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60 /DBEF /I..\..\cassist\common\include /I..\..\..\inc\common /I..\..\..\inc\i86 /I..\..\..\common\include /I..\..\common -I..\..\..\inc elxmedia.c
+elxmedia.c
+	masm repio.s
+Microsoft (R) MASM Compatibility Driver
+Copyright (C) Microsoft Corp 1993.  All rights reserved.
+
+ Invoking: ML.EXE /I. /Zm /c /Ta repio.s 
+
+ Assembling: repio.s
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60 /DBEF is_eisa.c
+is_eisa.c
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X is_mc.c
+is_mc.c
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X ntohs.c
+ntohs.c
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60 /DBEF /I..\..\cassist\common\include /I..\..\..\inc\common /I..\..\..\inc\i86 /I..\..\..\common\include /I..\..\common -I..\..\..\inc elx.c
+elx.c
+	link /nologo /M @link.dat
+Object Modules [.obj]: /nologo /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\putnum.obj ..\..\common\kbchar.obj  ..\rplagent.obj  eisa_slo.obj  elxmedia.obj  repio.obj+
+Object Modules [.obj]: is_eisa.obj  is_mc.obj  ntohs.obj  ..\..\common\get_conf.obj  ..\..\common\iutil.obj  ..\..\common\pciconf.obj  elx.obj  ..\..\network\network.obj
+Run File [crt0.exe]: elx.bef,
+List File [d:elx.map]: elx.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat smc all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X is_mc.c
+is_mc.c
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60 /DBEF  /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\..\inc  /I..\..\common smc.c
+smc.c
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X board_id.c
+board_id.c
+	link /nologo /M @link.dat
+Object Modules [.obj]: /nologo /M ..\..\cassist\common\lib\crt0.obj  ..\..\network\network.obj  ..\..\network\dssubs.obj  ..\..\common\low.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\rplagent.obj  is_mc.obj+
+Object Modules [.obj]: ..\..\common\get_conf.obj  ..\..\common\iutil.obj  smc.obj  board_id.obj  ..\..\common\__ntohs.obj  ..\..\common\setvect.obj
+Run File [crt0.exe]: smc.bef,
+List File [d:smc.map]: smc.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat tr all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60  /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\..\inc  /I..\..\common  /I.. tr.c
+tr.c
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60  /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\..\inc  /I..\..\common  /I.. tr_sr.c
+tr_sr.c
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\kbchar.obj  ..\..\common\putnum.obj  ..\rplagent.obj  ..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\..\common\is_mc.obj  ..\..\common\is_eisa.obj  ..\..\common\iutil.obj  tr.obj  tr_sr.obj  ..\..\common\__ntohs.obj  ..\..\common\setvect.obj  ..\..\network\network.obj
+Run File [crt0.exe]: tr.bef,
+List File [d:tr.map]: tr.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat smce all
+	cl /nologo /O /Fm /Fc /c /AS /Gs /G0 /X /DMSC60   /I..\..\..\common\include  /I..\..\cassist\common\include  /I..\..\common  /I..\..\..\inc  /I..\..\..\inc\common  /I..\..\..\inc\i86 smce.c
+smce.c
+	cl /nologo /O /Fm /Fc /c /AS /Gs /G0 /X /DMSC60   /I..\..\..\common\include  /I..\..\cassist\common\include  /I..\..\common  /I..\..\..\inc  /I..\..\..\inc\common  /I..\..\..\inc\i86 lm.c
+lm.c
+	masm repio.s
+Microsoft (R) MASM Compatibility Driver
+Copyright (C) Microsoft Corp 1993.  All rights reserved.
+
+ Invoking: ML.EXE /I. /Zm /c /Ta repio.s 
+
+ Assembling: repio.s
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\kbchar.obj  ..\rplagent.obj  ..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\..\common\is_mc.obj  ..\..\common\is_eisa.obj  ..\..\common\iutil.obj  ..\..\common\putnum.obj  smce.obj  lm.obj  repio.obj  ..\..\common\__ntohs.obj  ..\..\common\setvect.obj  ..\..\network\network.obj
+Run File [crt0.exe]: smce.bef,
+List File [d:smce.map]: smce.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat iee all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60  /I..\..\..\common\include  /I..\..\cassist\common\include  /I..\..\common  /I..\..\..\inc  /I.. iee.c
+iee.c
+	ml /Cp /Cx /nologo /c /Fl /Sa /Taspl.s
+ Assembling: spl.s
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\kbchar.obj  ..\..\common\putnum.obj  ..\rplagent.obj  ..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\..\common\is_mc.obj  ..\..\common\is_eisa.obj  ..\..\common\iutil.obj  iee.obj  spl.obj  ..\..\common\__ntohs.obj  ..\..\common\setvect.obj  ..\..\network\network.obj
+Run File [crt0.exe]: iee.bef,
+List File [d:iee.map]: iee.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat elink all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60 /I..\..\..\inc /I..\..\..\common\include /I..\..\common /I.. /I..\..\cassist\common\include elink.c
+elink.c
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\kbchar.obj  ..\..\common\putnum.obj  ..\rplagent.obj  ..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\..\common\is_mc.obj  ..\..\common\is_eisa.obj  ..\..\common\iutil.obj  elink.obj  ..\..\common\__ntohs.obj  ..\..\common\setvect.obj  ..\..\network\network.obj
+Run File [crt0.exe]: elink.bef,
+List File [d:elink.map]: elink.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat ieef all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60 /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\..\inc  /I..\..\common  /I.. ieef.c
+ieef.c
+../../common\types.h(22) : warning C4142: benign redefinition of type
+	ml  /Taspl.s
+ Assembling: spl.s
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+LINK : warning L4017: /r : unrecognized option name; option ignored
+Object Modules [.obj]: /r spl.obj 
+Run File [spl.exe]: "spl.exe"
+List File [nul.map]: NUL
+Libraries [.lib]: 
+Definitions File [nul.def]: 
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\pciconf.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\kbchar.obj  ..\..\common\putnum.obj  ..\rplagent.obj  ..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\..\common\is_mc.obj  ..\..\common\is_eisa.obj  ..\..\common\iutil.obj  ieef.obj  spl.obj  ..\..\common\__ntohs.obj  ..\..\common\setvect.obj  ..\..\network\network.obj
+Run File [crt0.exe]: ieef.bef,
+List File [d:ieef.map]: ieef.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat eepro all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60 /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\..\inc  /I..\..\common  /I.. eepro.c
+eepro.c
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\kbchar.obj  ..\rplagent.obj  ..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\..\common\is_mc.obj  ..\..\common\is_eisa.obj  ..\..\common\iutil.obj  eepro.obj  ..\..\common\__ntohs.obj  ..\..\common\setvect.obj  ..\..\network\network.obj
+Run File [crt0.exe]: eepro.bef,
+List File [d:eepro.map]: eepro.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat nei all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60 /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\common  /I..\..\..\inc\common  /I..\..\..\inc  /I.. nei.c
+nei.c
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\kbchar.obj  ..\..\common\putnum.obj  ..\rplagent.obj  ..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\..\common\is_mc.obj  ..\..\common\is_eisa.obj  ..\..\common\iutil.obj  nei.obj ..\..\common\__ntohs.obj  ..\..\common\setvect.obj  ..\..\network\network.obj
+Run File [crt0.exe]: nei.bef,
+List File [d:nei.map]: nei.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat dnet all
+	cl /O /Fm /Fc /c /AS /Gs /G3 /X /DMSC60 /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\..\inc  /I..\..\common  /I..\..\..\inc\common  /I..\..\..\inc\i86  /I.. dnet.c
+dnet.c
+dnetpm.c(23) : warning C4068: unknown pragma
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\pciconf.obj  ..\..\common\kbchar.obj  ..\rplagent.obj  ..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\..\common\is_mc.obj  ..\..\common\is_eisa.obj  ..\..\common\iutil.obj  dnet.obj ..\..\common\__ntohs.obj  ..\..\common\setvect.obj  ..\..\network\network.obj
+Run File [crt0.exe]: dnet.bef,
+List File [d:dnet.map]: dnet.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat nee all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60 /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\..\inc  /I..\..\common  /I.. nee.c
+nee.c
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60 /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\..\inc  /I..\..\common  /I.. neefcode.c
+neefcode.c
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\kbchar.obj  ..\..\common\putnum.obj  ..\rplagent.obj  ..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\..\common\is_mc.obj  ..\..\common\is_eisa.obj  ..\..\common\iutil.obj  nee.obj neefcode.obj ..\..\common\__ntohs.obj  ..\..\common\setvect.obj  ..\..\network\network.obj
+Run File [crt0.exe]: nee.bef,
+List File [d:nee.map]: nee.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat nfe all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60 /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\..\inc  /I..\..\common  /I.. nfe.c
+nfe.c
+../../common\types.h(22) : warning C4142: benign redefinition of type
+nfe.c(21) : warning C4103: 'nfe.h' : used #pragma pack to change alignment
+nfe.c(282) : warning C4049: '=' : indirection to different types
+nfe.c(287) : warning C4049: '=' : indirection to different types
+nfe.c(401) : warning C4049: '=' : indirection to different types
+nfe.c(417) : warning C4049: '=' : indirection to different types
+nfe.c(431) : warning C4090: '=' : different const or volatile qualifiers
+nfe.c(432) : warning C4049: '=' : indirection to different types
+nfe.c(451) : warning C4049: '=' : indirection to different types
+nfe.c(462) : warning C4049: '=' : indirection to different types
+nfe.c(496) : warning C4090: '=' : different const or volatile qualifiers
+nfe.c(515) : warning C4090: '=' : different const or volatile qualifiers
+nfe.c(522) : warning C4090: '=' : different const or volatile qualifiers
+nfe.c(611) : warning C4090: '=' : different const or volatile qualifiers
+nfe.c(628) : warning C4090: '=' : different const or volatile qualifiers
+nfe.c(649) : warning C4090: '=' : different const or volatile qualifiers
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\kbchar.obj  ..\..\common\putnum.obj  ..\rplagent.obj  ..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\..\common\is_mc.obj  ..\..\common\is_eisa.obj  ..\..\common\iutil.obj  nfe.obj  ..\..\common\__ntohs.obj  ..\..\common\setvect.obj  ..\..\network\network.obj
+Run File [crt0.exe]: nfe.bef,
+List File [d:nfe.map]: nfe.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat pcn all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60 /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\..\inc   /I..\..\common  /I.. pcn.c
+pcn.c
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\kbchar.obj  ..\..\common\putnum.obj  ..\rplagent.obj  ..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\..\common\is_mc.obj  ..\..\common\is_eisa.obj  ..\..\common\pciconf.obj  ..\..\common\iutil.obj  pcn.obj  ..\..\common\__ntohs.obj  ..\..\common\setvect.obj  ..\..\network\network.obj
+Run File [crt0.exe]: pcn.bef,
+List File [d:pcn.map]: pcn.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat riles all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60 /I..\..\cassist\common\include  /I..\..\common  /I..\..\..\common\include  /I..\..\..\inc\common  /I..\..\..\inc  /I.. riles.c
+riles.c
+riles.h(20) : warning C4142: benign redefinition of type
+	ml /I. /Zm /c /Cx eisanvm.asm
+ Assembling: eisanvm.asm
+	link /M  @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\rplagent.obj  ..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\..\common\is_mc.obj  ..\..\common\is_eisa.obj  ..\..\common\iutil.obj  riles.obj  eisanvm.obj  ..\..\common\__ntohs.obj  ..\..\common\setvect.obj  ..\..\network\network.obj
+Run File [crt0.exe]: riles.bef,
+List File [d:riles.map]: riles.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat smcf all
+	cl /nologo /O /Fm /Fc /c /Asnw /Gs /G2 /X /DMSC60  /DFARDATA /DREALMODE /DLM9232 /DETHERNET /I..\..\..\inc\common  /I..\..\..\inc\i86  /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\..\inc  /I..\..\common  /I..\smcg smcf.c
+smcf.c
+../smcg/smcgrm.c(122) : warning C4762: near/far mismatch in argument : conversion supplied
+../smcg/smcgrm.c(122) : warning C4762: near/far mismatch in argument : conversion supplied
+../smcg/smcgrm.c(122) : warning C4762: near/far mismatch in argument : conversion supplied
+../smcg/smcgrm.c(122) : warning C4762: near/far mismatch in argument : conversion supplied
+	cl /nologo /O /Fm /Fc /c /Asnw /Gs /G2 /X /DMSC60  /DFARDATA /DREALMODE /DLM9232 /DETHERNET /I..\..\..\inc\common  /I..\..\..\inc\i86  /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\..\inc  /I..\..\common  /I..\smcg 9232.c
+9232.c
+	cl /nologo /O /Fm /Fc /c /Asnw /Gs /G2 /X /DMSC60  /DFARDATA /DREALMODE /DLM9232 /DETHERNET /I..\..\..\inc\common  /I..\..\..\inc\i86  /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\..\inc  /I..\..\common  /I..\smcg lft9232.c
+lft9232.c
+	cl /nologo /O /Fm /Fc /c /Asnw /Gs /G2 /X /DMSC60  /DFARDATA /DREALMODE /DLM9232 /DETHERNET /I..\..\..\inc\common  /I..\..\..\inc\i86  /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\..\inc  /I..\..\common  /I..\smcg lft_cfg.c
+lft_cfg.c
+	masm ..\smcg\repio.s
+Microsoft (R) MASM Compatibility Driver
+Copyright (C) Microsoft Corp 1993.  All rights reserved.
+
+ Invoking: ML.EXE /I. /Zm /c /Ta ..\smcg\repio.s 
+
+ Assembling: ..\smcg\repio.s
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\kbchar.obj  ..\rplagent.obj  ..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\..\common\is_mc.obj  ..\..\common\is_eisa.obj  ..\..\common\iutil.obj  smcf.obj  9232.obj  lft9232.obj  lft_cfg.obj  repio.obj  ..\..\common\__ntohs.obj  ..\..\common\setvect.obj  ..\..\network\network.obj
+Run File [crt0.exe]: smcf.bef,
+List File [d:smcf.map]: smcf.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat smceu all
+	cl /nologo /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60  /DFARDATA /DREALMODE /DEBM /I..\..\..\inc\common  /I..\..\..\inc\i86  /I..\..\cassist\common\include  /I..\..\common  /I..\..\..\common\include  /I..\..\..\inc smceu.c
+smceu.c
+	cl /nologo /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60  /DFARDATA /DREALMODE /DEBM /I..\..\..\inc\common  /I..\..\..\inc\i86  /I..\..\cassist\common\include  /I..\..\common  /I..\..\..\common\include  /I..\..\..\inc 8232.c
+8232.c
+	cl /nologo /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60  /DFARDATA /DREALMODE /DEBM /I..\..\..\inc\common  /I..\..\..\inc\i86  /I..\..\cassist\common\include  /I..\..\common  /I..\..\..\common\include  /I..\..\..\inc lebm.c
+lebm.c
+	cl /nologo /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60  /DFARDATA /DREALMODE /DEBM /I..\..\..\inc\common  /I..\..\..\inc\i86  /I..\..\cassist\common\include  /I..\..\common  /I..\..\..\common\include  /I..\..\..\inc smceucfg.c
+smceucfg.c
+	masm ..\smcg\repio.s
+Microsoft (R) MASM Compatibility Driver
+Copyright (C) Microsoft Corp 1993.  All rights reserved.
+
+ Invoking: ML.EXE /I. /Zm /c /Ta ..\smcg\repio.s 
+
+ Assembling: ..\smcg\repio.s
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\network\dssubs.obj  ..\..\common\util.obj  ..\..\common\kbchar.obj  ..\..\common\putnum.obj  ..\rplagent.obj  ..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\..\common\is_mc.obj  ..\..\common\is_eisa.obj  ..\..\common\iutil.obj  smceu.obj  8232.obj  lebm.obj  smceucfg.obj  repio.obj  ..\..\common\__ntohs.obj  ..\..\common\setvect.obj  ..\..\network\network.obj
+Run File [crt0.exe]: smceu.bef,
+List File [d:smceu.map]: smceu.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat pe all
+	cd ddk6s
+	NMAKE                -f msc.mk all
+	mkdir objs
+	cd host\ppc
+	NMAKE                -f msc.mk all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X -I..\..\include -I.. -DDOS -Dinportb=inb -Doutportb=outb pp.c
+pp.c
+pga.c(268) : warning C4033: 'Setup_Delay' must return a value
+	copy pp.obj ..\..\objs
+        1 file(s) copied
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X -I..\..\include -I.. -DDOS -Dinportb=inb -Doutportb=outb unixglue.c
+unixglue.c
+unixglue.c(28) : warning C4049: '=' : indirection to different types
+	copy unixglue.obj ..\..\objs
+        1 file(s) copied
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X -I..\..\include -I.. -DDOS -Dinportb=inb -Doutportb=outb epp.c
+epp.c
+	copy epp.obj ..\..\objs
+        1 file(s) copied
+	cd ..\..
+	cd media\pe2
+	NMAKE                -f msc.mk all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X -I..\..\include -I.. -DDOS -Dinportb=inb -Doutportb=outb pe2.c
+pe2.c
+pe2.c(63) : warning C4005: 'ADAPTER_NAME' : macro redefinition
+../8390/eth.c(1107) : warning C4049: '=' : indirection to different types
+	copy pe2.obj ..\..\objs
+        1 file(s) copied
+	cd ..\..
+	cd media\pe3
+	NMAKE                -f msc.mk all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X -I..\..\include -I.. -DDOS -Dinportb=inb -Doutportb=outb pe3.c
+pe3.c
+compaq.c(9) : warning C4005: 'CPQ_READ_ENB' : macro redefinition
+../nice/eth.c(947) : warning C4049: '=' : indirection to different types
+	copy pe3.obj ..\..\objs
+        1 file(s) copied
+	cd ..\..
+	cd ..
+	cd pe3
+	NMAKE                all
+	cl /O /Fm /Fc /c /AS /Gs /G2 /X /DMSC60 /I..\..\..\cassist\common\include  /I..\..\..\..\common\include  /I..\..\..\..\inc  /I..\..\..\common  /I..\..  /I.. pe3.c
+pe3.c
+	link /M @link.dat,,,,,
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\..\cassist\common\lib\crt0.obj  ..\..\..\common\low.obj  ..\..\..\network\dssubs.obj  ..\..\..\common\util.obj  ..\..\..\common\kbchar.obj  ..\..\..\common\putnum.obj  ..\..\rplagent.obj  ..\..\..\common\get_conf.obj+
+Object Modules [.obj]: ..\ddk6s\objs\pe3.obj  ..\ddk6s\objs\pp.obj  ..\ddk6s\objs\epp.obj  ..\ddk6s\objs\unixglue.obj  pe3.obj+
+Object Modules [.obj]: ..\..\..\common\is_mc.obj  ..\..\..\common\is_eisa.obj  ..\..\..\common\iutil.obj+
+Object Modules [.obj]: ..\..\..\common\__ntohs.obj  ..\..\..\common\setvect.obj  ..\..\..\network\network.obj
+Run File [crt0.exe]: pe3.bef,
+List File [d:pe3.map]: pe3.map,
+Libraries [.lib]: ..\..\..\cassist\common\lib\common + ..\..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	cd ..
+	cd ..
+	cd scsi
+	NMAKE                all
+	cl /O /Gs /Fc /c /AS /G2 /X /I..\common /I..\..\inc /I..\..\common\include /I..\cassist\common\include scsi.c
+scsi.c
+	cl /O /Gs /Fc /c /AS /G2 /X /I..\common /I..\..\inc /I..\..\common\include /I..\cassist\common\include /Iata ataframe.c
+ataframe.c
+	makesub.bat aha1540 all
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\common /I..\..\..\inc /I..\..\..\common\include /I..\..\cassist\common\include aha1540.c
+aha1540.c
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\kbchar.obj  ..\..\common\is_mc.obj  ..\..\common\get_conf.obj  aha1540.obj  ..\scsi.obj  ..\..\common\iutil.obj 
+Run File [crt0.exe]: aha1540.bef,
+List File [d:aha1540.map]: aha1540.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat aha1740 all
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\common /I..\..\..\inc /I..\..\..\common\include /I..\..\cassist\common\include aha1740.c
+aha1740.c
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\kbchar.obj  aha1740.obj  ..\scsi.obj  ..\..\common\is_eisa.obj  ..\..\common\iutil.obj 
+Run File [crt0.exe]: aha1740.bef,
+List File [d:aha1740.map]: aha1740.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat aic all
+	ml /I. /Zm /c /Cx portio.asm
+ Assembling: portio.asm
+	cl /O /Gs /Fm /Fc /c /G2 /X /AS /I..\..\common /I..\..\..\inc  /I. /I..\..\..\common\include him6x60.c
+him6x60.c
+../../../common/include\dostypes.h(41) : warning C4005: 'TRUE' : macro redefinition
+	cl /O /Gs /Fm /Fc /c /G2 /X /AS /I..\..\common /I..\..\..\inc  /I. /I..\..\..\common\include aic.c
+aic.c
+scb6x60.h(81) : warning C4005: 'TRUE' : macro redefinition
+	link /NOLOGO /M @link.dat
+Object Modules [.obj]: /NOLOGO /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\util.obj  ..\..\common\kbchar.obj  ..\..\common\is_mc.obj  ..\..\common\putnum.obj  ..\..\common\get_conf.obj +
+Object Modules [.obj]: .\portio.obj  .\him6x60.obj  .\aic.obj  ..\scsi.obj  ..\..\common\iutil.obj
+Run File [crt0.exe]: aic.bef,
+List File [d:aic.map]: aic.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat ata all
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\common  /I..\..\..\inc  /I..\..\..\common\include  /I..\..\cassist\common\include main.c
+main.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\common  /I..\..\..\inc  /I..\..\..\common\include  /I..\..\cassist\common\include ata.c
+ata.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\common  /I..\..\..\inc  /I..\..\..\common\include  /I..\..\cassist\common\include atapi.c
+atapi.c
+	ml /I. /Zm /c /Cx readphys.asm
+ Assembling: readphys.asm
+	link /NOLOGO /M @link.dat
+Object Modules [.obj]: /NOLOGO /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\kbchar.obj  main.obj  ata.obj  atapi.obj  readphys.obj  ..\ataframe.obj  ..\..\common\iutil.obj 
+Run File [crt0.exe]: ata.bef,
+List File [d:ata.map]: ata.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat blogic all
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\cassist\common\include  /I..\..\common  /I..\..\..\common\include  /I..\..\..\inc blogic.c
+blogic.c
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj ..\..\common\low.obj ..\..\common\pciconf.obj ..\..\common\util.obj ..\..\common\putnum.obj ..\..\common\kbchar.obj ..\..\common\is_mc.obj ..\..\common\get_conf.obj blogic.obj ..\scsi.obj ..\..\common\iutil.obj 
+Run File [crt0.exe]: blogic.bef,
+List File [d:blogic.map]: blogic.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat corvette all
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\common  /I..\..\..\inc corvrm.c
+corvrm.c
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\kbchar.obj  ..\..\common\is_mc.obj  ..\..\common\get_conf.obj  corvrm.obj  ..\scsi.obj  ..\..\common\iutil.obj 
+Run File [crt0.exe]: corvette.bef,
+List File [d:corvette.map]: corvette.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat dpt all
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\common /I..\..\..\common\include /I..\..\..\inc /I..\..\cassist\common\include dptcmd.c
+dptcmd.c
+	link /NOLOGO /M @link.dat
+Object Modules [.obj]: /NOLOGO /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\pciconf.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\kbchar.obj  dptcmd.obj  ..\scsi.obj  ..\..\common\iutil.obj 
+Run File [crt0.exe]: dpt.bef,
+List File [d:dpt.map]: dpt.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat esa all
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X  /I..\..\cassist\common\include  /I..\..\common /I..\..\..\inc /I..\..\..\common\include esa.c
+esa.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X him.c
+him.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X him_init.c
+him_init.c
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\kbchar.obj  esa.obj  him.obj  him_init.obj  ..\scsi.obj  ..\..\common\is_eisa.obj  ..\..\common\iutil.obj 
+Run File [crt0.exe]: esa.bef,
+List File [d:esa.map]: esa.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat iss all
+	ml /I. /Zm /c /Cx iss_send.asm
+ Assembling: iss_send.asm
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..  /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\common  /I..\..\..\inc iss.c
+iss.c
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\util.obj  ..\..\common\kbchar.obj  iss_send.obj  iss.obj  ..\scsi.obj  ..\..\common\is_eisa.obj  ..\..\common\putnum.obj  ..\..\common\iutil.obj 
+Run File [crt0.exe]: iss.bef,
+List File [d:iss.map]: iss.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat mcis all
+	cl /Gs /O /Fm /Fc /c /AS /G2 /X /I..\..\cassist\common\include  /I..\..\common  /I..\..\..\common\include  /I..\..\..\inc mcis.c
+mcis.c
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\kbchar.obj  mcis.obj  ..\scsi.obj  ..\..\common\iutil.obj  ..\..\common\get_conf.obj 
+Run File [crt0.exe]: mcis.bef
+List File [d:mcis.map]: mcis.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat mlx all
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /DMSCSI_FEATURE /I..\..\common /I..\..\..\inc /I..\..\..\common\include mlx.c
+mlx.c
+	link /NOLOGO /M @link.dat
+Object Modules [.obj]: /NOLOGO /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\is_eisa.obj  ..\..\common\is_mc.obj  ..\..\common\get_conf.obj  ..\..\common\pciconf.obj +
+Object Modules [.obj]: ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\kbchar.obj  mlx.obj  ..\scsi.obj  ..\..\common\iutil.obj
+Run File [crt0.exe]: mlx.bef,
+List File [d:mlx.map]: mlx.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat ncrs all
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\common  /I..\..\..\inc  /I..\..\..\common\include  /I..\..\cassist\common\include 53c710.c
+53c710.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\common  /I..\..\..\inc  /I..\..\..\common\include  /I..\..\cassist\common\include 53c810.c
+53c810.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\common  /I..\..\..\inc  /I..\..\..\common\include  /I..\..\cassist\common\include init.c
+init.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\common  /I..\..\..\inc  /I..\..\..\common\include  /I..\..\cassist\common\include intr.c
+intr.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\common  /I..\..\..\inc  /I..\..\..\common\include  /I..\..\cassist\common\include ncr.c
+ncr.c
+	ml /Cp /Cx /nologo /c /Fl /Sa /DFARCODE=0 /Dmodel=SMALL /Tapciconf.s
+ Assembling: pciconf.s
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\kbchar.obj  53c710.obj  53c810.obj  init.obj  intr.obj  ncr.obj  pciconf.obj  ..\scsi.obj +
+Object Modules [.obj]: ..\..\common\is_eisa.obj  ..\..\common\iutil.obj
+Run File [crt0.exe]: ncrs.bef,
+List File [d:ncrs.map]: ncrs.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat tmc all
+	ml /I. /Zm /c /Cx bcopy.asm
+ Assembling: bcopy.asm
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\common /I..\..\..\inc /I..\..\..\common\include tmc850.c
+tmc850.c
+	link /NOLOGO /M @link.dat
+Object Modules [.obj]: /NOLOGO /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\kbchar.obj  ..\..\common\is_mc.obj  ..\..\common\get_conf.obj  .\bcopy.obj  .\tmc850.obj  ..\scsi.obj  ..\..\common\iutil.obj 
+Run File [crt0.exe]: tmc.bef,
+List File [d:tmc.map]: tmc.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat pcscsi all
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /DSOLARIS /DOTHER_OS /DDISABLE_DIO  /DDISABLE_SREG /DDISABLE_MDL /DCOMPAQ_MACHINE /I..\..\common  /I..\..\..\inc  /I..\..\..\common\include  /I..\..\cassist\common\include pcscsi.c
+pcscsi.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /DSOLARIS /DOTHER_OS /DDISABLE_DIO  /DDISABLE_SREG /DDISABLE_MDL /DCOMPAQ_MACHINE /I..\..\common  /I..\..\..\inc  /I..\..\..\common\include  /I..\..\cassist\common\include devscsi.c
+devscsi.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /DSOLARIS /DOTHER_OS /DDISABLE_DIO  /DDISABLE_SREG /DDISABLE_MDL /DCOMPAQ_MACHINE /I..\..\common  /I..\..\..\inc  /I..\..\..\common\include  /I..\..\cassist\common\include ggmini.c
+ggmini.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /DSOLARIS /DOTHER_OS /DDISABLE_DIO  /DDISABLE_SREG /DDISABLE_MDL /DCOMPAQ_MACHINE /I..\..\common  /I..\..\..\inc  /I..\..\..\common\include  /I..\..\cassist\common\include ggminsol.c
+ggminsol.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /DSOLARIS /DOTHER_OS /DDISABLE_DIO  /DDISABLE_SREG /DDISABLE_MDL /DCOMPAQ_MACHINE /I..\..\common  /I..\..\..\inc  /I..\..\..\common\include  /I..\..\cassist\common\include portabil.c
+portabil.c
+	ml /Cp /Cx /nologo /c /Fl /Sa /DFARCODE=0 /Dmodel=SMALL /Tairq_mask.s
+ Assembling: irq_mask.s
+	link /NOD /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /NOD /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\kbchar.obj  pcscsi.obj  devscsi.obj  ggmini.obj  ggminsol.obj  portabil.obj  irq_mask.obj  ..\scsi.obj +
+Object Modules [.obj]: ..\..\common\pciconf.obj  ..\..\common\iutil.obj
+Run File [crt0.exe]: pcscsi.bef,
+List File [d:pcscsi.map]: pcscsi.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat adp all
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\common /I..\..\..\common\include /I..\..\..\inc /I..\..\cassist\common\include adp.c
+adp.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X him.c
+him.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X himd.c
+himd.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X himdopt.c
+himdopt.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X him_init.c
+him_init.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X himdinit.c
+himdinit.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X himdiopt.c
+himdiopt.c
+	ml /Cp /Cx /nologo /c /Sa /DFARCODE=0 /Dmodel=SMALL /Tapcibuses.s
+ Assembling: pcibuses.s
+	link /NOLOGO /M @link.dat
+Object Modules [.obj]: /NOLOGO /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\pciconf.obj  ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\kbchar.obj  adp.obj  him.obj +
+Object Modules [.obj]: himd.obj  himdopt.obj  him_init.obj  himdinit.obj  himdiopt.obj  ..\scsi.obj  pcibuses.obj  ..\..\common\iutil.obj
+Run File [crt0.exe]: adp.bef,
+List File [d:adp.map]: adp.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat trantor all
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\common  /I..\..\..\inc trantor.c
+trantor.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\common  /I..\..\..\inc n5380.c
+n5380.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\common  /I..\..\..\inc card.c
+card.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\common  /I..\..\..\inc p3c.c
+p3c.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\common  /I..\..\..\inc parallel.c
+parallel.c
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /I..\..\cassist\common\include  /I..\..\..\common\include  /I..\..\common  /I..\..\..\inc scsifnc.c
+scsifnc.c
+	link /M @link.dat
+
+Microsoft (R) Segmented Executable Linker  Version 5.60
+Copyright (C) Microsoft Corp 1984-1993.  All rights reserved.
+
+Object Modules [.obj]: /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\util.obj  ..\..\common\kbchar.obj  trantor.obj  n5380.obj  card.obj  p3c.obj  parallel.obj  scsifnc.obj  ..\scsi.obj +
+Object Modules [.obj]: ..\..\common\is_eisa.obj  ..\..\common\putnum.obj  ..\..\common\iutil.obj
+Run File [crt0.exe]: trantor.bef,
+List File [d:trantor.map]: trantor.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	makesub.bat chs all
+	cl /O /Gs /Fm /Fc /c /AS /G2 /X /DMSCSI_FEATURE /I..\..\common /I..\..\..\inc /I..\..\..\common\include chs.c
+chs.c
+	link  /PACKC /NOLOGO /M @link.dat
+Object Modules [.obj]: /PACKC /NOLOGO /M ..\..\cassist\common\lib\crt0.obj  ..\..\common\low.obj  ..\..\common\get_conf.obj  ..\..\common\pciconf.obj +
+Object Modules [.obj]: ..\..\common\util.obj  ..\..\common\putnum.obj  ..\..\common\kbchar.obj  chs.obj  ..\scsi.obj  ..\..\common\iutil.obj
+Run File [crt0.exe]: chs.bef,
+List File [d:chs.map]: chs.map,
+Libraries [.lib]: ..\..\cassist\common\lib\common + ..\..\cassist\common\lib\slibce;
+LINK : warning L4021: no stack segment
+LINK : warning L4038: program has no starting address
+	cd ..

@@ -1,0 +1,60 @@
+---- Add a Terminal --------------------------------
+ 
+1. Select Serial Ports from Browse menu.
+
+2. Select the port for the terminal in the
+   Admintool:Serial Ports main window.
+
+3. Select Modify from the Edit Menu. 
+   The Modify window appears in Basic Detail
+   mode. (See "Modify Serial Ports Window" in the
+   "Reference" help for a description of the Modify
+   window items.)
+
+4. Select Terminal - Hardwired from the Template
+   menu. 
+
+5. Change the values of template entries if desired.
+
+6. Click on OK to configure the port.
+
+---- Add a Modem -----------------------------------
+
+1. Select Serial Ports from Browse menu.
+
+2. Select the port that will be used with a modem
+   from Admintool:Serial Ports main window.
+
+3. Select Modify from the Edit Menu. 
+   The Modify window appears in Basic Detail
+   mode. (See "Modify Serial Ports Window" in the
+   "Reference" help for a description of the Modify
+   window items.)
+
+4. Select the modem configuration from the Template
+   menu that meets or most closely matches your
+   modem service. (See "Modify Serial Ports Window"
+   in the "Reference" help for a description of the
+   Modify window items.)
+
+5. Change values of template entries if desired.
+
+6. Click on OK to configure the port.
+
+---- Initialize a Port Without Configuring ---------
+
+1. Select Serial Ports from Browse menu.
+
+2. Select the port that you want to initialize from
+   the Admintool:Serial Ports main window.
+
+3. Select Modify from the Edit Menu. 
+   The Modify window appears in Basic Detail 
+   mode. (See "Modify Serial Ports Window" in the
+   "Reference" help for a description of the Modify
+   window items.)
+
+4. Select Initialize Only - No Connection from the
+   Template menu.
+
+5. Click on OK to initialize the port.

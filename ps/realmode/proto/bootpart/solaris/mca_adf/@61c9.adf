@@ -1,0 +1,85 @@
+
+;  Standard Microsystems Ethernet Adapter Description File
+;  Version 2.00b
+;
+;
+AdapterId	61C9h
+AdapterName     "EtherCard PLUS Elite 10T/A (8013WP/A)"
+NumBytes        4
+
+NamedItem
+Prompt   "Adapter I/O Space"
+Choice   " I/O Base 0800h "    pos[0]=0000XXXXb    io 00800h-0081Fh
+Choice   " I/O Base 1800h "    pos[0]=0001XXXXb    io 01800h-0181Fh
+Choice   " I/O Base 2800h "    pos[0]=0010XXXXb    io 02800h-0281Fh
+Choice   " I/O Base 3800h "    pos[0]=0011XXXXb    io 03800h-0381Fh
+Choice   " I/O Base 4800h "    pos[0]=0100XXXXb    io 04800h-0481Fh
+Choice   " I/O Base 5800h "    pos[0]=0101XXXXb    io 05800h-0581Fh
+Choice   " I/O Base 6800h "    pos[0]=0110XXXXb    io 06800h-0681Fh
+Choice   " I/O Base 7800h "    pos[0]=0111XXXXb    io 07800h-0781Fh
+Choice   " I/O Base 8800h "    pos[0]=1000XXXXb    io 08800h-0881Fh
+Choice   " I/O Base 9800h "    pos[0]=1001XXXXb    io 09800h-0981Fh
+Choice   " I/O Base A800h "    pos[0]=1010XXXXb    io 0A800h-0A81Fh
+Choice   " I/O Base B800h "    pos[0]=1011XXXXb    io 0B800h-0B81Fh
+Choice   " I/O Base C800h "    pos[0]=1100XXXXb    io 0C800h-0C81Fh
+Choice   " I/O Base D800h "    pos[0]=1101XXXXb    io 0D800h-0D81Fh
+Choice   " I/O Base E800h "    pos[0]=1110XXXXb    io 0E800h-0E81Fh
+Choice   " I/O Base F800h "    pos[0]=1111XXXXb    io 0F800h-0F81Fh
+Help
+"This selects the I/O address space of the adapter. Normally,
+ select < I/O Base 800h >."
+   
+NamedItem
+Prompt "Shared Ram Base Address"
+Choice " 0C0000h, 16K " pos[1]=0x010000b mem 00C0000h-00C3FFFh
+Choice " 0C4000h, 16K " pos[1]=0x010010b mem 00C4000h-00C7FFFh
+Choice " 0C8000h, 16K " pos[1]=0x010100b mem 00C8000h-00CBFFFh
+Choice " 0CC000h, 16K " pos[1]=0x010110b mem 00CC000h-00CFFFFh
+Choice " 0D0000h, 16K " pos[1]=0x011000b mem 00D0000h-00D3FFFh
+Choice " 0D4000h, 16K " pos[1]=0x011010b mem 00D4000h-00D7FFFh
+Choice " 0D8000h, 16K " pos[1]=0x011100b mem 00D8000h-00DBFFFh
+Choice " 0DC000h, 16K " pos[1]=0x011110b mem 00DC000h-00DFFFFh
+Choice " FC0000h, 16K " pos[1]=1x010000b mem 0FC0000h-0FC3FFFh
+Choice " FC8000h, 16K " pos[1]=1x010100b mem 0FC8000h-0FCBFFFh
+Choice " FD0000h, 16K " pos[1]=1x011000b mem 0FD0000h-0FD3FFFh
+Choice " FD8000h, 16K " pos[1]=1x011100b mem 0FD8000h-0FDBFFFh
+Choice " 0C0000h,  8K " pos[1]=0x000000b mem 00C0000h-00C1FFFh
+Choice " 0C2000h,  8K " pos[1]=0x000001b mem 00C2000h-00C3FFFh
+Choice " 0C4000h,  8K " pos[1]=0x000010b mem 00C4000h-00C5FFFh
+Choice " 0C6000h,  8K " pos[1]=0x000011b mem 00C6000h-00C7FFFh
+Help
+"This selects the shared RAM base address for a 16K window."
+
+NamedItem
+Prompt  "BIOS ROM Base Address"
+Choice   " Disabled    "   pos[2]=XX110000b     
+Choice   " C0000h, 16K "   pos[2]=XX010000b    mem 00C0000h-00C3FFFh
+Choice   " C4000h, 16K "   pos[2]=XX010010b    mem 00C4000h-00C7FFFh
+Choice   " C8000h, 16K "   pos[2]=XX010100b    mem 00C8000h-00CBFFFh
+Choice   " CC000h, 16K "   pos[2]=XX010110b    mem 00CC000h-00CFFFFh
+Choice   " D0000h, 16K "   pos[2]=XX011000b    mem 00D0000h-00D3FFFh
+Choice   " D4000h, 16K "   pos[2]=XX011010b    mem 00D4000h-00D7FFFh
+Choice   " D8000h, 16K "   pos[2]=XX011100b    mem 00D8000h-00DBFFFh
+Choice   " DC000h, 16K "   pos[2]=XX011110b    mem 00DC000h-00DFFFFh
+Help
+"The BIOS ROM Base Address can be either disabled or enabled.  When it is enabled,
+ different sizes and address spaces can be assigned.  Normally, select
+ <BIOS ROM Disabled>."
+
+NamedItem
+Prompt  "Interrupt Level"
+Choice  " Level  3 "     pos[3]=XXXX00XXb    int  3
+Choice  " Level  4 "     pos[3]=XXXX01XXb    int  4
+Choice  " Level 10 "     pos[3]=XXXX10XXb    int  10 
+Choice  " Level 14 "     pos[3]=XXXX11XXb    int  14
+Help
+"This selects the interrupt level this adapter will use.  Normally, 
+ select <Level 10>."
+
+NamedItem
+Prompt  "MEDIA SELECT"
+Choice  " AUI or 10BaseT "     pos[3]=XXXXXX01b
+Choice  " TwPr - No link "     pos[3]=XXXXXX00b
+Help
+"This selects the network connection that this adapter will use."
+

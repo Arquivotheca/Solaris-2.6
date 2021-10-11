@@ -1,0 +1,7 @@
+name="smc"
+	class="sysbus"
+	__title__="SMC EtherCard PLUS"
+	__category__="network"
+
+	__auto__="string,true"
+	;

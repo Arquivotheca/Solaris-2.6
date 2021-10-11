@@ -1,0 +1,127 @@
+;GIL-3
+(
+	:interfaces             (Base.G Client.G Cmd.G File.G Meter.G Pkg.G Props.G )
+	:actions                (
+		(
+		:from                   (Base.G ViewMenu "Space Meter...")
+		:when                   (Notify )
+		:to                     (Meter.G MeterWin)
+		:function_type          :user_defined
+		:arg_type               ()
+		:action                 (Show)
+		)
+		(
+		:from                   (Base.G ViewMenu "Command Window...")
+		:when                   (Notify )
+		:to                     (Cmd.G CmdWin)
+		:function_type          :user_defined
+		:arg_type               ()
+		:action                 (Show)
+		)
+		(
+		:from                   (Base.G FileMenu "Save As...")
+		:when                   (Notify )
+		:to                     (File.G FileWin)
+		:function_type          :user_defined
+		:arg_type               ()
+		:action                 (Show)
+		)
+		(
+		:from                   (Base.G FileMenu "Save As...")
+		:when                   (Notify )
+		:to                     (File.G FileWin)
+		:function_type          :user_defined
+		:arg_type               (:string)
+		:action                 (SetLabel "Software Manager:  Save As")
+		)
+		(
+		:from                   (Base.G FileMenu "Save As...")
+		:when                   (Notify )
+		:to                     (File.G FileWin FileDoit)
+		:function_type          :user_defined
+		:arg_type               (:string)
+		:action                 (SetLabel "Save")
+		)
+		(
+		:from                   (Base.G EditMenu "Native Environment")
+		:when                   (Notify )
+		:to                     (Client.G ClientWin ClientOs)
+		:function_type          :user_defined
+		:arg_type               ()
+		:action                 (Disable)
+		)
+		(
+		:from                   (Base.G EditMenu "Native Environment")
+		:when                   (Notify )
+		:to                     (Client.G ClientWin ClientArch)
+		:function_type          :user_defined
+		:arg_type               ()
+		:action                 (Disable)
+		)
+		(
+		:from                   (Base.G EditMenu "Native Environment")
+		:when                   (Notify )
+		:to                     (Client.G ClientWin ClientApply)
+		:function_type          :user_defined
+		:arg_type               ()
+		:action                 (Disable)
+		)
+		(
+		:from                   (Base.G EditMenu "Native Environment")
+		:when                   (Notify )
+		:to                     (Client.G ClientWin ClientReset)
+		:function_type          :user_defined
+		:arg_type               ()
+		:action                 (Disable)
+		)
+		(
+		:from                   (Base.G EditMenu "Add Client Support...")
+		:when                   (Notify )
+		:to                     (Client.G ClientWin)
+		:function_type          :user_defined
+		:arg_type               (:string)
+		:action                 (SetLabel "Software Manager:  Add Client Support")
+		)
+		(
+		:from                   (Base.G EditMenu "Add Client Support...")
+		:when                   (Notify )
+		:to                     (Client.G ClientWin)
+		:function_type          :user_defined
+		:arg_type               ()
+		:action                 (Show)
+		)
+		(
+		:from                   (Base.G EditMenu "Remove Client Support...")
+		:when                   (Notify )
+		:to                     (Client.G ClientWin)
+		:function_type          :user_defined
+		:arg_type               ()
+		:action                 (Show)
+		)
+		(
+		:from                   (Base.G EditMenu "Remove Client Support...")
+		:when                   (Notify )
+		:to                     (Client.G ClientWin)
+		:function_type          :user_defined
+		:arg_type               (:string)
+		:action                 (SetLabel "Software Manager:  Remove Client Support")
+		)
+		(
+		:from                   (Base.G BaseMenu "Package Properties...")
+		:when                   (Notify )
+		:to                     (Pkg.G PkgWin)
+		:function_type          :user_defined
+		:arg_type               ()
+		:action                 (Show)
+		)
+		(
+		:from                   (Base.G BaseMenu "Set Base Directory...")
+		:when                   (Notify )
+		:to                     (Pkg.G PkgWin)
+		:function_type          :user_defined
+		:arg_type               ()
+		:action                 (Show)
+		)
+	)
+	:root_window            nil
+)

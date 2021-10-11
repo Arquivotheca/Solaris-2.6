@@ -1,0 +1,25 @@
+class="win" name="SUNWvga4"
+	__wclass__="XSCREEN"
+
+        ddxHandler="ddxSUNWvga4.so.1" ddxInitFunc="SUNWvga4Init"
+	;
+
+class="win" name="SUNWvga4"
+	__wclass__="XSCREENCONFIG"
+	__category__="display"
+	__title__="prototype super vga4 16 color device entry"
+
+	size="var,__size__"
+	__size__="string,7-inch,9-inch,15-inch,17-inch,19-inch"
+	__dimx__="string,6,7.5,12,13.5,15"
+	__dimy__="string,4,6,9.5,11,12"
+
+	position="var,__position__"
+	__position__="string,left,right,top,bottom"
+
+	device="SUNWvga4"
+	pmifile="/usr/openwin/share/etc/devdata/svpmi/SUNWvga4/4400c.pmi"
+	res="string,640x480,800x600,1024x768"
+	dpix="string,90"
+	dpiy="string,90"
+	;

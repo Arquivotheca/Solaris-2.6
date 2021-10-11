@@ -1,0 +1,17 @@
+---- Heterogeneous servers --------------------
+
+Heterogeneous servers are servers that support both
+SPARC and X86 clients. Because Solaris is 
+distributed on two CD-ROMs, (one for SPARC, one for
+x86, you must use both CD-ROMs to install the 
+software required to support both SPARC and x86
+platforms.
+
+To set up a heterogeneous server you must:
+
+  1. Install Solaris using the SPARC or x86 CD-ROM.
+
+  2. Reboot the server.
+
+  3. Insert the alternate CD-ROM and use swmtool(1M)
+     to install the alternate platform architecture.

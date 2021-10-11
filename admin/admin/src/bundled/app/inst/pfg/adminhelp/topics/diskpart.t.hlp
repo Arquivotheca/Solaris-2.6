@@ -1,0 +1,96 @@
+---- Definition: File system and disk layout ----
+
+File system and disk layout is the process of laying
+out file systems across the disks you've selected
+for installing Solaris. A disk can be divided into a
+maximum of eight slices. You can assign file systems
+to slices across the disks which determines where
+slices will be mounted in the files system hierarchy
+when the system is running.
+
+You can choose to have the software lay out the file
+systems (auto-layout), or you can manually assign a
+file systems to disks.
+
+---- Important Solaris file systems -----------
+
+The following file systems are ones that the Solaris
+installation program tracks for sufficient disk
+space as they are crucial to the success of 
+installing Solaris:
+
+/ (root) - the file system at the top of the
+hierarchical file tree on a system. It contains
+the directories and files critical for system
+operation, such as the kernel, device drivers,
+and the programs for booting a system.
+           
+/var - a file system that contains system files
+directories that are likely to change and grow over
+the life of the local system. These include system
+logs, vi files, mail files, and uucp files.
+
+/usr - a file system on a standalone system or
+server that contains many of the standard UNIX 
+programs. Sharing the large /usr file system
+with a server rather than maintaining a local copy
+minimizes the overall disk space required to 
+install and run the Solaris software on a system.
+
+/usr/openwin - a directory on a standalone system or
+server that contains OpenWindows file systems. If
+you do not create this directory, the Solaris
+installation program puts these file systems in
+/usr.
+
+/export - a file system on a server that is shared
+with other systems on a network. For example, the
+/export file system can contain the root file system
+and swap for diskless clients and the home
+directories for users on the network. Diskless 
+clients rely on the /export file system on a file
+server to boot and run.
+
+/export/root - a directory for clients' root file
+systems.
+
+---- Guidelines -------------------------------
+
+Which file systems should be created and their size,
+depends on the intended role of the system. For
+example, the file system hierarchies are usually
+more complex for servers than for standalone systems. 
+How file systems are laid out are also influenced by:
+ 
+  - Third-party or unbundled software to be
+    installed
+
+  - Whether a printer will be connected to the
+    system
+
+  - Whether users' home directories will be on a
+    local disk, or mounted from a shared file
+    server
+
+  - Where electronic mail will be received
+
+  - Site backup policies
+
+A general guideline is to divide up the file system
+hierarchy into distinct file systems. This makes
+backing up and restoring more efficient because not
+all parts of the hierarchy require backup on a 
+regular basis. By dividing file systems you can also
+spread the file system hierarchy across one or more
+disks, which can improve performance. For example,
+almost all of Solaris gets loaded into the /usr file
+system. Because the operating files of Solaris are
+mostly read-only, you can put /usr files into a 
+separate file system and back them up once.
+
+---- Creating / (root) as the only file system -----
+
+While it is acceptable to create (/) root as the
+only file system, backing up and restoring becomes
+more time-consuming because backups and recoveries
+are done for an entire file system.

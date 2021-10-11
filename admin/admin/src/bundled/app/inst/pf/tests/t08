@@ -1,0 +1,10 @@
+install_type  initial_install
+system_type standalone
+cluster SUNWCuser
+partitioning default
+dontuse c0t1d0
+filesys rootdisk.s0 auto /
+filesys any 24 swap
+filesys c0t3d0s5 300:50 /opt
+filesys rootdisk.s6 auto /usr
+filesys any all /export/home

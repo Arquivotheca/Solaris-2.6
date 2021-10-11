@@ -1,0 +1,127 @@
+
+AdapterId 08FDBh
+
+AdapterName "XGA Display Adapter/A"
+
+NumBytes 4
+
+FixedResources
+	pos[1]=0XXXXXX0b
+	pos[3]=1101XXXXb
+
+address 32
+
+Begin Device 03h 02h 00h NoDMA
+
+NamedItem Prompt "Video I/O Address"
+	choice "Instance 6: 2160h - 216Fh"
+		pos[0]=XXXX110Xb io 02160h-0216fh
+	choice "Instance 1: 2110h - 211Fh"
+		pos[0]=XXXX001Xb io 02110h-0211fh
+	choice "Instance 2: 2120h - 212Fh"
+		pos[0]=XXXX010Xb io 02120h-0212fh
+	choice "Instance 3: 2130h - 213Fh"
+		pos[0]=XXXX011Xb io 02130h-0213fh
+	choice "Instance 4: 2140h - 214Fh"
+		pos[0]=XXXX100Xb io 02140h-0214fh
+	choice "Instance 5: 2150h - 215Fh"
+		pos[0]=XXXX101Xb io 02150h-0215fh
+	choice "Instance 7: 2170h - 217Fh"
+		pos[0]=XXXX111Xb io 02170h-0217fh
+	choice "Instance 0: 2100h - 210Fh"
+		pos[0]=XXXX000Xb io 02100h-0210fh
+
+	Help
+	 "This field shows the I/O (Input/Output) address range for the display
+	 controller registers.	This field also affects the location of the
+	 video coprocessor registers.
+	 Each adapter you install must have a unique address range.  Normally,
+	 the address range does not need to be changed.
+	 If you are in the 'Change Configuration' window, you can change
+	 the setting.  Use F5 and F6 to scroll through the choices, the Up
+	 and Down arrow keys to move from field to field.
+	 If a setting conflicts with another, an asterisk (*) appears next to
+	 the conflicts.  You must fix conflicts before you use the adapter."
+
+NamedItem Prompt "1 MB VRAM Aperture Base Address"
+	choice "Address at 15 MB (F00000h)"
+		pos[3]=XXXX1111b mem 0F00000h-0Ffffffh
+	choice "Address at 14 MB (E00000h)"
+		pos[3]=XXXX1110b mem 0E00000h-0Efffffh
+	choice "Address at 13 MB (D00000h)"
+		pos[3]=XXXX1101b mem 0D00000h-0Dfffffh
+	choice "Address at 12 MB (C00000h)"
+		pos[3]=XXXX1100b mem 0C00000h-0Cfffffh
+	choice "Address at 11 MB (B00000h)"
+		pos[3]=XXXX1011b mem 0B00000h-0Bfffffh
+	choice "Address at 10 MB (A00000h)"
+		pos[3]=XXXX1010b mem 0A00000h-0Afffffh
+	choice "Address at 9 MB (900000h)"
+		pos[3]=XXXX1001b mem 900000h-9fffffh
+	choice "Address at 8 MB (800000h)"
+		pos[3]=XXXX1000b mem 800000h-8fffffh
+	choice "Disabled"
+		pos[3]=XXXX0000b
+
+	Help
+	"This field shows the 1 MB aperture from the PC into the video memory.
+	 If the aperture has been disabled, it is because there wasn't enough
+	 available memory address space for system memory and the aperture.
+	 If the aperture must be re-enabled, and if you are in the 'Change
+	 Configuration' window, use F5 and F6 key to select a choice. If this
+	 method is not successful, then remove the device that is competing
+	 for memory such as a system Micro Channel adapter or system memory.
+	 Removal of system memory may degrade the system performance.  If
+	 the aperture has been allocated an address range and it results in a
+	 reduction of usable system memory (with Micro Channel memory adapter)
+	 then the aperture can be disabled.
+	 If a setting conflicts with another, an asterisk (*) appears next to
+	 the conflicts.  You must fix conflicts before you use the adapter."
+
+NamedItem Prompt "Video Arbitration Level"
+	choice "Arbitration level 13" pos[1]=X1101XXXb arb 0dh
+	choice "Arbitration level 12" pos[1]=X1100XXXb arb 0ch
+	choice "Arbitration level 11" pos[1]=X1011XXXb arb 0bh
+	choice "Arbitration level 10" pos[1]=X1010XXXb arb 0ah
+	choice "Arbitration level  9" pos[1]=X1001XXXb arb 9
+	choice "Arbitration level  8" pos[1]=X1000XXXb arb 8
+	choice "Arbitration level 14" pos[1]=X1110XXXb arb 0eh
+	choice "Arbitration level  7" pos[1]=X0111XXXb arb 7
+
+	Help
+	"This field is used to select the arbitration level the adapter uses
+	 to transfer data.
+	 If you are in the 'Change Configuration' window, you can change
+	 the setting.  Use F5 and F6 to scroll through the choices, the Up
+	 and Down arrow keys to move from field to field.
+	 If a setting conflicts with another, an asterisk (*) appears next to
+	 the conflicts.  You must fix conflicts before you use the adapter."
+
+NamedItem Prompt "Video Fairness"
+	choice "Fairness On"  pos[1]=XXXXX1XXb
+	choice "Fairness Off" pos[1]=XXXXX0XXb
+
+	Help
+	"This field is used to select the Bus Arbitration Fairness.  When
+	 Bus Arbitration Fairness is set it controls whether the adapter
+	 will release control of the bus when it has been using it
+	 exclusively.  Normally, the field should be set to <On>.
+	 If you are in the 'Change Configuration' window, you can change
+	 the setting.  Use F5 and F6 to scroll through the choices, the Up
+	 and Down arrow keys to move from field to field."
+
+End
+
+ADPItem 1 prompt "ROM Address Range" EXEC
+	Help
+	"This field shows the address of the 8K block of memory that is
+	assigned to the adapter.  Only one XGA or XGA-2 Display Adapter
+	will have the ROM assigned, and any other XGA or XGA-2 Adapter
+	installed will share that address range.  If you are in the
+	'Change Configuration' window, you can change the setting.  Use
+	F5 and F6 to scroll through the choices, the Up and Down arrow
+	keys to move from field to field.  If a setting conflicts with
+	another, an asterisk (*) appears next to the conflict.	You must
+	fix conflicts before you use the adapter."
+
+

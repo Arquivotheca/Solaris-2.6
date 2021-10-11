@@ -1,0 +1,37 @@
+---- Definition: fdisk -----------------------------------------
+
+An fdisk partition is an area of an X86 disk devoted
+to an operating system. There are four partitions in
+the fdisk area which can be used for operating 
+systems, including multiple copies of some operating
+systems. However, multiple copies of Solaris in the
+fdisk partition is not supported.
+
+Only one fdisk partition can be active at a time.
+
+---- Solaris fdisk partitions ---------------------------------
+
+To use a disk to install Solaris, you must create a
+Solaris fdisk partition for it. The Solaris 
+installation program lets you create the fdisk 
+partition automatically (by making Solaris the
+entire disk, or the remainder of the disk) or 
+manually. If there is already a Solaris fdisk 
+partition on the disk, the Solaris installation 
+program will not prompt you about an fdisk partition.
+
+---- fdisk partition types ------------------------------------
+
+- PRI DOS is primary DOS (DOS12, DOS16, and 
+  DOSHUGE (DOS32))
+
+- EXT DOS is extended DOS.
+
+- Other is any non-Solaris or non-DOS partition.
+
+
+---- See also -------------------------------------------------
+     
+Administration Supplement for Solaris Platforms
+(manual)
+

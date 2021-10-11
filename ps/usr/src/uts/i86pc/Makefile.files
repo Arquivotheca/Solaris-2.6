@@ -1,0 +1,123 @@
+#
+# uts/i86pc/Makefile.files
+#
+# Copyright (c) 1996 by Sun Microsystems, Inc.
+# All rights reserved.
+#
+#pragma ident	"@(#)Makefile.files	1.87	96/09/30 SMI"
+#
+#	This Makefile defines all file modules in the directory uts/i86pc
+#	and its children. These are the source files which i86pc
+#	"implementation architecture" dependent.
+#
+
+#
+#       object lists
+#
+#
+#       Device driver kernel modules in /kernel/drv
+#
+# Bus independent device drivers
+
+AHA_OBJS +=     aha.o hba.o
+BLOGIC_OBJS +=	blogic.o blogic_hba.o
+CHANMUX_OBJS +=	chanmux.o
+DPT_OBJS +=     dpt.o dpt_send.o dptghd.o dptghd_debug.o dptghd_queue.o \
+		dptghd_scsa.o dptghd_scsi.o dptghd_timer.o dpt_eisa.o
+IEE_OBJS +=	iee.o
+KD_OBJS +=	evc.o	evga.o	i8042.o	kbmode.o	\
+		kdkb.o	kdstr.o	kdv.o	kdvt.o	vdc.o	vtables.o	\
+		kdspace.o	kdvm.o	\
+		ws_8042.o	ws_ansi.o	ws_cmap.o	ws_subr.o \
+		ws_tables.o	ws_tcl.o	wsspace.o	\
+		kdfakeit.o	iosubr.o
+KDMOUSE_OBJS +=	kdmouse.o 
+LOGI_OBJS += 	logi.o 
+MLX_OBJS +=	mlx_busops.o dac960.o dac960p.o mlx_devops.o dmc960.o	\
+		mlx_interrupt.o mlx.o mlx_conf.o mlx_dac.o mlx_eisa.o	\
+		mlx_intr.o mlx_raid.o mlx_transport.o mlx_xmca.o hba.o
+MSCSI_OBJS +=	mscsi.o
+MSMOUSE_OBJS +=	msm.o 
+NCRS_OBJS +=	53c710.o 53c825_compaq.o ncr_eisa.o ncr_sni.o
+P9000_OBJS +=   p9000.o
+P9100_OBJS +=   p9100.o
+PE_OBJS	+= 	pp.o	unixglue.o	epp.o	pe2.o	pe3.o	\
+		pe.o	scpa.o
+SMC_OBJS += 	smc.o board_id.o smcbcopy.o smcddi.o smcspace.o 
+TR_OBJS +=	tr.o tr_sr.o
+TRANTOR_OBJS += trantor.o
+XSVC_OBJS +=    xsvc.o
+
+# EISA bus device drivers
+CSA_OBJS +=	csa.o csa_impl.o csa_common.o csa_common_eisa.o csa_queue.o
+EHA_OBJS +=     eha.o hba.o
+DSA_OBJS +=	dsa.o
+ISS_OBJS +=	iss.o iss_hba.o
+NEE_OBJS +=	nee.o neefcode.o
+NFE_OBJS +=	nfe.o
+RILES_OBJS +=   riles.o
+SMCE_OBJS += 	smce.o smce_lm.o
+SMCEU_OBJS +=   smceu.o lebm.o smceucfg.o 8232.o
+SMCF_OBJS +=    smcf.o lft9232.o lft_cfg.o 9232.o
+
+# ISA (or ISA+EISA) bus device drivers
+AIC_OBJS +=	aic.o him6x60.o aiccp.o 
+EEPRO_OBJS +=   eepro.o
+EL_OBJS += 	el.o
+ELX_OBJS +=     elx.o elx_media.o elx_pci.o elx_xfr.o
+ELINK_OBJS += 	elink.o
+ESA_OBJS +=	esa.o him.o him_init.o
+IEEF_OBJS +=    ieef.o
+NEI_OBJS +=	nei.o
+SBPRO_OBJS += 	sbpro.o 
+TIQMOUSE_OBJS += tiqmouse.o
+
+# MC bus device drivers
+CORVETTE_OBJS += corv.o corv_hba.o delivery.o xmca.o 
+MCIS_OBJS +=    mcis.o hba.o
+
+# PCI bus device drivers
+IPRB_OBJS +=	iprb.o
+PCSCSI_OBJS +=	pcscsi.o pcscsi_dma_impl.o \
+		portability.o ggmini_solaris.o \
+		ggmini.o
+CHS_OBJS += chs_busops.o      chs_raid.o \
+	chs_conf.o        chs_transport.o \
+	chs_devops.o      chs_dac.o         chs_viperconf.o \
+        chs_viper.o chs_queue.o\
+	chs.o             chs_interrupt.o  \
+	chs_intr.o	chs_hba.o	
+
+# Driver-related objects
+ANSI_OBJS +=	ansi.o
+CHAR_OBJS +=	char.o
+EMAP_OBJS += 	emap.o
+
+#
+#       Misc kernel module objects in /kernel/misc
+#
+MSE_OBJS += 	mse.o
+
+#
+#       Streams kernel module objects in /kernel/strmod
+#
+VUIDKD_OBJS +=  vuidkd.o at_keyprocess.o
+
+#
+#	Machine-type modules in /kernel/mach
+#
+
+APIC_OBJS +=    apic_c.o apic_s.o
+AST_OBJS +=     ast.o
+COMPAQ_OBJS +=	compaq.o compaq_ml.o
+COROLLARY_OBJS += cbus.o cbus1.o cbus2.o cbus2ecc.o cbus_sw.o cbdriver.o \
+		cbus1bt.o cbus1pic.o cbus2pic.o cbusmem.o psm.o cbusmisc.o
+SYSPRO_OBJS +=  syspro.o
+TPF_OBJS +=     tpf.o imsattn.o calibrate.o lock_add_hrt.o tpfwbinvd.o
+WYSEMP_OBJS +=  wyse_sun_c.o wyse_sun_s.o
+#
+#	Build up defines and paths.
+#
+ALL_DEFS	+= -Di86pc
+INC_PATH	+= -I$(UTSBASE)/i86pc
+

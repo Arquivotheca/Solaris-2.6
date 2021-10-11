@@ -1,0 +1,11 @@
+install_type  initial_install
+system_type standalone
+cluster SUNWCuser
+partitioning default
+usedisk c0t3d0
+usedisk c0t0d0
+filesys rootdisk.s0 auto /
+filesys any 24 swap
+filesys c0t3d0s5 300:50 /opt
+filesys rootdisk.s6 auto /usr
+filesys c0t0d0s5 auto /usr/openwin

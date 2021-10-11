@@ -1,0 +1,18 @@
+Policy_defaults.time:  $(DIR)/Policy_defaults
+	-@if [ -f $(DIR)/Policy_defaults ]; then \
+		sed -e "/^#/d" -e s/#.*$$// $(DIR)/Policy_defaults \
+		| awk '{print $$1, $$0}' \
+		| $(MAKEDBM) - $(YPDBDIR)/$(DOM)/Policy_defaults.byname; \
+		touch Policy_defaults.time; \
+		echo "updated Policy_defaults"; \
+		if [ ! $(NOPUSH) ]; then \
+				$(YPPUSH) Policy_defaults.byname; \
+				echo "pushed Policy_defaults"; \
+		else \
+		: ; \
+		fi \
+		else \
+				echo "couldn't find $(DIR)/Policy_defaults"; \
+		fi
+
+Policy_defaults: Policy_defaults.time

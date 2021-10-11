@@ -1,0 +1,24 @@
+---- Password Security -----------------------------
+
+The Admintool:Add User form includes a section
+devoted to user account security. The ACCOUNT
+SECURITY portion of the Add User form concerns two
+areas of password security: 
+ 
+- How you want a user's password to be specified --
+  by you or by the user after logging in.
+
+  The ACCOUNT SECURITY Password options provide the 
+  means to determine how a user's password is to be 
+  specified initially.
+
+- How long you want a user's password to be
+  activated. 
+
+  The Min. Change, Max Change, Max Inactive, and
+  Expiration Date fields provide the means to force
+  users to change their passwords regularly. This
+  increases account security by making it harder
+  for unauthorized people to guess or decode a
+  user's password. 
+

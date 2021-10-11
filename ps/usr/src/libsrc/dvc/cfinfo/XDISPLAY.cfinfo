@@ -1,0 +1,9 @@
+class="XDISPLAY" name="XDISPLAY"
+
+	coreKeyboard="keyboard"
+	corePointer="pointer"
+	listOfScreens="display"
+
+	__xdclass__="XDISPLAY,XINPUT,XSCREEN,XSCREENCONFIG"
+	__xdcategory__="keyboard,pointer,display"
+	;

@@ -1,0 +1,28 @@
+---- Policy Manager ----------------------------------------
+
+Policy Manager enables system administrators to manage
+policies when adding users and diskless clients in a network
+environment.
+
+Administrators can modify the default values provided in
+Administration Tool's application windows when adding users
+and diskless clients.
+
+This lessens the amount of time modifying User Account
+Manager's and Host Manager's Add windows to fit your users'
+and diskless clients' profiles.
+
+For example, the modifiable default policies when adding users
+are:
+
+-	Login shell
+-	Primary group ID
+-	Skeleton directory
+-	Home directory permissions
+
+See the Administration Application Reference Manual for a
+complete list of default policies.
+
+Policy Manager can be used to manage policy information on the
+local system or the NIS or NIS+ database with the appropriate
+access privileges.

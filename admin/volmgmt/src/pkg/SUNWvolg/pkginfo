@@ -1,0 +1,24 @@
+#	Copyright (c) 1995 Sun Microsystems, Inc.
+#		All Rights Reserved
+#
+# @(#)pkginfo 1.3 95/02/01
+#
+# This required package information file describes characteristics of the
+# package, such as package abbreviation, full package name, package version,
+# and package architecture.
+
+PKG="SUNWvolg"
+NAME="Volume Management Graphical User Interface"
+ARCH=sparc
+VERSION=1.0.0
+PRODNAME="SunOS"
+PRODVERS=5.4
+SUNW_PKGTYPE=usr
+BASEDIR="/"
+DESC="Volume Management Graphical User Interface"
+VENDOR="Sun Microsystems, Inc."
+HOTLINE="Please contact your local service provider"
+EMAIL=""
+CLASSES="none"
+CATEGORY=system
+MAXINST=1000

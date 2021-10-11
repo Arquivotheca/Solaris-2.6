@@ -1,0 +1,33 @@
+---- Admintool:Add Software ------------------------
+
+Set Source Media Path
+    The Set Source Media.... button enables you to
+    specify the path to a mounted product CD or a
+    path to a product image on a hard disk. This
+    path is where Admintool:Software will look for
+    software products to install on the local
+    system. 
+
+    See "The Source Media Path" in the "Topics" help
+    for more information.
+
+Software
+    The Software window shows products that can be
+    installed from the specified media. 
+
+Description
+    The Description window shows detailed
+    information about any software product selected
+    in the software window.
+
+Customize
+    Optional. The Customize button enables you to
+    select specific software components from a
+    product that you want to install.
+
+    See "Customize Software" in the "Reference" help
+    for more information.
+
+See the "Topics" and "How To" help for more
+information about adding and removing software with
+Admintool. 

@@ -1,0 +1,37 @@
+# @(#)p9100.cfinfo	1.2 - 95/04/18 SunSoft
+
+class="win" name="diamond2"
+	__wclass__="XSCREEN"
+	ddxHandler="ddxSUNWp9100.so.1"  ddxInitFunc="SUNWp9100Init"
+	;
+
+class="win" name="diamond2"
+	__wclass__="XSCREENCONFIG"
+	__category__="display"
+	__xinside__="TRUE"
+	__title__="prototype p9100 device entry"
+
+	size="var,__size__"
+	__size__="string,15-inch,17-inch,19-inch"
+	__dimx__="string,12,13.5,15"
+	__dimy__="string,9.5,11,12"
+
+	res="var,__resolution__"
+	__resolution__="string,1024x768,1152x900,1280x1024,800x600,640x480"
+
+	defdepth="var,__depth__"
+        __depth__="string,8,24"
+
+	position="var,__position__"
+	__position__="string,left,right,top,bottom"
+
+        device="diamond2"
+	devname="/dev/fb0"
+	drv_name="p9100"
+	pmifile="prototype pmifile entry"
+	monitor="mfreq/mfreq48.vda"
+	dpix="string,90"
+	dpiy="string,90"
+
+	;
+

@@ -1,0 +1,66 @@
+#!/bin/sh
+#
+# @(#)test_methods 1.5     94/09/01 SMI
+#
+# shell script to test methods used by sysidtool
+#
+# -l local dispatch
+
+# get_timezone
+echo get timezone
+apm -c database -m get_timezone_entry -a nameservice=nis hostname=rmtc.Central.Sun.COM disable_locking=true
+
+echo set timezone
+apm -c base_system -m set_timezone -a timezone=US/Mountain disable_locking=true
+
+echo get_domain
+apm -c base_system -m get_domain -a disable_locking=true
+
+echo get_nodename
+apm -c base_system -m get_nodename -a disable_locking=true
+
+echo set_nodename
+apm -l -c base_system -m set_nodename -a nodename=install-4 takeeffect=bootonly disable_locking=true
+apm -l -c base_system -m set_nodename -a nodename=install-4 takeeffect=nowonly disable_locking=true
+apm -l -c base_system -m set_nodename -a nodename=install-4 takeeffect=nowandboot disable_locking=true
+
+echo set_domain
+apm -l -c base_system -m set_domain -a domain=rmtc.Central.Sun.COM takeeffect=bootonly disable_locking=true
+apm -l -c base_system -m set_domain -a domain=rmtc.Central.Sun.COM takeeffect=nowonly disable_locking=true
+apm -l -c base_system -m set_domain -a domain=rmtc.Central.Sun.COM takeeffect=nowandboot disable_locking=true
+
+echo config_nsswitch
+apm -l -c system -m config_nsswitch -a nameservice=nis
+apm -l -c system -m config_nsswitch -a nameservice=nis_plus
+apm -l -c system -m config_nsswitch -a nameservice=ufs
+
+echo set_netmask
+apm -l -c base_system -m set_net_if_ip_netmask -a net_if=le0 netmask=255.255.0.0
+
+echo get_net_if_ip_addr
+apm -c base_system -m get_net_if_ip_addr -a net_if=le0
+
+echo get_net_if_ether_addr
+apm -c base_system -m get_net_if_ether_addr -a net_if=le0
+
+echo set_net_if_status
+# status, trailers, private and arp are optional, but one must be used.
+# status: up, down
+# trailers, private, arp: yes, no
+apm -l -c base_system -m set_net_if_status -a net_if=le0 status=up
+apm -l -c base_system -m set_net_if_status -a net_if=le0 status=down
+
+echo set_lb_ntoa_entry
+apm -l -c system -m set_lb_ntoa_entry -a hostname=install-4
+
+echo remove_lb_ntoa_entry
+apm -l -c system -m remove_lb_ntoa_entry -a hostname=install-4
+
+echo get_net_if_names
+apm -c base_system -m get_net_if_names
+
+echo set_run_level
+apm -c base_system -m set_run_level -a run_level=0
+
+echo unconfig_files
+apm -l -c system -m unconfig_files

@@ -1,0 +1,13 @@
+name="sbpro"
+	__title__="SoundBlaster/PRO"
+	__category__="audio"
+
+	class="sysbus"
+	ioaddr="var,__ioa__"
+	__ioa__="numeric,0x220,0x240"
+
+	interrupts="numeric,5","var,__irq__"
+	__irq__="numeric,7,2,5,10"
+
+	dmachan="var,__dma__"
+	__dma__="numeric,1,0,3"

@@ -1,0 +1,8 @@
+install_type  initial_install
+system_type standalone
+cluster SUNWCuser
+partitioning default
+filesys c0t1d0s0 auto /
+filesys any auto swap
+filesys any 0 /usr
+filesys c0t1d0s7 existing /export/home

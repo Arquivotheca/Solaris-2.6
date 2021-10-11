@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+#ident "@(#)i.p9100conf 1.1 95/04/17 SMI"
+#
+# Copyright (c) 1995 by Sun Microsystems, Inc.
+#
+ 
+while read src dest
+do
+        if [ ! -f $dest ] ; then
+                cp $src $dest
+        fi
+done
+exit 0
+

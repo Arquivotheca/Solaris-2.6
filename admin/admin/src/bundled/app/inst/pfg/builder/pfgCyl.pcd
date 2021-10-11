@@ -1,0 +1,266 @@
+Module: pfgCyl
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Wed Mar  1 15:10:55 1995";
+      nodesUsed = "cyl_dialog,\ncyl_slice_entry";
+      copy = false;
+      inCreateMenu = true;
+        {
+          cyl_dialog = formWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 145;
+            vip_y = 30;
+              {
+                :Inherited panelhelpText = XmText;
+                Group: Widget
+                  managed = False;
+              }
+              {
+                :Inherited cylForm : form = XmForm;
+                Group: Widget
+                  marginWidth = 10;
+                  marginHeight = 10;
+                Group: Constraint
+                  topAttachment = attach_form;
+                    {
+                      mainText = XmTextField;
+                      Group: Widget
+                        focusCallback = "C: mainFocusCB";
+                        motionVerifyCallback = "C: mainMotionCB";
+                        columns = 20;
+                      Group: Constraint
+                        bottomAttachment = attach_opposite_widget;
+                        bottomWidget = recommendedForm;
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_widget;
+                        rightWidget = recommendedForm;
+                    }
+                    {
+                      recommendedForm = XmForm;
+                      Group: Constraint
+                        rightAttachment = attach_widget;
+                        rightWidget = minimumForm;
+                        topAttachment = attach_form;
+                        rightOffset = 15;
+                          {
+                            recommendedLabel = XmLabel;
+                            Group: Widget
+                              alignment = alignment_end;
+                            Group: Constraint
+                              topAttachment = attach_form;
+                              leftAttachment = attach_form;
+                              rightAttachment = attach_form;
+                          }
+                          {
+                            recommendedFrame = XmFrame;
+                            Group: Widget
+                              shadowType = shadow_in;
+                            Group: Constraint
+                              rightAttachment = attach_form;
+                              bottomAttachment = attach_form;
+                              topAttachment = attach_widget;
+                              topWidget = recommendedLabel;
+                                {
+                                  recommendedValue = XmLabel;
+                                  Group: Widget
+                                    navigationType = none;
+                                    recomputeSize = False;
+                                    alignment = alignment_end;
+                                    labelString = " ";
+                                }
+                          }
+                    }
+                    {
+                      minimumForm = XmForm;
+                      Group: Constraint
+                        rightAttachment = attach_form;
+                        topAttachment = attach_form;
+                          {
+                            minimumLabel = XmLabel;
+                            Group: Widget
+                              alignment = alignment_end;
+                            Group: Constraint
+                              leftAttachment = attach_form;
+                              rightAttachment = attach_form;
+                              topAttachment = attach_form;
+                          }
+                          {
+                            minimumFrame = XmFrame;
+                            Group: Widget
+                              shadowType = shadow_in;
+                            Group: Constraint
+                              topAttachment = attach_widget;
+                              topWidget = minimumLabel;
+                              bottomAttachment = attach_form;
+                              rightAttachment = attach_form;
+                                {
+                                  minimumValue = XmLabel;
+                                  Group: Widget
+                                    navigationType = none;
+                                    recomputeSize = False;
+                                    alignment = alignment_end;
+                                    labelString = " ";
+                                }
+                          }
+                    }
+                    {
+                      cylMatrixFrame = XmFrame;
+                      Group: Widget
+                        shadowType = shadow_out;
+                      Group: Constraint
+                        rightAttachment = attach_form;
+                        bottomAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = minimumForm;
+                        topOffset = 10;
+                          {
+                            cylMatrixForm = XmForm;
+                                {
+                                  cylEntryRowColumn = XmRowColumn;
+                                  Group: Widget
+                                    marginWidth = 5;
+                                    marginHeight = 5;
+                                    entryAlignment = alignment_end;
+                                    spacing = 1;
+                                    navigationType = none;
+                                  Group: Constraint
+                                    rightAttachment = attach_form;
+                                    leftAttachment = attach_form;
+                                    topAttachment = attach_form;
+                                      {
+                                        diskLabel = XmLabel;
+                                      }
+                                      {
+                                        headingLabel = XmLabel;
+                                      }
+                                }
+                                {
+                                  labelRowColumn = XmRowColumn;
+                                  Group: Widget
+                                    entryAlignment = alignment_end;
+                                  Group: Constraint
+                                    rightAttachment = attach_widget;
+                                    rightWidget = valueRowColumn;
+                                    bottomAttachment = attach_form;
+                                    topAttachment = attach_widget;
+                                    topWidget = cylEntryRowColumn;
+                                      {
+                                        overheadLabel = XmLabel;
+                                      }
+                                      {
+                                        allocatedLabel = XmLabel;
+                                      }
+                                      {
+                                        freeLabel = XmLabel;
+                                      }
+                                      {
+                                        capacityLabel = XmLabel;
+                                      }
+                                }
+                                {
+                                  valueRowColumn = XmRowColumn;
+                                  Group: Widget
+                                    entryAlignment = alignment_end;
+                                  Group: Constraint
+                                    bottomAttachment = attach_form;
+                                    topAttachment = attach_widget;
+                                    topWidget = cylEntryRowColumn;
+                                    rightAttachment = attach_opposite_widget;
+                                    rightWidget = cylEntryRowColumn;
+                                      {
+                                        overheadValue = XmLabel;
+                                      }
+                                      {
+                                        allocatedValue = XmLabel;
+                                      }
+                                      {
+                                        freeValue = XmLabel;
+                                      }
+                                      {
+                                        capacityValue = XmLabel;
+                                      }
+                                }
+                          }
+                    }
+              }
+              {
+                :Inherited messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = okButton;
+                    {
+                      :Inherited okButton : button1 = XmPushButton;
+                    }
+                    {
+                      :Inherited loadButton : button2 = XmPushButton;
+                    }
+                    {
+                      :Inherited cancelButton : button3 = XmPushButton;
+                    }
+                    {
+                      :Inherited helpButton : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"spotcylinder.r\")";
+                    }
+                    {
+                      :Inherited button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+        {
+          cyl_slice_entry = XmRowColumn;
+          Group: Widget
+            orientation = horizontal;
+            navigationType = none;
+            marginHeight = 0;
+          Group: Control
+            vip_x = 50;
+            vip_y = 30;
+              {
+                sliceLabel = XmLabel;
+              }
+              {
+                mountText = XmTextField;
+                Group: Widget
+                  columns = 20;
+                  navigationType = none;
+                  activateCallback = "C: mountActivateCB";
+                  cursorPositionVisible = False;
+              }
+              {
+                sizeText = XmTextField;
+                Group: Widget
+                  columns = 8;
+                  maxLength = 8;
+                  losingFocusCallback = "C: sizeLosingFocus";
+                  activateCallback = "C: sizeActivateCB";
+                  modifyVerifyCallback = "C: sizeVerifyCB";
+                  navigationType = none;
+                  cursorPositionVisible = False;
+              }
+              {
+                startText = XmTextField;
+                Group: Widget
+                  maxLength = 8;
+                  columns = 8;
+                  losingFocusCallback = "C: startLosingFocus";
+                  activateCallback = "C: startActivateCB";
+                  modifyVerifyCallback = "C: sizeVerifyCB";
+                  navigationType = none;
+                  cursorPositionVisible = False;
+              }
+              {
+                endText = XmTextField;
+                Group: Widget
+                  columns = 8;
+                  editable = False;
+                  maxLength = 8;
+                  navigationType = none;
+                  traversalOn = False;
+                  cursorPositionVisible = False;
+              }
+        }
+}
+

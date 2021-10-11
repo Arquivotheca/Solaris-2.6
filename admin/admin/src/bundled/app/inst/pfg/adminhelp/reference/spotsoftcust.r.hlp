@@ -1,0 +1,125 @@
+---- About This Screen -----------------------------
+
+A package is a functional group of files and
+directories that form a software application.
+A cluster is a group of software packages.
+
+For the initial option, the software in the software
+group you selected is automatically selected to be 
+installed. For the upgrade option, the existing 
+software on the system is selected to be upgraded. 
+
+In both cases, you can add or delete the software 
+to be installed by selecting or deselecting the 
+clusters and packages on this screen.   
+
+---- Using This Screen -----------------------------
+
+> To view the contents of the entire software group,
+  use the vertical scrollbar.
+
+> About partially-selected clusters...
+
+  In clusters that are only partially selected, you
+  can select all of the packages inside by clicking
+  twice on the cluster symbol.
+
+> About required clusters and packages...
+     
+  Required clusters and packages (shown as a white X
+  on dark background) cannot be selected or deleted;
+  they are shown so you can see the contents of the
+  software group in its entirety.
+
+  You can view the contents of required clusters and
+  packages by clicking on the text.
+
+---- Size (MB) -------------------------------------
+
+This is the approximate size of the package. A value
+showing < l means less than one megabyte.
+
+---- Total -----------------------------------------
+
+This is the approximate number of megabytes the
+system will need for the software you've selected.
+
+---- Package Description ---------------------------
+
+Each time you change focus on a cluster or package 
+in the Software Clusters and Packages window, the 
+Package Description window changes to display 
+information about the cluster or package in focus. 
+
+> To view complete descriptions, use the vertical 
+  and horizontal scrollbars.
+
+> To expand or contract the viewing area of the
+  Package Description window, place the cursor on
+  the sash box (just below the horizontal scrollbar)
+  and drag it up or down.
+
+---- Unresolved Software Dependencies --------------
+
+When customizing a software group, you can remove or
+add a software package that other software depends 
+on, creating an unresolved dependency. These 
+packages are displayed in the Unresolved Software 
+Dependencies window.
+
+The left line in the window is a package; the line 
+indented directly below it is the package it depends
+on.
+
+In the following example, the Install Software 
+package depends on the OpenWindows package.
+  
+  Unresolved Software Dependencies
+  +-------------------------------------------+
+  |Install Software                           |
+  |    OpenWindows required core package      |
+  |                                           |
+  +-------------------------------------------+
+
+To delete unresolved dependencies you can:
+
+  > Select the dependent package (in the above 
+    example, OpenWindows) 
+OR
+ 
+  > Deselect the package that requires the dependent
+    package (in the above example, Install 
+    Software).
+
+---- Should You Ignore Dependencies? ---------------
+
+Ignore dependencies only if you know you will 
+remotely mount the software from somewhere else on 
+the network, or if you are sure you do not want the 
+functionality. It is common practice to remotely 
+mount software from a file server on a network. In 
+this case, the software does not need to be locally 
+installed. For example, many sites install 
+OpenWindows on a file server and share the copy 
+using remote mounting.
+
+If you ignore unresolved dependencies, the Solaris
+installation program may still successfully install
+Solaris, but there is no guarantee that the optional
+software installed will be fully functional.
+
+---- To Reset a Software Group (Initial Only) ------
+
+> To discard changes you've made to a software
+  group and reset it to its original settings:
+
+  1. Choose OK on the Customize Software screen.
+
+  2. On the Software screen, select a different
+     software group. 
+
+  3. Answer OK to the warning message that says
+     you will lose all customizations to the
+     original software group.
+
+  4. Reselect the original software group.

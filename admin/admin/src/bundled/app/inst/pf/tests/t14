@@ -1,0 +1,6 @@
+install_type  initial_install
+partitioning default
+cluster SUNWCuser
+package SUNWbcp delete
+#filesys any existing /pkgs preserve ro
+filesys c0t3d0s7 existing /pkgs preserve

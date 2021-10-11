@@ -1,0 +1,524 @@
+Module: pfgLayout
+{
+      autoCuil = False;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Wed Jan 11 13:36:06 1995";
+      nodesUsed = "autoLayoutDialog,\nfull_table_entry,\neditable_table_entry,\nfull_editable_entry";
+        {
+          basic_table_entry = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_none;
+            horizontalSpacing = 30;
+          Group: Control
+            vip_x = 69;
+            vip_y = 687;
+              {
+                select_slice_name = select_slice_name : pfgLayout;
+                Group: Widget
+                  spacing = 20;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                recommended_size = XmLabel;
+                Group: Widget
+                  width = 100;
+                  recomputeSize = False;
+                  labelString = XXXXX;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = select_slice_name;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                create_size = size_field : pfgLayout;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = recommended_size;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+        }
+        {
+          select_slice_name = XmToggleButton;
+          Group: Widget
+            recomputeSize = False;
+            alignment = alignment_beginning;
+            marginWidth = 0;
+          Group: Control
+            vip_x = 70;
+            vip_y = 30;
+        }
+        {
+          size_field = XmTextField;
+          Group: Widget
+            width = 100;
+            maxLength = 4;
+          Group: Control
+            vip_x = 70;
+            vip_y = 470;
+        }
+        {
+          options_table_entry = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_none;
+            horizontalSpacing = 30;
+          Group: Control
+            vip_x = 70;
+            vip_y = 415;
+              {
+                disk_option = XmOptionMenu;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                    {
+                      :Popup disk_option_list = XmPulldownMenu;
+                          {
+                            any_disk = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C:set_disk_choice_any";
+                          }
+                    }
+              }
+              {
+                slice_option = XmOptionMenu;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = disk_option;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                    {
+                      :Popup slice_option_list = XmPulldownMenu;
+                          {
+                            any_slice = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C:set_slice_choice(\"ANY\")";
+                          }
+                          {
+                            slice_choice0 = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C:set_slice_choice(\"0\")";
+                          }
+                          {
+                            slice_choice1 = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C:set_slice_choice(\"1\")";
+                          }
+                          {
+                            slice_choice2 = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C:set_slice_choice(\"2\")";
+                          }
+                          {
+                            slice_choice3 = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C:set_slice_choice(\"3\")";
+                          }
+                          {
+                            slice_choice4 = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C:set_slice_choice(\"4\")";
+                          }
+                          {
+                            slice_choice5 = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C:set_slice_choice(\"5\")";
+                          }
+                          {
+                            slice_choice6 = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C:set_slice_choice(\"6\")";
+                          }
+                          {
+                            slice_choice7 = XmPushButton;
+                            Group: Widget
+                              activateCallback = "C:set_slice_choice(\"7\")";
+                          }
+                    }
+              }
+        }
+        {
+          full_table_entry = XmRowColumn;
+          Group: Widget
+            orientation = horizontal;
+            adjustLast = False;
+          Group: Control
+            vip_x = 70;
+            vip_y = 635;
+            vipComment = "";
+            vip_show_name = true;
+              {
+                basic_table_entry = basic_table_entry : pfgLayout;
+              }
+              {
+                options_table_entry = options_table_entry : pfgLayout;
+                Group: Widget
+                  managed = False;
+              }
+        }
+        {
+          basic_column_labels = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+            allowOverlap = False;
+          Group: Control
+            vip_x = 70;
+            vip_y = 250;
+              {
+                slice_name_label = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                rec_size_label = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = slice_name_label;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                create_size_label = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = rec_size_label;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+        }
+        {
+          options_column_labels = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+            allowOverlap = False;
+          Group: Control
+            vip_x = 70;
+            vip_y = 305;
+              {
+                disks_label = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                slices_label = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = disks_label;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+        }
+        {
+          header_form = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+            allowOverlap = False;
+          Group: Control
+            vip_x = 70;
+            vip_y = 360;
+              {
+                basic_column_labels = basic_column_labels : pfgLayout;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                options_column_labels = options_column_labels : pfgLayout;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = basic_column_labels;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+        }
+        {
+          main_table_rc = XmRowColumn;
+          Group: Widget
+            adjustLast = False;
+            orientation = vertical;
+          Group: Control
+            vip_x = 70;
+            vip_y = 195;
+        }
+        {
+          autoLayoutScrollWin = XmScrolledWindow;
+          Group: Widget
+            height = 200;
+            scrollingPolicy = automatic;
+            width = 900;
+          Group: Control
+            vip_x = 70;
+            vip_y = 140;
+              {
+                main_table_rc = main_table_rc : pfgLayout;
+              }
+        }
+        {
+          autoLayoutDialog = XmFormDialog;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_grow;
+            marginWidth = 15;
+          Group: Control
+            vip_x = 70;
+            vip_y = 85;
+            vipComment = "";
+            vip_show_name = true;
+              {
+                panelhelpText = panelhelpText : pfgGUITemplates;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_none;
+                  resizable = true;
+              }
+              {
+                header_form = header_form : pfgLayout;
+                Group: Widget
+                  marginHeight = 10;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_widget;
+                  topWidget = panelhelpText;
+                  bottomAttachment = attach_none;
+                  resizable = true;
+              }
+              {
+                autoLayoutForm = XmForm;
+                Group: Widget
+                  rubberPositioning = False;
+                  resizePolicy = resize_any;
+                  verticalSpacing = 10;
+                  marginWidth = 10;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_widget;
+                  topWidget = header_form;
+                  bottomAttachment = attach_none;
+                  resizable = true;
+                    {
+                      autoLayoutScrollWin = autoLayoutScrollWin : pfgLayout;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        topAttachment = attach_form;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                    }
+                    {
+                      basic_button = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:set_show_options";
+                        managed = False;
+                      Group: Constraint
+                        leftAttachment = attach_none;
+                        rightAttachment = attach_opposite_widget;
+                        topAttachment = attach_widget;
+                        topWidget = autoLayoutScrollWin;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                        rightWidget = autoLayoutScrollWin;
+                    }
+                    {
+                      options_button = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:set_show_basic";
+                        managed = False;
+                      Group: Constraint
+                        leftAttachment = attach_none;
+                        rightAttachment = attach_opposite_widget;
+                        topAttachment = attach_widget;
+                        topWidget = autoLayoutScrollWin;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                        rightWidget = autoLayoutScrollWin;
+                    }
+              }
+              {
+                autoLayoutMessageBox = messageBox : pfgGUITemplates;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_widget;
+                  topWidget = autoLayoutForm;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                    {
+                      :Inherited autoLayoutContinue : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:layoutContinueCB";
+                    }
+                    {
+                      :Inherited button_not_used : button2 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      :Inherited autoLayoutCancel : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:layoutCancelCB";
+                    }
+                    {
+                      :Inherited autoLayoutExit : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:pfgExit";
+                    }
+                    {
+                      :Inherited autoLayoutHelp : button5 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:pfgHelp(\"autolayout.t\")";
+                    }
+              }
+        }
+        {
+          editable_table_entry = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+            horizontalSpacing = 30;
+          Group: Control
+            vip_x = 70;
+            vip_y = 580;
+            vipComment = "";
+            vip_show_name = true;
+              {
+                recommended_size = XmLabel;
+                Group: Widget
+                  recomputeSize = False;
+                  width = 100;
+                  labelString = XXXXX;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = blank_name_entry;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                create_size = size_field : pfgLayout;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = recommended_size;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                blank_name_entry = blank_name_entry : pfgLayout;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+        }
+        {
+          full_editable_entry = XmRowColumn;
+          Group: Widget
+            orientation = horizontal;
+            adjustLast = True;
+          Group: Control
+            vipComment = "";
+            vip_show_name = true;
+            vip_x = 70;
+            vip_y = 525;
+              {
+                editable_table_entry = editable_table_entry : pfgLayout;
+                Group: Widget
+                  horizontalSpacing = 30;
+              }
+              {
+                options_table_entry = options_table_entry : pfgLayout;
+                Group: Widget
+                  managed = False;
+              }
+        }
+        {
+          blank_name_entry = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+          Group: Control
+            vipComment = "";
+            vip_x = 172;
+            vip_y = 454;
+              {
+                select_slice_name = select_slice_name : pfgLayout;
+                Group: Widget
+                  labelString = " ";
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                new_slice_name = XmTextField;
+                Group: Widget
+                  activateCallback = "C:create_new_table_entry";
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = select_slice_name;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+        }
+}
+

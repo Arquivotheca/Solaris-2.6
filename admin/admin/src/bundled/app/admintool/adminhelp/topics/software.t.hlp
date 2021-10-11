@@ -1,0 +1,21 @@
+---- Admintool:Software ----------------------------
+ 
+Managing software with Admintool enables you to add
+and remove software packages on the local system.
+
+Manage software with Admintool to perform the
+following tasks: 
+
+- Add and remove software on the local system
+- Customize the software installed on a system
+- Display software installed on a system
+- Display software available for installation
+
+Adding software with Admintool requires that the
+software be available either on a mounted CD or 
+on a hard disk. Admintool will extract specified
+software from the CD or hard disk and install it on
+the local system's disk.
+
+Admintool does not provide the means to install
+software on remote systems.

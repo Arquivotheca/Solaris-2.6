@@ -1,0 +1,39 @@
+---- Using the Upgrade Option ----------------------
+
+Before you begin an upgrade, the installation
+program analyzes the system to see if there is 
+enough disk space on the existing file systems for
+the new version of the Solaris software. 
+
+ - If there are file systems that don't have enough 
+   disk space, you'll be prompted to delete software
+   to be installed into those file systems or let 
+   auto-layout reallocate space on the system. 
+
+ - If the existing file systems have enough space,
+   you'll be able to begin the upgrade right away.
+
+---- What to Do After Upgrading --------------------
+
+Sometimes the installation program cannot save local
+modifications that you've made to the previous 
+version of Solaris software. Refer to the following
+file to see if you need to fix any of the local 
+modifications that the upgrade could not preserve:
+
+  Before you reboot the system...
+  /a/var/sadm/system/data/upgrade_cleanup
+
+  After you reboot the system...
+  /var/sadm/system/data/upgrade_cleanup
+
+A record of what the Solaris installation program
+did during an upgrade can be important to determine 
+if the upgrade was successful. The output of the 
+upgrade is saved in the following file:
+
+   Before you reboot the system...
+   /a/var/sadm/system/logs/install_log
+
+   After you reboot the system...
+   /var/sadm/system/logs/install_log

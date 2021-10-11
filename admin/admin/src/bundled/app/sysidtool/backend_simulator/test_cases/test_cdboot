@@ -1,0 +1,15 @@
+machine {
+	interfaces { 
+	{ le, 0, 0.0.0.0, 0.0.0.0, 0.0.0.0, <running, broadcast> }
+	}
+	sysidtool {
+		configured = 0;
+		bootparamed = 0;
+		networked = 0;
+		autobound = 0;
+		subnetted = 0;
+		rootpass = 0;
+		locale = 0;
+		termtype = sun;
+	}
+}

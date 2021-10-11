@@ -1,0 +1,8 @@
+install_type  Initial_install
+system_type   Standalone
+#product Solaris 2.0
+partitioning default
+size all /
+cluster  SUNWCuser
+cluster SUNWClp delete
+package  SUNWman  delete

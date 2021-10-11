@@ -1,0 +1,10 @@
+
+----- Allocating Client Services -------------
+
+The Solaris installation program lets you
+allocate space for AutoClient systems and 
+diskless clients. After you install Solaris 
+software, you must use Solstice Host Manager 
+to set up client service support for these 
+clients or they will not be able to access 
+Solaris software.

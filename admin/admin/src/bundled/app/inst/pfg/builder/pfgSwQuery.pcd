@@ -1,0 +1,49 @@
+Module: pfgSwQuery
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Fri Dec  2 08:19:34 1994";
+      nodesUsed = swquery_dialog;
+      copy = false;
+      inCreateMenu = true;
+        {
+          swquery_dialog = baseWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 50;
+            vip_y = 30;
+              {
+                :Inherited panelhelpText = panelhelpText;
+              }
+              {
+                :Inherited messageBox = messageBox;
+                Group: Widget
+                  defaultButton = continueButton;
+                    {
+                      :Inherited continueButton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: swQueryContinueCB";
+                    }
+                    {
+                      :Inherited gobackButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: swQueryGobackCB";
+                    }
+                    {
+                      :Inherited customizeButton : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: swQueryCustomCB";
+                    }
+                    {
+                      :Inherited exitButton : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgExit";
+                    }
+                    {
+                      :Inherited helpButton : button5 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"spotsoftcust.r\")";
+                    }
+              }
+        }
+}
+

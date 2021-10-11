@@ -1,0 +1,118 @@
+---- Admintool:Modify Serial Ports
+     "Basic" Mode ----------------------------------
+
+Template
+    Template specifies the type of physical device
+    you are connecting to the serial port and
+    configuring with Admintool. Choices include:
+
+    Terminal - Hardwired - This is the default
+    option for attaching a terminal to a serial
+    port. (Change to the More or Expert mode to
+    override default terminal settings.)
+
+    Modem - Dial In Only - When this option is
+    selected,  users can dial in to the modem but
+    cannot dial out. 
+
+    Modem - Dial Out Only - When this option is
+    selected, users can dial out from the modem but
+    cannot dial in. 
+
+    Modem - Bidirectional - When this option is
+    selected, users can either dial in or out from
+    the modem. 
+
+    Initialize Only - No Connection  - When this
+    option is selected, port software is
+    initialized, but not configured. (You can
+    select to initialize the port connection without
+    actually connecting a device to the port.)
+
+Detail
+    The Detail selection specifies how much
+    information you can view and modify with
+    Admintool. By default, the Admintool:Modify
+    Serial Ports window is in Basic mode. The
+    More and Expert modes each show progressively
+    more configuration data and options you can
+    control. 
+
+Port
+    Port specifies the port selected in the
+    Admintool:Serial Ports main window. 
+
+Service
+    Service specifies if the service for the
+    specified port is turned on (enabled).
+
+Baud Rate
+    Baud Rate specifies the line speed used to
+    communicate with the device. 
+
+Terminal Type
+    Terminal Type specifies abbreviations for
+    terminal types. Valid terminal types are defined
+    in the /etc/termcap file.
+
+
+---- Admintool:Modify Serial Ports
+     "More" Mode -----------------------------------
+
+Options
+    Options include the following:
+
+    Initialize Only - Specifies that the port
+    software is initialized, but not configured.
+
+    Bidirectional - Specifies that the port line is
+    used in both directions.
+
+    Software Carrier - Specifies that the software
+    carrier detection feature is used. If this
+    option is not enabled, the hardware carrier
+    detection signal is used. 
+   
+Login Prompt
+    Login Prompt specifies the prompt displayed
+    after connection is made. 
+
+Comment
+    Optional. Comment contains a text description of
+    the service, if any.
+
+Port Monitor Tag
+    Port Monitor Tag specifies the port monitor name
+    to be used for this port.  
+
+
+---- Admintool:Modify Serial Ports
+     "Expert" Mode -----------------------------------
+
+Expert Options
+    Expert Options include the following:
+
+    Create utmp Entry - Specifies that a utmp entry
+    is created upon login. This item must be enabled
+    if a login service is used.
+
+    Connect on Carrier - Specifies that a port's
+    associate service is invoked immediately when a
+    connect indication is received.
+
+Service
+    Service specifies the program that is run upon
+    connection. 
+
+Streams Modules
+    Streams Modules specifies the Streams modules
+    that are pushed before the service is started.
+
+Timeout (secs)
+    Timeout(secs) specifies the number of seconds
+    before a port is closed. 
+
+See the "Topics" and "How To" help for more
+information about using Admintool:Serial Ports to
+set up a terminal or modem on a system's serial
+port. 

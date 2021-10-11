@@ -1,0 +1,92 @@
+# api.doc. kdconf internal API documentation. 9/3/93
+#
+#ident "@(#)api.doc 1.1 93/09/07"
+
+This brief document describes the different API within kdconf. The API between
+kdconf and the dvc library is described in a document in that library's
+source tree.
+
+The routines described here can be accessed by including ui.h and windvc.h
+in the controlling program. Those include files contain more information
+regarding these specific routines.
+
+USER INTERFACE CONTROL ROUTINES (ui.h)
+
+There are three routines used to control the interactive mode of getting
+the configuration information from the user. There is one routine for each
+configurable element:
+
+get_display_interactive()
+get_pointer_interactive()
+get_keyboard_interactive()
+
+These routines should use the windvc routines described below to get
+lists of the devices in each category, and to retrieve the
+structure relevant to the device the user is interested in configuring.
+
+These routines must build the screens visible to the user, and control all
+user interaction.
+
+Each of these routines must not exit until a device has been chosen. However,
+do not ask for confirmation, as that will be acomplished by another routine.
+
+The confirm screen is built using the routine below.
+
+int get_config_confirm(int)
+
+The passed parameter is a mask, indicating which items were configured
+manually, and should therefore be presented for confirmation. The
+masks are defined in ui.h, as CONFIRM_DIS CONFIRM_KBD CONFIRM_PTR.
+If none of these were entered manually, then this routine will not
+get called.
+
+The confirm screen routine will return either CONFIRM_YES or CONFIRM_NO
+indicating the configuration displayed is acceptable.
+
+LIST/NODE SELECTION ROUTINES (windvc.h)
+
+void dvc_init(void);
+
+This routine must be clled before any other dvc or windvc routines
+get invoked. It sets up internal data structures and lists, nased on
+the contents of the kernel's devinfo tree, the OWconfig file, the
+defaultkb file and the .cfinfo files present on the machine.
+
+void dvc_commit(void);
+
+This routine is invoked last, after all selections have been confirmed.
+It will update the required configuration files with the information about
+the selected keyboard, display and mouse.
+
+char **get_category_list( cat_t catname );
+
+This routine is invoked with one of the three category defines
+(DISPLAY_CAT, KEYBOARD_CAT, POINTER_CAT) and returns a list of strings
+corresponding to the names of the different types of devices available
+for configuration. The string following the last valid device is NULL ("").
+
+device_info_t * get_device_info( cat_t catname, int idx);
+
+This routine is used to retrieve the device node of the device which
+the user wishes to configure. The device node retrieved is based on the index
+passed in the second parameter. This zero-based index corresponds to the
+order in which the devices were presented when the get_catgory_list function
+was invoked. The device node will contain structures which indiate all possible
+settings for all possible attributes, as well as the default values for those
+attributes. See the dvc API for information regarding those structures. 
+
+void set_selected_device (device_info_t * node);
+
+This routine is used to mark as selected a particular device. The internal
+library will keep track of the latest display, mouse and keyboard
+configured. This node should be the same pointer retrieved with the call
+to get_device_info. The selected attribute list may be modified before the
+node is selected with this routine. See the dvc API for information regarding
+changing the selected attribute information.
+
+device_info_t * get_selected_device( cat_t catname );
+
+ths routine retrieves a pointer to the device node most resently marked as
+selected (using set_selected_device), for the requested category. This
+should be used in the confirmation routine to display the selected
+device and its attributes.

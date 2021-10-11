@@ -1,0 +1,14 @@
+name="asy"
+	__title__="AT COM ports"
+	__category__="serial"
+
+	class="sysbus"
+	interrupts="numeric,12","var,__irq__"
+
+	__irq__="numeric,3,4"
+
+	ioaddr="var,__ioa__"
+	__ioa__="numeric,0x2f8,0x3f8,0x2e8,0x3e8"
+
+	__auto__="string,true"
+	;

@@ -1,0 +1,21 @@
+---- Existing disk layouts ---------------------
+
+You can load existing disk information from the
+Volume Table of Contents (VTOC) by accessing the
+Customize Disk by Cylinder screen. The VTOC table
+holds the current slice layout of the disk by 
+cylinders. Loading in an existing VTOC table will
+overwrite the existing layout.
+
+--- To access Customize Disk by Cylinder screen --
+
+1. Go to the File System and Disk Layout screen, and
+   select Customize. (The Customize Disk screen will
+   be displayed.)
+
+2. On the Customize Disk screen, click on the 
+   appropriate disk icon. (The Customize Disk by
+   Cylinder screen will be displayed.)
+
+3. On the Customize Disk by Cylinder screen, choose
+   Load.

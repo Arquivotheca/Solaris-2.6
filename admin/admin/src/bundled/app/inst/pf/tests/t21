@@ -1,0 +1,23 @@
+install_type    initial_install
+system_type     standalone
+
+partitioning    explicit
+fdisk	c0t3d0	DOS	free
+fdisk	c0t3d0	SOLARIS	200m
+
+filesys         c0t1d0s0	auto    /
+filesys         c0t1d0s1	auto    swap
+filesys         c0t1d0s3	auto	/usr
+filesys         c0t1d0s4	free    /export
+
+filesys         infidel-111:/export/s10-93/sunpro/2.0.1/SUNWspro - /opt/SUNWspro
+filesys         ud17-111a:/export/dist - /usr/dist
+filesys         hagar:/opt/teamware - /opt/teamware
+filesys         gallifrey:/export/gallifrey - /export/gallifrey
+filesys         gallifrey:/proto - /proto
+filesys         gallifrey:/work - /work
+
+cluster         SUNWCprog
+
+package         SUNWdiag        add
+package SUNWabe         delete

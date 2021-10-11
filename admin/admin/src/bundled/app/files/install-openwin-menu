@@ -1,0 +1,43 @@
+#
+#       @(#)install-openwin-menu 1.10 93/12/23 SMI
+#
+# Copyright (c) 1992 by Sun Microsystems, Inc.
+#
+#       install system default root menu file
+#
+# i18n: This needs to be installed as
+# "/usr/lib/locale/<LANG>/LC_MESSAGES/install-openwin-menu"
+# where LANG IS the localization it has been translated for.
+#
+
+"Workspace" TITLE
+
+"Solaris Install..."    (LANG=`grep LANG /tmp/root/etc/default/init | \
+			sed -e '/^#/d' -e 's/.*=//'`; \
+			export LANG; exec $OPENWINHOME/bin/xterm -fn \
+			installfont -bg black -fg white -cr gray70 -cu +sb \
+			-title "`gettext SUNW_INSTALL_SCRIPTS \
+			'Solaris Install'`" -geometry 80x34+135-52 -e \
+			/sbin/suninstall)
+
+"Console..."            (LANG=`grep LANG /tmp/root/etc/default/init | \
+			sed -e '/^#/d' -e 's/.*=//'`; \
+			export LANG; exec $OPENWINHOME/bin/xterm -C -fn \
+			installfont -bg black -fg white -cr gray70 -sb \
+			-title "`gettext SUNW_INSTALL_SCRIPTS \
+			'Solaris Install Console'`" -geometry 80x5+0+0)
+
+
+SEPARATOR
+
+"Properties..."		PROPERTIES
+
+"Command Tool..."	(LANG=`grep LANG /tmp/root/etc/default/init | \
+			sed -e '/^#/d' -e 's/.*=//'`; \
+			export LANG; exec $OPENWINHOME/bin/cmdtool)
+
+"Workstation Info..."   (LANG=`grep LANG /tmp/root/etc/default/init | \
+			sed -e '/^#/d' -e 's/.*=//'`; \
+			export LANG; exec $OPENWINHOME/bin/wsinfo)
+
+"Refresh"		DEFAULT REFRESH

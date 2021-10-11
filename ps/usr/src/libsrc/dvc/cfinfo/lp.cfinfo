@@ -1,0 +1,14 @@
+name="lp"
+	__title__="Parallel printer port"
+	__category__="lp"
+
+	class="sysbus"
+	interrupts="numeric,3","var,__irq__"
+
+	__irq__="numeric,7,5"
+
+	ioaddr="var,__ioa__"
+	__ioa__="numeric,0x378,0x278,0x3BC"
+
+	__auto__="string,true"
+	;

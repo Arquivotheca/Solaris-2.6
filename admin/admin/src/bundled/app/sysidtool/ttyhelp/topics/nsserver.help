@@ -1,0 +1,17 @@
+
+---- Description ----------------------------------------------------
+
+     Specifies the name and IP address of the network name server
+     for your system. 
+
+     An IP address is a series of four numbers separated by
+     periods.  Generally, each part of the address is a
+     number between 0 and 255.  The first number must be less
+     than 224 and usually the last number cannot be 0.
+
+
+---- See also -------------------------------------------------------
+
+     Internet Protocol (IP) address
+     name service
+     name server

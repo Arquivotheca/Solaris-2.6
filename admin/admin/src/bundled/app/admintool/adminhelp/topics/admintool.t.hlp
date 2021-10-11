@@ -1,0 +1,41 @@
+---- Admintool -------------------------------------
+ 
+Managing your system with Admintool enables you to
+perform the following tasks:
+
+- Manage user accounts - You can use Admintool to
+  add, delete, or modify user accounts. The
+  software makes appropriate changes in the system's
+  /etc/passwd file.
+
+- Manage groups - You can use Admintool to add and 
+  delete groups or modify group membership. The
+  software makes appropriate changes in the system's
+  /etc/group file. 
+
+- Manage hosts - You can use Admintool to add,
+  delete, or modify hosts, enabling remote access to
+  those hosts. The software makes appropriate
+  changes in the system's /etc/inet/hosts file.
+
+- Manage printers - You can use Admintool to add,
+  delete, or modify a system's printer setup. The
+  software makes appropriate changes in the system's
+  /etc/lp directory.
+
+- Manage serial ports - You can use Admintool to
+  enable and disable serial port services. The
+  Admintool sets up software services necessary to
+  use a modem or terminal attached to a system's
+  serial port. 
+
+- Manage software  - You can use Admintool to add or
+  remove software. The Admintool adds software from
+  a product CD or disk to an installed system, or
+  removes software from an installed system.
+
+NOTE:  To use Admintool, you must be a member of 
+       group 14 (the sysadmin group). For more
+       information, see "Group 14 (the sysadmin
+       Group)" and "Add Yourself to Group 14" from
+       the list of available help.  

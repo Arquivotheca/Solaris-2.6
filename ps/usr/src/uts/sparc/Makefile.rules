@@ -1,0 +1,48 @@
+#
+# uts/sparc/Makefile.rules
+#
+#pragma ident  "@(#)Makefile.rules 1.1     95/02/14 SMI"
+#
+# Copyright (c) 1995 by Sun Microsystems, Inc.
+# All rights reserved.
+#
+#	This Makefile defines all file modules and build rules for the
+# directory uts/sparc and it's children. These are the source files which
+# are specific to the sparc processor.
+#
+
+#
+#	This was implemented by pattern matching rules of the form:
+#
+# $(OBJS_DIR)/%.o:       $(UTSBASE)/common/os/%.c
+#	$(COMPILE.c) -o $@ $<
+#
+# $(LINTS_DIR)/%.ln:    $(UTSBASE)/common/os/%.c
+#	@($(LHEAD) $(LINT.c) $< $(LTAIL))
+#
+#	For each directory containing source. This proved to slow under
+#	Nse because it caused a significant additional number of stats
+#	and stats are real slow under TFS. If TFS performance should
+#	improve, one might consider returning to the former implementation.
+#	In the former implementation, this file (Makefile.rules) was not
+#	needed and the pattern matching rules were in Makefile.files.
+#
+
+#
+#	C object build rules
+#
+#	The following are alphabetized by source file path. Please maintain
+# this ordering.
+#
+#$(OBJS_DIR)/<module>.o:        $(UTSBASE)/sparc/<module>/<module>.c
+#        $(COMPILE.c) -o $@ $(UTSBASE)/sparc/<module>/<module>.c
+
+#
+#	Lint `object' build rules.
+#
+#	The following are alphabetized by source file path. Please maintain
+# this ordering.
+#
+
+#$(LINTS_DIR)/<module>.o:        $(UTSBASE)/sparc/<module>/<module>.c
+#        @($(LHEAD) $(LINT.c) $(UTSBASE)/sparc/<module>/<module>.c $(LTAIL))

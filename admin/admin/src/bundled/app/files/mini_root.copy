@@ -1,0 +1,215 @@
+/*
+ *
+ *	@(#)mini_root.copy 1.1 96/09/03
+ *
+ * Copyright (c) 1992-1996 Sun Microsystems, Inc.  All Rights Reserved. Sun
+ * considers its source code as an unpublished, proprietary trade secret, and
+ * it is available only under strict license provisions.  This copyright
+ * notice is placed here only to protect Sun in the event the source is
+ * deemed a published work.  Dissassembly, decompilation, or other means of
+ * reducing the object code to human readable form is prohibited by the
+ * license agreement under which this code is provided to the user or company
+ * in possession of this copy.
+ *
+ * RESTRICTED RIGHTS LEGEND: Use, duplication, or disclosure by the Government
+ * is subject to restrictions as set forth in subparagraph (c)(1)(ii) of the
+ * Rights in Technical Data and Computer Software clause at DFARS 52.227-7013
+ * and in similar clauses in the FAR and NASA FAR Supplement.
+ *
+ *
+ * mini_root.copy - list of files to copy from the "usr" to the "root"/usr
+ *
+ *	This file is used for two operations, the copy from "usr" to
+ * a temp directory; then a copy from temp to "root".
+ *
+ * format:
+ *	file temp dest
+ * where:
+ *	file	- either:
+ *		name of the file relative from "root"
+ *		- or:
+ *		"d" - mkdir -p (or rm -rf if there) the temp directory
+ *		    - mkdir -p the directory iff it is not there on root.
+ *		"l" - ln (on root) "temp" "dest"
+ *		    - (ignored on temp)
+ *	temp	- what name to use for the temporary file (relative to TMPDIR)
+ *		- or (d): directory name relative to "temp" or "root"
+ *		- or (l): existing file
+ *	dest	- what name to copy it to in "root"
+ *		- or (l): new name for file
+ */
+d   usr
+d	usr/sbin
+d	usr/bin
+d	usr/kernel/drv
+d	usr/kernel/fs
+d	usr/lib
+d	usr/lib/fs
+d	usr/lib/fs/tmpfs
+d	usr/lib/fs/lofs
+d	usr/lib/fs/ufs
+d	usr/lib/fs/pcfs
+d	usr/lib/fs/proc
+d	usr/lib/fs/fd
+f	usr/lib/ld.so.1		usr/lib/ld.so.1
+f	usr/lib/libsocket.so.1	usr/lib/libsocket.so.1
+f	usr/lib/libbsm.so.1	usr/lib/libbsm.so.1	
+l	usr/lib/libbsm.so.1	usr/lib/libbsm.so
+f	usr/lib/libc.so.1	usr/lib/libc.so.1	
+l	usr/lib/libc.so.1	usr/lib/libc.so
+f	usr/lib/libdevinfo.so.1	usr/lib/libdevinfo.so.1	
+l	usr/lib/libdevinfo.so.1	usr/lib/libdevinfo.so
+f	usr/lib/libdl.so.1	usr/lib/libdl.so.1	
+l	usr/lib/libdl.so.1	usr/lib/libdl.so
+f	usr/lib/libelf.so.1	usr/lib/libelf.so.1	
+l	usr/lib/libelf.so.1	usr/lib/libelf.so
+f	usr/lib/libintl.so.1	usr/lib/libintl.so.1	
+l	usr/lib/libintl.so.1	usr/lib/libintl.so
+f	usr/lib/libkstat.so.1	usr/lib/libkstat.so.1	
+l	usr/lib/libkstat.so.1	usr/lib/libkstat.so
+f	usr/lib/libkvm.so.1	usr/lib/libkvm.so.1	
+l	usr/lib/libkvm.so.1	usr/lib/libkvm.so
+f	usr/lib/libmapmalloc.so.1 usr/lib/libmapmalloc.so.1 
+l	usr/lib/libmapmalloc.so.1 usr/lib/libmapmalloc.so
+f	usr/lib/libw.so.1	usr/lib/libw.so.1	
+l	usr/lib/libw.so.1	usr/lib/libw.so
+f	usr/lib/libnsl.so.1	usr/lib/libnsl.so.1	
+l	usr/lib/libnsl.so.1	usr/lib/libnsl.so
+/* */
+f	usr/lib/libmp.so.2	usr/lib/libmp.so.2	
+l	usr/lib/libmp.so.2	usr/lib/libmp.so
+f	usr/lib/libthread.so.1	usr/lib/libthread.so.1	
+l	usr/lib/libthread.so.1	usr/lib/libthread.so
+/* needed for findcd for preinstall */
+f	usr/lib/libadm.so.1	usr/lib/libadm.so.1	
+l	usr/lib/libadm.so.1	usr/lib/libadm.so
+/* needed for drvconfig */
+f	usr/lib/nss_compat.so.1	usr/lib/nss_compat.so.1	
+l	usr/lib/nss_compat.so.1	usr/lib/nss_compat.so
+f	usr/lib/nss_dns.so.1	usr/lib/nss_dns.so.1	
+l	usr/lib/nss_dns.so.1	usr/lib/nss_dns.so
+f	usr/lib/nss_files.so.1	usr/lib/nss_files.so.1	
+l	usr/lib/nss_files.so.1	usr/lib/nss_files.so
+f	usr/lib/nss_nis.so.1	usr/lib/nss_nis.so.1	
+l	usr/lib/nss_nis.so.1	usr/lib/nss_nis.so
+f	usr/lib/nss_nisplus.so.1	usr/lib/nss_nisplus.so.1	
+l	usr/lib/nss_nisplus.so.1	usr/lib/nss_nisplus.so
+f	usr/lib/libsec.so.1	usr/lib/libsec.so.1	
+l	usr/lib/libsec.so.1	usr/lib/libsec.so
+f	usr/lib/librpcsvc.so.1	usr/lib/librpcsvc.so.1	
+l	usr/lib/librpcsvc.so.1	usr/lib/librpcsvc.so
+
+/*
+ * dynamic libs for cpio
+ *   libintl.so.1 =>  /usr/lib/libintl.so.1
+ *   libmapmalloc.so.1 =>     /usr/lib/libmapmalloc.so.1
+ *   libc.so.1 =>     /usr/lib/libc.so.1
+ *   libw.so.1 =>     /usr/lib/libw.so.1
+ *   libdl.so.1 =>    /usr/lib/libdl.so.1
+ */
+f	usr/bin/cpio sbin/cpio 
+
+/*
+ * dynamic libs for adb
+ *   libkvm.so.1 =>   /usr/lib/libkvm.so.1
+ *   libelf.so.1 =>   /usr/lib/libelf.so.1
+ *   libc.so.1 =>     /usr/lib/libc.so.1
+ *   libdl.so.1 =>    /usr/lib/libdl.so.1
+ */
+f	usr/bin/adb sbin/adb 
+
+/*
+ * dynamic libs for tmpfs/mount
+ *   libintl.so.1 =>  /usr/lib/libintl.so.1
+ *   libc.so.1 =>     /usr/lib/libc.so.1
+ *   libw.so.1 =>     /usr/lib/libw.so.1
+ *   libdl.so.1 =>    /usr/lib/libdl.so.1 
+ */
+f	usr/lib/fs/tmpfs/mount	usr/lib/fs/tmpfs/mount	
+
+/*
+ * dynamic libs for lofs/mount
+ *   libc.so.1 =>     /usr/lib/libc.so.1
+ *   libdl.so.1 =>    /usr/lib/libdl.so.1 
+ */
+f	usr/lib/fs/lofs/mount	usr/lib/fs/lofs/mount	
+
+/*
+ * dynamic libs for sbin/bpgetfile
+ *   libdl.so.1 =>    /usr/lib/libdl.so.1 
+ *   libsocket.so.1   These three won't show up with ldd
+ *   libnsl.so.1
+ */
+
+/* moved from root_cmds - needed for YP config */
+f	usr/bin/mkdir		usr/bin/mkdir			
+f	usr/bin/cp		usr/bin/cp			
+f	usr/bin/cat		usr/bin/cat			
+f	usr/bin/dd		usr/bin/dd		
+
+/* needed for preinstall root */
+f	usr/sbin/reboot		sbin/reboot	
+f	usr/sbin/mknod		sbin/mknod
+f	usr/bin/ls		usr/bin/ls
+f	usr/bin/df		usr/bin/df
+f	usr/bin/expr		usr/bin/expr
+f	usr/bin/grep		usr/bin/grep
+
+#ifdef sparc
+f	usr/bin/eject		usr/bin/eject
+#endif	/* sparc */
+
+f	usr/bin/ftp		usr/bin/ftp
+f	usr/bin/iostat		usr/bin/iostat	
+f	usr/bin/netstat		usr/bin/netstat	
+f	usr/bin/nfsstat		usr/bin/nfsstat
+f	usr/bin/ps		usr/bin/ps
+f	usr/bin/rm		usr/bin/rm
+f	usr/bin/truss		usr/bin/truss	
+f	usr/bin/vmstat		usr/bin/vmstat
+f	usr/sbin/snoop		usr/sbin/snoop
+f	usr/sbin/swap		usr/sbin/swap
+f	usr/sbin/installboot	usr/sbin/installboot
+
+f	usr/bin/find		usr/bin/find
+f	usr/sbin/fsck		usr/sbin/fsck
+f	usr/lib/fs/ufs/fsck	usr/lib/fs/ufs/fsck	
+
+f	usr/lib/fs/pcfs/mount	usr/lib/fs/pcfs/mount
+
+f	usr/lib/fs/proc/mount	usr/lib/fs/proc/mount
+
+f	usr/lib/fs/fd/mount	usr/lib/fs/fd/mount	
+f	usr/lib/fs/fd/fsck	usr/lib/fs/fd/fsck
+
+f	usr/kernel/fs/pcfs	usr/kernel/fs/pcfs
+f	usr/kernel/fs/fdfs	usr/kernel/fs/fdfs
+
+f	usr/kernel/drv/kstat	usr/kernel/drv/kstat
+f	usr/kernel/drv/kstat.conf	usr/kernel/drv/kstat.conf	
+
+f	usr/kernel/drv/ksyms	usr/kernel/drv/ksyms
+f	usr/kernel/drv/ksyms.conf	usr/kernel/drv/ksyms.conf
+
+/* needed for window system */
+f	usr/kernel/drv/ptm	usr/kernel/drv/ptm
+f	usr/kernel/drv/ptm.conf	usr/kernel/drv/ptm.conf
+f	usr/kernel/drv/pts	usr/kernel/drv/pts
+f	usr/kernel/drv/pts.conf	usr/kernel/drv/pts.conf
+
+f	usr/kernel/drv/winlock		usr/kernel/drv/winlock
+f	usr/kernel/drv/winlock.conf	usr/kernel/drv/winlock.conf
+
+f	usr/sbin/drvconfig	usr/sbin/drvconfig
+f	usr/sbin/devlinks	usr/sbin/devlinks
+f	usr/sbin/disks		usr/sbin/disks
+f	usr/sbin/tapes		usr/sbin/tapes
+f	usr/sbin/ports		usr/sbin/ports
+
+f	usr/sbin/modinfo	usr/sbin/modinfo
+f	usr/sbin/modload	usr/sbin/modload
+f	usr/sbin/modunload	usr/sbin/modunload
+f	usr/sbin/halt		usr/sbin/halt
+f	usr/bin/ldd		usr/bin/ldd
+
+f	usr/sbin/bpgetfile	sbin/bpgetfile

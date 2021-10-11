@@ -1,0 +1,19 @@
+---- To free up disk space --------------------
+
+There are several ways to free up disk space:
+
+- Add more disks to the Selected Disk list on the
+  Disks screen 
+
+- Attach another disk to your system
+
+- Remove a software cluster or package from the
+  software group you've selected (see Customizing
+  Software screen)
+
+- Choose a different software group on the Software 
+  screen
+
+- If installing a server, you can reduce the
+  number of clients and the default swap space
+  per client

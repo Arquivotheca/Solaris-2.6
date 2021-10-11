@@ -1,0 +1,150 @@
+Module: pfgPreserve
+{
+      autoCuil = false;
+      copy = false;
+      inCreateMenu = true;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Wed Mar  1 15:12:57 1995";
+      nodesUsed = "preserve_entry,\npreserve_dialog";
+        {
+          preserve_entry = XmFrame;
+          Group: Control
+            vip_x = 150;
+            vip_y = 30;
+            vipComment = "";
+            vip_show_name = true;
+              {
+                preserveEntryForm = XmForm;
+                    {
+                      preserveSliceLabel = XmLabel;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        bottomAttachment = attach_opposite_widget;
+                        topAttachment = attach_opposite_widget;
+                        topWidget = preserveMountText;
+                        bottomWidget = preserveMountText;
+                        rightAttachment = attach_widget;
+                        rightWidget = preserveMountText;
+                    }
+                    {
+                      preserveMountText = XmTextField;
+                      Group: Widget
+                        columns = 32;
+                        modifyVerifyCallback = "C: mountVerifyCB";
+                      Group: Constraint
+                        bottomAttachment = attach_form;
+                        topAttachment = attach_form;
+                        rightAttachment = attach_widget;
+                        rightWidget = preserveSizeLabel;
+                    }
+                    {
+                      preserveSizeLabel = XmLabel;
+                      Group: Constraint
+                        bottomAttachment = attach_opposite_widget;
+                        bottomWidget = preserveToggleButton;
+                        topAttachment = attach_opposite_widget;
+                        topWidget = preserveToggleButton;
+                        rightAttachment = attach_widget;
+                        rightWidget = preserveToggleButton;
+                    }
+                    {
+                      preserveToggleButton = XmToggleButton;
+                      Group: Widget
+                        valueChangedCallback = "C: preserveToggleCB";
+                      Group: Constraint
+                        bottomAttachment = attach_form;
+                        topAttachment = attach_form;
+                        rightAttachment = attach_form;
+                    }
+              }
+        }
+        {
+          preserve_dialog = formWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 50;
+            vip_y = 30;
+              {
+                :Inherited panelhelpText = XmText;
+              }
+              {
+                :Inherited preserveForm : form = XmForm;
+                Group: Widget
+                  marginWidth = 20;
+                    {
+                      sliceColumnLabel = XmLabel;
+                      Group: Constraint
+                        topAttachment = attach_form;
+                        leftAttachment = attach_form;
+                    }
+                    {
+                      fileSystemColumnLabel = XmLabel;
+                      Group: Constraint
+                        topAttachment = attach_opposite_widget;
+                        topWidget = sliceColumnLabel;
+                        leftAttachment = attach_widget;
+                        leftWidget = sliceColumnLabel;
+                    }
+                    {
+                      sizeColumnLabel = XmLabel;
+                      Group: Constraint
+                        topAttachment = attach_opposite_widget;
+                        topWidget = fileSystemColumnLabel;
+                        leftAttachment = attach_widget;
+                        leftWidget = fileSystemColumnLabel;
+                    }
+                    {
+                      preserveColumnLabel = XmLabel;
+                      Group: Constraint
+                        leftAttachment = attach_widget;
+                        leftWidget = sizeColumnLabel;
+                        topAttachment = attach_opposite_widget;
+                        topWidget = sizeColumnLabel;
+                    }
+                    {
+                      preserveScrolledWindow = XmScrolledWindow;
+                      Group: Widget
+                        scrollingPolicy = automatic;
+                      Group: Constraint
+                        rightAttachment = attach_form;
+                        leftAttachment = attach_form;
+                        bottomAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = sliceColumnLabel;
+                          {
+                            preserveRowColumn = XmRowColumn;
+                          }
+                    }
+              }
+              {
+                :Inherited messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = continueButton;
+                Group: Control
+                  collapsed = False;
+                    {
+                      :Inherited continueButton : button1 = XmPushButton;
+                    }
+                    {
+                      :Inherited cancelButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: preserveCancelCB";
+                    }
+                    {
+                      :Inherited helpButton : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"preserve.h\")";
+                    }
+                    {
+                      :Inherited button4 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      :Inherited button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+}
+

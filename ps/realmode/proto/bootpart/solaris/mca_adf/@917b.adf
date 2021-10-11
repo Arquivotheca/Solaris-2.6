@@ -1,0 +1,20 @@
+
+AdapterId 0917bh
+
+AdapterName "SVGA Adapter"
+
+NumBytes 1
+
+FixedResources
+ 	pos[0]=XXXXXXXXb
+
+Begin Device 03h
+
+NamedItem Prompt "ROM Address"
+   choice "C0000h-C7FFFh"	
+	pos[0]=xxxxxxxxb mem 0C0000h - 0C7FFFh
+Help
+   "This is the address range for the video adapter. This address cannot be changed"
+
+End
+

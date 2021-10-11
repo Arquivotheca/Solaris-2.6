@@ -1,0 +1,26 @@
+class="win" name="SUNWmach32"
+	__wclass__="XSCREENCONFIG"
+	__category__="display"
+	__title__="Prototype mach32 entry"
+
+	size="var,__size__"
+	__size__="string,15-inch,17-inch,19-inch"
+	__dimx__="string,12,13.5,15"
+	__dimy__="string,9.5,11,12"
+
+	position="var,__position__"
+	__position__="string,left,right,top,bottom"
+
+ 	device="SUNW8514"
+	pmifile="/usr/openwin/share/etc/devdata/svpmi/SUNW8514/mach32_60.pmi"
+
+	res="var,__resolution__"
+	__resolution__="string,1280x1024,1024x768"
+	__pmimap__="string,SUNWmach32,ati"
+
+	dpix="string,90"
+	dpiy="string,90"
+
+	__group__="string,SUNWmach32"
+	__members__="string,mach32_60,mach32_70,mach32_76,mach32_87,mach32_95"
+	;

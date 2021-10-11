@@ -1,0 +1,23 @@
+---- Admintool:Serial Ports ------------------------
+
+Managing serial ports with Admintool enables you to
+set up serial port services. This, in turn, enables
+you to use a terminal or modem attached to a
+system's serial port.
+
+Using Admintool to manage serial ports is a
+convenient way to set up terminals and modems
+without having to edit and create necessary files
+manually. Admintool:Serial Ports features:
+
+- Templates for common terminal and modem
+  configurations 
+- A view of current serial port status
+
+Because you do not physically add a serial port (it
+is a hardware component), Admintool only gives you
+the option to modify or delete serial port services.
+
+You must select a serial port by clicking on it
+to make the Modify and Delete options available from
+the Edit menu.

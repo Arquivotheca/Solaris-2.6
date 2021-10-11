@@ -1,0 +1,38 @@
+.\" @(#)order.4 1.2 93/02/24
+'\"macro stdmacro
+.\" Copyright (c) 1992 SunSoft, Inc. - All Rights Reserved
+'\"macro stdmacro
+.nr X
+.TH order 4 "24 Feb 1993"
+.SH NAME
+order \- package installation order description file
+.SH DESCRIPTION
+.IX ".order " "" "\fL.order\fP \(em installation order of software packages on product distribution media"
+.IX "package installation order file" ".order" "" "\(em \fLorder\fP"
+The package installation order file, \f4.order,\fP
+is an
+.SM ASCII
+file specifying the order in which packages must be installed 
+based on their prerequisite dependencies.  Any 
+package with prerequisite dependencies must be installed 
+.B after 
+any packages it lists as a prerequisite dependency in its \f4depend\fP file.
+.PP
+A \f4.order\fP file is required for the OS product.
+The \f4.order\fP file must reside in the
+top-level directory containing the product.
+.PP
+The ordering is specified as a list of package identifiers, from
+the first package to be installed to the last, one package identifier
+per line.
+.SH NOTES
+The \f4depend\fP file supports \f2incompatible\fP and \f2reverse\fP 
+dependencies.  These dependency types are not recognized in the \f4order\fP 
+file.
+.SH SEE ALSO
+.B cdtoc(4),
+.B clustertoc(4),
+.B packagetoc(4),
+.B pkginfo(4),
+.B depend(4)
+.\".Ee

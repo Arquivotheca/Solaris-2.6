@@ -1,0 +1,25 @@
+---- Admintool:Package Administration: Existing
+Files ----------------------------------------------
+
+Existing Files
+    Specifies what to do if an installation expects
+    to overwrite a previously installed file, thus
+    creating a conflict between packages. Options
+    are:
+
+    Ask		Installer will be prompted for
+		instructions when conflicting files
+		are found. 
+
+    Overwrite	Do not check for conflict; files in
+		conflict will be overwritten.
+
+    Skip	Override installation of conflicting
+		files; they will not be installed.
+
+    Abort	Abort installation if conflict is
+		detected. 
+
+See the "Topics" help for more information about
+using Admintool:Package Administration to set
+preferences during installation.

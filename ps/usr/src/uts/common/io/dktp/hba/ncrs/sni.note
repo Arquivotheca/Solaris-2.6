@@ -1,0 +1,89 @@
+From kiefner.abg@sni.de Wed Aug 10 02:05 PDT 1994
+Return-Path: <kiefner.abg@sni.de>
+Received: from West.Sun.COM by pongo.West.Sun.COM (5.0/SMI-SVR4)
+	id AA02299; Wed, 10 Aug 1994 02:05:03 +0800
+Received: from Sun.COM (sun-barr.EBay.Sun.COM) by West.Sun.COM (5.0/SMI-5.3)
+	id AA22481; Wed, 10 Aug 1994 02:05:02 +0800
+Received: from mail.sni.de (news.sni.de) by Sun.COM (sun-barr.Sun.COM)
+	id AA04696; Wed, 10 Aug 94 02:04:44 PDT
+Received: from sni.de by mail.sni.de id <17515-0@mail.sni.de>;
+          Wed, 10 Aug 1994 11:03:27 +0200
+Message-Id: <9408100904.AA04696@Sun.COM>
+Subject: BIOS Flash disk for PCE-5S
+To: adler@pongo73.West.Sun.COM (Bruce Adler)
+Date: Wed, 10 Aug 94 10:50:43 MESZ
+From: Erhard Kiefner <kiefner.abg@sni.de>
+Cc: Chris.Baker@uk
+X-Mailer: xmail 2.4 (based on ELM 2.2 PL16)
+Content-Type: text
+Content-Length: 2275
+Status: R
+
+
+
+Siemens Nixdorf AG
+Erhard Weiss
+10. August 94
+
+Dear Bruce Adler,
+
+I have received your mail. Here are the requested infos.
+
+I have checked the programming of the 53C710 register. 
+The bits EVP, EPG and GRP are set correct. In addition the bit EPC should be
+set.
+Here is a complete summary of the bits used:
+
+SNTL0:  EPC (enable parity checking) = 1
+        EPG (Enable partity generation/parity through) = 0
+
+CTEST7: EVP (even parity) = 1
+
+CTEST0: GRP (generate receive parity for pass through) = 1
+
+
+Technical description
+---------------------
+The odd parity of the SCSI bus in converted to even parity used for our 
+private 64 bit bus. The SCSI controller is responsible for generating the
+parity. This feature is available till Rev D of the SCSI controller
+53C710.
+
+
+We do not plan to change anything in the hardware. The hardware is frozen.
+
+I have discovered that the System BIOS that includes the SCSI BIOS (old name:
+CAMcore) is relatively old.
+The current version is: V1.00 / Rel 1.04.714
+That System BIOS includes a SCSI-BIOS V3.00.08.
+
+I will send you the new BIOS via mail. The BIOS can be flashed easily by 
+using the utility on the "Flash Update Boot Diskette".
+
+To flash the new BIOS 2 methods are possible:
+
+1. Boot the PCE-5S
+   Insert the BIOS Update Diskette
+   Run the AUTOEXEC.BAT file
+   The new BIOS will be flashed, several hints will be displayed on the 
+   screen.
+
+2. Use of the Recovery Mode
+   Open the PCE-5S
+   Close the switch S1 of the DIP switch located on the motherboard
+   Boot the PCE-5S with the Flash Boot Diskette inserted
+   Some infos will be displayed on the LCD display
+   After the update process is finished, remove the diskette
+   Turn the PCE-5S off
+   Open the switch S1
+ 
+
+-- 
++---------------------------------------------------------------------------+
+| Erhard Kiefner, SNI BU PC E SW 1,  Siemens Nixdorf Informationssysteme AG |
+| E-Mail: kiefner.abg@sni.de         Buergermeister-Ulrich-Str. 100         |
+| uucp:   unido!nixpbe!kiefner.abg   D-86199 Augsburg                       |
+| Tel:    +49 821 804 3605                                                  |
+| Fax:    +49 821 804 2910                                                  |
++---------------------------------------------------------------------------+
+

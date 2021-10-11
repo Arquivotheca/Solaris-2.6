@@ -1,0 +1,81 @@
+/*
+ * Copyright (c) 1993, by Sun Microsystems, Inc.
+ */
+
+#pragma ident	"@(#)phic.h	1.1	93/10/29 SMI"
+
+/* SHARP PHIC definitions */
+#define SHARP_WIN_INDEX0		0x20
+#define SHARP_WIN_INDEX1		0x21
+#define SHARP_WIN_INDEX2		0x22
+#define SHARP_WIN_INDEX3		0x23
+#define SHARP_MEM_WIN			0xD000
+#define SHARP_MEM_WIN0			0x0D
+#define SHARP_MEM_WIN1			0x0D
+#define SHARP_CARD_OFFSET0		0xF3
+#define SHARP_CARD_OFFSET1		0x43
+
+/* Toshiba ICCNT definitions */
+#define ICCNT_INDEX_REG			0xE4
+#define ICCNT_DATA_REG			0xE5
+#define ICCNT_INDEX_PORT		0x3E0
+#define ICCNT_DATA_PORT			0x3E1
+#define ICCNT_CARD_STATUS		0x00
+#define ICCNT_MODE			0x01
+#define ICCNT_IF_STATUS			0x02
+#define ICCNT_POWER_CONTROL		0x03
+#define ICCNT_IRQ_CONTROL		0x04
+#define ICCNT_STATUS_CHANGE		0x05
+#define ICCNT_CARD_SCIC			0x06
+#define ICCNT_ADDR_WE			0x07
+#define ICCNT_IO_CONTROL		0x08
+#define ICCNT_IO_START_HB		0x10
+#define ICCNT_IO_START_MB		0x11
+#define ICCNT_IO_START_LB		0x12
+#define ICCNT_IO_STOP_HB		0x13
+#define ICCNT_IO_STOP_MB		0x14
+#define ICCNT_IO_STOP_LB		0x15
+#define ICCNT_MEM_0_START_HB		0x18
+#define ICCNT_MEM_0_START_LB		0x19
+#define ICCNT_MEM_0_STOP_HB		0x1A
+#define ICCNT_MEM_0_STOP_LB		0x1B
+#define ICCNT_CM_OFFSET_0_HB		0x1C
+#define ICCNT_CM_OFFSET_0_LB		0x1D
+#define ICCNT_MEM_1_START_LB		0x20
+#define ICCNT_MEM_1_START_HB		0x21
+#define ICCNT_MEM_1_STOP_LB		0x22
+#define ICCNT_MEM_1_STOP_HB		0x23
+#define ICCNT_CM_OFFSET_1_LB		0x24
+#define ICCNT_CM_OFFSET_1_HB		0x25
+#define ICCNT_MEM_2_START_LB		0x28
+#define ICCNT_MEM_2_START_HB		0x29
+#define ICCNT_MEM_2_STOP_LB		0x2A
+#define ICCNT_MEM_2_STOP_HB		0x2B
+#define ICCNT_CM_OFFSET_2_LB		0x2C
+#define ICCNT_CM_OFFSET_2_HB		0x2D
+#define ICCNT_MEM_3_START_LB		0x30
+#define ICCNT_MEM_3_START_HB		0x31
+#define ICCNT_MEM_3_STOP_LB		0x32
+#define ICCNT_MEM_3_STOP_HB		0x33
+#define ICCNT_CM_OFFSET_3_LB		0x34
+#define ICCNT_CM_OFFSET_3_HB		0x35
+#define ICCNT_MEM_4_START_LB		0x38
+#define ICCNT_MEM_4_START_HB		0x39
+#define ICCNT_MEM_4_STOP_LB		0x3A
+#define ICCNT_MEM_4_STOP_HB		0x3B
+#define ICCNT_CM_OFFSET_4_LB		0x3C
+#define ICCNT_CM_OFFSET_4_HB		0x3D
+#define ICCNT_PORT_ADDR_LB		0x64
+#define ICCNT_PORT_ADDR_HB		0x65
+
+/* ICCNT register bit definitions */
+
+#define ICCNT_IO_CARD			0x01
+#define RELEASE_RESET       		0x10
+#define ICCNT_CARD_DETECTED		0x03
+
+#define UNKNOWN_CHIP			0x00
+#define PCIC_CHIP			0x01
+#define PHIC_CHIP			0x02
+#define ICCNT_CHIP			0x03
+

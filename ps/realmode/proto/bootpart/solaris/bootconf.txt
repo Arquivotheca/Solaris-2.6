@@ -1,0 +1,821 @@
+ * 
+ * bootconf.txt -- text translations for boot configuration program
+ * 
+ * This is the .txt file that contains all the string translations for the
+ * bootconf program. Text translations consist of key/value pairs. A key
+ * always starts with a '[' as the first character on a line and goes up
+ * to the matching ']' (use a backslash to get a literal ']' in the key).
+ * Then, the value starts at the next double quote '"' and goes up to the
+ * matching double quote. Anything else in this file is a comment.
+ * 
+
+#ident "@(#)bootconf.txt   1.67   96/10/01 SMI"
+
+[MENU_DEVICEID]
+"%s
+
+Enter the %s and press F2.
+
+%.70s
+
+
+"
+[MENU_GETRESOURCE]
+"Specify %s Resource
+
+Enter resource specification. %s
+
+%.70s\n
+"
+[MENU_DLTRESOURCE]
+"Delete %s Resource
+
+Select the resources to be deleted, then press F2.
+"
+[MENU_RESSELECT]
+"Specify Resources
+
+Use the indicated function keys to add to the resource lists below. To re-
+move an entry from a resource list, select the list and press F6. Press F7
+when done; F8 to cancel.
+
+%.70s
+"
+[MENU_ADD]
+"Add a Device
+
+Select the type of device to be added and press F2. Use F3 to sort the
+device type list by category. If the device you wish to add does not
+appear in the list, use F4 to read the corresponding CFG file from the
+floppy drive (or F5 if there is no CFG file).
+"
+[MENU_NO_SLOTS]
+"Configuration Error
+
+All ISA slots appear to be occupied. You must delete one or more ISA devices
+from the configuration before you can add a new one.
+"
+[MENU_EISA_DEVTYPE]
+"%.70s
+
+You must use the ECU to add, modify, or delete EISA devices.
+"
+[MENU_PRIME_CONFLICT]
+"Add device
+
+No devices of this type can be added at this time due to %s conflicts.
+Remove or reconfigure the conflicting device(s) and try again.
+
+Conflict occurred with %s
+
+Both devices use %s %s
+"
+[MENU_BOGUS_DDN]
+"Error in CFG File
+
+The resources currently assigned to this device do not match any known
+configuration as listed in the CFG file. You may view the current resource
+assignments, but the device cannot be reconfigured in the normal manner.
+
+You may be able to reconfigure the device by deleting it, then re-adding
+it with the desired resource assignments.
+"
+[MENU_SHOW_RESOURCES]
+"%s
+
+%s
+%s
+    %s
+    %s
+    %s
+    %s
+"
+[MENU_SET_RESOURCES]
+"%s
+
+Select the new resource assignment and press F2. Use F3 to restore original
+resource assignment.
+
+%s
+"
+[MENU_BOOT]
+"Boot Solaris
+
+The bootable devices are listed in this menu. You must choose one."
+[MENU_NO_BOOTDEV]
+"Boot Solaris
+
+There are no bootable devices currently configured. Use the device
+configuration facility to configure them.
+"
+[MENU_SEL_CONFIG]
+"Saved Configurations
+
+To use a saved configuration, select it and press F2, otherwise
+press F3"
+[MENU_DEL_CONFIG]
+"Saved Configurations
+
+To delete a saved configuration, select it and press F2, otherwise
+press F3"
+[MENU_KBD_TYPE]
+"Keyboard Language
+
+On this screen you must specify the language your keyboard supports.
+Please select one of the languages listed below and press F2 to continue.
+"
+[MENU_HELP_KBD_TYPE]
+"Help on Keyboard Type
+
+Although most PC keyboards are electronically the same, the key caps
+may be different to provide localized support (French, German, etc.).
+You must tell us which key caps layout your keyboard uses. If you
+don't know, pick UK-English.
+"
+[MENU_NO_CONFIG]
+"Error
+There were no saved configurations found."
+[MENU_NEW_PROP]
+"Create a New Property
+
+Property: "
+[MENU_NEW_VAL]
+"Enter New Value
+
+Property: %s
+Value: "
+[MENU_NEW_CONFIG]
+"Saving a configuration
+
+Enter a description of this configuration. Any unique description will do,
+but we recommend using the machine name. The description can consist of any
+alphanumeric characters including a space (but not as the first character).
+The name can be up to %d characters.
+
+        Configuration description: "
+
+[MENU_CONFIGURE]
+"Configure Devices
+
+Please select the desired action and press F2. Press F3 to return to the
+main menu.
+"
+[MENU_PICKDEV]
+"Select Device
+
+Currently configured devices are listed below. To display/modify resource
+usage of a particular device (or to delete the device), first select the
+device then press F2. Press F3 to return to the configuration menu.
+"
+
+[MENU_CONFLICTS]
+"Resource Conflicts Found
+
+The following resource conflicts were noted:
+
+"
+[MENU_MOUNT_FAIL]
+"Mount Failed
+
+Unable to mount a Solaris root file system from the device:
+
+	%s
+
+Error message from mount: 
+
+%s
+"
+[MENU_HELP_NETINST]
+"Network device booting help
+
+The driver for the specified network boot device was unable to locate
+the device.
+
+This may be because the device is configured incorrectly or missing.
+To correct this return to the \"Boot Main Menu\" and select the
+\"Device Configuration\" option.
+"
+[MENU_DEVSELECT]
+"Sort Device List
+
+Select one or more categories for inclusion in the device list.
+"
+[MENU_FUNSELECT]
+"Select a Function
+
+This is a multi-function device. Select the function to be configured and
+press F2. Press F3 when done. Press F4 to restore original configuration.
+"
+[MENU_PROBE]
+"Scan for ISA Devices
+
+Select the devices you wish to locate from the list below, then press F2 to
+begin scanning. Use F3 if you want to probe for all know device types; F4 to
+sort the list by device category."
+[MENU_LOAD_FLOPPY]
+"Searching for CFG Files
+
+Place floppy disk containing device manufacturer's CFG file in drive A
+"
+[MENU_READ_FLOPPY]
+"Searching for CFG Files
+
+"
+[MENU_PROBE_DEVICES]
+"Scanning for ISA Devices
+
+"
+[MENU_HELP_BOOT]
+"Help on booting Solaris
+
+The \"Boot Solaris\" menu should list all devices which can be booted
+from under Solaris. Select a device then press F2 to boot from it.
+
+If there are missing boot devices on this menu, then go to the 
+\"Advanced Options Menu\" and select the \"Review/Edit devices\" 
+or one of the scan options. This is most likely caused by not
+having probed for, or manually specified, an ISA bus boot device.
+
+To set or change the default boot device (which is marked in the
+menu as \"(Default)\"), select the device and press F5. This will be
+device which is automatically selected on entering this menu, or 
+chosen as the boot device if auto-booting. Note, auto-booting can
+be enabled by selecting \"Auto-boot management\" in the advanced
+menu."
+[MENU_HELP_CONFIGNAME]
+"Help on Entering a Configuration Name
+
+The configuration for your system will be saved on this floppy. You
+must provide a name for the saved configuration so you can select it
+if you need to use it at a later date. The host-name is always a good
+choice but any string will work. The name you give the saved configuration
+cannot exceed 8 characters or contain any punctuation and all characters
+are converted to lower case (so the names \"conf\" and \"CONF\" are the same).
+"
+[MENU_HELP_SEL_CONFIG]
+"Help on Selecting a Configuration
+
+The list of all previously-saved configurations is shown. If you want to
+use one of these configurations, select it from the menu. Otherwise,
+create a new configuration using the F-key listed at the bottom of the
+screen.
+"
+[MENU_HELP_DEL_CONFIG]
+"Help on deleting a configuration
+
+The list of all previously-saved configurations was shown
+on the previous menu. If you want to delete one of these
+configurations, select it from the menu, and press F3 to
+delete it. Otherwise, return by pressing F2.
+"
+[MENU_HELP_NEW_CONFIG]
+"New Configuration
+
+The configuration for your system will be saved. You must supply a
+description for the saved configuration so that you can select it
+if you need it at a later date. The host-name of the system is always
+a good choice but any description will work.
+
+If you wish to cancel saving the configuration then press F3 on the
+previous screen.
+"
+[MENU_HELP_CONFLICTS]
+"Help on Conflicts
+
+A resource conflict has been found between two or more peripherals in
+this system. You may ignore the conflict, but we recommend that you
+use the Device Configuration submenus to resolve the conflict.
+"
+[MENU_HELP_MOUNT]
+"Help on Mount
+
+To start Solaris a successful mount of the specified file system
+containing a Solaris root file system needs to occur.
+
+The \"Mount Failed\" screen appears when this mount was not successful.
+The error message returned from the mount is displayed.
+"
+[MENU_HELP_NAVIGATE]
+"Help on Navigating the Menus
+
+Use the F-keys (F1, F2, etc.) and the arrow keys to navigate through
+these menus. You may select menu items with the Return key. If your
+keyboard does not have F-keys, you may use the ESC key followed by the
+function number (ESC-1, ESC-2, etc.). If your keyboard does not have
+arrow keys, you may use the 'j' and 'k' keys (i.e. the vi commands).
+"
+[MENU_HELP_PROPERTIES]
+"Help on Properties
+
+We are still working on the Properties menus. When ready, you will be able
+to set the default boot device, console device, timeouts, etc. Until then,
+we have available a menu that allows you to create and set arbitrary
+properties. But you must understand what they mean first...
+"
+[MENU_HELP_NEW_PROP]
+"Help on New Property Name
+
+You must specify the name of the property you wish to create. It must be
+less than 32 characters and cannot contain any white space or control
+characters.
+"
+[MENU_HELP_NEW_VAL]
+"Help on New Value
+
+You must specify the value of the property. It must be less than 200
+characters in length.
+"
+[MENU_HELP_TOPICS]
+"Help Topics
+
+The help screens are divided up into the topics shown below.
+Press the F1 key (or the question mark) to view the help screen
+appropriate for the current menu.  From there, you can always
+enter this menu to select any other help topic.
+"
+[MENU_UPDATING_CONF]
+defaults"Updating\n\n\n\n\tUpdating Saved Configuration Information...
+"
+[MENU_CHECKING_CONF]
+"Initializing\n\n\n\n\tGathering Configuration Information...
+"
+[MENU_LOADING]
+"Loading\n\n\n\n\tLoading %s ...
+"
+[MENU_MAIN]
+"Boot Main Menu
+
+This is the main menu for the Solaris booting system.
+You must select a choice from the list below and press F2 to continue.
+
+To see a description of each choice, press F1 or the question mark.
+"
+[MENU_PROPERTIES]
+"Boot Properties
+
+This screen allows you to view and edit \"properties\" associated with
+the booting system itself. Use the F1 key for help on properties. There
+are currently %d properties defined. The current value is shown beneath
+each property."
+[MENU_SHORTHELP_ENTER]
+"Press the <enter> key to continue
+"
+[MENU_SHORTHELP_SELECT]
+"> To make a selection, use the arrow keys to highlight the option and
+  press Return to mark it [X].
+
+  %s
+  -------------------------------------------
+"
+[MENU_SHORTHELP_TEXT]
+""
+
+[MENU_HELP_CFGFILELOAD]
+"Error in Configuration Database
+
+The indicated CFG files were not included in the configuration database due
+to errors. The corresponding devices will not appear in the list of devices
+that may be added to the configuration (see the \"Add devices\" action on the
+next menu).
+
+If you wish to include one of the affected devices in your configuration,
+use the \"Define Device\" key after selecting the \"Add devices\" action.
+"
+[MENU_HELP_SET_RESOURCES]
+"Help on Resource Assignment
+
+Valid resource values (of the requested type) for the current device are
+listed on the previous screen. To change resource assignments, simply select
+the appropriate value and press F2.
+
+If the resources used by the current device do not appear in the value list,
+please check to make sure that you're working on the proper device. If so,
+there may be an error in the configuration database entry for devices of this
+type. You may be able to set the desired resource usage by deleting the
+device from the configuration, then re-adding it with the \"Define Device\"
+key on the \"Add devices\" screen.
+"
+[MENU_HELP_SHOW_RESOURCES]
+"Help on Resource Assignment
+
+The current resource assignments for the selected device are listed on the
+previous screen. If alternate resource assignments are possible, one or more
+of these function keys will be active:
+
+    F3:  Can be used to change I/O port addresses
+    F4:  Can be used to change IRQ assignments
+    F5:  Can be used to change DMA channels
+    F6:  Can be used to change memory assignments
+
+You may also be able to remove the device from the configuration by pressing
+the F7 key. Note, however, that self-identifying devices cannot be deleted
+in this manner.
+"
+
+[MENU_HELP_FUNSELECT]
+"Help on Function Selection
+
+Multi-function cards must be configured on a function-by-function basis. All
+possible functions of the current device are listed on the previous screen,
+although one or more of these functions may be disabled. To display the
+current state of a given function (and to optionally enable, disable, or
+reconfigure it), select the desired function and press F2.
+
+You may also be able to remove the device from the configuration by pressing
+the F5 key. Note, however, that self-identifying devices cannot be deleted
+in this manner.
+"
+
+[MENU_HELP_DEVSELECT]
+"Help on Device Categories Selection
+
+A list valid device categories appears on the previous screen. You may
+shorten the complete list of devices to be added/probed by selecting only
+those device categories that you're interested in. Use F3 if you wish to
+select all categories.
+"
+
+[MENU_HELP_PICKDEV]
+"Help on Device Selection
+
+A list of all currently configured devices appears on the previous screen.
+You may display resource assignments for a particular device (and optionally
+delete or reconfigure that device) by selecting the corresponding list entry
+and pressing F2.
+
+The numbers in parentheses that precede device names give the base I/O port
+addresses where the corresponding devices are attached. If a device is
+completely memory mapped (i.e, does not use I/O ports), its base memory
+address appears here instead. Devices that show a Port address of \"(***)\"
+are programmable devices that have not yet had a base port address assigned to
+them.
+"
+
+[MENU_HELP_GETRESOURCE]
+"Help on Resource Definition
+
+Default resource assignments for the device you're defining are entered
+by type from the previous screen. Input rules for resource types are as
+follows:
+
+   I/O Port addresses:
+	These must be hexadecimal numbers up to 4 digits long. Port ranges
+	may also be specified by separating the starting and ending address
+	with a hyphen (e.g, 310, 41F0-41FF)
+
+   IRQs:
+	These must be decimal numbers up to two digits long between 0 and 15.
+	inclusive. A value of 2 is automatically converted to 9.
+
+   DMA channels:
+	These must be single digit decimal numbers between 0 and 7.
+
+   Memory addresses:
+	These must be hexadecimal numbers up to 5 digits long between A0000
+	and FFFFF, inclusive. Memory addresses must also be aligned on 1K
+	boundaries.
+"
+
+[MENU_HELP_DLTRESOURCE]
+"Help on Resource Definition
+
+If you incorrectly entered one or more default resource assignments for
+the device you're defining, you may remove them by selecting the incorrect
+resources from the list on the previous screen and then pressing F2.
+"
+
+[MENU_HELP_DEVICEID]
+"Help on Device Definition
+
+The first step in defining a device is to enter its EISA device ID. This
+is a three-letter manufacturer ID followed by a four digit hexadecimal
+model number. Examples include:
+
+	ADP0400	... Adaptec 1740/1742 SCSI controller
+	TCM5070 ... 3Com Etherlink 16 adapter
+
+If you don't know the EISA device ID for the device in question, try
+something innocuous like \"ABC1234\".
+
+Note that you may define multiple devices using the same EISA device ID.
+However, using unique IDs might help you remember which definition
+matches a particular device in your system.
+"
+
+[MENU_HELP_RESSELECT]
+"Help on Device Definition
+
+Default resource assignments for the device you're defining are listed on
+the previous screen. To make additional resource assignments, select the
+appropriate resource type and press F2. If you wish to remove a resource
+assignment, select the appropriate type and press F3. Press F4 when you
+are satisfied with the default resource assignments as listed.
+
+Note that all default resources associated with a manually defined device
+must be available before that device can be configured. If there are any
+conflicts, you won't be able to add the device at this time.
+"
+
+[MENU_HELP_ADD]
+"Help on Adding Devices
+
+A list of the device types that may be added appears on the previous screen.
+To add a device of a particular type, simply select the corresponding list
+item and press F2 (use F3 to sort the list by device category to simplify
+searching).
+
+If the device you wish to add does not appear in device type list, you add
+it to the configuration database by pressing ...
+
+   F4:  To read the device description (CFG file) from the floppy disk
+        provided by the manufacturer.
+
+   F5:  To manually define the device's resource usage requirements.
+"
+
+[MENU_HELP_PROBE]
+"Help on ISA Device Scanning
+
+A list of devices that Solaris knows how to scan for appears on the
+previous screen. To probe for a particular type of device, simply select
+the corresponding list item(s) and press F2.
+
+To return to the previous menu press F3.
+"
+
+[MENU_HELP_READFLOPPY]
+"Searching for CFG Files
+
+The indicated CFG files (if any) were read from the floppy disk and added
+to the configuration database.
+"
+
+[MENU_HELP_PROBESTATUS]
+"Scanning for ISA Devices
+
+The previous screen shows the result of all requested probes. The name
+of each device type probed is printed followed by the number of
+devices found of that type. All devices identified during the probe
+phase are automatically added to the configuration (except as noted
+below).
+
+If a device of a given type was found, but it has resource conflicts
+with a previously configured device, the resource conflict is
+displayed.  Such devices are NOT added to the configuration, however.
+
+Some conflicts are difficult to avoid. A common conflict is between
+the SMC Ethernet adapter and the second serial port. The factory
+default IRQ setting for the SMC Ethernet adapter is 3 which is also
+used by the second serial port.  You have two options in this
+case. First is to ignore the error and allow the system to use the SMC
+Ethernet adapter with IRQ 3. The second serial port will be
+unavailable for use. The second option requires you to change the IRQ
+used by the SMC Ethernet adapter.
+"
+[MENU_DISK_MOUNT]
+"Running driver
+"
+[MENU_NET_MOUNT]
+"Loading\n\n\n\tLoading network driver ...
+"
+[MENU_WRONG_FLOPPY]
+"Error\n\n\n
+The Micro channel version of this diskette is required
+for this system. Please reboot using that diskette.
+"
+[MENU_WRONG_FLOPPY2]
+"Error\n\n\n
+This is the Micro channel diskette distribution
+which is not applicable for this system.
+Please reboot using the correct diskette.
+"
+[MENU_PROBE_ALL]
+"New configuration
+
+
+\tWelcome to the Solaris X86 device configuration utility.
+\t========================================================
+
+
+Press F1 on any screen for further help on the options and general guidance.
+
+Press F2 to scan for any legacy (ISA) devices (recommended). Note, the
+system could hang when scanning. See help (F1) for more information.
+
+Press F3 to bypass the scan.
+
+Press F4 to enter the advanced menu.
+"
+[MENU_HELP_PROBE_ALL]
+"Help on scanning for legacy devices
+
+Some systems may contain legacy (ISA bus) devices that cannot be
+automatically detected by the system. These devices must be identified
+for a correct working system. They can either be detected by running
+drivers to look (scan) for their devices or be manually added.
+
+We recommend initially scanning for all devices. However, this can be a
+potentially dangerous process, as all drivers look in all possible
+locations for their devices which can have harmful side effects.
+If the system seems to make no progress for a minute, then please reboot,
+and bypass this scan (F3 on previous menu). It is possible to individually
+scan for devices, from the advanced menu (F4). Alternatively, if you know
+the device type and its used resources, then select the add device option
+on the Device list screen.
+"
+[MENU_REVIEW]
+"Review/edit devices
+
+This screen shows the list of devices in the system. For each device
+the configured resources are shown. Note, some devices can be configured
+anywhere and so their resources are not shown as they must be set later."
+[MENU_HELP_REVIEW]
+"Review of devices help
+The previous screen shows the devices found in this system and
+the resources they use. From this menu you may:-
+
+F2: simply return to the previous menu (F2)
+F3: add an isa device manually
+F4: modify a previously manually added isa device
+F5: delete any device but the mother-board
+"
+[MENU_MOD_PROBE]
+"Error
+
+This device has previously been found by scanning, and its resources
+cannot be modified. If the system hardware has changed then please
+delete the device then:-
+
+ Either	1) re-scan for the device (recommended).
+ or		2) add the device manually if you know all the resources used.
+"
+[MENU_ADV]
+"Advanced options
+"
+[MENU_HELP_ADV]
+"Help on Advanced options
+
+You must select one of the options shown
+or return to the previous menu using F3
+"
+[MENU_REBOOT]
+"Reboot
+
+You must reboot in order to use a different saved configuration"
+[SAVE CONFIG ERR2]
+"Save configuration error
+
+The maximum of %d configurations has been reached.
+You must exit to the advanced menu and select the delete configuration
+option to create space for this configuration."
+[FILE CREATE ERR]
+"File error
+
+Unable to create configuration file.
+Is the media full?"
+[MENU_NAMES_CONFIG]
+"Duplicate name error
+
+Error: this name you entered is already in use. The list of used names
+is shown below. Please return and select another name.
+
+"
+[MCA_INTRO_MENU]
+"
+
+
+\tWelcome to the Solaris X86 device configuration utility.
+\t========================================================
+
+
+This machine is based on the IBM Micro-Channel architecture, and so
+all devices are self-identifying. Press enter to continue to the
+boot devices screen.
+
+Press F1 on any screen for further help on the options and general guidance.
+
+"
+[MCA_INTRO_MENU_HELP]
+"
+
+There is no additional help for this screen. Please press enter
+to proceed.
+"
+[MENU_DEL_MOTHR]
+"Error
+
+Cannot delete the motherboard device."
+[MENU_DEL_PNP]
+"Error
+
+Cannot delete ISA Plug-and-Play devices."
+[MENU_HW_NVRAM_NOMATCH]
+"Error:
+
+The Board in EISA slot %d does not match NVRAM info for that slot.
+You should run the EISA Configuration Utility to correct this.
+You may also continue booting but, you may experience problems
+due to this condition.
+Press <Control><Alt><Delete> to reboot."
+[MENU_BAD_BOOTPATH]
+"Error in bootpath:
+
+The bootpath property:
+
+%s
+
+is not valid and will be ignored"
+[MENU_SET_BOOTPATH]
+"Set default boot device
+
+Setting the default boot device to be:-
+
+	%s
+
+Note, this only affects auto-booting (booting a pre-selected device
+without user input or menus). See \"Auto-boot management\" under
+the advanced options."
+[MENU_AUTO_BOOT_ENABLED]
+"Auto-boot management
+
+To disable auto-boot press F4.
+
+To change auto-boot timeout enter values in seconds (currently %s)
+and press F2.
+
+Enter timeout: "
+[MENU_AUTO_BOOT_DISABLED]
+"Auto-boot management
+
+To enable auto-boot enter a timeout value in seconds (defaults to %s)
+and press F2.
+
+Enter timeout: "
+[MENU_HELP_AUTO_BOOT]
+" Help on auto boot
+
+Auto-boot allows a fully configured system to boot without asking 
+any questions, or bringing up the menu system. It should be the usual
+scheme for a normal boot after installation. It can be enabled and disabled
+via the previous menu. It works for both the default configuration and for
+saved configurations.
+"
+[MENU_NOBOOTPATH]
+"Error
+
+The bootpath must be set before auto-booting can be enabled.
+This can be set from the the \"Boot Solaris\" menu.
+"
+[MENU_CHECKING_DRIVERS]
+"Gathering device information
+"
+[MENU_WRITE_ERR]
+"Write error
+
+Error writing the file %s
+
+This might be because your floppy is write protected.
+If so you can unprotect the floppy now, and press enter to continue.
+If the floppy was intentionally protected reboot the system.
+
+This error might also occur if the media is full.
+"
+[MENU_PROG_WARN]
+"Warning
+
+Could not program the programmable device:-
+	
+	%s
+
+due to a lack of resources available or a
+conflict with the existing device:-
+
+	%s
+"
+[MENU_CORRUPT_ESCD]
+"Error
+
+The %s file that contains your system configuration is either
+
+1) an old revision of the file format
+2) corrupted
+
+and will be deleted"
+[MENU_DEV_80]
+"Missing primary disk
+
+Solaris could not detect a primary disk. It uses drivers to detect them,
+but no devices handled by any drivers map to the primary disk.
+
+Solaris has however detected a disk controller without a driver,
+and is assuming that the following disk maps to the primary disk.
+
+	%s
+
+Press F2 to confirm that this is the Solaris bootpath of the primary disk. 
+
+Press F3 to cancel this assumption. Note, a correct path can be entered
+on the diskette by setting bootpath in \"Set boot properties\" menu from the 
+advanced menu and reboot, or on the disk by setting the bootpath in the file
+\"/platform/i86pc/boot/solaris/bootenv.rc\".
+"

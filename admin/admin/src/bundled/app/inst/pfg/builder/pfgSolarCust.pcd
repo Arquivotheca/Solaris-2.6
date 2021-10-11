@@ -1,0 +1,221 @@
+Module: pfgSolarCust
+{
+      autoCuil = false;
+      nodesUsed = "solarcust_dialog,\nfdisk_entry";
+      copy = false;
+      inCreateMenu = true;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Wed Mar  8 08:47:18 1995";
+        {
+          solarcust_dialog = formWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 150;
+            vip_y = 30;
+              {
+                :Inherited panelhelpText = XmText;
+              }
+              {
+                :Inherited solarcustForm : form = XmForm;
+                Group: Widget
+                  rubberPositioning = False;
+                  resizePolicy = resize_any;
+                    {
+                      fdiskLabelForm = XmForm;
+                      Group: Widget
+                        rubberPositioning = False;
+                        resizePolicy = resize_any;
+                        allowOverlap = False;
+                      Group: Constraint
+                        leftAttachment = attach_position;
+                        rightAttachment = attach_none;
+                        topAttachment = attach_none;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                        leftPosition = 30;
+                          {
+                            fdiskPartitionName = XmLabel;
+                            Group: Widget
+                              marginWidth = 0;
+                            Group: Constraint
+                              leftAttachment = attach_form;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_form;
+                              resizable = true;
+                          }
+                          {
+                            fdiskPartitionSize = XmLabel;
+                            Group: Widget
+                              marginWidth = 0;
+                            Group: Constraint
+                              leftAttachment = attach_widget;
+                              leftWidget = fdiskPartitionName;
+                              rightAttachment = attach_none;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_form;
+                              resizable = False;
+                          }
+                          {
+                            fdiskCylinder = XmLabel;
+                            Group: Widget
+                              marginWidth = 0;
+                              alignment = alignment_end;
+                            Group: Constraint
+                              leftAttachment = attach_widget;
+                              leftWidget = fdiskPartitionSize;
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_form;
+                              resizable = true;
+                          }
+                    }
+                    {
+                      fdiskRowColumn = XmRowColumn;
+                      Group: Widget
+                        adjustLast = False;
+                      Group: Constraint
+                        leftAttachment = attach_position;
+                        leftPosition = 30;
+                        rightAttachment = attach_none;
+                        topAttachment = attach_widget;
+                        topWidget = fdiskLabelForm;
+                        bottomAttachment = attach_none;
+                        resizable = true;
+                    }
+                    {
+                      labelRowColumn = XmRowColumn;
+                      Group: Widget
+                        entryAlignment = alignment_end;
+                      Group: Constraint
+                        rightAttachment = attach_position;
+                        rightPosition = 50;
+                        bottomAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = fdiskRowColumn;
+                          {
+                            capacityLabel = XmLabel;
+                          }
+                          {
+                            allocatedLabel = XmLabel;
+                          }
+                          {
+                            freeLabel = XmLabel;
+                          }
+                          {
+                            roundingLabel = XmLabel;
+                          }
+                    }
+                    {
+                      sizeRowColumn = XmRowColumn;
+                      Group: Widget
+                        entryAlignment = alignment_end;
+                      Group: Constraint
+                        topAttachment = attach_widget;
+                        topWidget = fdiskRowColumn;
+                        bottomAttachment = attach_form;
+                        leftAttachment = attach_position;
+                        leftPosition = 50;
+                          {
+                            capacityValue = XmLabel;
+                          }
+                          {
+                            allocatedValue = XmLabel;
+                          }
+                          {
+                            freeValue = XmLabel;
+                          }
+                          {
+                            roundingValue = XmLabel;
+                          }
+                    }
+              }
+              {
+                :Inherited messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = okButton;
+                Group: Constraint
+                  topWidget = solarcustForm;
+                    {
+                      :Inherited okButton : button1 = XmPushButton;
+                    }
+                    {
+                      :Inherited cancelButton : button2 = XmPushButton;
+                    }
+                    {
+                      :Inherited helpButton : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"fdisk.t\")";
+                    }
+                    {
+                      :Inherited button4 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      :Inherited button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+        {
+          fdisk_entry = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+          Group: Control
+            vip_x = 50;
+            vip_y = 30;
+              {
+                fdiskOptionMenu = XmOptionMenu;
+                Group: Widget
+                  subMenuId = pulldownMenu;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  rightAttachment = attach_widget;
+                  rightWidget = fdiskSizeText;
+                    {
+                      :Popup pulldownMenu = XmPulldownMenu;
+                          {
+                            solarButton = XmPushButton;
+                          }
+                          {
+                            dosButton = XmPushButton;
+                          }
+                          {
+                            unusedButton = XmPushButton;
+                          }
+                          {
+                            otherButton = XmPushButton;
+                          }
+                    }
+              }
+              {
+                fdiskSizeText = XmTextField;
+                Group: Widget
+                  maxLength = 8;
+                  columns = 8;
+                  navigationType = none;
+                Group: Constraint
+                  rightAttachment = attach_widget;
+                  bottomAttachment = attach_form;
+                  topAttachment = attach_form;
+                  leftAttachment = attach_none;
+                  rightWidget = fdiskStartCylinder;
+                  resizable = False;
+              }
+              {
+                fdiskStartCylinder = XmLabel;
+                Group: Widget
+                  alignment = alignment_end;
+                Group: Constraint
+                  leftAttachment = attach_none;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = false;
+              }
+        }
+}
+

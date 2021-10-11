@@ -1,0 +1,200 @@
+Module: pfgPlatformSelector
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Tue Dec 13 14:46:56 1994";
+      copy = false;
+      inCreateMenu = true;
+      nodesUsed = "platform_selector,\nentry_table,\nentry_pair";
+        {
+          entry_pair = XmRowColumn;
+          Group: Widget
+            numColumns = 5;
+            orientation = horizontal;
+            adjustLast = False;
+            spacing = 20;
+            marginHeight = 4;
+          Group: Control
+            vip_x = 55;
+            vip_y = 140;
+            vipComment = "";
+            vip_show_name = true;
+        }
+        {
+          platform_scroll = XmScrolledWindow;
+          Group: Widget
+            scrollBarDisplayPolicy = static;
+            scrollingPolicy = automatic;
+            height = 300;
+            width = 625;
+          Group: Control
+            vip_x = 165;
+            vip_y = 85;
+              {
+                entry_table = entry_table : pfgPlatformSelector;
+              }
+        }
+        {
+          entry_table = XmRowColumn;
+          Group: Widget
+            adjustLast = False;
+            orientation = vertical;
+          Group: Control
+            vip_x = 165;
+            vip_y = 30;
+            vipComment = "";
+            vip_show_name = true;
+        }
+        {
+          column_form = XmForm;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+          Group: Control
+            vip_x = 55;
+            vip_y = 30;
+              {
+                OS_label = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                arch_label = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                  leftWidget = OS_label;
+              }
+              {
+                locale_label = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = arch_label;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                mntpoint_label = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = locale_label;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+              {
+                size_label = XmLabel;
+                Group: Widget
+                  marginWidth = 0;
+                Group: Constraint
+                  leftAttachment = attach_widget;
+                  leftWidget = mntpoint_label;
+                  rightAttachment = attach_none;
+                  topAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+              }
+        }
+        {
+          platform_selector = XmFormDialog;
+          Group: Widget
+            rubberPositioning = False;
+            resizePolicy = resize_any;
+            marginWidth = 15;
+          Group: Control
+            vip_x = 55;
+            vip_y = 85;
+              {
+                ps_messageBox = messageBox : pfgGUITemplates;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_none;
+                  bottomAttachment = attach_form;
+                  resizable = true;
+                    {
+                      :Inherited ps_continue : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:psContinueCB";
+                    }
+                    {
+                      :Inherited ps_goback : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:psGoBackCB";
+                    }
+                    {
+                      :Inherited ps_cancel : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:psCancelCB";
+                    }
+                    {
+                      :Inherited ps_exit : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:psExitCB";
+                    }
+                    {
+                      :Inherited ps_help : button5 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C:pfgHelp(\"spotservices.r\")";
+                    }
+              }
+              {
+                ps_panelhelpText = panelhelpText : pfgGUITemplates;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_none;
+                  bottomAttachment = attach_widget;
+                  bottomWidget = column_form;
+                  resizable = true;
+              }
+              {
+                column_form = column_form : pfgPlatformSelector;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_none;
+                  bottomAttachment = attach_widget;
+                  bottomWidget = form;
+                  resizable = true;
+              }
+              {
+                form = XmForm;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  rightAttachment = attach_form;
+                  topAttachment = attach_none;
+                  bottomAttachment = attach_widget;
+                  bottomWidget = ps_messageBox;
+                  resizable = true;
+                    {
+                      platform_scroll = platform_scroll : pfgPlatformSelector;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        topAttachment = attach_form;
+                        bottomAttachment = attach_form;
+                        resizable = true;
+                    }
+              }
+        }
+}
+

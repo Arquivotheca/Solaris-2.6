@@ -1,0 +1,17 @@
+* /dev/rdsk/c0t3d0s2 partition map
+* 104 MB disk
+* Dimensions:
+*     512 bytes/sector
+*      35 sectors/track
+*       6 tracks/cylinder
+*     210 sectors/cylinder
+*    1019 cylinders
+*    1018 accessible cylinders
+*
+* Flags:
+*   1: unmountable
+*  10: read-only
+*
+*                          First     Sector    Last
+* Partition  Tag  Flags    Sector     Count    Sector  Mount Directory
+

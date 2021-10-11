@@ -1,0 +1,8 @@
+#! /bin/sh
+#
+#ident  "@(#)req.flg 1.2     94/10/24 SMI"
+#
+# Copyright (c) 1992 by Sun Microsystems, Inc.
+#
+ 
+echo_file src/bundled/app/inst/Makefile

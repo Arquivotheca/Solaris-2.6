@@ -1,0 +1,80 @@
+AdapterId 08FD6h
+
+AdapterName "IBM Personal Audio Adapter/A"
+
+NumBytes 4
+
+FixedResources
+     pos[0]=XX00XXXXb 
+     pos[1]=0000XXXXb 
+     pos[3]=11XXXXXXb 
+     io 0200h-020fh    
+     int 15      
+
+Begin NoDMA
+   
+      NamedItem Prompt "I/O Address Selection"
+      choice "0400-041F 04F8-04FF" pos[3]=XX000001b io 0400h-041fh 04f8h-04ffh
+      choice "0800-081F 08F8-08FF" pos[3]=XX000010b io 0800h-081fh 08f8h-08ffh
+      choice "0C00-0C1F 0CF8-0CFF" pos[3]=XX000011b io 0c00h-0c1fh 0cf8h-0cffh
+      choice "1000-101F 10F8-10FF" pos[3]=XX000100b io 1000h-101fh 10f8h-10ffh
+      choice "1400-141F 14F8-14FF" pos[3]=XX000101b io 1400h-141fh 14f8h-14ffh
+      choice "1800-181F 18F8-18FF" pos[3]=XX000110b io 1800h-181fh 18f8h-18ffh
+      choice "1C00-1C1F 1CF8-1CFF" pos[3]=XX000111b io 1c00h-1c1fh 1cf8h-1cffh
+      choice "2000-201F 20F8-20FF" pos[3]=XX001000b io 2000h-201fh 20f8h-20ffh
+      choice "2400-241F 24F8-24FF" pos[3]=XX001001b io 2400h-241fh 24f8h-24ffh
+      choice "2800-281F 28F8-28FF" pos[3]=XX001010b io 2800h-281fh 28f8h-28ffh
+      choice "2C00-2C1F 2CF8-2CFF" pos[3]=XX001011b io 2c00h-2c1fh 2cf8h-2cffh
+      choice "3000-301F 30F8-30FF" pos[3]=XX001100b io 3000h-301fh 30f8h-30ffh
+      choice "3400-341F 34F8-34FF" pos[3]=XX001101b io 3400h-341fh 34f8h-34ffh
+      choice "3800-381F 38F8-38FF" pos[3]=XX001110b io 3800h-381fh 38f8h-38ffh
+      choice "3C00-3C1F 3CF8-3CFF" pos[3]=XX001111b io 3c00h-3c1fh 3cf8h-3cffh
+      choice "4000-401F 40F8-40FF" pos[3]=XX010000b io 4000h-401fh 40f8h-40ffh
+      choice "4400-441F 44F8-44FF" pos[3]=XX010001b io 4400h-441fh 44f8h-44ffh
+      choice "4800-481F 48F8-48FF" pos[3]=XX010010b io 4800h-481fh 48f8h-48ffh
+      choice "4C00-4C1F 4CF8-4CFF" pos[3]=XX010011b io 4c00h-4c1fh 4cf8h-4cffh
+
+   Help
+      "This item enables the selection of I/O addresses that are used by the
+      adapter.  Conflicting I/O addresses are marked with an asterisk and
+      should be changed. Use the F5=Previous and the F6=Next keys to change
+      conflicting addresses in the 'Change Configuration' window."
+
+   NamedItem Prompt "Arbitration Level"
+      choice "Level 8" pos[1]=XXXX1000b arb 08h
+      choice "Level 9" pos[1]=XXXX1001b arb 09h
+      choice "Level A" pos[1]=XXXX1010b arb 0ah
+      choice "Level B" pos[1]=XXXX1011b arb 0bh
+      choice "Level C" pos[1]=XXXX1100b arb 0ch
+      choice "Level D" pos[1]=XXXX1101b arb 0dh
+      choice "Level E" pos[1]=XXXX1110b arb 0eh
+      choice "Level 1" pos[1]=XXXX0001b arb 01h
+      choice "Level 3" pos[1]=XXXX0011b arb 03h
+      choice "Level 5" pos[1]=XXXX0101b arb 05h
+      choice "Level 6" pos[1]=XXXX0110b arb 06h
+      choice "Level 7" pos[1]=XXXX0111b arb 07h
+
+   Help
+      "This item enables the selection of available MicroChannel Arbitration
+      levels. Conflicting levels are marked with an asterisk and should be
+      changed. Use the F5=Previous and the F6=Next keys to change conflicting
+      levels in the 'Change Configuration' window."
+
+   NamedItem Prompt "Fairness Enable/Disable"
+      choice "Enabled" pos[0]=1XXXXXXXb
+      choice "Disabled" pos[0]=0XXXXXXXb
+
+   Help
+      "This item enables the MicroChannel Fairness feature to be enabled or
+      disabled. The recommended setting is enabled."
+
+   NamedItem Prompt "MIDI Port Enable/Disable"
+      choice "Disabled" pos[0]=XXXXX0XXb
+      choice "Enabled" pos[0]=XXXXX1XXb io 0330h-0335h int 7		
+
+   Help
+      "MIDI may be enabled or disabled by the user. If an MPU adapter is also
+      installed in the same system using Primary addresses, set this item to
+      'Disabled' or use the Alternate addresses for the MPU."
+
+End

@@ -1,0 +1,218 @@
+AdapterID 0708h
+
+AdapterName "BusLogic 32 Bit Bus Master MCA-to-SCSI Host Adapter (v1.40)"
+
+NumBytes 4
+
+fixedResources
+   pos[0]=xxxxxxx1b
+   pos[1]=000000xxb
+   pos[2]=xxx0x0xxb
+   pos[3]=110xxxxxb 
+
+nameditem
+   Prompt "BIOS Address"
+      Choice "DC000h"
+         pos[0]=111xxxxxb
+	 mem 0dc000h-0dffffh
+      Choice "Disable"
+	 pos[0]=000xxxxxb
+      Choice "D8000h"
+         pos[0]=110xxxxxb
+	 mem 0d8000h-0dbfffh
+      Choice "D4000h"
+         pos[0]=101xxxxxb
+	 mem 0d4000h-0d7fffh
+      Choice "D0000h"
+         pos[0]=100xxxxxb
+	 mem 0d0000h-0d3fffh
+      Choice "CC000h"
+         pos[0]=011xxxxxb
+	 mem 0cc000h-0cffffh
+      Choice "C8000h"
+         pos[0]=010xxxxxb
+	 mem 0c8000h-0cbfffh
+      Choice "C4000h"
+         pos[0]=001xxxxxb
+	 mem 0c4000h-0c7fffh
+
+   Help
+      "This selects the memory location of the host adapter's 
+       BIOS PROM.  Conflicting assignments will be marked with
+       an asterick and must be changed to use the host adapter.
+       To disable the host adapter's BIOS PROM, choose the 
+       'Disable' option.  Note, if two Micro Channel host adapters
+       reside in the system one of them must have its BIOS PROM
+       disabled.   The default setting is DC000h." 
+
+nameditem
+   Prompt "I/O Port Address"
+      Choice "330h"
+        pos[0]=xxx0xxxxb
+        pos[1]=00000011b
+        io 0330h-0333h
+      Choice "334h"
+        pos[0]=xxx1xxxxb
+        pos[1]=00000011b
+        io 0334h-0337h
+      Choice "234h"
+        pos[0]=xxx1xxxxb
+        pos[1]=00000010b
+        io 0234h-0237h
+      Choice "134h"
+        pos[0]=xxx1xxxxb
+        pos[1]=00000001b
+        io 0134h-0137h
+      Choice "230h"
+        pos[0]=xxx0xxxxb
+        pos[1]=00000010b
+        io 0230h-0233h
+      Choice "130h"
+        pos[0]=xxx0xxxxb
+        pos[1]=00000001b
+        io 0130h-0133h
+   Help
+      "This option selects the I/O Port of the host adapter.
+       Conflicting assignments are marked with an asterisk and
+       must be changed to use the host adapter.  Default I/O
+       address is 330h."
+
+nameditem
+   Prompt "Arbitration Level"
+      Choice "Level_5"
+        pos[3]=xxxx0101b
+        arb 5
+      Choice "Level_6"
+        pos[3]=xxxx0110b
+        arb 6
+      Choice "Level_7"
+        pos[3]=xxxx0111b
+        arb 7
+      Choice "Level_4"
+        pos[3]=xxxx0100b
+        arb 4
+      Choice "Level_3"
+        pos[3]=xxxx0011b
+        arb 3
+      Choice "Level_1"
+        pos[3]=xxxx0001b
+        arb 1
+      Choice "Level_0"
+        pos[3]=xxxx0000b
+        arb 0
+    
+   Help
+   "This selects the DMA channel the host adapter will use to
+    transfer data.  Conflicting assignments will be marked with
+    an asterick and must be changed to use the host adapter.  The
+    default level is 5."
+
+ nameditem
+   Prompt "Arbitration Fairness"
+      Choice "On"
+         pos[3]=xxx0xxxxb
+      Choice "Off"
+         pos[3]=xxx1xxxxb
+
+   Help
+      "Bus Arbitration Fairness controls whether the host adapter 
+       implements the fairness alorigthm after it is preempted from
+       the Micro Channel.  Default is fairness enabled."
+
+nameditem
+   Prompt "Interrupt Request"
+      Choice "Int_15"
+        pos[0]=xxxx111xb
+        int 15d
+      Choice "Int_14"
+        pos[0]=xxxx110xb
+        int 14d
+      Choice "Int_12"
+        pos[0]=xxxx100xb
+        int 12d
+      Choice "Int_11"
+        pos[0]=xxxx011xb
+        int 11d
+      Choice "Int_10"
+        pos[0]=xxxx010xb
+        int 10d
+      Choice "Int_9"
+        pos[0]=xxxx001xb
+        int 9d
+   Help
+      "This selects the interrupt channel the host adapter will 
+       use to report status.  Conflicting assignments will be
+       marked with an asterick and must be changed to use the
+       host adapter.  The default is interrupt 15."
+
+ nameditem
+   Prompt "Data Streaming"
+      Choice "Disable"
+         pos[2]=xxxxxxx0b
+      Choice "Enable"
+         pos[2]=xxxxxxx1b
+
+   Help
+      "The streaming data procedure transfers data blocks by using a single
+       address followed by multiple 16- or 32-bit data transfers within a 
+       single streaming data cycle. If data streaming is enabled, the host
+       adapter can achieve a maximum data transfer rate of 40 MBytes/sec on
+       the Micro Channel bus. If data streaming is disabled, the maximum 
+       data transfer rate is 20 MBytes/sec."
+
+nameditem
+   Prompt "Adapter SCSI Bus ID"
+      Choice "Id_7"
+         pos[2]=111xxxxxb
+      Choice "Id_6"
+         pos[2]=110xxxxxb
+      Choice "Id_5"
+         pos[2]=101xxxxxb
+      Choice "Id_4"
+         pos[2]=100xxxxxb
+      Choice "Id_3"
+         pos[2]=011xxxxxb
+      Choice "Id_2"
+         pos[2]=010xxxxxb
+      Choice "Id_1"
+         pos[2]=001xxxxxb
+      Choice "Id_0"
+         pos[2]=000xxxxxb
+
+   Help
+      "This is the SCSI ID of the host adapter.  The default setting
+       is SCSI ID 7."
+
+nameditem
+   Prompt "Adapter Initiate Sync Negotiation"
+      Choice "On"
+         pos[2]=xxxxxx1xb
+      Choice "Off"
+         pos[2]=xxxxxx0xb
+   Help
+      "Synchronous transfer on the SCSI bus will be initiated by the
+       host adapter if 'On'.  The default setting is On." 
+ 
+nameditem
+   Prompt "Adapter SCSI Parity Checking"
+      Choice "On"
+         pos[2]=xxx1xxxxb
+      Choice "Off"
+         pos[2]=xxx0xxxxb
+   Help
+       "The host adapter will check SCSI Parity if 'On'.  The default
+        setting is On."
+
+nameditem
+   Prompt "Disk > 1GB and not SCO UNIX"
+      Choice "Off"
+         pos[2]=xxxx0xxxb
+      Choice "On"
+         pos[2]=xxxx1xxxb
+   Help
+       "The host adapter will change cylinder, head, & sector per track
+	to support drive capacity greater than 1GigaByte if 'On'.  The 
+	default setting is Off."
+
+
+

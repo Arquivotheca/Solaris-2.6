@@ -1,0 +1,7 @@
+install_type  initial_install
+system_type dataless
+cluster SUNWCuser
+partitioning default
+filesys c0t3d0s0 auto /
+filesys rmtc:/export/usr - /usr
+filesys rmtc:/export/usr/kvm 129.152.223.1 /usr/kvm

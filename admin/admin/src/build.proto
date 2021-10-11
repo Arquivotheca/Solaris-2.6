@@ -1,0 +1,86 @@
+#! /bin/sh
+#
+#ident	"@(#)build.proto	1.35	95/02/17 SMI"
+#
+# Copyright (c) 1991 by Sun Microsystems, Inc.
+#
+# To create a release build:
+#	1) You must be root !
+#	2) set VERSION, ROOT, SRC, PROTO and CBE_PATH
+#	3) sh build.proto & 
+# To follow progress do "tail Make.out".
+#
+# Note: ROOT and SRC must be mutually exclusive directories.
+
+#===========================================
+# Required to change parameters
+#===========================================
+
+VERSION="Solaris 2.6 Beta"
+
+ROOT=/build/admin/admin/proto
+SRC=/build/admin/admin/src
+PROTO=/
+CBE_PATH=/opt/SUNWspro
+UNB_ADM_DIR=SUNWadm/2.1
+
+export ROOT SRC VERSION PROTO UNB_ADM_DIR
+
+#===========================================
+# Optional to change parameters 
+#=========================================== 
+
+PATH=${CBE_PATH}:/usr/ccs/bin:/usr/bin:/usr/sbin:/sbin:${PATH}
+OPENWINHOME=${PROTO}/usr/openwin
+MOTIFHOME=${PROTO}/usr/dt
+LD_LIBRARY_PATH=${ROOT}/usr/lib:${ROOT}/usr/snadm/classes/lib
+export PATH OPENWINHOME MOTIFHOME LD_LIBRARY_PATH
+
+CH=
+RELEASE_BUILD=
+TMPDIR=/tmp
+export CH RELEASE_BUILD TMPDIR
+
+# Make sure these aren't set in the environment.
+unset LDFLAGS
+unset CFLAGS
+
+# Don't link in QA partner
+QAPCH="#"
+export QAPCH
+
+# Link in Licensing...default for now
+LICCH=""
+export LICCH
+
+unset CCFLAGS
+
+# unset these variables because in the full source product, the man page package
+# build sets them and will screw up our build.
+unset PKGINFODIR
+unset PKGNAME
+unset PROTOTYPE
+
+OUTFILE=Make.out
+
+cd $SRC
+echo
+echo "Cleaning root area $ROOT for new build ..."
+rm -rf $ROOT/* > /dev/null  2>&1 || {
+	echo "rm -rf $ROOT failed"
+	exit 1
+}
+echo "make clobber"
+make clobber > /dev/null 2>&1 || {
+	echo "make clobber failed"
+	exit 1
+}
+find $SRC -name .make.state -exec rm {} \;
+
+echo "make install"
+( echo; echo "==== new start at `date` ====" ) > $OUTFILE
+make -e install >> $OUTFILE 2>&1
+RC=$?
+( echo; echo "==== stopped at `date` ====" ) >> $OUTFILE
+echo "Build exited with status $RC"
+exit $RC

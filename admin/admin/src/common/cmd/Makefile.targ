@@ -1,0 +1,19 @@
+#
+#ident	"@(#)Makefile.targ	1.2	94/10/20 SMI"
+#
+# Copyright (c) 1992 by Sun Microsystems, Inc.
+#
+
+$(ROOTADMINBIN)/%: %
+	$(INS.file)
+
+clobber: clean
+	$(RM) $(PROG) $(CLOBBERFILES)
+
+lint_PROG:
+	$(LINT.c) $(PROG).c
+
+lint_SRCS:
+	$(LINT.c) $(SRCS)
+
+FRC:

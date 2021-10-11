@@ -1,0 +1,64 @@
+---- Admintool:Add/Modify Local Printer ------------
+
+Printer Name
+    Specifies a unique name for the printer. The
+    printer name must be a text string composed of
+    uppercase or lowercase alphabetical characters
+    (A-Z), digits (0-9), minus signs, or
+    underscores. A printer name can be a maximum of
+    14 characters long. 
+
+Print Server
+    Specifies the name of the system that has a
+    printer physically connected to
+    it. Admintool:Printers sets up this system with
+    the appropriate software to manage local and
+    remote print requests. 
+
+Description
+    Optional. Describes the printer, the printer
+    location, or provides other comments about the
+    printer. 
+
+Printer Port
+    Specifies the port the printer is connected to. 
+
+Printer Type
+    Specifies the generic name for a type of
+    printer. Supported printer types correspond to
+    printers listed in the /usr/share/lib/terminfo
+    directory. 
+
+File Contents
+    Specifies the format of files that can be
+    printed without any special filtering by the
+    print software. PostScript is the default and is
+    probably correct most of the time. 
+
+Fault Notification
+    Specifies how the superuser will be notified in
+    case of a printer error.  
+
+Options
+    Specifies whether or not to set up this printer
+    as a system default printer and whether or not 
+    to print a banner with each print job. The
+    options include: 
+ 
+    Default Printer - The printer your print
+    requests will be sent to if you do not specify a
+    printer. 
+
+    Always Print Banner - If disabled, users can use
+    a command line option to prevent the banner from 
+    printing. If enabled, the banner page always
+    prints. 
+
+User Access List
+    Optional. Specifies the print clients that can
+    print to this printer. By default, all print
+    clients have access to this printer. 
+
+See the "Topics" and "How To" help for more
+information about enabling printer access with
+Admintool. 

@@ -1,0 +1,167 @@
+;
+; Version: 1.00
+;
+; (C) Copyright International Business Machines Corporation 1993
+; All Rights Reserved
+;
+AdapterId 08FA8h
+
+AdapterName "IBM EtherStreamer MC32 Adapter"
+
+NumBytes 4
+FixedResources
+  POS[0]=1xxxxxxxb
+  POS[2]=x1xx0xx1b
+Begin NoDMA
+NamedItem Prompt "Adapter Media Type Selection"
+  Choice "Autosense"    POS[1]=x1xxxxxxb
+  Choice "UTP"          POS[1]=00xxxxxxb POS[2]=1xxxxxxxb
+  Choice "COAX"         POS[1]=10xxxxxxb POS[2]=0xxxxxxxb
+  Choice "AUI"          POS[1]=00xxxxxxb POS[2]=0xxxxxxxb
+
+  Help
+  "This option allows you to select which cable type is
+   connecting the adapter card to the network.  The choices
+   are Autosense, in which the adapter determines the media,
+   Attachment Unit Interface (AUI), Unshielded Twisted Pair
+   (UTP or 10BASET), or Coax (10BASE2).  The assignment for
+   the adapter media type can be changed by selecting
+   'CHANGE CONFIGURATION' and then using the F5=Previous
+   and the F6=Next keys."
+
+NamedItem Prompt "System Interrupt Level"
+  Choice "Interrupt  3" POS[1]=xx01xxxxb  Int 03h
+  Choice "Interrupt  2" POS[1]=xx00xxxxb  Int 02h
+  Choice "Interrupt 10" POS[1]=xx10xxxxb  Int 0Ah
+  Choice "Interrupt 11" POS[1]=xx11xxxxb  Int 0Bh
+
+  Help
+  "This option allows you to select the interrupt level that the
+   adapter will use to interrupt the system unit.  The preferred
+   interrupt level is 3, but the adapter can operate on any of the
+   four levels if necessary.  The assignment for this interrupt
+   level can be changed by selecting 'CHANGE CONFIGURATION' and
+   then using the F5=Previous and the F6=Next keys.
+   If an assignment has an asterisk (*) by it, it is in
+   conflict with another assignment and must be changed."
+
+NamedItem Prompt "Micro Channel I/O Address"
+  Choice "1C00-1CFF"    POS[0]=x000111xb   IO 01C00h-01CFFh
+  Choice "2000-20FF"    POS[0]=x001000xb   IO 02000h-020FFh
+  Choice "2400-24FF"    POS[0]=x001001xb   IO 02400h-024FFh
+  Choice "2800-28FF"    POS[0]=x001010xb   IO 02800h-028FFh
+  Choice "2C00-2CFF"    POS[0]=x001011xb   IO 02C00h-02CFFh
+  Choice "3000-30FF"    POS[0]=x001100xb   IO 03000h-030FFh
+  Choice "3400-34FF"    POS[0]=x001101xb   IO 03400h-034FFh
+  Choice "3800-38FF"    POS[0]=x001110xb   IO 03800h-038FFh
+  Choice "3C00-3CFF"    POS[0]=x001111xb   IO 03C00h-03CFFh
+  Choice "4000-40FF"    POS[0]=x010000xb   IO 04000h-040FFh
+  Choice "4400-44FF"    POS[0]=x010001xb   IO 04400h-044FFh
+  Choice "4800-48FF"    POS[0]=x010010xb   IO 04800h-048FFh
+  Choice "4C00-4CFF"    POS[0]=x010011xb   IO 04C00h-04CFFh
+  Choice "5000-50FF"    POS[0]=x010100xb   IO 05000h-050FFh
+  Choice "5400-54FF"    POS[0]=x010101xb   IO 05400h-054FFh
+  Choice "5800-58FF"    POS[0]=x010110xb   IO 05800h-058FFh
+  Choice "5C00-5CFF"    POS[0]=x010111xb   IO 05C00h-05CFFh
+  Choice "6000-60FF"    POS[0]=x011000xb   IO 06000h-060FFh
+  Choice "6400-64FF"    POS[0]=x011001xb   IO 06400h-064FFh
+  Choice "6800-68FF"    POS[0]=x011010xb   IO 06800h-068FFh
+  Choice "6C00-6CFF"    POS[0]=x011011xb   IO 06C00h-06CFFh
+  Choice "7000-70FF"    POS[0]=x011100xb   IO 07000h-070FFh
+  Choice "7400-74FF"    POS[0]=x011101xb   IO 07400h-074FFh
+  Choice "7800-78FF"    POS[0]=x011110xb   IO 07800h-078FFh
+  Choice "7C00-7CFF"    POS[0]=x011111xb   IO 07C00h-07CFFh
+  Choice "8000-80FF"    POS[0]=x100000xb   IO 08000h-080FFh
+  Choice "8400-84FF"    POS[0]=x100001xb   IO 08400h-084FFh
+  Choice "8800-88FF"    POS[0]=x100010xb   IO 08800h-088FFh
+  Choice "8C00-8CFF"    POS[0]=x100011xb   IO 08C00h-08CFFh
+  Choice "9000-90FF"    POS[0]=x100100xb   IO 09000h-090FFh
+  Choice "9400-94FF"    POS[0]=x100101xb   IO 09400h-094FFh
+  Choice "9800-98FF"    POS[0]=x100110xb   IO 09800h-098FFh
+  Choice "9C00-9CFF"    POS[0]=x100111xb   IO 09C00h-09CFFh
+  Choice "A000-A0FF"    POS[0]=x101000xb   IO 0A000h-0A0FFh
+  Choice "A400-A4FF"    POS[0]=x101001xb   IO 0A400h-0A4FFh
+  Choice "A800-A8FF"    POS[0]=x101010xb   IO 0A800h-0A8FFh
+  Choice "AC00-ACFF"    POS[0]=x101011xb   IO 0AC00h-0ACFFh
+  Choice "FC00-FCFF"    POS[0]=x111111xb   IO 0FC00h-0FCFFh
+
+  HELP "This option allows you to select the micro channel I/O
+        address range of the adapter.  For micro channel I/O
+        cycles, this Ethernet Network adapter is selected when the micro
+        channel I/O address is within a 256 byte region. If more than
+        one adapter is used in your computer, each adapter must be
+        assigned a separate I/O address range. The assignment for the
+        I/O address range can be changed by selecting 'CHANGE CONFIGURATION'
+        and then using the F5=PREVIOUS and the F6=NEXT keys.
+        If an assignment has an asterisk (*) by it, it is in
+        conflict with another assignment and the I/O address range
+        must be changed.  If a conflict continues to exist, you may
+        need to change the assignments for other options that are in
+        your computer to resolve the conflict."
+
+NamedItem Prompt "Streaming Data Select"
+  Choice "Enabled"      POS[3]=xx1xxxxxb
+  Choice "Disabled"     POS[3]=xx0xxxxxb
+
+  Help "This Ethernet Network Adapter can operate
+        with or without Data Streaming.  For best
+        performance, select <Enabled>.  This selection
+        can be changed by selecting 'CHANGE CONFIGURATION'
+        and then using the F5=Previous and the F6=Next keys."
+
+NamedItem Prompt "Fairness"
+  Choice "Fairness ON " POS[3]=xxx0xxxxb
+  Choice "Fairness OFF" POS[3]=xxx1xxxxb
+
+  Help
+  "Bus Arbitration Fairness controls whether the adapter will share
+   the bus equitably with other devices or retain control of the bus
+   as needed.  Under normal circumstances, select <ON>.  The assignment
+   for fairness can be changed by selecting 'CHANGE CONFIGURATION'
+   and then using the F5=Previous and the F6=Next keys."
+
+NamedItem Prompt "Arbitration Level"
+  Choice "Level 1"      POS[3]=xxxx0001b  arb 01h
+  Choice "Level 2"      POS[3]=xxxx0010b  arb 02h
+  Choice "Level 3"      POS[3]=xxxx0011b  arb 03h
+; Choice "Level 4"      POS[3]=xxxx0100b  arb 04h
+  Choice "Level 5"      POS[3]=xxxx0101b  arb 05h
+  Choice "Level 6"      POS[3]=xxxx0110b  arb 06h
+  Choice "Level 7"      POS[3]=xxxx0111b  arb 07h
+  Choice "Level 8"      POS[3]=xxxx1000b  arb 08h
+  Choice "Level 9"      POS[3]=xxxx1001b  arb 09h
+  Choice "Level A"      POS[3]=xxxx1010b  arb 0Ah
+  Choice "Level B"      POS[3]=xxxx1011b  arb 0Bh
+  Choice "Level C"      POS[3]=xxxx1100b  arb 0Ch
+  Choice "Level D"      POS[3]=xxxx1101b  arb 0Dh
+  Choice "Level E"      POS[3]=xxxx1110b  arb 0Eh
+
+  Help "This Ethernet Network adapter
+        can operate on one of thirteen arbitration levels: 1, 2, 3 or
+        5 thru E. If more than one adapter is used in your computer,
+        each adapter must be assigned a separate arbitration level.
+        Assignment for the arbitration level can be changed by
+        selecting 'CHANGE CONFIGURATION' and then using the
+        F5=Previous and the F6=Next keys.
+        If an assignment has an asterisk (*) by it, it is in
+        conflict with another assignment and the arbitration level
+        must be changed.  If a conflict continues to exist, you may
+        need to change the assignments for other adapters or options
+        that are in your computer to resolve the conflict."
+
+NamedItem Prompt "Parity Enable/Monitor Feedback"
+  Choice "Parity OFF/Monitor OFF"    pos[2]=xxxxx00xb
+  Choice "Parity ON /Monitor OFF"    pos[2]=xxxxx10xb
+  Choice "Parity OFF/Monitor ON "    pos[2]=xxxxx01xb
+  Choice "Parity ON /Monitor ON "    pos[2]=xxxxx11xb
+
+  Help   "Micro Channel Parity Enable/Monitor Slave devices feedback signal:
+          This Ethernet Network adapter provides the capability of
+          generating and checking data and address parity.  In
+          addition, this adapter also provides the capability
+          of monitoring slave device's Selected Feedback Return
+          Exception signals during DMA operations. These
+          assignments can be changed by selecting 'CHANGE CONFIGURATION'
+          and then using the F5=Previous and the F6=Next keys."
+End
+

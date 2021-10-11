@@ -1,0 +1,20 @@
+
+---- To determine a system's platform ---------
+
+  1. Exit the Solaris installation program.
+  
+  2. Type the uname -mp command at the root 
+     prompt. 
+
+     NOTE: The uname -mp command displays
+     the platform group, followed by 
+     the processor type.
+
+     For example:
+
+     Solaris Power PC    prep ppc
+     SPARC               sun4 sparc
+     x86                i86pc i386
+         
+  3. Restart the Solaris installation program.
+

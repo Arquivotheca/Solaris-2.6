@@ -1,0 +1,4 @@
+install_type  initial_install
+system_type standalone
+cluster SUNWCuser
+partitioning default

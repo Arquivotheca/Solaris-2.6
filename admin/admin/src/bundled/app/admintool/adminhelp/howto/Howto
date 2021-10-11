@@ -1,0 +1,30 @@
+Add Yourself to Group 14 (the sysadmin Group)
+	group_14.h.hlp
+Add a Group
+	group_add.h.hlp
+Add/Delete Members in a Group
+	group_mod.h.hlp
+Delete a Group
+	group_del.h.hlp
+Add a New User Account
+	user_add.h.hlp
+Modify a User Account
+	user_mod.h.hlp
+Delete a User Account
+	user_del.h.hlp
+Add Access to Remote Hosts
+	host_add.h.hlp
+Modify Access to Remote Hosts
+	host_mod.h.hlp
+Delete a Host Entry
+	host_del.h.hlp
+Add Access to a Local or Remote Printer
+	print_add.h.hlp
+Modify Printer Access
+	print_mod.h.hlp
+Delete Printer Access
+	print_del.h.hlp
+Add Software
+	software_add.h.hlp
+Add a Terminal or Modem
+	serial_mod.h.hlp

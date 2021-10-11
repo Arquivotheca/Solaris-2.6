@@ -1,0 +1,70 @@
+NOTES ON UPDATING THE SOFTWARE LIBRARY:
+
+[2/13/95]
+I've made some modifications to the software library that
+will have to be understood by anyone making future modifications
+to the library (library users are not affected).  The change
+is to clearly separate out the functions that are used externally
+and ensure that they are NOT used internally.  That allows
+me to log all external calls to the software library, without
+getting them confused with calls from the software library into
+itself.  Here's how it works:
+
+1.  Every external function, such as mark_arch(), has been replaced
+by a "wrapper" function with the original function's name (i.e.,
+mark_arch) and a "real" function called "swi_<original_function>"
+(i.e. swi_mark_arch).
+
+2.  The wrapper function does the following:
+
+	enter_swlib("<name of wrapper function");
+	return_code = swi_<original_function>(<args>);
+	exit_swlib();
+	return (return_code);
+
+3.  The "real" function is just the old function, now renamed to
+swi_<function>.
+
+4.  When the software library needs to call one of these functions, it
+calls the internal function, such as swi_mark_arch(), instead of the
+external function mark_arch().  In order to avoid editing every
+single call to these functions in the software library , I
+have set up #defines in sw_swi_defines.h which are of the form:
+
+#define mark_arch swi_mark_arch
+
+These #defines are only used by the software library functions
+themselves.
+
+By putting a breakpoint at enter_swlib(), you can now track every
+entry to the software library.  Right now, the enter_swlib()
+and exit_swlib() function just return, so their only use is as a
+target of breakpoints.  Eventually, I may add various tracing and
+logging code to those functions.
+
+
+Instructions for adding new external functions to libsw
+-----------------------------------------------------------
+1.  Assuming the function's external name is "foobar", write the
+    "real" function (the internal function) and name it "swi_foobar",
+    and add it to some source file OTHER THAN sw_api.c.
+2.  Add the function prototype for "foobar()" to sw_api.h.
+3.  If the file containing the internal function (swi_foobar()) is
+    "junk.c", create the wrapper function in swi_junk.c and name it
+    "foobar".  Look at the other wrapper functions for examples.
+4.  Add the internal function's prototype (the one for swi_foobar)
+    to sw_swi.h.
+5.  Add the following to sw_swi_defines.h:
+
+  #define foobar swi_foobar
+
+The swi_*.c files (the ones that contains the wrapper functions)
+should contains the includes:
+
+#include "sw_api.h"
+#include "sw_swi.h"
+
+All other .c files in the library source directory should contain
+the include:
+
+#include "sw_lib.h"

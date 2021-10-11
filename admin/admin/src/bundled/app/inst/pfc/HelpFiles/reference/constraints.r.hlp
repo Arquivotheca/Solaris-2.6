@@ -1,0 +1,122 @@
+---- About This Screen -----------------------------
+
+This screen lets you change the constraints on file
+systems. The constraints tell auto-layout what it 
+can or cannot do to a file system when it tries to 
+reallocate space again. 
+
+The main task when changing constraints is to make 
+enough free space available from the file systems 
+listed for the file systems that need more space 
+(Total Space Allocated > Total Space Needed).
+
+    NOTE: Even though you may specify constraints 
+    to allocate enough free space for the space 
+    needed, auto-layout may still fail because of 
+    limitations on how the file systems can be 
+    reallocated. 
+ 
+---- Constraints -----------------------------------
+
+You can specify the following constraints for a file
+system:
+
+> Fixed - Auto-layout cannot change the file system.
+  By default, all file systems that don't require 
+  more space are specified as Fixed.
+
+> Changeable - Auto-layout can move the file system
+  to another location and it can change its size. 
+  This constraint is available only for file systems
+  that are mounted by the /etc/vfstab file. You can
+  change a file system's size by changing its 
+  Minimum Size value. 
+
+    NOTE: File systems that require more space are 
+    always specified as Changeable. 
+
+> Movable - Auto-layout can move the file system to
+  another slice (on the same disk or different 
+  disk), but its size stays the same. This 
+  constraint is available only for file systems that
+  are mounted by the /etc/vfstab file.
+
+> Available - Auto-layout will use all of the space
+  on the file system to reallocate space (all of the
+  file system's space is considered free space 
+  because it's not mounted by the /etc/vfstab file).
+
+  All the data in the file system will be lost. 
+  This constraint is available only on file systems
+  that are not mounted by the /etc/vfstab file.
+
+---- Guidelines for Specifying Constraints ---------
+
+> On file systems that reside on the same disk as a 
+  file system that needs more space, specify the 
+  Changeable or Movable constraint (Choose the file
+  systems that reside next to the file system 
+  first.)
+
+> On file systems that can spare free space, specify
+  the Changeable constraint. 
+ 
+> On file systems that contain data that you don't 
+  need or want, specify the Available constraint.
+
+> Try to minimize the use of the Changeable and 
+  Movable constraints. If a file system is 
+  moved or changed, its user files must be backed 
+  up during the upgrade so the disks can be 
+  repartitioned (client services and Solaris CD 
+  images are considered user files).
+
+---- Heading Descriptions ------------------------
+
+> Required Size - The size that the file system 
+  requires for the upgrade.
+ 
+> Existing Size - The current size of the file
+  system. 
+ 
+> Free Space - The amount of free space that the 
+  file system contains. 
+ 
+> Space Needed - The amount of additional space 
+  that a file system needs for the upgrade.  
+ 
+> Minimum Size - The minimum size the file system 
+  will be after the upgrade. The size of the file 
+  system may be more if unallocated space is added 
+  to it. You can increase or decrease this value to 
+  change the size of a file system when the 
+  Changeable constraint is specified.  
+ 
+> Total Space Needed - The total amount of needed 
+  space on all the file systems.
+ 
+> Total Free Space Allocated - The total amount of 
+  free space that is selected.  This includes free 
+  space from file systems marked as Available
+  (Free Space) and from file systems marked as
+  Changeable (Existing Size - Minimum Size).
+
+---- Collapse Option -------------------------------
+
+The Collapse option enables you to decrease the
+number of file systems by moving (collapsing) them 
+into their parent file systems. Collapsing file 
+systems may or may not change which file systems 
+need more space for the upgrade. 
+
+---- Filter Option ---------------------------------
+
+The Filter option enables you to select which file 
+systems to display in the list.
+
+---- Defaults Option -------------------------------
+
+The Defaults option resets all the constraints to 
+their default values: file systems that need more 
+space are Changeable and all other file systems are 
+Fixed.

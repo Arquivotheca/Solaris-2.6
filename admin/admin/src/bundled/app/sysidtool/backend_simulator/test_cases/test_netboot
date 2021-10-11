@@ -1,0 +1,48 @@
+machine {
+        name = foo;
+        domainname = bar.com;
+	interfaces { 
+	{ le, 0, 129.152.221.1, 255.255.255.0, 129.152.221.255,
+		<up, running, broadcast> }
+	}
+	sysidtool {
+		configured = 0;
+		bootparamed = 0;
+		networked = 0;
+		autobound = 0;
+		subnetted = 0;
+		rootpass = 0;
+		locale = 0;
+		termtype = sun;
+	}
+}
+nameservice {
+	domainname = bar.com;
+	type = nis;
+	server = broadcast;
+	map {
+		name = locale;
+		{ foo, German }
+	}
+	map {
+		name = bootparams;
+		{ bar, root=install-1:/disk2,install=install-1:/disk2 }
+	}
+	map {
+		name = netmask;
+		{ 129.152.0.0, 255.255.255.0, "foo bar" }
+	}
+	map {
+		name = hosts;
+		{ timehost, 129.152.221.100 }
+	}
+	map {
+		name = ether;
+		{ foo, 1:2:3:4:5:6 }
+		{ bar, 7:8:9:10:11:12 }
+	}
+        map {
+		name = timezone;
+		{ bar.com, US/Mountain }
+	}
+}

@@ -1,0 +1,16 @@
+#
+# uts/i86pc/sxp/README
+# Copyright (c) 1996 by Sun Microsystems, Inc.
+#
+#pragma ident	"@(#)README	1.1	96/02/21 SMI"
+
+This is version information from Rockwell:
+
+2-16-96
+
+These drivers were built for Solaris 2.5 from the B2.12,sol2200 tree.
+
+11387    10 rns_smt
+19417    46 sxp
+30144   226 sys_core
+

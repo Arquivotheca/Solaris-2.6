@@ -1,0 +1,296 @@
+Module: pfgDisks
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.2 / Solaris 2.4";
+      lastWritten = "Mon May 20 07:52:04 1996";
+      nodesUsed = "disks_dialog,\ndisk_slice_entry,\ndisks_entry";
+      copy = false;
+      inCreateMenu = true;
+        {
+          disks_dialog = formWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 50;
+            vip_y = 85;
+              {
+                panelhelpText = XmText;
+                Group: Widget
+                  managed = False;
+              }
+              {
+                disksForm : form = XmForm;
+                Group: Widget
+                  marginHeight = 10;
+                  marginWidth = 10;
+                  rubberPositioning = False;
+                  resizePolicy = resize_any;
+                Group: Constraint
+                  topAttachment = attach_form;
+                    {
+                      mainText = XmTextField;
+                      Group: Widget
+                        focusCallback = "C: mainFocusCB";
+                        motionVerifyCallback = "C: mainMotionCB";
+                        cursorPositionVisible = False;
+                        columns = 20;
+                      Group: Constraint
+                        bottomAttachment = attach_opposite_widget;
+                        bottomWidget = recommendedForm;
+                        leftAttachment = attach_form;
+                    }
+                    {
+                      recommendedForm = XmForm;
+                      Group: Constraint
+                        rightAttachment = attach_widget;
+                        rightWidget = minimumForm;
+                        topAttachment = attach_form;
+                        rightOffset = 15;
+                          {
+                            recommendedLabel = XmLabel;
+                            Group: Widget
+                              alignment = alignment_end;
+                            Group: Constraint
+                              topAttachment = attach_form;
+                              leftAttachment = attach_form;
+                              rightAttachment = attach_form;
+                          }
+                          {
+                            recommendedFrame = XmFrame;
+                            Group: Widget
+                              shadowType = shadow_in;
+                            Group: Constraint
+                              rightAttachment = attach_form;
+                              bottomAttachment = attach_form;
+                              topAttachment = attach_widget;
+                              topWidget = recommendedLabel;
+                                {
+                                  recommendedValue = XmLabel;
+                                  Group: Widget
+                                    navigationType = none;
+                                    recomputeSize = False;
+                                    alignment = alignment_end;
+                                    labelString = " ";
+                                }
+                          }
+                    }
+                    {
+                      minimumForm = XmForm;
+                      Group: Constraint
+                        rightAttachment = attach_form;
+                        topAttachment = attach_form;
+                          {
+                            minimumLabel = XmLabel;
+                            Group: Widget
+                              alignment = alignment_end;
+                            Group: Constraint
+                              leftAttachment = attach_form;
+                              rightAttachment = attach_form;
+                              topAttachment = attach_form;
+                          }
+                          {
+                            minimumFrame = XmFrame;
+                            Group: Widget
+                              shadowType = shadow_in;
+                            Group: Constraint
+                              topAttachment = attach_widget;
+                              topWidget = minimumLabel;
+                              bottomAttachment = attach_form;
+                              rightAttachment = attach_form;
+                                {
+                                  minimumValue = XmLabel;
+                                  Group: Widget
+                                    navigationType = none;
+                                    recomputeSize = False;
+                                    alignment = alignment_end;
+                                    labelString = " ";
+                                }
+                          }
+                    }
+                    {
+                      disksScrolledWindow = XmScrolledWindow;
+                      Group: Widget
+                        scrollingPolicy = automatic;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        bottomAttachment = attach_none;
+                        topAttachment = attach_widget;
+                        topWidget = recommendedForm;
+                        rightAttachment = attach_form;
+                        topOffset = 10;
+                        resizable = true;
+                          {
+                            disksRowColumn = XmRowColumn;
+                            Group: Widget
+                              orientation = horizontal;
+                          }
+                    }
+                    {
+                      bootdeviceLabel = XmLabel;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_none;
+                        topAttachment = attach_widget;
+                        topWidget = disksScrolledWindow;
+                        bottomAttachment = attach_form;
+                        resizable = true;
+                    }
+              }
+              {
+                messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = okButton;
+                    {
+                      okButton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: disksOkCB";
+                    }
+                    {
+                      cancelButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: disksCancelCB";
+                    }
+                    {
+                      helpButton : button3 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"spotcustdisk.r\")";
+                    }
+                    {
+                      button4 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+        {
+          disk_slice_entry = XmRowColumn;
+          Group: Widget
+            orientation = horizontal;
+            navigationType = none;
+            marginHeight = 0;
+          Group: Control
+            vip_x = 155;
+            vip_y = 30;
+              {
+                sliceLabel = XmLabel;
+              }
+              {
+                mountText = XmTextField;
+                Group: Widget
+                  columns = 20;
+                  navigationType = none;
+                  activateCallback = "C: mountActivateCB";
+                  cursorPositionVisible = False;
+                  losingFocusCallback = "C: mountLosingFocus";
+              }
+              {
+                sizeText = XmTextField;
+                Group: Widget
+                  columns = 8;
+                  maxLength = 8;
+                  losingFocusCallback = "C: sizeLosingFocus";
+                  activateCallback = "C: sizeActivateCB";
+                  modifyVerifyCallback = "C: sizeVerifyCB";
+                  navigationType = none;
+                  cursorPositionVisible = False;
+              }
+        }
+        {
+          disks_entry = XmFrame;
+          Group: Widget
+            shadowType = shadow_out;
+            navigationType = none;
+          Group: Control
+            vip_x = 50;
+            vip_y = 30;
+              {
+                disksEntryForm = XmForm;
+                Group: Widget
+                  navigationType = none;
+                    {
+                      cylButton = XmPushButton;
+                      Group: Widget
+                        labelType = pixmap;
+                        activateCallback = "C: cylOpenCB";
+                        navigationType = tab_group;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        topAttachment = attach_form;
+                        leftOffset = 5;
+                        topOffset = 5;
+                    }
+                    {
+                      diskEntryRowColumn = XmRowColumn;
+                      Group: Widget
+                        marginWidth = 5;
+                        entryAlignment = alignment_end;
+                        spacing = 1;
+                        navigationType = none;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = cylButton;
+                          {
+                            diskLabel = XmLabel;
+                          }
+                    }
+                    {
+                      labelRowColumn = XmRowColumn;
+                      Group: Widget
+                        entryAlignment = alignment_end;
+                      Group: Constraint
+                        rightAttachment = attach_widget;
+                        rightWidget = valueRowColumn;
+                        bottomAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = diskEntryRowColumn;
+                          {
+                            capacityLabel = XmLabel;
+                          }
+                          {
+                            allocatedLabel = XmLabel;
+                          }
+                          {
+                            freeLabel = XmLabel;
+                          }
+                          {
+                            roundingLabel = XmLabel;
+                          }
+                          {
+                            overheadLabel = XmLabel;
+                          }
+                    }
+                    {
+                      valueRowColumn = XmRowColumn;
+                      Group: Widget
+                        entryAlignment = alignment_end;
+                      Group: Constraint
+                        bottomAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = diskEntryRowColumn;
+                        rightAttachment = attach_opposite_widget;
+                        rightWidget = diskEntryRowColumn;
+                          {
+                            capacityValue = XmLabel;
+                          }
+                          {
+                            allocatedValue = XmLabel;
+                          }
+                          {
+                            freeValue = XmLabel;
+                          }
+                          {
+                            roundingValue = XmLabel;
+                          }
+                          {
+                            overheadValue = XmLabel;
+                          }
+                    }
+              }
+        }
+}
+

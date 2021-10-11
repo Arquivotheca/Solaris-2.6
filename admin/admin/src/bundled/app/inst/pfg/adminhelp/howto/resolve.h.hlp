@@ -1,0 +1,32 @@
+---- To resolve software dependencies ---------
+
+When customizing a software group, you can remove
+or add a software package that other software
+depends on for functionality, creating an unresolved
+dependency. These packages are displayed in the
+Unresolved Software Dependencies list on the 
+Customizing Software screen.
+
+The leftmost line in the window indicates a package;
+the line indented directly below it, is the package
+it depends on.
+
+In the following example, the Install Software 
+package depends on the OpenWindows package.
+  
+  Unresolved Software Dependencies
+  +-------------------------------------------+
+  |Install Software                           |
+  |    OpenWindows required core package      |
+  |                                           |
+  +-------------------------------------------+
+
+To delete unresolved dependencies you can:
+
+  - Select the dependent package (in the above 
+    example, OpenWindows) 
+or...
+ 
+  - Deselect the package that requires the
+    dependent package (in the above example,
+    Install Software).

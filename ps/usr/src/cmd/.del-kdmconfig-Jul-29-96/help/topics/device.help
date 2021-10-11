@@ -1,0 +1,21 @@
+
+---- Description -----------------------------------------------------
+
+     Specifies the serial communications port used to connect 
+     your mouse.
+
+     The serial communications ports (COM ports) are usually 
+     located on the back of your computer. The mouse is connected 
+     to the COM port using a 9-pin, 15-pin, or 25-pin connector.
+
+     COM ports map to the following Solaris devices:
+
+       COM1 = /dev/tty00
+       COM2 = /dev/tty01
+       COM3 = /dev/tty02 
+       COM4 = /dev/tty03
+
+     Currently all serial mice will be configured on /dev/tty00 (COM1).  
+     Instructions for configuring serial mice on other ports will be 
+     in the Release Notes.
+ 

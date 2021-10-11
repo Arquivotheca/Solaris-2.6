@@ -1,0 +1,48 @@
+
+AdapterId 090EEh
+
+AdapterName "SVGA Adapter/A"
+
+NumBytes 4
+
+FixedResources
+        pos[1]=11111111b
+        pos[2]=11101110b
+        pos[3]=11010000b
+        io 3b0h-3bbh 3c0h-3dfh
+        int 9
+
+Begin Device 03h 01h 00h NoDMA
+
+NamedItem Prompt "Video I/O Address"
+        choice "Instance 6: 2160h - 216Fh"
+                pos[0]=XXXX110Xb io 02160h-0216fh
+        choice "Instance 1: 2110h - 211Fh"
+                pos[0]=XXXX001Xb io 02110h-0211fh
+        choice "Instance 2: 2120h - 212Fh"
+                pos[0]=XXXX010Xb io 02120h-0212fh
+        choice "Instance 3: 2130h - 213Fh"
+                pos[0]=XXXX011Xb io 02130h-0213fh
+        choice "Instance 4: 2140h - 214Fh"
+                pos[0]=XXXX100Xb io 02140h-0214fh
+        choice "Instance 5: 2150h - 215Fh"
+                pos[0]=XXXX101Xb io 02150h-0215fh
+        choice "Instance 7: 2170h - 217Fh"
+                pos[0]=XXXX111Xb io 02170h-0217fh
+        choice "Instance 0: 2100h - 210Fh"
+                pos[0]=XXXX000Xb io 02100h-0210fh
+
+        Help
+         "This field shows the I/O (Input/Output) address range for the display
+         controller registers.
+         Each adapter you install must have a unique address range.  Normally,
+         the address range does not need to be changed.
+         If you are in the 'Change Configuration' window, you can change
+         the setting.  Use F5 and F6 to scroll through the choices, the Up
+         and Down arrow keys to move from field to field.
+         If a setting conflicts with another, an asterisk (*) appears next to
+         the conflicts.  You must fix conflicts before you use the adapter."
+
+End
+
+

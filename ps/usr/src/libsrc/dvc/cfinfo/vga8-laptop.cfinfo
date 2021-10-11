@@ -1,0 +1,24 @@
+class="win" name="SUNWvga8-laptop"
+	__wclass__="XSCREENCONFIG"
+	__category__="display"
+	__title__="prototype super vga8 256 color laptop device entry"
+
+	size="var,__size__"
+	__size__="string,7-inch,9-inch,15-inch"
+	__dimx__="string,6,7.5,12"
+	__dimy__="string,4,6,9.5"
+
+	position="var,__position__"
+	__position__="string,left,right,top,bottom"
+
+	device="SUNWvga8"
+ 	pmifile="prototype pmifile entry"
+
+	res="string,640x480"
+
+	dpix="string,90"
+	dpiy="string,90"
+
+	__group__="string,SUNWvga8-laptop"
+	__members__="string,4400c,ergo,wd90c26am,wd90c24am,versa,versa50,ti4000e"
+	;

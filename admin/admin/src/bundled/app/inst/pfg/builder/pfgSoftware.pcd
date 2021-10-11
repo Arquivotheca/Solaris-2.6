@@ -1,0 +1,392 @@
+Module: pfgSoftware
+{
+      autoCuil = false;
+      release = "TeleUSE v3.0.2 / Solaris 2.4";
+      lastWritten = "Wed Apr 24 13:46:35 1996";
+      nodesUsed = software_dialog;
+      copy = false;
+      inCreateMenu = true;
+        {
+          software_dialog = formWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 65;
+            vip_y = 85;
+              {
+                panelhelpText = XmText;
+                Group: Widget
+                  managed = False;
+              }
+              {
+                softwareForm : form = XmForm;
+                Group: Widget
+                  marginWidth = 20;
+                  marginHeight = 10;
+                Group: Constraint
+                  topAttachment = attach_form;
+                    {
+                      clusterLabel = XmLabel;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        topAttachment = attach_form;
+                    }
+                    {
+                      sizeLabel = XmLabel;
+                      Group: Constraint
+                        bottomAttachment = attach_widget;
+                        bottomWidget = packagesScrolledWindow;
+                        rightAttachment = attach_opposite_widget;
+                        rightWidget = packagesScrolledWindow;
+                    }
+                    {
+                      packagesScrolledWindow = XmScrolledWindow;
+                      Group: Widget
+                        scrollingPolicy = automatic;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = clusterLabel;
+                        bottomAttachment = attach_widget;
+                        bottomWidget = totalSizeForm;
+                        rightAttachment = attach_opposite_widget;
+                        rightWidget = totalSizeForm;
+                          {
+                            softwareClustersRowColumn = XmRowColumn;
+                          }
+                    }
+                    {
+                      totalSizeForm = XmForm;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        bottomAttachment = attach_widget;
+                        bottomWidget = legendFrame;
+                        rightAttachment = attach_opposite_widget;
+                        rightWidget = legendFrame;
+                          {
+                            totalSizeLabel = XmLabel;
+                            Group: Widget
+                              alignment = alignment_end;
+                            Group: Constraint
+                              topAttachment = attach_form;
+                              bottomAttachment = attach_form;
+                              leftAttachment = attach_form;
+                              rightAttachment = attach_widget;
+                              rightWidget = totalSizeValue;
+                          }
+                          {
+                            totalSizeValue = XmLabel;
+                            Group: Widget
+                              alignment = alignment_beginning;
+                            Group: Constraint
+                              rightAttachment = attach_form;
+                              bottomAttachment = attach_form;
+                              topAttachment = attach_form;
+                          }
+                    }
+                    {
+                      legendFrame = XmFrame;
+                      Group: Widget
+                        shadowType = shadow_etched_out;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        bottomAttachment = attach_form;
+                          {
+                            legendForm = XmForm;
+                                {
+                                  legendRowColumn = XmRowColumn;
+                                  Group: Widget
+                                    entryAlignment = alignment_end;
+                                    numColumns = 3;
+                                    packing = pack_column;
+                                    traversalOn = False;
+                                    adjustLast = False;
+                                      {
+                                        expandForm = legend_arrow_entry : pfgSoftware;
+                                            {
+                                              expandLegendArrow : legendArrow = XmArrowButton;
+                                              Group: Widget
+                                                arrowDirection = arrow_down;
+                                            }
+                                            {
+                                              expandLegendLabel : legendLabel = XmLabel;
+                                              Group: Constraint
+                                                leftWidget = expandLegendArrow;
+                                            }
+                                      }
+                                      {
+                                        contractForm = legend_arrow_entry : pfgSoftware;
+                                            {
+                                              contractLegendArrow : legendArrow = XmArrowButton;
+                                              Group: Widget
+                                                arrowDirection = arrow_right;
+                                            }
+                                            {
+                                              contractLegendLabel : legendLabel = XmLabel;
+                                              Group: Constraint
+                                                leftWidget = contractLegendArrow;
+                                            }
+                                      }
+                                      {
+                                        requiredForm = legend_button_entry : pfgSoftware;
+                                            {
+                                              requiredLegendButton : legendButton = XmPushButton;
+                                            }
+                                            {
+                                              requiredLegendLabel : legendLabel = XmLabel;
+                                              Group: Constraint
+                                                leftWidget = requiredLegendButton;
+                                            }
+                                      }
+                                      {
+                                        partialForm = legend_button_entry : pfgSoftware;
+                                            {
+                                              partialLegendButton : legendButton = XmPushButton;
+                                            }
+                                            {
+                                              partialLegendLabel : legendLabel = XmLabel;
+                                              Group: Constraint
+                                                leftWidget = partialLegendButton;
+                                            }
+                                      }
+                                      {
+                                        selectedform = legend_button_entry : pfgSoftware;
+                                            {
+                                              selectedLegendButton : legendButton = XmPushButton;
+                                            }
+                                            {
+                                              selectedLegendLabel : legendLabel = XmLabel;
+                                              Group: Constraint
+                                                leftWidget = selectedLegendButton;
+                                            }
+                                      }
+                                      {
+                                        unselectedForm = legend_button_entry : pfgSoftware;
+                                            {
+                                              unselectedLegendButton : legendButton = XmPushButton;
+                                            }
+                                            {
+                                              unselectedLegendLabel : legendLabel = XmLabel;
+                                              Group: Constraint
+                                                leftWidget = unselectedLegendButton;
+                                            }
+                                      }
+                                }
+                          }
+                    }
+                    {
+                      softwarePanedWindow = XmPanedWindow;
+                      Group: Constraint
+                        rightAttachment = attach_form;
+                        leftAttachment = attach_widget;
+                        leftWidget = packagesScrolledWindow;
+                        topAttachment = attach_form;
+                        bottomAttachment = attach_form;
+                        leftOffset = 20;
+                          {
+                            softwareInfoFrame = XmFrame;
+                            Group: Widget
+                              shadowThickness = 0;
+                                {
+                                  softwareInfoLabel = XmLabel;
+                                  Group: Constraint
+                                    childType = frame_title_child;
+                                }
+                                {
+                                  softwareInfoScrolledWindow = XmScrolledWindow;
+                                  Group: Widget
+                                    traversalOn = False;
+                                    visualPolicy = constant;
+                                    scrollingPolicy = automatic;
+                                      {
+                                        softwareInfoForm = XmForm;
+                                        Group: Widget
+                                          verticalSpacing = 3;
+                                          rubberPositioning = False;
+                                          resizePolicy = resize_any;
+                                            {
+                                              softwareInfoRowColumn = XmRowColumn;
+                                              Group: Widget
+                                                entryAlignment = alignment_end;
+                                                packing = pack_tight;
+                                                marginHeight = 0;
+                                                marginWidth = 0;
+                                              Group: Constraint
+                                                leftAttachment = attach_form;
+                                                topAttachment = attach_form;
+                                                bottomAttachment = attach_form;
+                                                  {
+                                                    prodLabel = XmLabel;
+                                                    Group: Widget
+                                                      labelString = " ";
+                                                  }
+                                                  {
+                                                    abbrevLabel = XmLabel;
+                                                    Group: Widget
+                                                      labelString = " ";
+                                                  }
+                                                  {
+                                                    vendorLabel = XmLabel;
+                                                    Group: Widget
+                                                      labelString = " ";
+                                                  }
+                                                  {
+                                                    descriptLabel = XmLabel;
+                                                    Group: Widget
+                                                      labelString = " ";
+                                                  }
+                                                  {
+                                                    estLabel = XmLabel;
+                                                    Group: Widget
+                                                      labelString = " ";
+                                                  }
+                                            }
+                                            {
+                                              softwareInfoRowColumn1 = XmRowColumn;
+                                              Group: Widget
+                                                packing = pack_tight;
+                                                marginHeight = 0;
+                                                marginWidth = 0;
+                                              Group: Constraint
+                                                leftAttachment = attach_widget;
+                                                topAttachment = attach_form;
+                                                leftWidget = softwareInfoRowColumn;
+                                                rightAttachment = attach_form;
+                                                bottomAttachment = attach_form;
+                                                resizable = true;
+                                                  {
+                                                    prodValue = XmLabel;
+                                                    Group: Widget
+                                                      labelString = " ";
+                                                  }
+                                                  {
+                                                    abbrevValue = XmLabel;
+                                                    Group: Widget
+                                                      labelString = " ";
+                                                  }
+                                                  {
+                                                    vendorValue = XmLabel;
+                                                    Group: Widget
+                                                      labelString = " ";
+                                                  }
+                                                  {
+                                                    descriptValue = XmLabel;
+                                                    Group: Widget
+                                                      labelString = " ";
+                                                  }
+                                                  {
+                                                    sizeRowColumn = XmRowColumn;
+                                                    Group: Widget
+                                                      numColumns = 2;
+                                                      packing = pack_column;
+                                                      marginHeight = 0;
+                                                      marginWidth = 0;
+                                                  }
+                                            }
+                                      }
+                                }
+                          }
+                          {
+                            softwareDependenciesFrame = XmFrame;
+                            Group: Widget
+                              shadowThickness = 0;
+                                {
+                                  softwareDependenciesScrolledList = XmScrolledList;
+                                  Group: Widget
+                                    visibleItemCount = 4;
+                                }
+                                {
+                                  softwareDependenciesLabel = XmLabel;
+                                  Group: Constraint
+                                    childType = frame_title_child;
+                                }
+                          }
+                    }
+              }
+              {
+                messageBox = XmMessageBox;
+                Group: Widget
+                  defaultButton = okButton;
+                    {
+                      okButton : button1 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: softwareOkCB";
+                    }
+                    {
+                      helpButton : button2 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"spotsoftcust.r\")";
+                    }
+                    {
+                      button3 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      button4 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+                    {
+                      button5 = XmPushButton;
+                      Group: Widget
+                        managed = False;
+                    }
+              }
+        }
+        {
+          legend_arrow_entry = XmForm;
+          Group: Control
+            vip_x = 65;
+            vip_y = 140;
+              {
+                legendArrow = XmArrowButton;
+                Group: Widget
+                  shadowThickness = 0;
+                Group: Constraint
+                  leftAttachment = attach_form;
+                  bottomAttachment = attach_form;
+                  topAttachment = attach_form;
+              }
+              {
+                legendLabel = XmLabel;
+                Group: Constraint
+                  rightAttachment = attach_form;
+                  leftAttachment = attach_widget;
+                  leftWidget = legendArrow;
+                  bottomAttachment = attach_form;
+                  topAttachment = attach_form;
+              }
+        }
+        {
+          legend_button_entry = XmForm;
+          Group: Control
+            vip_x = 65;
+            vip_y = 30;
+              {
+                legendButton = XmPushButton;
+                Group: Widget
+                  labelType = pixmap;
+                  width = 20;
+                  height = 20;
+                  marginWidth = 0;
+                  marginHeight = 0;
+                  recomputeSize = False;
+                Group: Constraint
+                  resizable = False;
+                  leftAttachment = attach_form;
+                  topAttachment = attach_form;
+                  leftOffset = 30;
+              }
+              {
+                legendLabel = XmLabel;
+                Group: Widget
+                  alignment = alignment_beginning;
+                Group: Constraint
+                  rightAttachment = attach_form;
+                  leftAttachment = attach_widget;
+                  leftWidget = legendButton;
+                  bottomAttachment = attach_form;
+                  topAttachment = attach_form;
+              }
+        }
+}
+

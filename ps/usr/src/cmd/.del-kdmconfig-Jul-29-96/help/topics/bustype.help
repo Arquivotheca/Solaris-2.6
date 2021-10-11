@@ -1,0 +1,4 @@
+---- Description -----------------------------------------------------
+ 
+	Specifies which bus type the board resides on.  Which is
+	either PCI or VLB.

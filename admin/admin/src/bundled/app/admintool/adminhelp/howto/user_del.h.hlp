@@ -1,0 +1,19 @@
+---- Delete a User Account -------------------------
+
+1. Select Users from the Browse menu.
+
+2. Select the user entry to delete from the
+   Admintool:Users main window.
+
+3. Select Delete from the Edit menu on the
+   Admintool:Users main window.
+
+   A window is displayed asking you to confirm the
+   deletion.
+
+4. Click on Delete.
+
+   The selected user is deleted and the user
+   information displayed in the main window is
+   updated.
+

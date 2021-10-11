@@ -1,0 +1,22 @@
+---- Delete Printer Access -------------------------
+
+1. Select Printers from the Browse menu.
+
+2. Select the printer entry to delete from the
+   Admintool:Printers main window.
+
+   The printer can be either a local or remote
+   printer. 
+
+3. Select Delete from the Edit menu on the
+   Admintool:Printers main window.
+
+   A window is displayed asking you to confirm the
+   deletion.
+
+4. Click on Delete.
+
+   The selected printer is deleted and the printer 
+   information displayed in the main window is
+   updated.
+

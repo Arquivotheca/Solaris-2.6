@@ -1,0 +1,17 @@
+install_type    initial_install
+system_type     server
+client_arch	sun4c
+
+partitioning    explicit
+filesys         c0t3d0s0        auto    /
+filesys		c0t3d0s1	auto	swap
+filesys         c0t3d0s6        free    /usr
+
+filesys         infidel-111:/export/s10-93/sunpro/2.0.1/SUNWspro - /opt/SUNWspro
+filesys         ud17-111a:/export/dist - /usr/dist
+filesys         hagar:/opt/teamware - /opt/teamware
+filesys         gallifrey:/export/gallifrey - /export/gallifrey
+filesys         gallifrey:/proto - /proto
+filesys         gallifrey:/work - /work
+
+cluster         SUNWCall

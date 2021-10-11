@@ -1,0 +1,85 @@
+#
+# uts/common/Makefile.files
+#
+# Copyright (c) 1996 by Sun Microsystems, Inc.
+# All rights reserved.
+#
+#pragma	ident	"@(#)Makefile.files	1.77	96/08/29 SMI"
+#
+#	This Makefile defines all file modules for the directory uts/common
+# and it's children. These are the source files which may be considered
+# common to all SunOS systems.
+#
+
+#
+#			object lists
+#
+
+#
+#		Driver (pseudo-driver) Modules
+#
+
+ATA_OBJS +=	ata.o
+FD_OBJS +=	fd.o
+FDC_OBJS +=	fdc.o
+LP_OBJS +=	lp.o
+ASY_OBJS +=	asy.o
+
+VUIDM3P_OBJS += vuidmice.o vuidm3p.o
+VUIDM4P_OBJS += vuidmice.o vuidm4p.o
+VUIDM5P_OBJS += vuidmice.o vuidm5p.o
+VUIDPS2_OBJS += vuidmice.o vuidps2.o
+
+SCCD_AUDIO_OBJS += sccd_audio.o
+SYSINIT_OBJS +=	sysinit.o
+DADK_OBJS +=	dadk.o
+GDA_OBJS +=	gda.o
+SNLB_OBJS += 	snlb.o
+GENLB_OBJS += 	genlb.o
+STRATEGY_OBJS += strategy.o
+SCDK_OBJS += 	scdk.o scdk_watch.o sctarget.o
+CMDK_OBJS +=	cmdk.o
+OBJMGR_OBJS += 	objmgr.o
+
+NCRS_OBJS +=	busops.o cam.o ccb.o devops.o init.o interrupt.o ncr.o \
+ 		ncr_clock.o ncr_conf.o ncr_intr.o \
+ 		queue.o script.o sg.o syncio.o transport.o \
+ 		53c810.o ncr_geom.o ncr_hba.o
+
+#
+# The GHD files are currently shared source and not yet a driver module
+#
+GHD_OBJS +=	ghd.o ghd_debug.o ghd_dma.o ghd_queue.o ghd_scsa.o \
+		ghd_scsi.o ghd_timer.o
+
+ADP_OBJS +=	$(GHD_OBJS) adp.o adp_him.o adp_him_init.o himd.o \
+		himdinit.o himdiopt.o himdopt.o
+
+DNET_OBJS += 	dnet.o
+
+PCELX_OBJS += pcelx.o pcgld.o
+
+PCN_OBJS += 	pcn.o 
+
+PCMEM_OBJS += pcmem.o
+
+PCRAM_OBJS += pcram.o
+
+PCSER_OBJS += pcser.o pcser_cis.o
+
+PCEPP_OBJS += pcepp.o
+
+#
+#	Build up defines and paths.
+#
+LINT_DEFS	+= -Dunix
+
+#
+#	This duality can be removed when the native and target compilers
+#	are the same (or at least recognize the same command line syntax!)
+#	It is a bug in the current compilation system that the assember
+#	can't process the -Y I, flag.
+#
+NATIVE_INC_PATH += $(INC_PATH) $(CCYFLAG)$(UTSBASE)/common
+AS_INC_PATH	+= -I$(DSF_DIR) $(INC_PATH) -I$(UTSBASE)/common
+INCLUDE_PATH    += $(INC_PATH) -I$(UTSBASE)/common

@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# ident	"@(#)postinstall	1.3	96/05/03 SMI"
+# SUNWpcelx postinstall script
+
+PATH="/bin:/usr/bin:/usr/sbin:${PATH}"
+export PATH
+
+ADDDRV=/usr/sbin/add_drv
+
+DRVALIAS="${BASEDIR}/etc/driver_aliases"
+
+if test ! -f ${DRVALIAS} -o ! -w ${DRVALIAS}; then
+	echo "SUNWpcelx: file ${DRVALIAS} is missing/inaccessible." >&2
+	exit 1
+fi
+
+trap "rm -f /tmp/$$.*;exit" 0 1 2 3 13 15
+
+#
+# add_drv_alias - add driver aliases
+#
+add_drv_alias()
+{
+	DRIVER="$1"
+	ALIAS="$2"
+
+	echo "$DRIVER \"$ALIAS\"" >>${DRVALIAS}
+}
+
+${ADDDRV} -b ${BASEDIR} -n pcelx
+add_drv_alias pcelx 'pccard101,589'
+add_drv_alias pcelx 'pccard101,562,0'
+
+touch ${BASEDIR}/reconfigure
+
+exit 0

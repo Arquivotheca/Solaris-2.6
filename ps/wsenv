@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+#pragma ident "@(#)wsenv.template 1.18     96/11/21 SMI"
+#
+# Copyright (c) 1996 by Sun Microsystems, Inc.
+# All rights reserved.
+#
+# wsenv - set workspace build environment variables
+#
+# SSS = SunSoft South
+#
+##--------------------------------------------------------------------------
+#
+# EDIT AND DOT THIS FILE IN THE WORKSPACE PRIOR TO RUNNING A BUILD!!!!
+#
+##--------------------------------------------------------------------------
+# BUILD_ENV: Defines which build environment to use.
+#           A build environment includes the SunPro development tools
+#           (compilers and teamware), the CBE, and the RE tools (compiler
+#           front-end scripts).  This assignment *must* be made, otherwise
+#           the build will fail.
+#           Select from: 2.4, 2.5, 2.5.1, 2.6 (which refer to the Solaris
+#           releases).
+BUILD_ENV=2.6
+export BUILD_ENV
+
+# MACH: Defines the machine type for which code is being compiled.
+#           If cross-compiling, define MACH with the result of a 'uname -

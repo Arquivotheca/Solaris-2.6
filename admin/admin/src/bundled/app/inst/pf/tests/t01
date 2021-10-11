@@ -1,0 +1,9 @@
+install_type  initial_install
+system_type standalone
+locale de
+cluster SUNWCprog
+cluster SUNWCxgl delete
+cluster SUNWCaud
+package SUNWaudmo
+package SUNWman delete
+package SUNWdialh add

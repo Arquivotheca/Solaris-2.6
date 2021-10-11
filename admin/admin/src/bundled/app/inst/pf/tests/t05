@@ -1,0 +1,8 @@
+install_type  initial_install
+system_type standalone
+cluster SUNWCuser
+partitioning explicit
+filesys c0t3d0s0 existing /
+filesys c0t3d0s1 existing swap
+filesys c0t3d0s5 existing /opt preserve ro
+filesys c0t3d0s6 existing /usr ro

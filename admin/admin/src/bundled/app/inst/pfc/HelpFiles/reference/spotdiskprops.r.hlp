@@ -1,0 +1,36 @@
+
+---- About this screen  --------------------------------------
+
+     This screen lets you to change the way the disk 
+     editor works on the Customize Disk: screen. By
+     default, the disk editor:
+
+     - Uses Mbytes as the editing unit
+     - Does not show cylinder boundaries
+
+     > To change a default, use the arrow keys to
+       highlight an option and press Return to mark it [X]
+     
+
+---- Show cylinder boundaries --------------------------------
+
+     Turning on cylinder boundaries lets you edit 
+     starting cylinders. Generally, this is useful only
+     when creating overlapping partitions. 
+
+     CAUTION: Cylinder editing requires advanced system
+     administration skills. Do not turn cylinder boundaries
+     if you do not understand the ramifications of this
+     type of editing.
+
+
+---- Load existing slices from VTOC label -------------------
+
+     The Volume Table of Contents (VTOC) describes how 
+     information is arranged on the disk. Loading this table
+     lets you read in the current disk configuration. 
+
+     CAUTION: If you choose to load existing slices, note 
+     that whatever you've configured on the Customize Disk:
+     screen will be deleted.
+

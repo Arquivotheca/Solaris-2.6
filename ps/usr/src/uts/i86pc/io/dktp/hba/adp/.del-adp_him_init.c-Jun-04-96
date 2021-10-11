@@ -1,0 +1,1110 @@
+
+/*
+ * Copyright (c) 1995 Sun Microsystems, Inc.
+ * All Rights Reserved.
+ */
+
+/* $Header:   V:/source/code/aic-7870/him/common/him_init.cv_   1.27.1.0   03 Mar 1994 17:01:08   VON  $ */
+
+#pragma ident	"@(#).del-adp_him_init.c-Jun-04-96	1.5	95/06/28 SMI"
+
+/***************************************************************************
+*                                                                          *
+* Copyright 1993 Adaptec, Inc.,  All Rights Reserved.                      *
+*                                                                          *
+* This software contains the valuable trade secrets of Adaptec.  The       *
+* software is protected under copyright laws as an unpublished work of     *
+* Adaptec.  Notice is for informational purposes only and does not imply   *
+* publication.  The user of this software may make copies of the software  *
+* for use with parts manufactured by Adaptec or under license from Adaptec *
+* and for no other use.                                                    *
+*                                                                          *
+***************************************************************************/
+
+/***************************************************************************
+*
+*  Module Name:   AIC-7870/7850 HIM (Hardware Interface Module)
+*
+*  Version:       1.01
+*                 
+*  Source Code:   HIM_INIT.C  HIMBINIT.C HIMDINIT.C HIMDISTD.C HIMDIOPT.C
+*                 HIM.C HIMB.C HIMD.C HIMDSTD.C HIMDOPT.C
+*                 HIM_REL.H   HIM_EQU.H   HIM_SCB.H
+*                 SEQUENCE.H  SEQ_OFF.H   MACRO.H
+*
+*  Base Code #:   xxxxxx-00
+*
+*  Description:   Hardware Interface Module for linking/compiling with
+*                 software drivers supporting the AIC-7870 and AIC-7870
+*                 based host adapters (ie. Javelin).
+*
+*  History:
+*
+***************************************************************************/
+
+/****************************************************************************
+*
+*  Module Name:   HIM_INIT.C
+*
+*  Description:
+*                 Codes common to HIM at initialization are defined here. 
+*                 It should always be included independent of configurations
+*                 and modes of operation. These codes can be thrown away 
+*                 after HIM initialization.
+*
+*  Programmers:   Paul von Stamwitz
+*                 Chuck Fannin
+*                 Jeff Mendiola
+*                 Harry Yang
+*    
+*  Notes:         NONE
+*
+*  Entry Point(s):
+*
+*     PH_GetNumOfBuses - Return number of PCI buses present in system
+*     PH_FindHA        - Look for Host Adapter at Bus/Device "slot"
+*     PH_GetConfig     - Initialize HIM data structures
+*     PH_InitHA        - Initialize Host Adapter
+*
+*  Revisions -
+*
+****************************************************************************/
+
+#include <sys/scsi/scsi.h>
+#include <sys/dktp/adp/him_scb.h>
+#include <sys/dktp/adp/him_equ.h>
+#include <sys/dktp/adp/seq_off.h>
+#include <sys/dktp/adp/sequence.h>
+#include <sys/dktp/adp/him_rel.h>
+
+/*********************************************************************
+*
+*   PH_GetNumOfBuses -
+*
+*   This routine will interrogate all the HOST-TO-PCI bridges as well
+*   as all the PCI-TO-PCI bridges to determine the total number of 
+*   PCI buses present in the system.
+*
+*  Return Value:  Highest number of PCI bus plus one
+*
+*  Parameters:    none
+*
+*  Activation:    ASPI layer, initialization.
+*
+*  Remarks:       The first attempt to retrieve the total number of
+*                 buses shall be from OSM using SYSTEM BIOS call INT 1A,
+*                 If it is available.  Otherwise, 0x55555555 shall be
+*                 returned to this routine and the 2nd scheme is used.
+*
+*                 The Host-to_PCI bridge chip can be any device number
+*                 on the PCI bus.
+*
+*********************************************************************/
+#ifndef  _LESS_CODE
+UWORD PH_GetNumOfBuses ()
+{
+   cfp_struct *NUL_PTR = (cfp_struct *) NOT_DEFINED;
+   UWORD nofbus, next_busnumber;
+   UBYTE subordinate_busnumber;
+   UBYTE high_subordinate_busnumber;
+   UBYTE i, host_bridge_dev;
+   DWORD class_code, nofbus_dword;
+   
+   /* NUL_PTR = (cfp_struct *) NOT_DEFINED;  */
+
+   if ((nofbus_dword=PH_GetNumOfBusesOSM()) != NO_CONFIG_OSM)
+   {
+      nofbus = (UWORD)(nofbus_dword & 0x0000ffff);
+      return(nofbus);
+   }
+
+   nofbus = 0;
+   subordinate_busnumber=0;         /* in case there are no pci-pci bridge */
+   high_subordinate_busnumber=0;    /* same as above */
+
+   /*
+      starting with '0' as the root PCI bus number and search for the
+      highest subordinate bus number of the current bridge, if one
+      exists.  Move on to the next higher PCI bus number and check for
+      the existence of host-to-pci bridge class code before scanning for
+      other pci bridges.
+   */
+   for ( next_busnumber = 0;
+         next_busnumber <= 255;
+         next_busnumber =   (subordinate_busnumber==0)
+                          ? (next_busnumber+1)
+                          : (subordinate_busnumber+1) )
+   {
+      subordinate_busnumber = 0;
+
+      /* scan for host-to-PCI bridge device.       */
+      for (host_bridge_dev=0; host_bridge_dev<32; host_bridge_dev++)
+      {
+         class_code = 0xffffff00 & Ph_ReadConfig( NUL_PTR,
+                                                (UBYTE)(next_busnumber&0xff),
+                                                 host_bridge_dev,
+                                                 DEV_REV_ID);
+
+         if (   (class_code == 0x06000000)   /* either class code represents  */
+             || (class_code == 0x00000000))  /* a possible host-to-pci bridge */
+         {
+
+            ++nofbus;
+
+            /* go through each device on the current bus to find all */
+            /* PCI to PCI bridges. 32 devices maximum per PCI bus    */
+            for (i=0; i<32; i++)
+            {
+               /* make sure use class code etc match with the PCI to PCI and  */
+               /* use the subordinate bus number to update the maximum number */
+               /* of buses available up to this host-to-PCI bridge            */
+               if (i==host_bridge_dev)       /* skip the host bridge device   */
+                  continue;
+
+               class_code = 0xffffff00 & Ph_ReadConfig( NUL_PTR,
+                                                        (UBYTE)(next_busnumber&0xff),
+                                                        i,
+                                                        DEV_REV_ID);
+               if (class_code == 0x06040000)
+               {
+                  subordinate_busnumber = (UBYTE) ((Ph_ReadConfig( NUL_PTR,
+                                                                   (UBYTE)(next_busnumber&0xff),
+                                                                   i,
+                                                                   BUS_NUMBER) >> 16 ) & 0xFF);
+                  if ( (UWORD)(subordinate_busnumber+1) > nofbus )
+                  {
+                     nofbus = (UWORD)(subordinate_busnumber+1);
+                     high_subordinate_busnumber = subordinate_busnumber;
+                  }
+               }
+            }
+            break;         /* stop scanning the bus once host bridge is found */
+         }
+      }
+   }
+   /* If the system has a Mach 1 chip, the host-to-bridge chip would
+      response for any scanning with device #0 and end up with 256
+      PCI buses.  In this case, we would default to 1 PCI bus.
+   */
+   return((nofbus == 256) ? high_subordinate_busnumber + 1 : nofbus);
+}
+#endif      /* _LESS_CODE  */
+
+/*********************************************************************
+*
+*   PH_FindHA routine -
+*
+*   This routine will interrogate the hardware (if any) at the
+*   specified port address to see if a supported host adapter is
+*   present.
+*
+*  Return Value:  0x00 - no AIC-787x h.a. found
+*                 0x01 - AIC-787x h.a. found
+*                 0x81 - AIC-787x h.a. found but not enabled
+*
+*  Parameters:    unsigned int bus_number
+*                 unsigned int device number
+*
+*  Activation:    ASPI layer, initialization.
+*
+*  Remarks:
+*
+*********************************************************************/
+
+UWORD PH_FindHA (WORD bus_number,
+                 WORD device_number)
+{
+   cfp_struct *NUL_PTR = (cfp_struct *) NOT_DEFINED;
+   DWORD device_id;
+   DWORD status_cmd;
+   UBYTE num_of_ha = 0;
+
+   device_id = Ph_ReadConfig(NUL_PTR,
+                             (UBYTE)bus_number,
+                             (UBYTE)device_number,
+                             (UBYTE)ID_REG); /* Get id                     */
+                                             /* Is ID AIC-78xx?            */
+   if (   (   ((device_id & 0x00ffffff) == HA_ID_MASK)   /* 9004 78xx?  */
+           || ((device_id & 0x00ffffff) == SAMURAI_ID))  /* 9004 75xx?  */
+         && PHM_INCLUDESABRE(device_id))
+      
+   {
+      status_cmd = Ph_ReadConfig(NUL_PTR,
+                                 (UBYTE)bus_number,
+                                 (UBYTE)device_number,
+                                 (UBYTE)STATUS_CMD_REG); /* Get cmd reg    */
+      if (!(status_cmd & ISPACEEN))         /* Check if device enabled    */
+      {
+         num_of_ha = NOT_ENABLED;            /* If not, set bit 7 on       */
+      }
+      ++num_of_ha;                           /* Bump number of HA          */
+
+      if (!(status_cmd & MASTEREN))         /* Check if bus master enabled  */
+      {
+         status_cmd |= MASTEREN;
+         Ph_WriteConfig(NUL_PTR,(UBYTE) bus_number,(UBYTE) device_number,
+            (UBYTE) STATUS_CMD_REG,status_cmd);
+      }
+   }
+   return(num_of_ha);
+}
+
+/*********************************************************************
+*
+*   PH_GetConfig routine -
+*
+*   This routine initializes the members of the ha_Config and ha_struct
+*   structures.
+*
+*  Return Value:  None
+*                  
+*  Parameters:    config_ptr
+*              In:
+*                 Bus_Number
+*                 Device_Number
+*                 HA_Data_Ptr (for driver only)
+*
+*              Out:
+*                 ha_config structure will be initialized.
+*
+*  Activation:    ASPI layer, driver initialization
+*                  
+*  Remarks:                
+*                  
+*********************************************************************/
+#ifndef  _LESS_CODE
+void PH_GetConfig (cfp_struct *config_ptr)
+{
+   register AIC_7870 *base;
+   UBYTE hcntrl_data, i, j;
+
+   config_ptr->CFP_BaseAddress = (Ph_ReadConfig(config_ptr,
+                                                config_ptr->Cf_BusNumber,
+                                                config_ptr->Cf_DeviceNumber,
+                                                BASE_ADDR_REG) & 0xfffffffc);
+
+   base = config_ptr->CFP_Base;
+
+   config_ptr->CFP_AdapterIdH = INBYTE(AIC7870[DEVID0]);
+   config_ptr->CFP_AdapterIdL = INBYTE(AIC7870[DEVID1]);
+
+   config_ptr->Cf_ReleaseLevel = REL_LEVEL;  /* Current Release Level    */
+
+   config_ptr->Cf_RevisionLevel =           /* Get device revision level */
+               (UBYTE) Ph_ReadConfig(config_ptr,
+                                     config_ptr->Cf_BusNumber,
+                                     config_ptr->Cf_DeviceNumber,DEV_REV_ID);
+
+   if (!((hcntrl_data = INBYTE(AIC7870[HCNTRL])) & CHIPRESET))
+   {
+      Ph_Pause(base);
+   }
+   else
+   {
+      /* Set InitNeeded will either use default or information */
+      /* SEEPROM */
+      config_ptr->CFP_InitNeeded = 1;
+   }
+
+   PHM_GETCONFIG(config_ptr);
+
+   config_ptr->Cf_IrqChannel=(UBYTE)Ph_ReadConfig(config_ptr,
+                                                  config_ptr->Cf_BusNumber,
+                                                  config_ptr->Cf_DeviceNumber,
+                                                  INTR_LEVEL_REG);
+
+   config_ptr->Cf_BusRelease = INBYTE(AIC7870[LATTIME]) & 0xfc;
+
+   config_ptr->Cf_Threshold = (DFTHRSH1 + DFTHRSH0) >> 6;
+   config_ptr->Cf_ScsiId = 7;
+   config_ptr->CFP_ConfigFlags |= RESET_BUS + SCSI_PARITY;
+
+   if (config_ptr->CFP_AdapterIdL == 0x74)      /* if differential board */
+      config_ptr->CFP_ConfigFlags |= DIFF_SCSI; /* mark it here for OSM */
+
+   if (INBYTE(AIC7870[SBLKCTL]) & SELWIDE)
+   {
+      config_ptr->Cf_MaxTargets = 16;
+      j = SYNC_MODE + WIDE_MODE;
+      config_ptr->CFP_AllowDscnt = 0xffff;
+   }
+   else
+   {
+      config_ptr->Cf_MaxTargets = 8;
+      j = SYNC_MODE;
+      config_ptr->CFP_AllowDscnt = 0x00ff;
+   }
+
+   Ph_MemorySet(config_ptr->Cf_ScsiOption,j,config_ptr->Cf_MaxTargets);
+   config_ptr->CFP_TerminationLow = config_ptr->CFP_TerminationHigh = 1;
+   if ((Ph_ReadEeprom(config_ptr, base)) && !config_ptr->CFP_InitNeeded)
+   {
+      config_ptr->Cf_Threshold = INBYTE(AIC7870[PCISTATUS]) >> 6;
+      config_ptr->Cf_ScsiId = (INBYTE(AIC7870[SCSIID]) & OID);
+      config_ptr->CFP_ConfigFlags |= INBYTE(AIC7870[SXFRCTL1]) & (STIMESEL + ENSPCHK);
+
+      for (i = 0; i < config_ptr->Cf_MaxTargets; i++)
+      {
+         if ((j = INBYTE(AIC7870[XFER_OPTION + i])) != NEEDNEGO)
+         {
+            config_ptr->Cf_ScsiOption[i] = j & (WIDEXFER + SXFR);
+            if (j & SOFS)
+            {
+               config_ptr->Cf_ScsiOption[i] |= SYNC_MODE;
+            }
+         }
+      }
+      config_ptr->CFP_AllowDscntL = ~INBYTE(AIC7870[DISCON_OPTION]);
+      if (config_ptr->Cf_MaxTargets == 16)
+      {
+         config_ptr->CFP_AllowDscntH = ~INBYTE(AIC7870[DISCON_OPTION + 1]);
+      }
+   }
+   if (!(hcntrl_data & CHIPRESET))
+   {
+      Ph_WriteHcntrl(base, (UBYTE) (hcntrl_data));
+   }
+
+   /* since we don't have a easy way to tell the warm  */
+   /* boot from reloading HIM we are going to always   */
+   /* set CFP_InitNeeded for right now                 */
+   config_ptr->CFP_InitNeeded = 1;
+}
+#endif         /* _LESS_CODE  */
+
+/*********************************************************************
+*
+*   PH_InitHA routine -
+*
+*   This routine initializes the host adapter.
+*
+*  Return Value:  0x00      - Initialization successful
+*                 <nonzero> - Initialization failed
+*                  
+*  Parameters:    config_ptr
+*                 h.a. config structure will be filled in
+*                 upon initialization.
+*
+*  Activation:    Aspi layer, initialization.
+*                  
+*  Remarks:                
+*
+*********************************************************************/
+
+UWORD PH_InitHA (cfp_struct *config_ptr)
+{
+   register AIC_7870 *base;
+
+   UWORD i;
+
+   base = config_ptr->CFP_Base;
+
+   Ph_WriteHcntrl(base, (UBYTE) (PAUSE));
+
+   PHM_INITHA(config_ptr);
+
+   if (config_ptr->CFP_InitNeeded)
+      if (i = Ph_LoadSequencer(config_ptr))
+         return(i);
+
+   if (config_ptr->CFP_InitNeeded)
+   {
+      OUTBYTE(AIC7870[SCSIID], config_ptr->Cf_ScsiId);
+      if (config_ptr->CFP_ResetBus)       /* Reset bus if told to */
+      {
+         Ph_ResetSCSI(base);
+         Ph_CheckSyncNego(config_ptr);    /* Adjust the sync nego parameters   */
+      }
+      else
+         config_ptr->CFP_SuppressNego = 0;
+
+      Ph_ResetChannel(config_ptr);
+
+      i = INBYTE(AIC7870[SBLKCTL]);                      /* Turn off led   */
+      OUTBYTE(AIC7870[SBLKCTL], i & ~(DIAGLEDEN + DIAGLEDON));
+   }
+   OUTBYTE(AIC7870[SEQCTL], FAILDIS + FASTMODE + SEQRESET);
+   OUTBYTE(AIC7870[SEQADDR0], IDLE_LOOP_ENTRY >> 2);
+   OUTBYTE(AIC7870[SEQADDR1], 00);        /* Entry points always low page  */
+   OUTBYTE(AIC7870[BRKADDR1], BRKDIS);
+
+   OUTBYTE(AIC7870[PCISTATUS], config_ptr->Cf_Threshold << 6);
+
+   OUTBYTE(AIC7870[SXFRCTL0], DFON);   /* Turn on digital filter 1/7/94 */
+
+   /* high byte termination disable/enable */
+   /* enable/disable high byte termination only if  */
+   /* it's wide bus                                 */
+   if (config_ptr->Cf_MaxTargets == 16)
+   {
+      OUTBYTE(AIC7870[SEEPROM],SEEMS);                /* process high byte */
+      while(INBYTE(AIC7870[SEEPROM]) & EXTARBACK);          /* termination */
+      OUTBYTE(AIC7870[SEEPROM],SEEMS|SEECS);
+   
+      if (config_ptr->CFP_TerminationHigh)          
+      {                                              /* enable termination */
+         OUTBYTE(AIC7870[BRDCTL],BRDDAT6|BRDSTB|BRDCS); 
+         OUTBYTE(AIC7870[BRDCTL],BRDDAT6|BRDCS);        
+      }
+      else
+      {
+         OUTBYTE(AIC7870[BRDCTL],BRDSTB|BRDCS);     /* disable termination */
+         OUTBYTE(AIC7870[BRDCTL],BRDCS);               
+      }
+      OUTBYTE(AIC7870[BRDCTL],0);
+      OUTBYTE(AIC7870[SEEPROM],0);
+   }
+
+   OUTBYTE(AIC7870[DISCON_OPTION], ~config_ptr->CFP_AllowDscntL);
+   OUTBYTE(AIC7870[DISCON_OPTION + 1], ~config_ptr->CFP_AllowDscntH);
+
+   Ph_WriteHcntrl(base, (UBYTE) (INTEN));
+
+   return(0);
+}
+
+/*********************************************************************
+*
+*   Ph_ReadConfig routine -
+*
+*   This routine will interrogate the hardware's configuration space
+*   using PCI mechanism #1. If value from configuration space are all
+*   FF's, then the routine will interrogate the hardware's configuration
+*   space using PCI mechanism #2.
+*
+*  Return Value:  32-bit configuration data from specified register
+*
+*  Parameters:    unsigned char bus_number
+*                 unsigned char device number
+*                 unsigned char register number
+*
+*  Activation:    PH_FindHA, PH_GetConfig
+*
+*  Remarks:
+*
+*********************************************************************/
+
+DWORD Ph_ReadConfig (cfp_struct *config_ptr,
+                     UBYTE bus_number,
+                     UBYTE device_number,
+                     UBYTE register_number)
+{
+   DWORD config_data_value;
+   union
+   {
+      DWORD config_address_value;
+      struct
+      {
+         DWORD reg:8;
+         DWORD function:3;
+         DWORD device:5;
+         DWORD bus:8;
+         DWORD rsvd:7;
+         DWORD enable:1;
+      } caf_struct;
+   } caf;
+   union
+   {
+      UWORD config_data_area;
+      struct
+      {
+         UWORD reg:8;
+         UWORD device:4;
+         UWORD config_space:4;
+      } cda_struct;
+   } cda;
+
+   /* try with OSMs version of read configuration space first.  If OSM  */
+   /* is not able to access on its own.  HIM will first determine the   */
+   /* access mechanism that is allowed by the system before actually    */
+   /* start accessing the config space.                                 */
+   if ((config_data_value = PH_ReadConfigOSM(config_ptr,
+                                             bus_number,
+                                             device_number,
+                                             register_number)) != NO_CONFIG_OSM)
+      return(config_data_value);
+
+#ifndef _NO_CONFIG
+
+   switch (Ph_AccessConfig(bus_number))
+   {
+      case  PCI_MECHANISM1:         /* CONFIG SPACE ACCESS MECHANISM #1 */
+         /*
+            Build config_address_value:
+
+               31        24 23        16 15      11 10  8 7        0 
+               ------------------------------------------------------
+               |1| 0000000 | bus_number | device # | 000 | register |
+               ------------------------------------------------------
+         */
+         caf.caf_struct.reg = register_number;
+         caf.caf_struct.function = 0;
+         caf.caf_struct.device = device_number;
+         caf.caf_struct.bus = bus_number;
+         caf.caf_struct.rsvd = 0;
+         caf.caf_struct.enable = 1;
+
+         OUTDWORD(CONFIG_ADDRESS, caf.config_address_value); /* Enable config cycle  */
+         config_data_value = INDWORD(CONFIG_DATA);           /* Read config data     */
+         caf.config_address_value = 0;                       /* Disable config cycle */
+         OUTDWORD(CONFIG_ADDRESS, caf.config_address_value);
+         break;
+
+      case  PCI_MECHANISM2:       /* CONFIG SPACE ACCESS MECHANISM #2   */
+         if (device_number < 0x10)
+         {
+            cda.cda_struct.config_space = 0x0c;
+            cda.cda_struct.device = device_number;
+            cda.cda_struct.reg = register_number;
+
+            OUTBYTE(FORWARD_REG, bus_number);
+            OUTBYTE(CONFIG_ADDRESS, 0x60);                     /* Enable config cycle  */
+            config_data_value = INDWORD(cda.config_data_area); /* Read config data     */
+            OUTBYTE(FORWARD_REG, 00);
+            OUTBYTE(CONFIG_ADDRESS, 00);                       /* Disable config cycle */
+         }
+         else
+            config_data_value = 0xffffffff;
+         break;
+   }
+   return(config_data_value);
+#endif /* _NO_CONFIG */
+}
+
+/*********************************************************************
+*
+*   Ph_WriteConfig routine -
+*
+*   This routine will write to the hardware's configuration space
+*   using PCI mechanism #1. If value from configuration space are all
+*   FF's, then the routine will interrogate the hardware's configuration
+*   space using PCI mechanism #2.
+*
+*  Return Value:  0 - Write successful
+*                 -1 - Write failed
+*
+*  Parameters:    unsigned char bus_number
+*                 unsigned char device number
+*                 unsigned char register number
+*                 32-bit configuration data to specified register
+*
+*  Activation:    PH_FindHA, PH_GetConfig
+*
+*  Remarks:
+*
+*********************************************************************/
+
+int Ph_WriteConfig (cfp_struct *config_ptr,
+                     UBYTE bus_number,
+                     UBYTE device_number,
+                     UBYTE register_number,
+                     DWORD config_data_value)
+{
+   int   ret_code;
+   DWORD cdv;
+
+   union
+   {
+      DWORD config_address_value;
+      struct
+      {
+         DWORD reg:8;
+         DWORD function:3;
+         DWORD device:5;
+         DWORD bus:8;
+         DWORD rsvd:7;
+         DWORD enable:1;
+      } caf_struct;
+   } caf;
+   union
+   {
+      UWORD config_data_area;
+      struct
+      {
+         UWORD reg:8;
+         UWORD device:4;
+         UWORD config_space:4;
+      } cda_struct;
+   } cda;
+
+   ret_code = 0;                 /* initialize into good return code */
+
+   /* try with OSMs version of write configuration space first.  If OSM */
+   /* is not able to access on its own.  HIM will first determine the   */
+   /* access mechanism that is allowed by the system before actually    */
+   /* start accessing the config space.                                 */
+   if ((config_data_value = PH_WriteConfigOSM(config_ptr,
+                                              bus_number,
+                                              device_number,
+                                              register_number,
+                                              config_data_value)) != NO_CONFIG_OSM)
+      return(ret_code);
+
+#ifndef _NO_CONFIG
+
+   switch (Ph_AccessConfig(bus_number))
+   {
+      case  PCI_MECHANISM1:         /* CONFIG SPACE ACCESS MECHANISM #1 */
+         /*
+            Build config_address_value:
+
+               31        24 23        16 15      11 10  8 7        0 
+               ------------------------------------------------------
+               |1| 0000000 | bus_number | device # | 000 | register |
+               ------------------------------------------------------
+         */
+         caf.caf_struct.reg = register_number;
+         caf.caf_struct.function = 0;
+         caf.caf_struct.device = device_number;
+         caf.caf_struct.bus = bus_number;
+         caf.caf_struct.rsvd = 0;
+         caf.caf_struct.enable = 1;
+
+         OUTDWORD(CONFIG_ADDRESS, caf.config_address_value); /* Enable config cycle  */
+         cdv = INDWORD(CONFIG_DATA);                         /* Read config data     */
+
+         if (cdv != 0xffffffff)                              /* If read is good then */ 
+         {                                                   /* we can write with    */
+            OUTDWORD(CONFIG_DATA,config_data_value);         /* mech #1              */
+         }
+         else
+            ret_code = -1;                         /* failed to write config space  */
+
+         caf.config_address_value = 0;                       /* Disable config cycle */
+         OUTDWORD(CONFIG_ADDRESS, caf.config_address_value);
+         break;                        /* end of mechanism #1  */
+         
+      case  PCI_MECHANISM2:       /* CONFIG SPACE ACCESS MECHANISM #2   */
+         if (device_number < 0x10)
+         {
+            cda.cda_struct.config_space = 0x0c;
+            cda.cda_struct.device = device_number;
+            cda.cda_struct.reg = register_number;
+
+            OUTBYTE(FORWARD_REG, bus_number);
+            OUTBYTE(CONFIG_ADDRESS, 0x60);                     /* Enable config cycle  */
+            OUTDWORD(cda.config_data_area,config_data_value);  /* Write config data    */
+            OUTBYTE(FORWARD_REG, 00);
+            OUTBYTE(CONFIG_ADDRESS, 00);                       /* Disable config cycle */
+         }
+      else
+         ret_code = -1;
+
+      break;
+   }
+
+   return(ret_code);
+#endif /* _NO_CONFIG */
+}
+
+/*********************************************************************
+*
+*  Ph_AccessConfig  -
+*
+*  This routine will determine the access mechanism for the PCI config
+*  space.  Firstly, PCI bus #0 is scanned for any PCI device under
+*  Mechanism #1.  If no device at all is found, the target PCI buses is
+*  scanned for any PCI device, again under mechanism #1.  Otherwise,
+*  access mechanism #1 is assumed. Access mechanism #2 is assumed when
+*  no valid PCI devices are found at the target PCI bus.
+*
+*  Return Value:  PCI_MECHANISM1 if ID Reg is readable with mechanism #1
+*                 PCI_MECHANISM2 if ID Reg is not readable with mechanism #1
+*
+*  Parameters:    PCI bus_number
+*
+*  Activation:    Ph_ReadConfig
+*
+*  Remarks:
+*
+*********************************************************************/
+UBYTE Ph_AccessConfig (UBYTE bus_number)
+{
+   register UBYTE device_number;
+   register UBYTE next_bus;
+   DWORD class_code;
+   union
+   {
+      DWORD config_address_value;
+      struct
+      {
+         DWORD reg:8;
+         DWORD function:3;
+         DWORD device:5;
+         DWORD bus:8;
+         DWORD rsvd:7;
+         DWORD enable:1;
+      } caf_struct;
+   } caf;
+
+   next_bus = 0;              /* always start with PCI bus #0 */
+   while (1)
+   {
+      for (device_number=0;
+           device_number<32;
+           device_number++)
+      {
+         caf.caf_struct.reg = (UBYTE)DEV_REV_ID;
+         caf.caf_struct.function = 0;
+         caf.caf_struct.device = device_number;
+         caf.caf_struct.bus = next_bus;
+         caf.caf_struct.rsvd = 0;
+         caf.caf_struct.enable = 1;
+
+         OUTDWORD(CONFIG_ADDRESS, caf.config_address_value); /* Enable config cycle  */
+         class_code = INDWORD(CONFIG_DATA);                  /* Read config data     */
+         caf.config_address_value = 0;                       /* Disable config cycle */
+         OUTDWORD(CONFIG_ADDRESS, caf.config_address_value);
+
+         class_code &= 0xff000000;        /* isolate bass class info only */
+         if (class_code != 0xff000000)    /* check for any device */
+            break;                        /* found a pci device, use #1 */
+      }                 /* end of for(device_number=0; etc. )  */
+
+      if (class_code == 0xff000000)    /* no PCI device was found */
+      {
+         if (next_bus == bus_number)   /* completed both buses, or bus #0 */
+            return(PCI_MECHANISM2);    /* and found no device, use #2 */
+         else
+            next_bus = bus_number;     /* scan the non-0 target bus */
+      }
+      else                             /* valid PCI device was found */
+         return(PCI_MECHANISM1);       /* yes, use #1 */
+   }
+}
+
+/*********************************************************************
+*
+*   Ph_ReadEeprom -
+*
+*   This routine will read the serial eeprom and modify the configuration
+*   structure accordingly. 
+*
+*  Return Value:  1 if eeprom NOT present
+*                 0 if eeprom present, configuration structure modified
+*
+*  Parameters:    ha_config pointer
+*                 base address of AIC-7870
+*
+*  Activation:    PH_GetConfig
+*
+*  Remarks:
+*
+*********************************************************************/
+#ifndef  _LESS_CODE
+UWORD Ph_ReadEeprom (cfp_struct *config_ptr,
+                     register AIC_7870 *base)
+
+{
+   UWORD chksum = 0;
+   UWORD disc = 0;
+   UWORD E2Value;
+   UWORD reg_base;
+   UWORD i;
+   int eeprom_type;
+
+   /* Make sure EEPROM interface availabel       */
+   /* This is necessary because chip like Dagger */
+   /* which does not have regsiters SEEPROM and  */
+   /* BRDCTL defined may get hang                */
+   OUTBYTE(AIC7870[SEEPROM],SEECS);
+   if (!(INBYTE(AIC7870[SEEPROM]) & SEECS))
+      return(1);
+
+   /* Enable EEPROM access */
+   OUTBYTE(AIC7870[SEEPROM], SEEMS);
+   while ( ! (INBYTE(AIC7870[SEEPROM]) & SEERDY) );
+
+   eeprom_type = EETYPE_C06C46;          /* Default to C06 and C46 */
+   reg_base = 0;           /* Default always to the first 64 bytes */
+   switch(config_ptr->CFP_AdapterId)
+   {
+      case VLIGHT_LANCE:
+         if (config_ptr->Cf_DeviceNumber != 4)    /* For Channel B */
+            reg_base = EEPROM_SIZE / 2;     /* use second 64 bytes */
+         break;
+
+      case VIKING_LANCE:
+         eeprom_type = EETYPE_C56C66;        /* Set to C46 and C56 */
+         switch(config_ptr->Cf_DeviceNumber)
+         {
+            case 1:
+            case 4:
+               /* base at the first section */
+               break;
+
+            case 2:
+            case 8:
+               /* base at the second section */
+               reg_base = EEPROM_SIZE / 2;
+               break;
+
+            case 3:
+            case 12:
+               /* base at the third section */
+               reg_base = (EEPROM_SIZE / 2) * 2;
+               break; 
+         }
+         break;
+
+      case VIKING_SABRE:
+         break;
+   }
+
+   /* make sure checksum and maximum no of targets matched*/
+   for ( i = 0; i < (UWORD)(EEPROM_SIZE/2-1); i++ )
+   {
+      chksum += ( E2Value = Ph_ReadE2Register( (UWORD)(reg_base+i), base, eeprom_type ) );
+      if ( i * 2 == EE_MAX_TARGET && 
+         config_ptr->Cf_MaxTargets != (UBYTE) E2Value )
+         break;
+   }
+
+   if ( i != EEPROM_SIZE/2-1 || chksum != Ph_ReadE2Register( (UWORD)(reg_base+i), base, eeprom_type ) )
+   {
+      OUTBYTE(AIC7870[SEEPROM], 0);
+      return(1);
+   }      
+
+   /* process EEPROM information word by word */
+   for ( i = 0; i < (UWORD)(EEPROM_SIZE/2-1); i++ )
+   {
+      E2Value = Ph_ReadE2Register( (UWORD)(reg_base + i), base, eeprom_type );
+      if ( (UBYTE) i < config_ptr->Cf_MaxTargets )
+      {
+         /* set scsi option flag */
+         config_ptr->Cf_ScsiOption[i] = 
+            (UBYTE) ( ( ( E2Value & E2T_WIDE ) << 2 ) |
+            ( (UBYTE)( E2Value & E2T_SYNCRATE ) << 4 ) |
+            ( (UBYTE)( E2Value & E2T_SYNCMODE ) >> 3 ) );
+
+         /* build disconnect flag */
+         disc |= ( (UWORD)( E2Value & E2T_DISCONNECT ) >> 4 ) << i;
+      }
+      else
+         if ( i < 16 )
+            config_ptr->Cf_ScsiOption[i] = 0;
+         else
+            switch( i * 2 )
+            {
+            case EE_CONTROL:
+               config_ptr->CFP_ScsiParity = (UWORD)( E2Value & E2C_PARITY ) >> 4;
+               config_ptr->CFP_ResetBus = (UWORD)( E2Value & E2C_RESET ) >> 6;
+               config_ptr->CFP_TerminationLow = ((E2Value & E2C_TERM_LOW) != 0);
+               config_ptr->CFP_TerminationHigh = ((E2Value & E2C_TERM_HIGH) != 0);
+               break;
+
+            case EE_ID:
+               config_ptr->Cf_ScsiId = (UBYTE) ( E2Value & 0xf );
+               config_ptr->Cf_BusRelease = (UBYTE) ( E2Value >> 8 );
+               break;
+            }
+   } 
+
+   /* set disconnect flag */
+   config_ptr->CFP_AllowDscnt = disc;
+
+   /* Disable EEPROM access */
+   OUTBYTE(AIC7870[SEEPROM], 0);
+   return(0);
+}
+#endif   /* _LESS_CODE  */
+
+/*********************************************************************
+*
+*   Ph_ReadE2Register -
+*
+*   Read from EEPROM register word
+*
+*  Return Value:  register value (word)
+*
+*  Parameters:    EEPROM register address
+*                 base address of AIC-7870
+*
+*  Activation:    read_eeprom
+*
+*  Remarks:
+*
+*********************************************************************/
+#ifndef  _LESS_CODE
+UWORD Ph_ReadE2Register (UWORD address,
+                         register AIC_7870 *base,
+                         int eeprom_type)
+{
+UBYTE seeprom_value;
+UWORD retval = 0;
+UWORD mask;
+int i;
+int count;
+
+   /* send EEPROM register address with op code for read */
+   if (eeprom_type == EETYPE_C06C46)
+   {                                   /* Setup for NM93C06 or NM93C46 */
+      address |= 0x0080;                       /* OR with read command */
+      mask = 0x0080;                               /* Setup mask value */
+      count = 8;                                   /* Setup loop count */
+   }
+   else
+   {                                   /* Setup for NM93C56 or NM93C66 */
+      address |= 0x0200;                       /* OR with read command */
+      mask = 0x0200;                               /* Setup mask value */
+      count = 10;                                  /* Setup loop count */
+   }
+   OUTBYTE( AIC7870[SEEPROM], seeprom_value = SEEMS | SEECS | SEEDO );
+   Ph_Wait2usec(seeprom_value, base);
+   OUTBYTE( AIC7870[SEEPROM], seeprom_value |= SEECK );
+   Ph_Wait2usec(seeprom_value, base);
+   OUTBYTE( AIC7870[SEEPROM], seeprom_value &= ~ SEECK );
+   Ph_Wait2usec(seeprom_value, base);
+   
+   for ( i = 0; i < count; i++ )
+   {
+      seeprom_value = SEEMS | SEECS | ( ( address & mask ) ? SEEDO : 0 );
+      OUTBYTE( AIC7870[SEEPROM], seeprom_value );
+      Ph_Wait2usec(seeprom_value, base);
+      OUTBYTE( AIC7870[SEEPROM], seeprom_value |= SEECK );
+      Ph_Wait2usec(seeprom_value, base);
+      address <<= 1;
+   }
+
+   OUTBYTE( AIC7870[SEEPROM], SEEMS | SEECS );
+   Ph_Wait2usec(SEEMS | SEECS, base);
+
+   /* get value for the register */
+   for ( i = 0; i < 16; i++ )
+   {
+      retval <<= 1;
+      OUTBYTE( AIC7870[SEEPROM], SEEMS | SEECS | SEECK );
+      Ph_Wait2usec(SEEMS | SEECS | SEECK, base);
+      OUTBYTE( AIC7870[SEEPROM], SEEMS | SEECS );
+      if ( INBYTE( AIC7870[SEEPROM] ) & SEEDI )
+         retval |= 1;
+      Ph_Wait2usec(SEEMS | SEECS, base);
+   }
+
+   OUTBYTE( AIC7870[SEEPROM], SEEMS );
+   Ph_Wait2usec(SEEMS, base);
+   return( retval );
+}
+#endif   /* _LESS_CODE  */
+
+/*********************************************************************
+*
+*   Ph_Wait2usec -
+*
+*   This routine will use Lance hardware supported timer to wait for 
+*   2.4 usec before return.
+*
+*  Return Value:  none
+*
+*  Parameters:    SEEPROM register value for timer reset
+*                 base address of AIC-7870
+*
+*  Activation:    Ph_ReadE2Register
+*
+*  Remarks:       timer has been reset before calling this routine
+*
+*********************************************************************/
+#ifndef  _LESS_CODE
+void Ph_Wait2usec (UBYTE seeprom_value,
+                   register AIC_7870 *base)
+{
+int i;
+
+   /* wait for 3 * 800 nsec = 2.4 usec */
+   for ( i = 0; i < 3; i++ )
+   {
+      /* wait for 800 nsec */
+      while ( ! ( INBYTE( AIC7870[SEEPROM] ) & SEERDY ) );
+
+      /* reset timer */
+      OUTBYTE( AIC7870[SEEPROM], seeprom_value );
+   }     
+}
+#endif   /* _LESS_CODE  */
+
+/*********************************************************************
+*
+*   Ph_LoadSequencer -
+*
+*   This routine will down load sequencer code into AIC-7870 host
+*   adapter
+*
+*  Return Value:  0 - good
+*                 Others - error
+*
+*  Parameters:    seqptr - pointer to sequencer code
+*                 seqsize - sequencer code size
+*
+*  Activation:    PH_InitHA
+*
+*  Remarks:       timer has been reset before calling this routine
+*
+*********************************************************************/
+
+int Ph_LoadSequencer (cfp_struct *config_ptr)
+{
+   UBYTE *seq_code;
+   UWORD seq_size;
+   int index,cnt;
+   UBYTE i;
+   register AIC_7870 *base;
+
+   base = config_ptr->CFP_Base;
+   /* depending on mode we are going to load different sequqncer */
+   if (config_ptr->Cf_AccessMode == 2)
+   {
+      index = 1;                    /* Load optima mode sequencer          */
+#if !defined( _EX_SEQ01_ )
+      seq_code = Seq_01;
+#endif /* !_EX_SEQ01 */
+   }
+   else
+   {
+      index = 0;                    /* Load standard mode sequencer        */
+#if !defined( _EX_SEQ00_ )
+      seq_code = Seq_00;
+#endif /* !_EX_SEQ00 */
+   }
+
+   /* if the sequencer code size is zero then we should return */
+   /* with error immediately (no sequencer code available) */
+   if ( ! ( seq_size = SeqExist[index].seq_size ) )
+      return( -2 );
+   
+   /* patch sequencer */
+   i = TARGET_ID;
+   if (config_ptr->CFP_MultiTaskLun)
+   {
+      i |= LUN;
+   }
+             
+   /* PAUL - if TARG_LUN_MASK0 = 0, skip patch */
+   if (SeqExist[index].seq_trglunmsk0 != 0)
+   {
+      seq_code[SeqExist[index].seq_trglunmsk0] = i;
+   }
+
+
+   OUTBYTE(AIC7870[SEQCTL], FASTMODE + PERRORDIS + LOADRAM);
+   OUTBYTE(AIC7870[SEQADDR0], 00);
+   OUTBYTE(AIC7870[SEQADDR1], 00);
+   for (cnt = 0; cnt < (int) seq_size; cnt++)
+   {
+      OUTBYTE(AIC7870[SEQRAM], seq_code[cnt]);
+   }
+   OUTBYTE(AIC7870[SEQCTL], FASTMODE + PERRORDIS);
+   OUTBYTE(AIC7870[SEQCTL], FASTMODE + PERRORDIS + LOADRAM);
+   OUTBYTE(AIC7870[SEQADDR0], 00);
+   OUTBYTE(AIC7870[SEQADDR1], 00);
+   for (cnt = 0; cnt < (int) seq_size; cnt++)
+   {
+      if (INBYTE(AIC7870[SEQRAM]) != seq_code[cnt])
+      {
+        return(ERR);
+      }
+   }
+   OUTBYTE(AIC7870[SEQCTL], FASTMODE + PERRORDIS);
+
+   return(0);
+}

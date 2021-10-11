@@ -1,0 +1,23 @@
+
+---- Description --------------------------------------------------
+
+     Specifies your system's relationship to a name service.
+
+     To be known to a name server, the NIS+ or NIS maps must
+     contain the system name, IP address, and Ethernet address.
+     See the "Installing Solaris" manual for instructions on
+     how to add a system to the name service.
+
+     NOTE: Specifying that your system as part of a name service
+     may reduce the network information you have to provide on
+     subsequent screens.
+
+     If you do not know the network name service for your system,
+     do not guess; check with your system administrator.
+
+
+---- See also -----------------------------------------------------
+
+     NIS+
+     NIS 
+     name service

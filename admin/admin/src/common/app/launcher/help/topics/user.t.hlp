@@ -1,0 +1,16 @@
+---- User Account Manager ------------------------------------
+ 
+User Account Manager enables system administrators to
+manage user account information without having to manually
+edit important system files.
+
+Use User Account Manager to perform the following tasks:
+
+-       Add and remove user account information
+-       Change user passwords
+-       Apply password aging features
+-       Display and sort user account information
+
+User Account Manager can be used to manage user account
+information on the local system or the NIS or NIS+ database
+with the appropriate access privileges.

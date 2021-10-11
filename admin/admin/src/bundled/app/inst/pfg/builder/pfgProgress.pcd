@@ -1,0 +1,60 @@
+Module: pfgProgress
+{
+      autoCuil = false;
+      copy = false;
+      inCreateMenu = true;
+      release = "TeleUSE v3.0.1 / Solaris 2.3";
+      lastWritten = "Thu Mar 16 13:42:15 1995";
+      nodesUsed = progress_dialog;
+        {
+          progress_dialog = formWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 50;
+            vip_y = 30;
+              {
+                :Inherited panelhelpText = XmText;
+              }
+              {
+                :Inherited progressForm : form = XmForm;
+                Group: Widget
+                  marginWidth = 20;
+                Group: Constraint
+                  bottomAttachment = attach_form;
+                    {
+                      installLabel = XmLabel;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        topAttachment = attach_form;
+                    }
+                    {
+                      packageLabel = XmLabel;
+                      Group: Constraint
+                        topAttachment = attach_form;
+                        leftAttachment = attach_widget;
+                        leftWidget = installLabel;
+                    }
+                    {
+                      progressScale = XmScale;
+                      Group: Widget
+                        orientation = horizontal;
+                        traversalOn = False;
+                        scaleHeight = 32;
+                      Group: Constraint
+                        leftAttachment = attach_form;
+                        bottomAttachment = attach_form;
+                        rightAttachment = attach_form;
+                        topAttachment = attach_widget;
+                        topWidget = installLabel;
+                        bottomOffset = 10;
+                    }
+              }
+              {
+                :Inherited messageBox = XmMessageBox;
+                Group: Widget
+                  managed = False;
+                Group: Control
+                  collapsed = True;
+              }
+        }
+}
+

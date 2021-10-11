@@ -1,0 +1,34 @@
+Bus Type
+	bustype.help
+Memory Address
+	memaddr.help
+Buttons
+	buttons.help
+Color Depth Number
+	depth.help
+Confirm Information
+	confirm.help
+Display Resolution
+	resolution.help
+Graphics Card
+	display.help
+Interrupt Number (IRQ)
+	irq.help
+I/O Address
+	ioaddr.help
+Keyboard
+	keyboard.help
+Keyboard Layout
+	layout.help
+Monitor type
+	monitor.help
+Navigation
+	navigate.help
+Pointing Device
+	pointer.help
+Screen Size
+	size.help
+Serial Port
+	device.help
+Virtual Screen
+	desktop.help

@@ -1,0 +1,38 @@
+Module: pfgAllocateSvcQuery
+{
+      autoCuil = False;
+      release = "TeleUSE v3.0.2 / Solaris 2.4";
+      lastWritten = "Thu Mar 28 18:04:51 1996";
+        {
+          allocatesvc_dialog = baseWindow : pfgGUITemplates;
+          Group: Control
+            vip_x = 40;
+            vip_y = 30;
+              {
+                panelhelpText = XmText;
+              }
+              {
+                messageBox = XmMessageBox;
+                    {
+                      continueButton : button1 = XmPushButton;
+                    }
+                    {
+                      gobackButton : button2 = XmPushButton;
+                    }
+                    {
+                      allocateButton : button3 = XmPushButton;
+                    }
+                    {
+                      exitButton : button4 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgExit";
+                    }
+                    {
+                      helpButton : button5 = XmPushButton;
+                      Group: Widget
+                        activateCallback = "C: pfgHelp(\"allocate.t\")\"";
+                    }
+              }
+        }
+}
+

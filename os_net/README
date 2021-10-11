@@ -1,0 +1,76 @@
+
+Setup a build area of about 1 GB and mount it at /build.
+
+Execute the following commands to build the os_net source
+in a c-shell environment.
+
+hostname# cd /cdrom/solaris_2_6_cmn_src
+ 
+hostname# tar cf - os_net | (cd /build; tar xpf -)
+
+hostname# cd /build/os_net/src_ws/usr/src
+
+Set the environment variables.
+
+hostname# setenv MACH `uname -p`
+hostname# setenv ROOT /build/os_net/src_ws/proto/root_${MACH}
+hostname# setenv SRC /build/os_net/src_ws/usr/src
+hostname# setenv ENVCPPFLAGS1 -I${ROOT}/usr/include
+hostname# setenv ENVLDLIBS1 "-L${ROOT}/usr/ccs/lib -L${ROOT}/usr/lib"
+hostname# setenv CH ""
+hostname# setenv TMPDIR "/tmp"
+hostname# setenv RELEASE_BUILD ""
+hostname# setenv RELEASE "5.6"
+hostname# setenv VERSION "Beta"
+hostname# setenv RELEASE_DATE "December 1996"
+hostname# setenv SPRO_ROOT /opt/SUNWspro
+
+Build the source
+
+hostname# make -e install >& makeout
+
+Due to the removal of encryption source the following binaries need to
+be copied in order to make the a working osnet.
+
+hostname# cd /cdrom/solaris_2_6_platform_src/build_env/<sparc or x86>/bin
+
+case sparc:
+hostname# cp usr/bin/crypt /build/os_net/src_ws/proto/root_${ARCH}/usr/bin
+hostname# cp usr/sbin/keyserv /build/os_net/src_ws/proto/root_${ARCH}/usr/sbin
+hostname# cp usr/4lib/libc.* /build/os_net/src_ws/proto/root_${ARCH}/usr/4lib
+hostname# cp usr/lib/libcrypt_i.a /build/os_net/src_ws/proto/root_${ARCH}/usr/lib
+hostname# cp usr/lib/libnsl.* /build/os_net/src_ws/proto/root_${ARCH}/usr/lib
+hostname# cp usr/lib/libkrb.* /build/os_net/src_ws/proto/root_${ARCH}/usr/lib
+hostname# cp usr/lib/libp/libc.a /build/os_net/src_ws/proto/root_${ARCH}/usr/lib/libp
+hostname# cp usr/lib/pics/libc_pic.a /build/os_net/src_ws/proto/root_${ARCH}/usr/lib/pics
+hostname# cp kernel/misc/des /build/os_net/src_ws/proto/root_${ARCH}/kernel/misc
+hostname# cp etc/lib/pam_pwmgt.so.1 /build/os_net/src_ws/proto/root_${ARCH}/etc/lib
+hostname# cp usr/lib/security/pam_pwmgt.so.1 /build/os_net/src_ws/proto/root_${ARCH}/usr/lib/security
+hostname# cp usr/sbin/rpc.nispasswdd /build/os_net/src_ws/proto/root_${ARCH}/usr/sbin
+hostname# cp usr/bin/nisaddcred /build/os_net/src_ws/proto/root_${ARCH}/usr/bin
+hostname# cp usr/sbin/newkey /build/os_net/src_ws/proto/root_${ARCH}/usr/sbin
+hostname# cp usr/bin/chkey /build/os_net/src_ws/proto/root_${ARCH}/usr/bin
+hostname# cp usr/lib/libc.* /build/os_net/src_ws/proto/root_${ARCH}/usr/lib
+
+
+case i386:
+hostname# cp usr/bin/crypt /build/os_net/src_ws/proto/root_${ARCH}/usr/bin
+hostname# cp usr/sbin/keyserv /build/os_net/src_ws/proto/root_${ARCH}/usr/sbin
+hostname# cp usr/lib/libcrypt_i.a /build/os_net/src_ws/proto/root_${ARCH}/usr/lib
+hostname# cp usr/lib/libnsl.* /build/os_net/src_ws/proto/root_${ARCH}/usr/lib
+hostname# cp usr/lib/libkrb.* /build/os_net/src_ws/proto/root_${ARCH}/usr/lib
+hostname# cp usr/lib/libp/libc.a /build/os_net/src_ws/proto/root_${ARCH}/usr/lib/libp
+hostname# cp usr/lib/pics/libc_pic.a /build/os_net/src_ws/proto/root_${ARCH}/usr/lib/pics
+hostname# cp usr/lib/security/pam_pwmgt.so.1 /build/os_net/src_ws/proto/root_${ARCH}/usr/lib/security
+hostname# cp usr/sbin/rpc.nispasswdd /build/os_net/src_ws/proto/root_${ARCH}/usr/sbin
+hostname# cp usr/bin/nisaddcred /build/os_net/src_ws/proto/root_${ARCH}/usr/bin
+hostname# cp usr/sbin/newkey /build/os_net/src_ws/proto/root_${ARCH}/usr/sbin
+hostname# cp usr/bin/chkey /build/os_net/src_ws/proto/root_${ARCH}/usr/bin
+hostname# cp usr/lib/libc.* /build/os_net/src_ws/proto/root_${ARCH}/usr/lib
+
+Build Packages 
+
+hostname# cd /build/os_net/src_ws/usr/src/pkgdefs
+hostname# make -e install >& makepkg
+
+Packages are found at /build/os_net/src_ws/pkgarchive

@@ -1,0 +1,24 @@
+---- Preserving swap and overlap -----------------
+
+When you preserve swap and overlap slices, you are
+preserving geometry, not data.
+
+---- To change a mount point ---------------------
+
+Use the arrow keys to move to the mount point name
+and type the new name.
+
+  NOTE: Any changes to / (root), swap, or overlap,
+  must begin with a backslash (/)  
+
+---- Files you must rename -----------------------
+
+If you're preserving data on any of the following 
+files, you must rename their mount points as these 
+files must be unique on the disk:
+
+    / (root)    
+    /usr    
+    /usr/openwin  
+    /var
+

@@ -1,0 +1,91 @@
+#
+#ident "@(#)Targetdirs 1.32 94/01/13 SMI"
+#
+# Copyright (c) 1989 by Sun Microsystems, Inc.
+#
+#
+# The list is built of owner-group combinations.  ROOT.SYS occurs twice
+# because some directories owned by root and in group sys are subdirectories
+# of directories having other owner-group attributes.
+#
+# It is easier to think in terms of directory names without the ROOT macro
+# prefix.  ROOTDIRS is TARGETDIRS with ROOT prefixes.  It is necessary
+# to work with ROOT prefixes when controlling conditional assignments.
+#
+# Symbolic links are added to the end of the list when IFNOTPROTO is not
+# '#', as when the superuser is doing a full build with ownerships and
+# output is going to a ROOT which is not /proto.  SYMLINKS are omitted
+# otherwise, because the NSE stumbles over them too often.  Hence the
+# use of IFNOTPROTO before the incremental assignment of SYMLINKS to
+# TARGETDIRS.
+#
+# The macro SYM.ROOT.SYS means symlinks with owner root and group sys.
+
+IFNOTPROTO:sh=	echo \\043
+$(CH) IFNOTPROTO=
+
+SYMLINKS=	$(SYM.ROOT.SYS) $(SYM.ROOT.BIN) $(SYM.BIN.BIN) $(SYM.OTHERS)
+
+TARGETDIRS=	$(ROOT.SYS) $(ROOT.BIN) $(BIN.BIN) $(ROOT.SYS2) \
+		$(UUCP.UUCP) $(OTHERS)
+
+$(IFNOTPROTO) TARGETDIRS += $(SYMLINKS)
+
+ROOT.SYS=  \
+	/etc  \
+	/sbin  \
+	/usr  
+
+ROOT.BIN=  \
+	/usr/sbin  \
+	/usr/sbin/install.d  \
+	/usr/include \
+	/usr/lib \
+	/usr/lib/devconfig \
+	/usr/lib/devconfig/lib \
+	/usr/lib/devconfig/lib/locale \
+	/usr/lib/devconfig/lib/locale/C \
+	/usr/lib/devconfig/lib/locale/C/help \
+	/usr/lib/locale \
+	/usr/lib/locale/C \
+	/usr/lib/locale/C/help \
+	/usr/lib/locale/C/help/kdmconfig.help \
+	/usr/lib/locale/C/help/kdmconfig.help/howto \
+	/usr/lib/locale/C/help/kdmconfig.help/reference \
+	/usr/lib/locale/C/help/kdmconfig.help/topics
+
+BIN.BIN=  
+
+ROOT.SYS2=  
+
+UUCP.UUCP=  
+
+OTHERS=  
+
+# macros for symbolic links
+
+SYM.ROOT.SYS= 
+
+SYM.ROOT.BIN=  
+
+SYM.BIN.BIN=  
+
+SYM.OTHERS=  
+
+# prepend the ROOT prefix
+
+ROOTDIRS=	$(TARGETDIRS:%=$(ROOT)%)
+
+$(ROOT)/etc  \
+$(ROOT)/sbin  \
+$(ROOT)/usr  \
+$(ROOT)/usr/sbin \
+$(ROOT)/usr/sbin/install.d  :=	DIRMODE=775
+
+
+# Installing a directory symlink calls for overriding INS.dir to install
+# a symlink.
+#
+$(SYMLINKS:%=$(ROOT)%):=  \
+   INS.dir= -$(RM) -r $@; $(SYMLINK) $(LINKDEST) $@; \
+	     $(CHOWN) $(OWNER) $@; $(CHGRP) $(GROUP) $@

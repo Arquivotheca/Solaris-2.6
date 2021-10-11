@@ -1,0 +1,13 @@
+class="win" name="MS-S"
+	__wclass__="XINPUT"
+	__category__="pointer"
+	__title__="Microsoft serial mouse"
+
+	ddxHandler="ddxSUNWx86mouse.so.1"
+	ddxInitFunc="ddxSUNWmouseProc"
+
+ 	buttons="string,2"
+	strmod="vuidm3p"
+
+	dev="string,/dev/tty00"
+	;

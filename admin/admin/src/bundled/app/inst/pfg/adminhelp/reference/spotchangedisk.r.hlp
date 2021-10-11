@@ -1,0 +1,55 @@
+---- About this screen ------------------------
+
+This screen lets you change the default boot 
+disk.
+
+On SPARC systems, you will also see an option
+to automatically reboot Solaris software from 
+the device.
+
+On x86 systems, if you change the boot disk,
+you must also change the BIOS after 
+installation.
+
+---- Disk -------------------------------------
+
+The boot disk is the disk that contains the
+Solaris software.
+
+If you select No Preference, the Solaris 
+installation program will select a boot
+device from disks listed.
+
+---- SPARC Only: Device -----------------------
+
+The boot device is VTOC slice on SPARC systems
+that is configured as primary for booting 
+Solaris software. The boot device is where 
+the root (/) file system will be configured.
+
+If you select Any from the Device menu, the
+Solaris installation program will select any
+slice in the list.
+
+---- SPARC Only: Automatically Reboot? --------
+
+By default, the system hardware (EEPROM) will 
+be changed during the Solaris installation 
+program to guarantee automatic rebooting of 
+Solaris software. This option is equivalent 
+to using the eeprom(1M) command, where the 
+hardware is changed so the boot device you've 
+selected will be the one from which Solaris 
+software is automatically booted. 
+
+NOTE: If you deselect Automatic Reboot,
+automatic rebooting of Solaris software
+is not guaranteed. 
+
+---- Original Boot Device ---------------------
+
+This is the default boot device that was
+selected at the start of the installation
+session. 
+
+

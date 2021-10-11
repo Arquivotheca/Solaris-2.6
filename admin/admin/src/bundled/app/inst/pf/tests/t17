@@ -1,0 +1,19 @@
+install_type    initial_install
+system_type     standalone
+partitioning    explicit
+
+fdisk	c0t3d0	solaris 100
+fdisk	c0t3d0	dos	100
+#fdisk	c0t3d0	0x0F	0177	active
+filesys         c0t3d0s0        auto    /
+filesys		c0t3d0s1	auto	swap
+filesys         c0t3d0s6        free    /usr
+
+filesys         infidel-111:/export/s10-93/sunpro/2.0.1/SUNWspro - /opt/SUNWspro
+filesys         ud17-111a:/export/dist - /usr/dist
+filesys         hagar:/opt/teamware - /opt/teamware
+filesys         gallifrey:/export/gallifrey - /export/gallifrey
+filesys         gallifrey:/proto - /proto
+filesys         gallifrey:/work 129.152.223.1 /work
+
+cluster         SUNWCall

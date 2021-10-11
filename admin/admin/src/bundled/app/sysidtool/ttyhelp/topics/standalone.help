@@ -1,0 +1,10 @@
+
+---- Description ----------------------------------------------------
+
+     Specifies whether your system is currently connected to a 
+     network.  The system must physically be connected to the
+     network by an Ethernet card or network adapter card.
+
+     The Solaris installation program needs the connection so it
+     can find as much information as possible from the network
+     about your system.

@@ -1,0 +1,27 @@
+
+---- Description ---------------------------------------------------
+
+     Specifies a default time zone for your system.
+
+     There are three ways to set a default time zone from
+     the Time zone menu:
+
+	- Select a geographic region 
+           
+          A subscreen is displayed for specifying a time zone
+          within your region (for example, United States/Mountain)
+        
+
+	- Select other - offset from GMT
+
+          A subscreen is displayed for specifying the number of
+          hours offset from Greenwich Mean Time. 
+
+
+        - Select other - specify a file
+
+          A subscreen is displayed for specifying the name of a
+          time zone file in the /usr/share/lib/zoneinfo directory.
+          The file must reside in this directory or you'll get an
+          error message recommending that you select a time zone
+          by geographic region.
